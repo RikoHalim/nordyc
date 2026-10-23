@@ -32,7 +32,7 @@ The fixture programme ID is `693f20d6-4952-5c77-aae3-47c59928449d`. Retrieve its
 
 ## Verification
 
-Local output: `76 passed, 1 skipped, 1 warning in 2.58s`. The skipped PostgreSQL integration requires `TEST_DATABASE_URL`; Docker/PostgreSQL is unavailable locally. GitHub Actions provisions PostgreSQL 16 and runs that test. Refer to `STATUS.md` for the latest acceptance result.
+Local output: `76 passed, 1 skipped, 1 warning in 2.58s`. The skipped PostgreSQL integration requires `TEST_DATABASE_URL`; Docker/PostgreSQL is unavailable locally. [GitHub Actions run 1](https://github.com/RikoHalim/shift-os/actions/runs/39985901492) passed with Python 3.11 and PostgreSQL 16: `77 passed, 1 warning in 2.55s`, with no skips. This verifies the real migration, constraints, schema comparison, downgrade and re-upgrade. Phase 01 is complete in `STATUS.md`.
 
 Ruff lint and formatting pass. Editable installation, CLI help, offline PostgreSQL SQL generation and Uvicorn startup were verified. Real HTTP smoke checks returned live 200, OpenAPI 200 and readiness 503 without a database. Windows sandbox restrictions required running TestClient with local socket access. One upstream Starlette/httpx deprecation warning remains.
 

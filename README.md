@@ -1,6 +1,8 @@
 # SHIFT//OS — Codex Backend Starter Kit
 
-**What this is:** A set of *project instructions, design contracts, synthetic fixtures, and sequential prompts* for building the backend of SHIFT//OS in a new project folder. **This ZIP contains specifications, not a finished API**. Codex writes the application code.
+**Current checkout:** Phase 01 is implemented and verified, including PostgreSQL migration testing in GitHub CI. See [the quickstart](#phase-01-implementation-and-quickstart), [handoff](PHASE_01_HANDOFF.md), and [status](STATUS.md). The original starter-kit instructions below remain as context for later phases.
+
+**What this starter kit is:** A set of *project instructions, design contracts, synthetic fixtures, and sequential prompts* for building the backend of SHIFT//OS in a new project folder. The original ZIP contained specifications; the Phase 01 application code is now included in this repository.
 
 ## Start in 4 steps
 
