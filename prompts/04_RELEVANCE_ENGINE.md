@@ -1,16 +1,7 @@
-# CODEX PROMPT — Phase 04: Whole-Programme Course Relevance Engine
+# PHASE 4 — Programme-wide conservative relevance engine
 
-Read `AGENTS.md`, `docs/01_PRODUCT_SCOPE.md`, `docs/03_DATA_MODEL.md`, `docs/04_ANALYSIS_AND_DECISIONS.md`, `docs/05_API_CONTRACT.md`, `docs/07_TEST_PLAN.md`, `examples/expected_behaviours.md`, and current code. Implement Phase 04 **only**.
+Verify prior phases. Read `docs/06_ANALYSIS_ENGINE.md`, `docs/11_TEST_PLAN.md` and `fixtures/expected_test_behaviours.md`.
 
-**Most important rule:** A run analyses **every course in the programme revision**, not one chosen course. Each course produces a result, including `INSUFFICIENT_EVIDENCE`.
+Implement one analysis job for **all courses in one selected programme**, including courses with little information. Combine verified catalogue and dated cross-disciplinary evidence, map appropriate academic standards, produce qualitative `review_flag` and short evidence-backed rationale for each course, plus programme-level investigation areas. **Never infer actual syllabi from titles**. Title-only courses must remain preliminary, with explicit unknowns and targeted review questions. Include citations/locators and evidence class in every finding; LLM use optional/provider-gated; offline deterministic fixture evaluator required. Rule/evidence validation must reject invented citations, auto-obsolete results and arbitrary percentages.
 
-Implement:
-1. A testable pure analysis service that accepts structured document facts + skill/occupation evidence + dated snapshot and yields `CourseAnalysis` records with supported citations and uncertainty reasons. Separate extraction, source matching, LLM assistance, and evidence validation.
-2. Five qualitative dimensions: foundational relevance; AI-transformed tasks; occupational relevance; curriculum currency; future resilience. Do not output arbitrary relevance percentages. Differentiate `NOT_EVIDENCED`, `UNKNOWN`, and `ASSESSED`.
-3. Optional LLM interface `AnalysisProvider` with a safe offline `SyntheticDemoProvider`/stub (explicitly tagged as demo) and a real provider adapter only if configured. Typed structured JSON; no LLM output accepted with evidence references absent from input context. If no real provider/key configured, never imply one ran.
-4. Evidence sufficiency validator. Course titles alone -> `INSUFFICIENT_EVIDENCE`; 'AI can do task' alone never results in course obsolete. Contradictions and stale sources -> uncertainty flags.
-5. Programme-wide aggregation across all courses: potential unaddressed competencies, cross-course connections and insufficient-evidence count; do not falsely report missing skills if source set or syllabus set is partial.
-6. `POST /programmes/{id}/analyses`, `GET /analyses/{id}`, `GET /analyses/{id}/courses`, `GET /analyses/{id}/courses/{course_id}`. Store input snapshot IDs and model/prompt versions. Avoid a long blocking request for production-scale jobs; make worker/job strategy realistic, independently testable.
-7. Tests: N input courses -> N results; no detailed syllabus; invalid citations; no AI provider; contradictory evidence; change of evidence; immutable run.
-
-Do **not** implement final academic action choice or frontend; Phase 05 handles actions. At end print a sample JSON analysis of full programme + tests, labelling demo outputs.
+Tests: multi-major input; title-only abstention; all courses returned; no false missing skill assertions; provenance; snapshot version. Update STATUS; STOP.

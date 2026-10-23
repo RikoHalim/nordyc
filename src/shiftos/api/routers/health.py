@@ -8,6 +8,7 @@ from shiftos.schemas.common import ErrorResponse, HealthResponse
 router = APIRouter(prefix="/health", tags=["Health"])
 
 
+@router.get("", response_model=HealthResponse)
 @router.get("/live", response_model=HealthResponse)
 def live() -> HealthResponse:
     return HealthResponse(status="alive")

@@ -20,7 +20,7 @@ class HealthResponse(BaseModel):
 T = TypeVar("T")
 
 
-class Page(BaseModel, Generic[T]):
+class Page(BaseModel, Generic[T]):  # noqa: UP046 - preserve the tested Pydantic generic contract
     items: list[T]
     total: int
     limit: int

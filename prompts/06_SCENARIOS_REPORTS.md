@@ -1,12 +1,7 @@
-# CODEX PROMPT — Phase 06: Scenarios, Re-analysis and Academic Reports
+# PHASE 6 — Scenarios, SDG mapping and action reporting
 
-Read `AGENTS.md`, `docs/04_ANALYSIS_AND_DECISIONS.md`, `docs/05_API_CONTRACT.md`, `docs/06_SOURCES_AND_PROVENANCE.md`, `docs/07_TEST_PLAN.md`. Implement Phase 06 **only**.
+Verify Phases 1–5. Read `docs/08_SCENARIOS_SDG_AND_REPORTING.md` and `docs/09_HACKATHON_COMPLIANCE.md`.
 
-Tasks:
-1. Two transparent scenario presets: `MODERATE` and `ACCELERATED` AI adoption. Presets are **qualitative assumptions** about adoption/impact; no invented economic or employment projections. Show differences only when evidence/assumptions support them.
-2. Create scenario comparison API and immutable run snapshots. Import `SYN-Q2` after `SYN-Q1` and demonstrate re-analysis of the same curriculum, with an explanation of any changed course-level/programme-wide action.
-3. Academic report as **structured JSON** listing entire course inventory count, per-course findings, primary actions, alternatives, source references/dates, unknown data, scenario contrasts, programme-wide opportunities and provisional SDG mappings with *target* and rationale. Missing justification => `NEEDS_REVIEW`.
-4. Add review decision endpoint restricted to an explicitly supplied review actor/role label in demo; do not imply production-grade authentication. Action only changes on a deliberate request, never on AI generation.
-5. Tests for immutable past runs, scenario determinism, uncertainty labels, no fabricated stats, report references, SDG review state and explicit approval.
+Add moderate/accelerated adoption **assumptions** (not fake numerical probability forecasts), dated source-snapshot comparison and impact replay for changed signals. Generate structured draft academic action report with all source citations, courses reviewed, confidence/unknowns, options/no change, approval status, SDG explanations and future data needs. SDG tags must have defensible rationale. Support reporting of exact changes between source snapshots. Preserve the original six must-haves vs unresolved organiser waiver in compliance docs; do not silently claim those features implemented.
 
-Don't spend this phase on a PDF designer or UI. JSON report is the MVP contract; export formatting can follow later.
+Tests for scenario differences, unrelated discipline stability, meaningful SDG explanation and source-auditable reporting. Update STATUS; STOP.

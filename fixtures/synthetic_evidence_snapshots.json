@@ -1,0 +1,74 @@
+{
+  "synthetic_demo": true,
+  "warning": "ALL SIGNALS, VALUES, DATES, RESEARCH CLAIMS AND SOURCES HERE ARE FABRICATED FOR OFFLINE TESTS ONLY.",
+  "snapshots": [
+    {
+      "id": "syn-snap-A",
+      "observation_date": "2026-02-01",
+      "items": [
+        {
+          "topic": "AI-assisted software test production",
+          "discipline": "computing",
+          "signal_index": 22,
+          "source_id": "syn-source-01"
+        },
+        {
+          "topic": "AI-assisted market research",
+          "discipline": "business",
+          "signal_index": 28,
+          "source_id": "syn-source-02"
+        },
+        {
+          "topic": "AI-assisted content drafting",
+          "discipline": "communication",
+          "signal_index": 30,
+          "source_id": "syn-source-03"
+        }
+      ]
+    },
+    {
+      "id": "syn-snap-B",
+      "observation_date": "2026-07-01",
+      "items": [
+        {
+          "topic": "AI-assisted software test production",
+          "discipline": "computing",
+          "signal_index": 58,
+          "source_id": "syn-source-01"
+        },
+        {
+          "topic": "AI-assisted market research",
+          "discipline": "business",
+          "signal_index": 28,
+          "source_id": "syn-source-02"
+        },
+        {
+          "topic": "AI-assisted content drafting",
+          "discipline": "communication",
+          "signal_index": 30,
+          "source_id": "syn-source-03"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "syn-source-01",
+      "publisher": "Synthetic fixture publisher",
+      "type": "synthetic_demo",
+      "url": null
+    },
+    {
+      "id": "syn-source-02",
+      "publisher": "Synthetic fixture publisher",
+      "type": "synthetic_demo",
+      "url": null
+    },
+    {
+      "id": "syn-source-03",
+      "publisher": "Synthetic fixture publisher",
+      "type": "synthetic_demo",
+      "url": null
+    }
+  ]
+}

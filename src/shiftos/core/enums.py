@@ -1,6 +1,16 @@
 from enum import StrEnum
 
 
+class EvidenceClass(StrEnum):
+    VERIFIED_UNIVERSITY_FACT = "verified_university_fact"
+    PUBLISHED_STANDARD = "published_standard"
+    OCCUPATION_REQUIREMENT = "occupation_requirement"
+    DATED_WORKFORCE_SIGNAL = "dated_workforce_signal"
+    DATED_AI_CAPABILITY = "dated_ai_capability"
+    INFERENCE = "inference"
+    SYNTHETIC_DEMO = "synthetic_demo"
+
+
 class CourseType(StrEnum):
     COMPULSORY = "COMPULSORY"
     ELECTIVE = "ELECTIVE"

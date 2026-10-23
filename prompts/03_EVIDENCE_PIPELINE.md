@@ -1,15 +1,9 @@
-# CODEX PROMPT — Phase 03: Versioned Workforce and AI Evidence
+# PHASE 3 — Academic/workforce/AI reference pipeline
 
-Read `AGENTS.md`, `docs/03_DATA_MODEL.md`, `docs/06_SOURCES_AND_PROVENANCE.md`, `docs/07_TEST_PLAN.md`, and previous implementation. Implement Phase 03 **only**.
+Verify Phases 1–2. Read `docs/05_SOURCES_AND_DATASETS.md`, source registry and data model.
 
-Build the versioned **evidence ingestion** pipeline for Malaysian occupations, skills, AI capabilities/task changes and academic standards. The MVP imports curated JSON/CSV files; it does **not** scrape websites or invent live data. Use `examples/sample_evidence.json` as a synthetic test case.
+Build versioned `sources`/`evidence_items` with published/observed/collected dates; typed ingestion adapters for curated MQA standards, occupation/skill taxonomy (ESCO; MyNSR where permitted), dated DOSM/MyCOL occupational signals, and evidence on AI impact by discipline. Import only officially available, licensed/authorised data; if source cannot be imported, record availability and use explicitly synthetic **offline** fixtures. Add source-coverage diagnostics and an occupation-vs-skill unit type check. No fabricated automatic live updates.
 
-Requirements:
-1. Add `evidence_sources`, `evidence_passages`, `signal_snapshots`, skill and occupation mapping persistence/migrations. Store provenance fields, publication and observation dates separately, jurisdiction, licence, `is_synthetic`.
-2. Importer validates schema, dates, IDs, claim type, excerpt and source integrity; prevent duplicates/version overwrites; reject orphan passage IDs.
-3. Implement source/snapshot import/list APIs, source lookup and paginated evidence retrieval.
-4. Support `SYN-Q1` and `SYN-Q2` versioned snapshots with changed underlying passage; verify both persist unchanged and can be compared.
-5. Make rule guard explicit: a job-opening number for an occupation does not determine the demand for an individual skill. Never infer skill growth from it.
-6. Provide source integrity tests, invalid payload and contradictory/old evidence tests.
+Produce two labelled dated snapshots (actual where permitted or synthetic). Verify every item can be traced back to source and original time window. Do not call any study an exact prediction of job loss. Tests for deterministic refresh, cross-discipline mapping and missing evidence.
 
-Keep AI providers and course-relevance outputs out of this phase. Show local import command and provenance queries at end.
+Update `STATUS.md` and STOP. Next Phase 4.

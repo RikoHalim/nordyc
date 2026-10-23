@@ -1,0 +1,129 @@
+{
+  "synthetic_demo": true,
+  "warning": "FICTIONAL UNIVERSITY, FICTIONAL CURRICULUM. TEST DATA ONLY. NOT XMUM.",
+  "institution": {
+    "id": "syn-inst-01",
+    "name": "Harborview Demo University (Synthetic)",
+    "country": "MY",
+    "source_kind": "synthetic_demo"
+  },
+  "programmes": [
+    {
+      "id": "syn-prg-swe",
+      "name": "Software Engineering (Synthetic)",
+      "discipline": "computing",
+      "courses": [
+        {
+          "id": "syn-c-01",
+          "title": "Programming Fundamentals",
+          "year": 1,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-02",
+          "title": "Database",
+          "year": 2,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-03",
+          "title": "Software Quality Engineering",
+          "year": 3,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-04",
+          "title": "Introduction to Artificial Intelligence",
+          "year": null,
+          "semester": null,
+          "elective": null,
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "syn-prg-business",
+      "name": "International Business (Synthetic)",
+      "discipline": "business",
+      "courses": [
+        {
+          "id": "syn-c-05",
+          "title": "Principles of Management",
+          "year": 1,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-06",
+          "title": "Business Research Methods",
+          "year": 2,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-07",
+          "title": "International Marketing",
+          "year": 2,
+          "semester": null,
+          "elective": true,
+          "description": null
+        },
+        {
+          "id": "syn-c-08",
+          "title": "Business Analytics",
+          "year": 3,
+          "semester": null,
+          "elective": null,
+          "description": null
+        }
+      ]
+    },
+    {
+      "id": "syn-prg-comm",
+      "name": "Communication (Synthetic)",
+      "discipline": "communication",
+      "courses": [
+        {
+          "id": "syn-c-09",
+          "title": "Communication Theory",
+          "year": 1,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-10",
+          "title": "Media Writing",
+          "year": 2,
+          "semester": null,
+          "elective": false,
+          "description": null
+        },
+        {
+          "id": "syn-c-11",
+          "title": "Digital Media Research",
+          "year": 3,
+          "semester": null,
+          "elective": null,
+          "description": null
+        },
+        {
+          "id": "syn-c-12",
+          "title": "Public Relations Practice",
+          "year": 3,
+          "semester": null,
+          "elective": true,
+          "description": null
+        }
+      ]
+    }
+  ]
+}

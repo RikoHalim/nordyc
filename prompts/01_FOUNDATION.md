@@ -1,36 +1,23 @@
-# CODEX PROMPT — Phase 01: Backend Foundation
+# PHASE 1 — Foundation compatibility and maintenance
 
-## Mission
+Phase 1 already exists. Inspect and preserve working code, migration 0001 and persisted data; make only necessary additive corrections. Do not recreate the repository.
 
-Implement only the backend foundation for the modular-monolith architecture in `docs/02_BACKEND_ARCHITECTURE.md`. This is **not** a model-powered prototype yet.
-
-## Read first
-
-`AGENTS.md`, `docs/01_PRODUCT_SCOPE.md`, `docs/02_BACKEND_ARCHITECTURE.md`, `docs/03_DATA_MODEL.md`, `docs/05_API_CONTRACT.md`, `docs/07_TEST_PLAN.md`, `examples/sample_programme.json`.
+Read `AGENTS.md`, `README.md`, `STATUS.md`, docs 01–03 and 10–11. **Implement Phase 1 only**.
 
 ## Implement
 
-1. A Python 3.11+ project using `src/shiftos/` with `pyproject.toml` and installable package. FastAPI app factory/lifespan, versioned router prefix and automatic OpenAPI.
-2. Typed settings (Pydantic Settings), `.env.example`, safe defaults. Health live/ready endpoints and consistent error schema.
-3. PostgreSQL Docker Compose dev DB and SQLAlchemy 2 async/sync choice documented (prefer a simple consistent approach), Alembic initial migrations for key Phase 01 tables: institution, programme, revision, course, document metadata, anchor, and job/run foundation. Remaining tables from data model may be added later; avoid rushed giant migration if not needed.
-4. Endpoints create/list institutions, create/read programme, list all programme courses; basic input validation. Include a **documented offline fixture import command** that reads `examples/sample_programme.json` and preserves synthetic flags/unknown syllabus status. Idempotent reruns.
-5. pytest API + service tests, migration integration test (if Postgres available), Ruff lint/format setup, simple README dev commands. No API key required.
+- FastAPI app with `/health`, `/api/v1` router, conventional settings, logging and typed Pydantic errors.
+- PostgreSQL database connection, SQLAlchemy 2 declarative models and Alembic migrations.
+- Institution, Programme, Course and Source minimal tables. A university has many programmes; programme has many courses; optional year/semester/type and **source provenance** are supported.
+- Basic institution/programme/course create/read endpoints (retain compatible routes; updates/deletes need a later explicit versioning contract) with pagination and validation. Add consistent 404/409/422 errors.
+- Database transaction lifecycle and dependency injection, clean package layout.
+- Basic automated tests including nested multi-major fixture, nullable metadata, foreign keys, and migrations. Provide local setup e.g. docker compose Postgres optionally (if used, document it).
+- `.env.example`, dependency file/lock, `.gitignore`, README development instructions and example commands.
 
-## Key invariants
+## Not now
 
-- Programme revision has many course records. Do not hardcode the number or model primary flow as one-course review.
-- Real programme metadata can be incomplete; no fictitious CLOs, assessments or competency scores.
-- UUID PKs, constraints, UTC timestamp fields. Do not leak credentials.
-- `GET /api/v1/programmes/{id}/courses` returns **all** programme courses, paginated if needed.
+No scraper, no external datasets, no LLM, no relevance algorithm, no frontend, no fabricated imported XMUM records.
 
-## Out of scope this phase
+## Acceptance / stop
 
-Document text parsing, workforce source fetching, LLM integration, relevance decision engine, simulation, frontend, PDF reports.
-
-## Done only when
-
-- App starts, OpenAPI and both health endpoints behave as specified.
-- PostgreSQL migration runs or limitation is explicitly reported.
-- Fixture import, programme creation/listing, and pagination tests pass.
-- `python -m pytest -q` and lint pass if environment supports installing dependencies.
-- Show exact files and run commands; update `STATUS.md` with verified results.
+Demonstrate creating one institution with **multiple distinct programmes**, each with courses and year fields, using local DB and API. Run tests and migrations; record actual command outcomes. Update `STATUS.md`: Phase 1 COMPLETE only if genuinely tested. Then STOP; next `prompts/02_CURRICULUM_DISCOVERY.md`.

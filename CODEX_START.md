@@ -1,23 +1,19 @@
-# Paste this as your FIRST message to Codex
+# Continue the existing SHIFT//OS repository
+
+This checkout already contains Phase 1. Do not create a new repository, re-run a greenfield foundation prompt, reset Git history or replace working components. `STATUS.md` records tested completion; later specifications are not implemented features.
+
+## Scope audit or Phase 1 maintenance prompt
 
 ```text
-You are the lead backend engineer for SHIFT//OS. The working directory is the project root of a new repository containing AGENTS.md, README.md, docs/, prompts/, and examples/.
+Read AGENTS.md, README.md, STATUS.md, docs/00_READ_ME_FIRST.md, docs/03_DATA_MODEL.md, docs/10_API_CONTRACT.md and docs/15_PHASE1_MIGRATION_AUDIT.md. Inspect code and migrations before changes.
 
-Read AGENTS.md, README.md, STATUS.md, docs/01_PRODUCT_SCOPE.md, docs/02_BACKEND_ARCHITECTURE.md, docs/03_DATA_MODEL.md, docs/04_ANALYSIS_AND_DECISIONS.md, docs/05_API_CONTRACT.md, docs/07_TEST_PLAN.md, and prompts/01_FOUNDATION.md.
+Audit the current Phase 1 foundation against revised requirements. Preserve its factory, sessions, error envelope, existing APIs, immutable fixture importer, revisions, documents, anchors and migration 0001. Make only necessary additive compatibility corrections, with migrations and tests. Do not recreate the repository, implement Phase 2, build an AI engine/frontend, or commit/push automatically.
 
-Implement PHASE 01 ONLY, following prompts/01_FOUNDATION.md. This is a backend-first project. Build a clean FastAPI application with SQLAlchemy models, PostgreSQL/Docker Compose configuration, Alembic initial migration, health endpoints, environment configuration, test setup, and seed/import capability for synthetic fixture records as specified. Do not build the AI engine, document parser, frontend, or unrelated features yet.
-
-IMPORTANT PRODUCT CONSTRAINT: The eventual workflow analyses an ENTIRE uploaded academic programme and ALL detected courses. Never design the database or primary API around selecting one course to analyse. No manual relevance percentages.
-
-Run any available lint/tests and fix failures. Show me files created, exact local run commands, test output, assumptions, and remaining TODOs. Update STATUS.md only after verified acceptance criteria are met. Do not claim a database integration test passed if Docker/Postgres is unavailable.
+Report preserved/changed components, actual test output, migration safety and remaining gaps. Update STATUS.md honestly and stop after the approved phase.
 ```
 
-## After Phase 01
+## Next prompt — only when explicitly authorised
 
-Paste the contents of `prompts/02_DOCUMENT_INGESTION.md`, then Phase 03, and so on. Ask Codex to complete, test, and commit/review each phase separately.
+Use `prompts/02_CURRICULUM_DISCOVERY.md`, which replaces the upload-first Phase 2 prompt. Target all publicly discoverable XMUM undergraduate programmes and source-backed course titles/year grouping, with bounded access and manual import fallback. Syllabi are optional. Phase 2 is not part of the Phase 1 migration.
 
-## If Codex gets distracted
-
-```text
-Stop feature expansion. Re-read AGENTS.md, docs/01_PRODUCT_SCOPE.md and the current prompts/0X_*.md. Implement only the acceptance criteria of the current phase. Identify any proposed work that belongs to a later phase and defer it.
-```
+Continue one phase at a time: inspect -> smallest plan -> authorised implementation -> tests/migrations -> docs/STATUS -> report -> stop. Never mark future work complete because its specification or fixture exists.

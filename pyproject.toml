@@ -6,19 +6,19 @@ build-backend = "setuptools.build_meta"
 name = "shiftos"
 version = "0.1.0"
 description = "Programme-wide academic decision support backend for Malaysian universities"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
-  "fastapi>=0.115,<1",
-  "uvicorn>=0.30,<1",
-  "pydantic>=2.9,<3",
-  "pydantic-settings>=2.5,<3",
-  "SQLAlchemy>=2.0,<2.1",
-  "psycopg[binary]>=3.2,<4",
-  "alembic>=1.13,<2",
+  "fastapi==0.161.1",
+  "uvicorn==0.54.0",
+  "pydantic==2.14.1",
+  "pydantic-settings==2.16.1",
+  "SQLAlchemy==2.0.55",
+  "psycopg[binary]==3.3.6",
+  "alembic==1.20.1",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<10", "httpx>=0.27,<1", "ruff>=0.9,<1"]
+dev = ["pytest==9.1.1", "httpx==0.28.1", "ruff==0.17.2"]
 
 [project.scripts]
 shiftos = "shiftos.cli:main"
@@ -33,7 +33,7 @@ addopts = "-ra"
 markers = ["integration: requires an explicitly configured PostgreSQL test database"]
 
 [tool.ruff]
-target-version = "py311"
+target-version = "py312"
 line-length = 100
 
 [tool.ruff.lint]

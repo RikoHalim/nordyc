@@ -28,6 +28,7 @@ from shiftos.core.enums import (
     CourseType,
     DocumentFormat,
     DocumentKind,
+    EvidenceClass,
     ExtractionStatus,
     JobStatus,
 )
@@ -40,15 +41,63 @@ class SyntheticMixin:
     )
 
 
+class Source(RecordMixin, SyntheticMixin, Base):
+    __tablename__ = "sources"
+    __table_args__ = (
+        CheckConstraint("length(trim(publisher)) > 0", name="publisher_not_blank"),
+        CheckConstraint("length(trim(title)) > 0", name="title_not_blank"),
+        CheckConstraint(
+            "is_synthetic = (evidence_class = 'synthetic_demo')",
+            name="synthetic_evidence_consistent",
+        ),
+        CheckConstraint(
+            "is_synthetic OR (url IS NOT NULL AND length(trim(url)) > 0)",
+            name="nonsynthetic_requires_url",
+        ),
+        CheckConstraint(
+            "content_hash IS NULL OR length(content_hash) = 64", name="content_hash_length"
+        ),
+    )
+
+    publisher: Mapped[str] = mapped_column(String(255), nullable=False)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    url: Mapped[str | None] = mapped_column(Text)
+    source_kind: Mapped[str] = mapped_column(String(100), default="manual", server_default="manual")
+    evidence_class: Mapped[EvidenceClass] = mapped_column(
+        Enum(
+            EvidenceClass,
+            name="evidence_class",
+            values_callable=lambda members: [member.value for member in members],
+            native_enum=False,
+            create_constraint=True,
+        ),
+        default=EvidenceClass.INFERENCE,
+        server_default=EvidenceClass.INFERENCE.value,
+    )
+    license_status: Mapped[str] = mapped_column(
+        String(100), default="unknown", server_default="unknown"
+    )
+    published_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    observed_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    collected_at: Mapped[datetime | None] = mapped_column(UTCDateTime())
+    content_hash: Mapped[str | None] = mapped_column(String(64))
+
+
 class Institution(RecordMixin, SyntheticMixin, Base):
     __tablename__ = "institutions"
     __table_args__ = (
         CheckConstraint("country = 'MY'", name="malaysia_only"),
         CheckConstraint("length(trim(name)) > 0", name="name_not_blank"),
+        Index("ix_institutions_source_id", "source_id"),
     )
 
     name: Mapped[str] = mapped_column(String(255), nullable=False)
     country: Mapped[str] = mapped_column(String(2), default="MY", server_default="MY")
+    website_url: Mapped[str | None] = mapped_column(Text)
+    source_id: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("sources.id", ondelete="RESTRICT")
+    )
+    source_locator: Mapped[str | None] = mapped_column(String(500))
 
 
 class Programme(RecordMixin, SyntheticMixin, Base):
@@ -62,6 +111,7 @@ class Programme(RecordMixin, SyntheticMixin, Base):
             use_alter=True,
         ),
         Index("ix_programmes_institution_id", "institution_id"),
+        Index("ix_programmes_source_id", "source_id"),
     )
 
     institution_id: Mapped[UUID] = mapped_column(
@@ -71,6 +121,13 @@ class Programme(RecordMixin, SyntheticMixin, Base):
     programme_code: Mapped[str | None] = mapped_column(String(100))
     academic_year: Mapped[str | None] = mapped_column(String(50))
     active_revision_id: Mapped[UUID | None] = mapped_column(Uuid)
+    level: Mapped[str | None] = mapped_column(String(100))
+    discipline_key: Mapped[str | None] = mapped_column(String(100))
+    canonical_url: Mapped[str | None] = mapped_column(Text)
+    source_id: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("sources.id", ondelete="RESTRICT")
+    )
+    source_locator: Mapped[str | None] = mapped_column(String(500))
 
 
 class ProgrammeRevision(RecordMixin, SyntheticMixin, Base):
@@ -109,7 +166,13 @@ class Course(RecordMixin, SyntheticMixin, Base):
             "detailed_syllabus_available OR extraction_status != 'NORMALIZED_FIXTURE'",
             name="normalized_fixture_requires_syllabus",
         ),
+        CheckConstraint(
+            "NOT is_verified OR (NOT is_synthetic AND source_id IS NOT NULL "
+            "AND source_locator IS NOT NULL AND length(trim(source_locator)) > 0)",
+            name="verified_requires_provenance",
+        ),
         Index("ix_courses_revision_course_code", "programme_revision_id", "course_code"),
+        Index("ix_courses_source_id", "source_id"),
     )
 
     programme_revision_id: Mapped[UUID] = mapped_column(
@@ -145,6 +208,13 @@ class Course(RecordMixin, SyntheticMixin, Base):
         server_default=ExtractionStatus.INVENTORY_ONLY.value,
     )
     detailed_syllabus_available: Mapped[bool] = mapped_column(
+        Boolean, default=False, server_default=false(), nullable=False
+    )
+    source_id: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("sources.id", ondelete="RESTRICT")
+    )
+    source_locator: Mapped[str | None] = mapped_column(String(500))
+    is_verified: Mapped[bool] = mapped_column(
         Boolean, default=False, server_default=false(), nullable=False
     )
 

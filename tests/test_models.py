@@ -1,5 +1,5 @@
 import json
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime, timedelta, timezone
 from pathlib import Path
 from uuid import UUID, uuid4
 
@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError, StatementError
 from sqlalchemy.orm import Session
 
-from shiftos.core.enums import CourseType, ExtractionStatus
+from shiftos.core.enums import CourseType, EvidenceClass, ExtractionStatus
 from shiftos.models import (
     Course,
     Document,
@@ -17,6 +17,7 @@ from shiftos.models import (
     Job,
     Programme,
     ProgrammeRevision,
+    Source,
 )
 from shiftos.services.ingestion.fixtures import import_fixture
 
@@ -218,3 +219,203 @@ def test_job_completion_cannot_precede_start(session: Session, synthetic_records
             )
         )
         session.flush()
+
+
+@pytest.mark.parametrize("evidence_class", list(EvidenceClass))
+def test_source_evidence_classes_and_unknown_dates_are_preserved(
+    session: Session, evidence_class: EvidenceClass
+) -> None:
+    synthetic = evidence_class == EvidenceClass.SYNTHETIC_DEMO
+    source = Source(
+        publisher="Synthetic Test Publisher",
+        title="Synthetic source metadata test",
+        url=None if synthetic else "https://example.invalid/source",
+        evidence_class=evidence_class,
+        is_synthetic=synthetic,
+    )
+    session.add(source)
+    session.commit()
+    session.refresh(source)
+    assert source.evidence_class == evidence_class
+    assert source.source_kind == "manual"
+    assert source.license_status == "unknown"
+    assert source.published_at is None
+    assert source.observed_at is None
+    assert source.collected_at is None
+    assert source.content_hash is None
+
+
+def test_source_defaults_to_inference_and_normalizes_explicit_dates(session: Session) -> None:
+    supplied_date = datetime(2026, 1, 2, tzinfo=timezone(timedelta(hours=8)))
+    source = Source(
+        publisher="Synthetic Test Publisher",
+        title="Synthetic dated source",
+        url="https://example.invalid/dated-source",
+        published_at=supplied_date,
+        content_hash="a" * 64,
+    )
+    session.add(source)
+    session.commit()
+    session.refresh(source)
+    assert source.evidence_class == EvidenceClass.INFERENCE
+    assert source.is_synthetic is False
+    assert source.published_at == supplied_date
+    assert source.published_at.utcoffset() == timedelta(0)
+    assert source.observed_at is None
+    assert source.collected_at is None
+
+
+@pytest.mark.parametrize("field", ["published_at", "observed_at", "collected_at"])
+def test_source_naive_dates_are_rejected(session: Session, field: str) -> None:
+    with pytest.raises(StatementError), session.begin_nested():
+        session.add(
+            Source(
+                publisher="Synthetic Test Publisher",
+                title="Synthetic naive date",
+                url="https://example.invalid/source",
+                **{field: datetime(2026, 1, 2)},
+            )
+        )
+        session.flush()
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        {"publisher": " "},
+        {"title": " "},
+        {"url": None},
+        {"url": " "},
+        {"is_synthetic": True},
+        {"evidence_class": EvidenceClass.SYNTHETIC_DEMO},
+        {"evidence_class": "UNTRACEABLE"},
+        {"content_hash": "invalid"},
+    ],
+)
+def test_source_constraints_apply_outside_api(session: Session, values: dict) -> None:
+    with pytest.raises(IntegrityError), session.begin_nested():
+        session.add(
+            Source(
+                **{
+                    "publisher": "Synthetic Test Publisher",
+                    "title": "Synthetic invalid source",
+                    "url": "https://example.invalid/source",
+                    **values,
+                }
+            )
+        )
+        session.flush()
+
+
+@pytest.mark.parametrize("model", [Institution, Programme, Course])
+def test_catalogue_source_references_cannot_be_missing(
+    session: Session, synthetic_records: dict, model: type
+) -> None:
+    record_values = {
+        Institution: {"name": "Synthetic source test institution"},
+        Programme: {
+            "name": "Synthetic source test programme",
+            "institution_id": UUID(synthetic_records["institution"]["id"]),
+        },
+        Course: {
+            "course_name": "Synthetic source test course",
+            "programme_revision_id": UUID(synthetic_records["programme"]["revision_id"]),
+        },
+    }
+    with pytest.raises(IntegrityError), session.begin_nested():
+        session.add(model(source_id=uuid4(), **record_values[model]))
+        session.flush()
+
+
+@pytest.mark.parametrize("model", [Institution, Programme, Course])
+def test_referenced_catalogue_source_cannot_be_deleted(
+    session: Session, synthetic_records: dict, model: type
+) -> None:
+    source = Source(
+        publisher="Synthetic Test Publisher",
+        title="Synthetic retained provenance",
+        evidence_class=EvidenceClass.SYNTHETIC_DEMO,
+        is_synthetic=True,
+    )
+    session.add(source)
+    session.flush()
+    record_id = {
+        Institution: synthetic_records["institution"]["id"],
+        Programme: synthetic_records["programme"]["id"],
+        Course: synthetic_records["courses"][0]["id"],
+    }[model]
+    record = session.get(model, UUID(record_id))
+    record.source_id = source.id
+    record.source_locator = "synthetic:test"
+    session.commit()
+    with pytest.raises(IntegrityError), session.begin_nested():
+        session.delete(source)
+        session.flush()
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        {"is_synthetic": True},
+        {"source_id": None},
+        {"source_locator": None},
+        {"source_locator": " "},
+    ],
+)
+def test_verified_course_requires_nonsynthetic_provenance(
+    session: Session, synthetic_records: dict, values: dict
+) -> None:
+    source = Source(
+        publisher="Synthetic Test Publisher",
+        title="Synthetic provenance validation example",
+        url="https://example.invalid/catalogue",
+        evidence_class=EvidenceClass.VERIFIED_UNIVERSITY_FACT,
+    )
+    session.add(source)
+    session.commit()
+    with pytest.raises(IntegrityError), session.begin_nested():
+        session.add(
+            Course(
+                **{
+                    "programme_revision_id": UUID(synthetic_records["programme"]["revision_id"]),
+                    "course_name": "Synthetic verification constraint test",
+                    "is_verified": True,
+                    "is_synthetic": False,
+                    "source_id": source.id,
+                    "source_locator": "#course-list",
+                    **values,
+                }
+            )
+        )
+        session.flush()
+
+
+def test_course_verification_only_asserts_catalogue_provenance(
+    session: Session, synthetic_records: dict
+) -> None:
+    source = Source(
+        publisher="Synthetic Test Publisher",
+        title="Synthetic catalogue constraint example",
+        url="https://example.invalid/catalogue",
+        evidence_class=EvidenceClass.VERIFIED_UNIVERSITY_FACT,
+    )
+    session.add(source)
+    session.flush()
+    course = Course(
+        programme_revision_id=UUID(synthetic_records["programme"]["revision_id"]),
+        course_name="Synthetic verified catalogue entry",
+        source_id=source.id,
+        source_locator="#course-list",
+        is_verified=True,
+    )
+    session.add(course)
+    session.commit()
+    session.refresh(course)
+    assert course.is_verified is True
+    assert course.detailed_syllabus_available is False
+    assert course.extraction_status == ExtractionStatus.INVENTORY_ONLY
+    assert course.year is None
+    assert course.semester is None
+    assert course.course_type == CourseType.UNKNOWN
+    existing = session.get(Course, UUID(synthetic_records["courses"][0]["id"]))
+    assert existing.is_verified is False

@@ -6,6 +6,7 @@ from shiftos.models.foundation import (
     Job,
     Programme,
     ProgrammeRevision,
+    Source,
 )
 
 __all__ = [
@@ -16,4 +17,5 @@ __all__ = [
     "Job",
     "Programme",
     "ProgrammeRevision",
+    "Source",
 ]
