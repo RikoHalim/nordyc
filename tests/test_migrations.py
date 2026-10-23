@@ -2,18 +2,25 @@ import os
 from collections.abc import Iterator
 from datetime import UTC, datetime
 from pathlib import Path
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import pytest
 from alembic.autogenerate import compare_metadata
 from alembic.config import Config
 from alembic.migration import MigrationContext
-from sqlalchemy import MetaData, create_engine, inspect, select, text
+from fastapi.testclient import TestClient
+from sqlalchemy import MetaData, create_engine, func, inspect, select, text
 from sqlalchemy.engine import Connection, make_url
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm import sessionmaker
 
 from alembic import command
+from shiftos.core.config import Settings
 from shiftos.db.base import Base
+from shiftos.db.session import Database
+from shiftos.main import create_app
+from shiftos.models import Course, ProgrammeRevision, Source
+from shiftos.services.ingestion.worker import run_once
 
 
 @pytest.fixture
@@ -154,6 +161,9 @@ def _assert_original_rows_preserved(
     reflected = MetaData()
     reflected.reflect(connection, only=list(snapshot))
     for name, rows in snapshot.items():
+        if not rows:
+            assert connection.scalar(select(func.count()).select_from(reflected.tables[name])) == 0
+            continue
         original_columns = [reflected.tables[name].c[column] for column in rows[0]]
         assert [
             dict(row) for row in connection.execute(select(*original_columns)).mappings()
@@ -278,7 +288,8 @@ def test_downgrade_refuses_new_metadata_and_preserves_old_rows_on_safe_roundtrip
     connection.commit()
     snapshot = _seed_original_schema(connection)
     connection.commit()
-    command.upgrade(config, "head")
+    # Exercise the 0002 guard in isolation; 0003 has its own loss-prevention tests.
+    command.upgrade(config, "0002_catalogue_sources")
     connection.commit()
     for table_name, column, value in [
         ("institutions", "website_url", "https://example.invalid/university"),
@@ -314,3 +325,226 @@ def test_downgrade_refuses_new_metadata_and_preserves_old_rows_on_safe_roundtrip
     connection.commit()
     _assert_original_rows_preserved(connection, snapshot)
     _assert_metadata_matches(connection)
+
+
+@pytest.mark.integration
+def test_populated_0002_upgrade_to_0003_preserves_provenance_and_safe_roundtrip(
+    migration_database: tuple[Connection, Config],
+) -> None:
+    """No new importer metadata may be invented for pre-existing catalogue rows."""
+    connection, config = migration_database
+    command.upgrade(config, "0002_catalogue_sources")
+    connection.commit()
+    _seed_original_schema(connection)
+    previous = MetaData()
+    previous.reflect(connection)
+    source_id = uuid4()
+    connection.execute(
+        previous.tables["sources"]
+        .insert()
+        .values(
+            id=source_id,
+            publisher="Synthetic Migration Publisher",
+            title="Synthetic 0002 catalogue",
+            url="https://example.invalid/legacy-catalogue",
+            evidence_class="synthetic_demo",
+            is_synthetic=True,
+        )
+    )
+    connection.execute(
+        previous.tables["courses"]
+        .update()
+        .values(
+            source_id=source_id,
+            source_locator="#synthetic-legacy-course",
+            updated_at=previous.tables["courses"].c.updated_at,
+        )
+    )
+    connection.execute(
+        previous.tables["institutions"]
+        .update()
+        .values(
+            website_url="https://example.invalid/",
+            updated_at=previous.tables["institutions"].c.updated_at,
+        )
+    )
+    connection.commit()
+    snapshot = {
+        name: [dict(row) for row in connection.execute(select(table)).mappings()]
+        for name, table in previous.tables.items()
+        if name != "alembic_version"
+    }
+    connection.commit()
+    command.upgrade(config, "0003_curriculum_ingestion")
+    connection.commit()
+    _assert_original_rows_preserved(connection, snapshot)
+    _assert_metadata_matches(connection)
+    assert connection.scalar(text("SELECT import_fingerprint FROM programme_revisions")) is None
+    assert connection.scalar(text("SELECT metadata_json FROM programme_revisions")) == {}
+    assert connection.scalar(text("SELECT raw_year_label FROM courses")) is None
+    assert connection.scalar(text("SELECT source_url FROM courses")) is None
+    assert connection.scalar(text("SELECT review_notes FROM courses")) == []
+    assert connection.scalar(text("SELECT institution_id FROM jobs")) is None
+    assert connection.scalar(text("SELECT payload_json FROM jobs")) == {}
+    assert connection.scalar(text("SELECT result_json FROM jobs")) == {}
+    connection.commit()
+    command.downgrade(config, "0002_catalogue_sources")
+    connection.commit()
+    _assert_original_rows_preserved(connection, snapshot)
+    assert "import_fingerprint" not in {
+        column["name"] for column in inspect(connection).get_columns("programme_revisions")
+    }
+    connection.commit()
+    command.upgrade(config, "head")
+    connection.commit()
+    _assert_original_rows_preserved(connection, snapshot)
+    _assert_metadata_matches(connection)
+
+
+@pytest.mark.integration
+def test_0003_downgrade_refuses_each_populated_phase2_metadata_family(
+    migration_database: tuple[Connection, Config],
+) -> None:
+    connection, config = migration_database
+    command.upgrade(config, "0002_catalogue_sources")
+    connection.commit()
+    snapshot = _seed_original_schema(connection)
+    connection.commit()
+    command.upgrade(config, "head")
+    connection.commit()
+    for table_name, column, value, empty in [
+        ("programmes", "ingestion_key", "a" * 64, None),
+        ("programme_revisions", "import_fingerprint", "b" * 64, None),
+        ("programme_revisions", "metadata_json", {"synthetic_note": "retain"}, {}),
+        ("courses", "raw_year_label", "Year 2/3", None),
+        ("courses", "raw_semester_label", "Semester 1/2", None),
+        ("courses", "elective_group", "Synthetic elective group", None),
+        ("courses", "source_url", "https://example.invalid/catalogue", None),
+        ("courses", "review_notes", ["Synthetic review note"], []),
+        ("jobs", "institution_id", snapshot["institutions"][0]["id"], None),
+        ("jobs", "idempotency_key", "synthetic-key", None),
+        ("jobs", "payload_json", {"synthetic_payload": True}, {}),
+        ("jobs", "result_json", {"synthetic_result": "retain"}, {}),
+    ]:
+        table = Base.metadata.tables[table_name]
+        connection.execute(table.update().values({column: value, "updated_at": table.c.updated_at}))
+        connection.commit()
+        with pytest.raises(RuntimeError, match="Export Phase 2 catalogue data"):
+            command.downgrade(config, "0002_catalogue_sources")
+        connection.rollback()
+        assert connection.scalar(select(table.c[column])) == value
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == (
+            "0003_curriculum_ingestion"
+        )
+        connection.execute(table.update().values({column: empty, "updated_at": table.c.updated_at}))
+        connection.commit()
+    _assert_original_rows_preserved(connection, snapshot)
+    _assert_metadata_matches(connection)
+
+
+@pytest.mark.integration
+def test_postgresql_curriculum_queue_reimport_revisions_and_fastapi_retrieval(
+    migration_database: tuple[Connection, Config],
+) -> None:
+    """Migrations, ORM writes, worker and HTTP reads share an isolated PG schema."""
+    connection, config = migration_database
+    command.upgrade(config, "head")
+    connection.commit()
+    database = Database(connection.engine, sessionmaker(bind=connection, expire_on_commit=False))
+    settings = Settings(_env_file=None, app_env="test")
+    manifest = {
+        "name": "Bachelor of Synthetic PostgreSQL Studies",
+        "canonical_url": "https://example.invalid/courses/synthetic-pg",
+        "source_url": "https://example.invalid/courses/synthetic-pg",
+        "source_locator": "#synthetic-curriculum",
+        "retrieved_at": "2026-10-20T00:00:00Z",
+        "reviewed": True,
+        "courses": [
+            {
+                "course_name": "Synthetic PG Foundations",
+                "year": 1,
+                "source_locator": "#synthetic-year1 > li",
+                "source_excerpt": "Synthetic PG Foundations",
+            },
+            {
+                "course_name": "Synthetic PG Elective",
+                "course_type": "ELECTIVE",
+                "raw_year_label": "Year 3/4",
+                "elective_group": "Synthetic choice group",
+                "source_locator": "#synthetic-elective > li",
+                "source_excerpt": "Synthetic PG Elective",
+            },
+        ],
+    }
+    with TestClient(create_app(settings=settings, database=database)) as client:
+        response = client.post(
+            "/api/v1/institutions",
+            json={
+                "name": "Synthetic PostgreSQL Test University",
+                "website_url": "https://example.invalid/",
+                "is_synthetic": True,
+            },
+        )
+        assert response.status_code == 201, response.text
+        institution = response.json()
+
+        def enqueue_and_process(payload: dict) -> dict:
+            response = client.post(
+                f"/api/v1/institutions/{institution['id']}/imports",
+                json={"is_synthetic": True, "programmes": [payload]},
+            )
+            assert response.status_code == 202, response.text
+            queued = response.json()
+            assert run_once(database, settings) == UUID(queued["id"])
+            completed = client.get(f"/api/v1/catalogue/jobs/{queued['id']}").json()
+            assert completed["status"] == "SUCCEEDED", completed
+            return completed["result"]["entries"][0]
+
+        first = enqueue_and_process(manifest)
+        repeated = enqueue_and_process(manifest)
+        assert repeated["status"] == "unchanged"
+        assert first["revision_id"] == repeated["revision_id"]
+        with database.session_factory() as session:
+            assert session.scalar(select(func.count()).select_from(ProgrammeRevision)) == 1
+            assert session.scalar(select(func.count()).select_from(Source)) == 1
+            assert session.scalar(select(func.count()).select_from(Course)) == 2
+        changed = {
+            **manifest,
+            "retrieved_at": "2026-10-21T00:00:00Z",
+            "courses": [
+                {
+                    "course_name": "Synthetic PG Revised Foundations",
+                    "year": 2,
+                    "source_locator": "#synthetic-year2 > li",
+                    "source_excerpt": "Synthetic PG Revised Foundations",
+                }
+            ],
+        }
+        second = enqueue_and_process(changed)
+        assert second["revision_id"] != first["revision_id"]
+        replay = enqueue_and_process(manifest)
+        assert replay["status"] == "unchanged" and replay["active"] is False
+        path = f"/api/v1/programmes/{first['programme_id']}"
+        active = client.get(path + "/courses")
+        assert active.status_code == 200
+        assert active.json()["programme_revision_id"] == second["revision_id"]
+        assert active.json()["items"][0]["course_name"] == "Synthetic PG Revised Foundations"
+        old = client.get(path + f"/revisions/{first['revision_id']}/courses")
+        assert old.status_code == 200
+        assert old.json()["total"] == 2
+        elective = next(item for item in old.json()["items"] if item["course_type"] == "ELECTIVE")
+        assert elective["year"] is None and elective["raw_year_label"] == "Year 3/4"
+        assert elective["source_url"] == manifest["source_url"]
+        assert elective["is_synthetic"] is True and elective["is_verified"] is False
+        assert client.get(path + "/revisions").json()["total"] == 2
+        coverage = client.get(path + "/coverage").json()
+        assert coverage["course_count"] == 1
+        assert coverage["graduation_curriculum_complete"] is False
+        forbidden = client.post(path + "/courses", json={"course_name": "Synthetic mutation"})
+        assert forbidden.status_code == 409
+    connection.commit()
+    with pytest.raises(RuntimeError, match="Export Phase 2 catalogue data"):
+        command.downgrade(config, "0002_catalogue_sources")
+    connection.rollback()
+    assert connection.scalar(text("SELECT count(*) FROM programme_revisions")) == 2
+    assert connection.scalar(text("SELECT count(*) FROM courses")) == 3

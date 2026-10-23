@@ -21,6 +21,7 @@ from sqlalchemy import (
     false,
     func,
 )
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
 from shiftos.core.enums import (
@@ -103,6 +104,7 @@ class Institution(RecordMixin, SyntheticMixin, Base):
 class Programme(RecordMixin, SyntheticMixin, Base):
     __tablename__ = "programmes"
     __table_args__ = (
+        UniqueConstraint("institution_id", "ingestion_key", name="uq_programmes_ingestion"),
         CheckConstraint("length(trim(name)) > 0", name="name_not_blank"),
         ForeignKeyConstraint(
             ["active_revision_id", "id"],
@@ -124,6 +126,7 @@ class Programme(RecordMixin, SyntheticMixin, Base):
     level: Mapped[str | None] = mapped_column(String(100))
     discipline_key: Mapped[str | None] = mapped_column(String(100))
     canonical_url: Mapped[str | None] = mapped_column(Text)
+    ingestion_key: Mapped[str | None] = mapped_column(String(64))
     source_id: Mapped[UUID | None] = mapped_column(
         Uuid, ForeignKey("sources.id", ondelete="RESTRICT")
     )
@@ -135,6 +138,9 @@ class ProgrammeRevision(RecordMixin, SyntheticMixin, Base):
     __table_args__ = (
         UniqueConstraint("id", "programme_id", name="uq_programme_revisions_id_programme"),
         UniqueConstraint("programme_id", "version_label"),
+        UniqueConstraint(
+            "programme_id", "import_fingerprint", name="uq_programme_revisions_import"
+        ),
         CheckConstraint("length(trim(version_label)) > 0", name="version_label_not_blank"),
         CheckConstraint(
             "fixture_sha256 IS NULL OR length(fixture_sha256) = 64",
@@ -150,6 +156,10 @@ class ProgrammeRevision(RecordMixin, SyntheticMixin, Base):
     effective_date: Mapped[date | None] = mapped_column(Date)
     fixture_id: Mapped[str | None] = mapped_column(String(100))
     fixture_sha256: Mapped[str | None] = mapped_column(String(64))
+    import_fingerprint: Mapped[str | None] = mapped_column(String(64))
+    metadata_json: Mapped[dict[str, Any]] = mapped_column(
+        JSON().with_variant(JSONB(), "postgresql"), default=dict, server_default="{}"
+    )
 
 
 class Course(RecordMixin, SyntheticMixin, Base):
@@ -188,6 +198,13 @@ class Course(RecordMixin, SyntheticMixin, Base):
     credit_hours: Mapped[Decimal | None] = mapped_column(Numeric(6, 2))
     year: Mapped[int | None] = mapped_column(Integer)
     semester: Mapped[int | None] = mapped_column(Integer)
+    raw_year_label: Mapped[str | None] = mapped_column(String(100))
+    raw_semester_label: Mapped[str | None] = mapped_column(String(100))
+    elective_group: Mapped[str | None] = mapped_column(String(255))
+    source_url: Mapped[str | None] = mapped_column(Text)
+    review_notes: Mapped[list[str]] = mapped_column(
+        JSON().with_variant(JSONB(), "postgresql"), default=list, server_default="[]"
+    )
     inventory_source_anchor_id: Mapped[UUID | None] = mapped_column(
         Uuid,
         ForeignKey(
@@ -315,6 +332,11 @@ class DocumentAnchor(RecordMixin, SyntheticMixin, Base):
 class Job(RecordMixin, SyntheticMixin, Base):
     __tablename__ = "jobs"
     __table_args__ = (
+        UniqueConstraint("institution_id", "kind", "idempotency_key", name="uq_jobs_request_key"),
+        CheckConstraint(
+            "programme_revision_id IS NOT NULL OR institution_id IS NOT NULL",
+            name="job_has_catalogue_target",
+        ),
         CheckConstraint("length(trim(kind)) > 0", name="kind_not_blank"),
         CheckConstraint(
             "completed_at IS NULL OR (started_at IS NOT NULL AND completed_at >= started_at)",
@@ -322,10 +344,21 @@ class Job(RecordMixin, SyntheticMixin, Base):
         ),
         Index("ix_jobs_status", "status"),
         Index("ix_jobs_programme_revision_id", "programme_revision_id"),
+        Index("ix_jobs_institution_id", "institution_id"),
     )
 
-    programme_revision_id: Mapped[UUID] = mapped_column(
-        Uuid, ForeignKey("programme_revisions.id", ondelete="RESTRICT"), nullable=False
+    programme_revision_id: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("programme_revisions.id", ondelete="RESTRICT")
+    )
+    institution_id: Mapped[UUID | None] = mapped_column(
+        Uuid, ForeignKey("institutions.id", ondelete="RESTRICT")
+    )
+    idempotency_key: Mapped[str | None] = mapped_column(String(100))
+    payload_json: Mapped[dict[str, Any]] = mapped_column(
+        JSON().with_variant(JSONB(), "postgresql"), default=dict, server_default="{}"
+    )
+    result_json: Mapped[dict[str, Any]] = mapped_column(
+        JSON().with_variant(JSONB(), "postgresql"), default=dict, server_default="{}"
     )
     kind: Mapped[str] = mapped_column(String(50), default="INGESTION", server_default="INGESTION")
     status: Mapped[JobStatus] = mapped_column(

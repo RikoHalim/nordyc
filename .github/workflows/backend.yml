@@ -1,4 +1,4 @@
-name: Backend foundation
+name: Backend curriculum ingestion
 
 on:
   push:
@@ -48,5 +48,5 @@ jobs:
         run: python -m ruff check .
       - name: Check formatting
         run: python -m ruff format --check .
-      - name: Run fixture tests and PostgreSQL migration integration
+      - name: Run catalogue, security and PostgreSQL integration tests
         run: python -m pytest -q

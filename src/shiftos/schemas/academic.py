@@ -156,12 +156,34 @@ class CourseRead(StoredRecord):
     credit_hours: Decimal | None
     year: int | None
     semester: int | None
+    raw_year_label: str | None = None
+    raw_semester_label: str | None = None
+    elective_group: str | None = None
+    source_url: str | None = None
+    review_notes: list[str] = Field(default_factory=list)
     inventory_source_anchor_id: UUID | None
     extraction_status: ExtractionStatus
     detailed_syllabus_available: bool
     source_id: UUID | None
     source_locator: str | None
     is_verified: bool
+
+    @computed_field
+    @property
+    def evidence_level(self) -> Literal["title_only", "synthetic_detail", "detailed_syllabus"]:
+        if not self.detailed_syllabus_available:
+            return "title_only"
+        return "synthetic_detail" if self.is_synthetic else "detailed_syllabus"
+
+    @computed_field
+    @property
+    def missing_fields(self) -> list[str]:
+        missing = [key for key in ("course_code", "year", "semester") if getattr(self, key) is None]
+        if self.course_type == CourseType.UNKNOWN:
+            missing.append("course_type")
+        if not self.detailed_syllabus_available:
+            missing.append("syllabus")
+        return missing
 
     @computed_field
     @property

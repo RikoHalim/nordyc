@@ -12,6 +12,16 @@ class Settings(BaseSettings):
 
     app_env: Literal["development", "test", "production"] = "development"
     database_url: SecretStr = SecretStr("postgresql+psycopg://shiftos@localhost:5432/shiftos")
+    discovery_enabled: bool = False
+    discovery_terms_reviewed: bool = False
+    catalogue_write_token: SecretStr | None = None
+
+    @field_validator("catalogue_write_token")
+    @classmethod
+    def validate_catalogue_token(cls, value: SecretStr | None) -> SecretStr | None:
+        if value is not None and not value.get_secret_value().strip():
+            raise ValueError("CATALOGUE_WRITE_TOKEN must be nonempty when configured")
+        return value
 
     @field_validator("database_url")
     @classmethod

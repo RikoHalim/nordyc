@@ -129,10 +129,8 @@ def create_course(session: Session, programme_id: UUID, data: CourseCreate) -> C
     )
     if revision is None:
         raise DomainError("CONFLICT", "Programme has no active curriculum revision", 409)
-    if revision.fixture_sha256:
-        raise DomainError(
-            "CONFLICT", "Imported fixture revisions are immutable; use a new revision", 409
-        )
+    if revision.fixture_sha256 or revision.import_fingerprint:
+        raise DomainError("CONFLICT", "Imported revisions are immutable; use a new revision", 409)
     source = require_source(session, data.source_id) if data.source_id else None
     synthetic = (
         data.is_synthetic
@@ -151,6 +149,7 @@ def create_course(session: Session, programme_id: UUID, data: CourseCreate) -> C
     course = Course(
         **{**data.model_dump(), "is_synthetic": synthetic},
         programme_revision_id=revision.id,
+        source_url=source.url if source else None,
     )
     session.add(course)
     session.commit()
@@ -164,9 +163,16 @@ def require_course(session: Session, course_id: UUID) -> Course:
     return course
 
 
-def list_courses(session: Session, programme_id: UUID, limit: int, offset: int) -> CoursePage:
+def list_courses(
+    session: Session, programme_id: UUID, limit: int, offset: int, revision_id: UUID | None = None
+) -> CoursePage:
     programme = require_programme(session, programme_id)
-    statement = select(Course).where(Course.programme_revision_id == programme.active_revision_id)
+    selected = revision_id or programme.active_revision_id
+    if revision_id:
+        revision = session.get(ProgrammeRevision, revision_id)
+        if revision is None or revision.programme_id != programme_id:
+            raise DomainError("NOT_FOUND", "Programme revision not found", 404)
+    statement = select(Course).where(Course.programme_revision_id == selected)
     total = session.scalar(select(func.count()).select_from(statement.subquery())) or 0
     courses = session.scalars(statement.order_by(Course.id).limit(limit).offset(offset)).all()
     return CoursePage(
@@ -174,5 +180,5 @@ def list_courses(session: Session, programme_id: UUID, limit: int, offset: int) 
         total=total,
         limit=limit,
         offset=offset,
-        programme_revision_id=programme.active_revision_id,
+        programme_revision_id=selected,
     )
