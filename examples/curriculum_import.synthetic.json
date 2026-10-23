@@ -1,0 +1,41 @@
+{
+  "is_synthetic": true,
+  "idempotency_key": "synthetic-catalogue-example-1",
+  "programmes": [
+    {
+      "name": "Bachelor of Synthetic Community Studies",
+      "canonical_url": "https://curriculum.example.invalid/courses/synthetic-community-studies",
+      "source_url": "https://curriculum.example.invalid/courses/synthetic-community-studies",
+      "source_locator": "#synthetic-main-courses",
+      "retrieved_at": "2026-10-20T00:00:00Z",
+      "license_status": "synthetic_fixture",
+      "reviewed": false,
+      "notes": [
+        "Entirely invented offline demonstration; no real university facts.",
+        "Create a synthetic institution with website_url https://curriculum.example.invalid first."
+      ],
+      "courses": [
+        {
+          "course_name": "Synthetic Community Inquiry",
+          "year": 1,
+          "raw_year_label": "Year 1",
+          "semester": null,
+          "course_type": "UNKNOWN",
+          "source_locator": "#synthetic-main-courses li:nth-of-type(1)",
+          "source_excerpt": "Synthetic Community Inquiry",
+          "review_notes": ["synthetic_demo", "needs_syllabus_confirmation"]
+        },
+        {
+          "course_name": "Synthetic Environmental Communication",
+          "year": null,
+          "semester": null,
+          "course_type": "ELECTIVE",
+          "elective_group": "Synthetic shared elective pool",
+          "source_locator": "#synthetic-main-courses li:nth-of-type(2)",
+          "source_excerpt": "Synthetic Environmental Communication",
+          "review_notes": ["synthetic_demo", "needs_syllabus_confirmation"]
+        }
+      ]
+    }
+  ]
+}

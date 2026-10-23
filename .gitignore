@@ -21,3 +21,16 @@ data/private/
 .pytest-tmp/
 *.db
 *.sqlite3
+*.sqlite
+*.db-*
+*.sqlite*-*
+data/raw/
+data/local/
+tmp/
+temp/
+.pytest-phase*/
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/

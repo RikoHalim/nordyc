@@ -2,7 +2,7 @@
 
 SHIFT//OS helps Malaysian university career centres and academic committees review whole programmes against traceable academic, occupational, workforce and AI evidence. Humans make academic decisions. The pilot catalogue target is **all publicly discoverable XMUM undergraduate programmes**, with deep engine validation on a small set of diverse disciplines first. Other Malaysian institutions will be discovered on demand.
 
-This repository preserves the existing Phase 1 implementation and Git history and adapts its foundation to revised requirements. It is not an empty starter or a completed analysis platform. See [STATUS.md](STATUS.md) for actual verification results and [the migration audit](docs/15_PHASE1_MIGRATION_AUDIT.md) for preserved, changed and deferred work. No real XMUM catalogue has been collected by this phase.
+Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallback and immutable catalogue snapshots to the existing Phase 1 backend. See [STATUS.md](STATUS.md) for measured results and [the Phase 2 handoff](docs/16_PHASE2_CURRICULUM_INGESTION.md) for commands and source-access limits. Live discovery was refused by this environment's private DNS; a real PostgreSQL/FastAPI manual-fallback check loaded 25 official directory programme records and 141 course appearances across three diverse programmes. This does not certify full curriculum coverage.
 
 ## Current foundation
 
@@ -12,8 +12,10 @@ This repository preserves the existing Phase 1 implementation and Git history an
 - Source registry and provenance links; synthetic and incomplete records stay explicit.
 - Paginated create/read catalogue APIs and an idempotent offline fixture CLI.
 - Existing document metadata, exact anchors, revision checksums and job records retained.
+- Dynamic XMUM undergraduate discovery, conservative title/year/elective parsing, source dates/hashes and coverage/missing-field reporting.
+- Separate worker, reviewed structured imports, duplicate checks and safe snapshot re-imports/history.
 
-Discovery, source fetching, parsing, workforce/AI imports, analysis, recommendations, scenarios, reports and frontend remain future phases. Source registration records supplied metadata and performs no external verification. A supplied verification assertion is not independent automated verification.
+Workforce/academic/AI reference imports, analysis, recommendations, scenarios, reports and frontend remain future phases. Source registration and reviewed-file flags are supplied assertions; they do not independently verify actual teaching content.
 
 ## Revised product contract
 
@@ -50,7 +52,13 @@ The original fixture contains 12 invented courses, two electives and six without
 
 ## Existing database upgrade
 
-Back up the configured database and confirm the intended environment. Keep `0001_foundation` unchanged; apply additive `0002` with `python -m alembic upgrade head`. It adds source/provenance metadata without replacing the original seven tables or course/revision IDs. Existing rows gain nullable metadata and `is_verified: false`, not invented provenance. Fixture hashes and anchors remain intact. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md) and audit.
+Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002` and `0003`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, import metadata and institution-scoped jobs. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md).
+
+## Curriculum discovery and imports
+
+Read the [Phase 2 runbook](docs/16_PHASE2_CURRICULUM_INGESTION.md) before live acquisition. Both discovery flags default false. After recording publisher access/terms review, enable them in the worker environment, queue `POST /api/v1/catalogue/discover` with `{"provider":"xmum"}`, and run `python -m shiftos.cli worker`. Poll `/api/v1/catalogue/jobs/{id}` and inspect each programme's `/coverage`. Failed pages retain existing snapshots and expose manual fallback.
+
+For verified files, `python -m shiftos.cli import-curriculum path/to/reviewed.json --institution <UUID>` queues the same persistence path; `python -m shiftos.cli worker --once` processes the next eligible job. [The clearly synthetic example](examples/curriculum_import.synthetic.json) works offline with a matching synthetic institution. Real imports require official URLs, actual retrieval dates, locators and title excerpts. No syllabus is invented. In production configure a nonempty `CATALOGUE_WRITE_TOKEN` for new HTTP job submissions; this is not full deployment authentication.
 
 ## Development checks
 
@@ -81,8 +89,10 @@ Tests use randomly named `shiftos_test_*` schemas and clean them up; they do not
 | `docs/03_DATA_MODEL.md`, `docs/10_API_CONTRACT.md` | Implemented schema/APIs vs future targets |
 | `docs/12_MVP_ROADMAP.md` | Preliminary, final and post-hackathon priorities |
 | `docs/15_PHASE1_MIGRATION_AUDIT.md` | Phase 1 compatibility review |
+| `docs/16_PHASE2_CURRICULUM_INGESTION.md` | Discovery, structured import, worker and actual coverage handoff |
+| `docs/DATASET_RESEARCH.md`, `data/dataset_registry.csv` | Verified research and acquisition candidates |
 | `examples/` | Preserved executable synthetic fixtures |
 | `fixtures/`, `references/` | Later acceptance cases and candidate sources |
 | `prompts/` | One-phase instructions; legacy filenames redirect |
 
-Continue with [Phase 2 discovery](prompts/02_CURRICULUM_DISCOVERY.md) only when explicitly requested. Do not commit or push automatically.
+Phase 2 stops here. The user subsequently authorised merging `feature/phase-2-curriculum-ingestion` into `main` and synchronising the local checkout. The next recommended development task is Phase 3 reference evidence ingestion, guided by the completed dataset research; start only when explicitly requested. See STATUS for the merge verification and remaining source-access limits.
