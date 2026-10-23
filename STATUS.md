@@ -53,13 +53,15 @@ Targeted suites overlap; counts are not added to the full suite. The localhost s
 
 One Starlette test-client warning deprecates httpx integration and suggests httpx2. The existing tests pass; future dependency maintenance can address it. An initial new source-date assertion exposed a non-UTC immediate response; refreshing the committed source fixed it and targeted/full suites now pass. No failing test remains.
 
-The original checkout recorded 77 tests passing in its previous GitHub Actions run on Python 3.11/PostgreSQL 16. That historical result does **not** certify this revision. Updated CI targets Python 3.12/PostgreSQL 16; its run must be inspected separately after pushing.
+The original checkout recorded 77 tests passing in its previous GitHub Actions run on Python 3.11/PostgreSQL 16. That historical result does **not** certify this revision.
+
+Verified for implementation commit `866df6c` in [GitHub Actions run 39998532797](https://github.com/RikoHalim/shift-os/actions/runs/39998532797): **SUCCESS** on Python **3.12** with PostgreSQL **16**. Installation, Ruff lint, formatting, and the fixture/test suite including PostgreSQL migrations all completed successfully. Local test counts above come from captured pytest output; CI success was checked from the run and job/step conclusions.
 
 ## Remaining gaps and limits
 
 No Phase 1 acceptance blocker remains. Generic updates/deletes are deliberately absent; Phase 1's endpoint contract is create/read. Versioned corrections/import upserts, source retirement and controlled discovery belong to later phases. Revisions provide a snapshot boundary; no second snapshot table is needed now.
 
-Public-source verification, robots/terms handling, catalogue completeness, real XMUM coverage, executing workers, standards/evidence pipelines, LLM/relevance/actions, scenarios, reports, authentication and frontend remain unimplemented. Source classes and `is_verified` are supplied assertions constrained by schema/services, not independent verification. No analysis accuracy is claimed. Python 3.12 and Docker Compose execution were not tested locally; local checks used Python 3.13 and portable PostgreSQL.
+Public-source verification, robots/terms handling, catalogue completeness, real XMUM coverage, executing workers, standards/evidence pipelines, LLM/relevance/actions, scenarios, reports, authentication and frontend remain unimplemented. Source classes and `is_verified` are supplied assertions constrained by schema/services, not independent verification. No analysis accuracy is claimed. Python 3.12 was validated in CI, not locally. Local checks used Python 3.13 and portable PostgreSQL; Docker Compose execution remains untested locally.
 
 ## Preliminary, final and post-hackathon
 
