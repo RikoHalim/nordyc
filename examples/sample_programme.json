@@ -1,0 +1,613 @@
+{
+  "fixture_id": "SYN-PROG-01",
+  "is_synthetic": true,
+  "disclaimer": "Entirely invented course identifiers, curricula and learning outcomes for testing. Not a representation of any real university.",
+  "institution": {
+    "id": "57de47e8-2fcc-57d6-95b0-5f709dcde3f3",
+    "name": "Synthetic Malaysian University (DEMO ONLY)",
+    "country": "MY"
+  },
+  "programme": {
+    "id": "693f20d6-4952-5c77-aae3-47c59928449d",
+    "name": "Software Engineering — Synthetic Demonstration",
+    "academic_year": "2026/2027",
+    "revision_id": "a2f861f1-9573-52e1-ba8c-8a0b95abd306"
+  },
+  "documents": [
+    {
+      "id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+      "filename": "synthetic_programme_structure.json",
+      "document_kind": "PROGRAMME_STRUCTURE",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    },
+    {
+      "id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+      "filename": "synthetic_SE101_syllabus.json",
+      "document_kind": "SYLLABUS",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    },
+    {
+      "id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+      "filename": "synthetic_SE201_syllabus.json",
+      "document_kind": "SYLLABUS",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    },
+    {
+      "id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+      "filename": "synthetic_SE202_syllabus.json",
+      "document_kind": "SYLLABUS",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    },
+    {
+      "id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+      "filename": "synthetic_SE203_syllabus.json",
+      "document_kind": "SYLLABUS",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    },
+    {
+      "id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+      "filename": "synthetic_SE301_syllabus.json",
+      "document_kind": "SYLLABUS",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    },
+    {
+      "id": "f579901e-da11-52a3-a905-105bf997a91d",
+      "filename": "synthetic_SE302_syllabus.json",
+      "document_kind": "SYLLABUS",
+      "is_synthetic": true,
+      "content_status": "NORMALIZED_FIXTURE"
+    }
+  ],
+  "courses": [
+    {
+      "id": "e791f379-5cde-57b4-895a-d50c46b0456b",
+      "code": "SE101",
+      "name": "Programming Fundamentals",
+      "course_type": "COMPULSORY",
+      "year": 1,
+      "inventory_anchor": {
+        "id": "3edaf141-dc05-50e4-9527-fa57a6bf04da",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE101",
+        "excerpt": "SE101 — Programming Fundamentals (COMPULSORY)"
+      },
+      "detailed_syllabus_available": true,
+      "syllabus_document_id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+      "learning_outcomes": [
+        {
+          "id": "af84b972-6394-5e79-a431-a5a3dd325772",
+          "text": "Apply variables, control flow and data structures to simple programmes",
+          "document_anchor": {
+            "id": "aeab4999-2aef-5dd2-bb6c-4784ae1ef67b",
+            "document_id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+            "locator": "synthetic:SE101:clo:1",
+            "excerpt": "Apply variables, control flow and data structures to simple programmes"
+          }
+        },
+        {
+          "id": "beebe011-e524-5824-b9d2-2581a8ee2da0",
+          "text": "Test and debug small programs",
+          "document_anchor": {
+            "id": "9f4a3c24-412f-5552-b4ce-1c1d9cd55892",
+            "document_id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+            "locator": "synthetic:SE101:clo:2",
+            "excerpt": "Test and debug small programs"
+          }
+        }
+      ],
+      "topics": [
+        {
+          "id": "397076f4-fefb-5e9e-a867-b4903264b7c3",
+          "text": "Problem decomposition",
+          "document_anchor": {
+            "id": "f31c7b66-1795-54e9-9c9a-e11b19006640",
+            "document_id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+            "locator": "synthetic:SE101:topic:1",
+            "excerpt": "Problem decomposition"
+          }
+        },
+        {
+          "id": "08946b74-fed6-547e-8ac9-cda9136bfad2",
+          "text": "Basic testing",
+          "document_anchor": {
+            "id": "229c1fdc-245a-53a9-98ca-76907c0e10ca",
+            "document_id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+            "locator": "synthetic:SE101:topic:2",
+            "excerpt": "Basic testing"
+          }
+        }
+      ],
+      "assessments": [
+        {
+          "id": "47d86a48-e22b-588e-87ed-0c98bd0f2dbe",
+          "text": "Programming lab with tests",
+          "document_anchor": {
+            "id": "52b91ad8-c333-50b6-87d0-8dc93ab94fab",
+            "document_id": "2bad2421-dc1b-5c23-9fd0-2e066683acce",
+            "locator": "synthetic:SE101:assessment:1",
+            "excerpt": "Programming lab with tests"
+          }
+        }
+      ]
+    },
+    {
+      "id": "beaaa27d-50d4-5896-a076-75e33e370916",
+      "code": "SE201",
+      "name": "Database Systems",
+      "course_type": "COMPULSORY",
+      "year": 2,
+      "inventory_anchor": {
+        "id": "898c3a1f-cd57-5c2c-8bed-1ed5e1bc65f8",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE201",
+        "excerpt": "SE201 — Database Systems (COMPULSORY)"
+      },
+      "detailed_syllabus_available": true,
+      "syllabus_document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+      "learning_outcomes": [
+        {
+          "id": "d05d0675-b838-542c-af5c-dc1462d01f1a",
+          "text": "Design a relational data model",
+          "document_anchor": {
+            "id": "89ac5395-9bc7-51dd-996f-a03a2408e78a",
+            "document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+            "locator": "synthetic:SE201:clo:1",
+            "excerpt": "Design a relational data model"
+          }
+        },
+        {
+          "id": "b7236052-65cb-5705-9dba-7fb361782b1d",
+          "text": "Write SQL queries and inspect their results",
+          "document_anchor": {
+            "id": "e93fa548-9f19-58d2-9288-fec3bc467245",
+            "document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+            "locator": "synthetic:SE201:clo:2",
+            "excerpt": "Write SQL queries and inspect their results"
+          }
+        }
+      ],
+      "topics": [
+        {
+          "id": "22d6a609-a7d2-52a1-879a-869a7de5ab01",
+          "text": "Relational models",
+          "document_anchor": {
+            "id": "5bb6bcad-0976-5d38-971b-d2587696c60b",
+            "document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+            "locator": "synthetic:SE201:topic:1",
+            "excerpt": "Relational models"
+          }
+        },
+        {
+          "id": "b2fb5911-20ab-531e-aebb-34c2512b29f4",
+          "text": "SQL query design",
+          "document_anchor": {
+            "id": "f93d40df-cb1c-5bba-a8ee-8c666636994e",
+            "document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+            "locator": "synthetic:SE201:topic:2",
+            "excerpt": "SQL query design"
+          }
+        },
+        {
+          "id": "d4853e2d-4116-5fa0-a113-2198e098dd2c",
+          "text": "Data integrity",
+          "document_anchor": {
+            "id": "5ab43b2c-c0ab-5f1c-acd8-103fc4c23448",
+            "document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+            "locator": "synthetic:SE201:topic:3",
+            "excerpt": "Data integrity"
+          }
+        }
+      ],
+      "assessments": [
+        {
+          "id": "359ea07a-67c4-53ad-bcc2-e907e07594e5",
+          "text": "SQL query and validation assignment",
+          "document_anchor": {
+            "id": "53983cb8-e1fd-5368-990d-98857a017809",
+            "document_id": "9973bde0-37b1-5776-b542-956bbd32dfd7",
+            "locator": "synthetic:SE201:assessment:1",
+            "excerpt": "SQL query and validation assignment"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ca7e34d2-8382-504d-a2be-3e68ca3ba776",
+      "code": "SE202",
+      "name": "Software Quality Engineering",
+      "course_type": "COMPULSORY",
+      "year": 2,
+      "inventory_anchor": {
+        "id": "3539357b-4212-580b-a68f-9a7fdc046b61",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE202",
+        "excerpt": "SE202 — Software Quality Engineering (COMPULSORY)"
+      },
+      "detailed_syllabus_available": true,
+      "syllabus_document_id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+      "learning_outcomes": [
+        {
+          "id": "1d80f5dd-08f0-58af-b9c9-b69b403f8623",
+          "text": "Explain software quality assurance principles",
+          "document_anchor": {
+            "id": "86e87fb8-0e93-52c1-99a5-752f705ee574",
+            "document_id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+            "locator": "synthetic:SE202:clo:1",
+            "excerpt": "Explain software quality assurance principles"
+          }
+        },
+        {
+          "id": "3a34e463-bbae-5c88-a80a-8976dd464d27",
+          "text": "Design test cases from functional requirements",
+          "document_anchor": {
+            "id": "e640c545-f70b-55cc-aea9-39536b72d28e",
+            "document_id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+            "locator": "synthetic:SE202:clo:2",
+            "excerpt": "Design test cases from functional requirements"
+          }
+        }
+      ],
+      "topics": [
+        {
+          "id": "d09f270c-62bf-563e-bf2f-88033f372c1c",
+          "text": "Quality models",
+          "document_anchor": {
+            "id": "2ed9c1b7-8ef9-5790-b5e2-8b6013fea595",
+            "document_id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+            "locator": "synthetic:SE202:topic:1",
+            "excerpt": "Quality models"
+          }
+        },
+        {
+          "id": "83bfacf9-0184-5e05-992a-f17b8828d641",
+          "text": "Test design",
+          "document_anchor": {
+            "id": "583ee343-a547-5fc0-b866-6d069d2681a5",
+            "document_id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+            "locator": "synthetic:SE202:topic:2",
+            "excerpt": "Test design"
+          }
+        }
+      ],
+      "assessments": [
+        {
+          "id": "b6c505c1-1339-573f-9176-e60e0c70d94f",
+          "text": "Manual test-case design assignment",
+          "document_anchor": {
+            "id": "20698ec3-8e7e-548a-9ed8-26f4d3736980",
+            "document_id": "8403c7e7-69eb-5d09-a25d-30f9c4ab32a0",
+            "locator": "synthetic:SE202:assessment:1",
+            "excerpt": "Manual test-case design assignment"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ab3cc4ee-a8b0-51ef-b906-3f34ec6cf6d2",
+      "code": "SE203",
+      "name": "Software Verification and Validation",
+      "course_type": "COMPULSORY",
+      "year": 2,
+      "inventory_anchor": {
+        "id": "8913f101-811f-5f3e-ba86-18d5705dbb5f",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE203",
+        "excerpt": "SE203 — Software Verification and Validation (COMPULSORY)"
+      },
+      "detailed_syllabus_available": true,
+      "syllabus_document_id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+      "learning_outcomes": [
+        {
+          "id": "66ece453-4750-5548-825d-121a483fc5c0",
+          "text": "Apply verification and validation techniques",
+          "document_anchor": {
+            "id": "b0865bcf-f09b-503f-8226-970cd20de8dd",
+            "document_id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+            "locator": "synthetic:SE203:clo:1",
+            "excerpt": "Apply verification and validation techniques"
+          }
+        },
+        {
+          "id": "e0d7e56e-5eb0-5fe3-8c4b-e60809eca582",
+          "text": "Interpret static and dynamic test evidence",
+          "document_anchor": {
+            "id": "165a3ccc-9ea8-55fa-b702-2e149d80dcf9",
+            "document_id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+            "locator": "synthetic:SE203:clo:2",
+            "excerpt": "Interpret static and dynamic test evidence"
+          }
+        }
+      ],
+      "topics": [
+        {
+          "id": "d1b87373-37fe-53c4-aa23-c870eae6fec6",
+          "text": "Static analysis",
+          "document_anchor": {
+            "id": "09bc2b56-0f7a-526a-89c7-174e0d68ecd5",
+            "document_id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+            "locator": "synthetic:SE203:topic:1",
+            "excerpt": "Static analysis"
+          }
+        },
+        {
+          "id": "4f09dae6-9133-5be7-825b-9d16b943c1d2",
+          "text": "Validation strategies",
+          "document_anchor": {
+            "id": "60cce3d8-a295-5587-8e78-d6c4642305f8",
+            "document_id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+            "locator": "synthetic:SE203:topic:2",
+            "excerpt": "Validation strategies"
+          }
+        }
+      ],
+      "assessments": [
+        {
+          "id": "4cfb4f06-eccb-5939-bd43-84f9c5c9bb0b",
+          "text": "Verification report assignment",
+          "document_anchor": {
+            "id": "523d6ec1-9c51-55d7-ab25-c6078342fc1c",
+            "document_id": "5e0a3db7-5ca2-55c8-8709-7a6090a92955",
+            "locator": "synthetic:SE203:assessment:1",
+            "excerpt": "Verification report assignment"
+          }
+        }
+      ]
+    },
+    {
+      "id": "520a3145-3f50-500a-9c56-06500869deff",
+      "code": "SE301",
+      "name": "Artificial Intelligence Fundamentals",
+      "course_type": "COMPULSORY",
+      "year": 3,
+      "inventory_anchor": {
+        "id": "ce21fe54-fe0c-5765-bd0e-6aa6d42c0a99",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE301",
+        "excerpt": "SE301 — Artificial Intelligence Fundamentals (COMPULSORY)"
+      },
+      "detailed_syllabus_available": true,
+      "syllabus_document_id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+      "learning_outcomes": [
+        {
+          "id": "54d4fdda-598a-5897-b3e0-d55048b51482",
+          "text": "Describe core machine learning methods",
+          "document_anchor": {
+            "id": "d83e361e-0fe9-502c-907b-2e96f1d09c60",
+            "document_id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+            "locator": "synthetic:SE301:clo:1",
+            "excerpt": "Describe core machine learning methods"
+          }
+        },
+        {
+          "id": "756cec68-09f5-51c3-9396-ce8394df2a12",
+          "text": "Evaluate a basic predictive model",
+          "document_anchor": {
+            "id": "5dc8af7a-f10c-534c-a35c-c69bfa401455",
+            "document_id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+            "locator": "synthetic:SE301:clo:2",
+            "excerpt": "Evaluate a basic predictive model"
+          }
+        }
+      ],
+      "topics": [
+        {
+          "id": "6b840f6c-d0ea-5980-ab6c-ff6c495e4d13",
+          "text": "Machine learning introduction",
+          "document_anchor": {
+            "id": "f91834d8-c7eb-5f22-9a8a-1319160bd02a",
+            "document_id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+            "locator": "synthetic:SE301:topic:1",
+            "excerpt": "Machine learning introduction"
+          }
+        },
+        {
+          "id": "0e925cd9-e8cf-5d54-b48a-239ca5cc60b5",
+          "text": "Model validation",
+          "document_anchor": {
+            "id": "5094d48b-385a-5450-8662-41183ddfbc20",
+            "document_id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+            "locator": "synthetic:SE301:topic:2",
+            "excerpt": "Model validation"
+          }
+        }
+      ],
+      "assessments": [
+        {
+          "id": "fac638a4-7db1-5436-93a8-bbf19b31409f",
+          "text": "Basic predictive-model evaluation",
+          "document_anchor": {
+            "id": "eb7853c7-37a5-5bec-b956-b249d8d56253",
+            "document_id": "a903391f-50de-582a-9c40-e95b8b2414ab",
+            "locator": "synthetic:SE301:assessment:1",
+            "excerpt": "Basic predictive-model evaluation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "40aaf937-1826-5744-b9ac-3c9fc09793d8",
+      "code": "SE302",
+      "name": "Applied Python Programming",
+      "course_type": "COMPULSORY",
+      "year": 3,
+      "inventory_anchor": {
+        "id": "d876fad6-1779-51cc-aec9-1bcffd202263",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE302",
+        "excerpt": "SE302 — Applied Python Programming (COMPULSORY)"
+      },
+      "detailed_syllabus_available": true,
+      "syllabus_document_id": "f579901e-da11-52a3-a905-105bf997a91d",
+      "learning_outcomes": [
+        {
+          "id": "8a42c393-9867-5780-b51f-6931e9caa95c",
+          "text": "Write reusable Python modules",
+          "document_anchor": {
+            "id": "518df12c-2471-57cd-b2fc-6003ca75ec1f",
+            "document_id": "f579901e-da11-52a3-a905-105bf997a91d",
+            "locator": "synthetic:SE302:clo:1",
+            "excerpt": "Write reusable Python modules"
+          }
+        },
+        {
+          "id": "0492bce0-4ef1-58cc-8dbe-7589962c871b",
+          "text": "Test data processing functions",
+          "document_anchor": {
+            "id": "a65f2c7b-76fb-52b6-b526-994243817dcb",
+            "document_id": "f579901e-da11-52a3-a905-105bf997a91d",
+            "locator": "synthetic:SE302:clo:2",
+            "excerpt": "Test data processing functions"
+          }
+        }
+      ],
+      "topics": [
+        {
+          "id": "eb60bc9c-0fae-5339-a100-8f741502882e",
+          "text": "Python programming",
+          "document_anchor": {
+            "id": "09fad5dd-7ed3-532f-ba6c-b46d518e432f",
+            "document_id": "f579901e-da11-52a3-a905-105bf997a91d",
+            "locator": "synthetic:SE302:topic:1",
+            "excerpt": "Python programming"
+          }
+        },
+        {
+          "id": "cc9f39e9-1f44-537b-92b6-06a8d1925d57",
+          "text": "Unit testing",
+          "document_anchor": {
+            "id": "fb16eb2e-55ec-5ebb-80b1-f40607546f2c",
+            "document_id": "f579901e-da11-52a3-a905-105bf997a91d",
+            "locator": "synthetic:SE302:topic:2",
+            "excerpt": "Unit testing"
+          }
+        }
+      ],
+      "assessments": [
+        {
+          "id": "45b762ae-7fa1-5b67-8693-7be6d6a03a69",
+          "text": "Python coding assignment",
+          "document_anchor": {
+            "id": "1ce8fb0e-33a3-5a0c-9351-d8b140799ae6",
+            "document_id": "f579901e-da11-52a3-a905-105bf997a91d",
+            "locator": "synthetic:SE302:assessment:1",
+            "excerpt": "Python coding assignment"
+          }
+        }
+      ]
+    },
+    {
+      "id": "5d4df418-1c27-582c-ae3a-a4580a219cb9",
+      "code": "SE303",
+      "name": "Data Mining",
+      "course_type": "COMPULSORY",
+      "year": 3,
+      "inventory_anchor": {
+        "id": "ccbbc2ec-4f3f-53dc-9e69-57ddfe981d6a",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE303",
+        "excerpt": "SE303 — Data Mining (COMPULSORY)"
+      },
+      "detailed_syllabus_available": false,
+      "syllabus_document_id": null,
+      "learning_outcomes": [],
+      "topics": [],
+      "assessments": []
+    },
+    {
+      "id": "13f81257-8e35-5ceb-b17e-4a7c182a79fd",
+      "code": "SE304",
+      "name": "Requirements Engineering",
+      "course_type": "COMPULSORY",
+      "year": 3,
+      "inventory_anchor": {
+        "id": "4d6c038d-fa3d-5004-8de6-0fc10709a608",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE304",
+        "excerpt": "SE304 — Requirements Engineering (COMPULSORY)"
+      },
+      "detailed_syllabus_available": false,
+      "syllabus_document_id": null,
+      "learning_outcomes": [],
+      "topics": [],
+      "assessments": []
+    },
+    {
+      "id": "5e651320-5124-5a67-ac8b-7ce692c4bbfe",
+      "code": "SE401",
+      "name": "Software Architecture",
+      "course_type": "COMPULSORY",
+      "year": 4,
+      "inventory_anchor": {
+        "id": "aa934358-dd07-5ecd-89a1-a2112a8bff9e",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE401",
+        "excerpt": "SE401 — Software Architecture (COMPULSORY)"
+      },
+      "detailed_syllabus_available": false,
+      "syllabus_document_id": null,
+      "learning_outcomes": [],
+      "topics": [],
+      "assessments": []
+    },
+    {
+      "id": "163055f7-0d41-599e-9562-d4e3a8453677",
+      "code": "SE402",
+      "name": "Cloud Computing",
+      "course_type": "COMPULSORY",
+      "year": 4,
+      "inventory_anchor": {
+        "id": "02abb3ca-70b8-5ee7-b976-fb208ee1bea2",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:SE402",
+        "excerpt": "SE402 — Cloud Computing (COMPULSORY)"
+      },
+      "detailed_syllabus_available": false,
+      "syllabus_document_id": null,
+      "learning_outcomes": [],
+      "topics": [],
+      "assessments": []
+    },
+    {
+      "id": "2c4b37bd-4e87-54d3-a7ec-827baf0abcec",
+      "code": "ELE401",
+      "name": "Human-Computer Interaction",
+      "course_type": "ELECTIVE",
+      "year": 4,
+      "inventory_anchor": {
+        "id": "d8f499cf-e6f4-5a34-97d9-a053be1d0561",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:ELE401",
+        "excerpt": "ELE401 — Human-Computer Interaction (ELECTIVE)"
+      },
+      "detailed_syllabus_available": false,
+      "syllabus_document_id": null,
+      "learning_outcomes": [],
+      "topics": [],
+      "assessments": []
+    },
+    {
+      "id": "bc385141-32b8-589d-b217-02b4f5621e7f",
+      "code": "ELE402",
+      "name": "Mobile Application Development",
+      "course_type": "ELECTIVE",
+      "year": 4,
+      "inventory_anchor": {
+        "id": "7f131699-f607-54ce-8cb4-1bc56d2b9013",
+        "document_id": "1b3e9926-906c-5baf-b39c-7d96ea753aab",
+        "locator": "synthetic:inventory:ELE402",
+        "excerpt": "ELE402 — Mobile Application Development (ELECTIVE)"
+      },
+      "detailed_syllabus_available": false,
+      "syllabus_document_id": null,
+      "learning_outcomes": [],
+      "topics": [],
+      "assessments": []
+    }
+  ]
+}

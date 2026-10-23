@@ -1,0 +1,41 @@
+from enum import StrEnum
+
+
+class CourseType(StrEnum):
+    COMPULSORY = "COMPULSORY"
+    ELECTIVE = "ELECTIVE"
+    UNKNOWN = "UNKNOWN"
+
+
+class ExtractionStatus(StrEnum):
+    INVENTORY_ONLY = "INVENTORY_ONLY"
+    NORMALIZED_FIXTURE = "NORMALIZED_FIXTURE"
+    NEEDS_REVIEW = "NEEDS_REVIEW"
+
+
+class DocumentKind(StrEnum):
+    PROGRAMME_STRUCTURE = "PROGRAMME_STRUCTURE"
+    SYLLABUS = "SYLLABUS"
+    SUPPORTING = "SUPPORTING"
+
+
+class DocumentFormat(StrEnum):
+    PDF = "PDF"
+    DOCX = "DOCX"
+    JSON = "JSON"
+
+
+class ContentStatus(StrEnum):
+    UPLOADED = "UPLOADED"
+    NORMALIZED_FIXTURE = "NORMALIZED_FIXTURE"
+    NEEDS_REVIEW = "NEEDS_REVIEW"
+    NEEDS_OCR = "NEEDS_OCR"
+    FAILED = "FAILED"
+
+
+class JobStatus(StrEnum):
+    QUEUED = "QUEUED"
+    RUNNING = "RUNNING"
+    SUCCEEDED = "SUCCEEDED"
+    PARTIAL = "PARTIAL"
+    FAILED = "FAILED"

@@ -1,0 +1,138 @@
+{
+  "fixture_id": "SYN-EVIDENCE-01",
+  "is_synthetic": true,
+  "disclaimer": "All observations are invented to exercise the code. They are not statistics, studies or conclusions about the Malaysian economy or universities.",
+  "sources": [
+    {
+      "id": "220c39f3-3461-52ce-af52-208e8ac6ec64",
+      "title": "SYNTHETIC Q1: AI-assisted software testing changes",
+      "publisher": "Synthetic Fixture Generator",
+      "url": null,
+      "source_kind": "AI_CAPABILITY",
+      "published_at": "2026-03-31",
+      "observed_start": "2026-01-01",
+      "observed_end": "2026-03-31",
+      "retrieved_at": "2026-10-23T00:00:00Z",
+      "jurisdiction": "MY",
+      "licensing_note": "Entirely synthetic testing fixture",
+      "is_synthetic": true,
+      "version": "SYN-Q1"
+    },
+    {
+      "id": "cc477b14-e4e3-500c-8e46-3d62c5f9d041",
+      "title": "SYNTHETIC Q2: AI-assisted software testing changes",
+      "publisher": "Synthetic Fixture Generator",
+      "url": null,
+      "source_kind": "AI_CAPABILITY",
+      "published_at": "2026-06-30",
+      "observed_start": "2026-04-01",
+      "observed_end": "2026-06-30",
+      "retrieved_at": "2026-10-23T00:00:00Z",
+      "jurisdiction": "MY",
+      "licensing_note": "Entirely synthetic testing fixture",
+      "is_synthetic": true,
+      "version": "SYN-Q2"
+    },
+    {
+      "id": "b567df85-b533-5fec-bb63-7a1d65e76f0c",
+      "title": "SYNTHETIC occupational requirements for software testing",
+      "publisher": "Synthetic Fixture Generator",
+      "url": null,
+      "source_kind": "OCCUPATION_SKILLS",
+      "published_at": "2026-01-01",
+      "observed_start": "2026-01-01",
+      "observed_end": "2026-06-30",
+      "retrieved_at": "2026-10-23T00:00:00Z",
+      "jurisdiction": "MY",
+      "licensing_note": "Entirely synthetic testing fixture",
+      "is_synthetic": true,
+      "version": "SYN-BASE"
+    }
+  ],
+  "passages": [
+    {
+      "id": "e963a586-dcfb-5cd8-b99a-a85c39f7fa7c",
+      "source_id": "220c39f3-3461-52ce-af52-208e8ac6ec64",
+      "locator": "synthetic:q1:paragraph:1",
+      "exact_excerpt": "Synthetic scenario: some Malaysian software testing teams are piloting AI-assisted test-case suggestions, while testers remain responsible for validation.",
+      "claim_type": "AI_CAPABILITY",
+      "is_synthetic": true
+    },
+    {
+      "id": "1adeae72-e601-5584-9cf4-95d52c35ea02",
+      "source_id": "cc477b14-e4e3-500c-8e46-3d62c5f9d041",
+      "locator": "synthetic:q2:paragraph:1",
+      "exact_excerpt": "Synthetic scenario: greater use of AI-assisted test-case generation increases the importance of validating generated cases and traceability.",
+      "claim_type": "AI_CAPABILITY",
+      "is_synthetic": true
+    },
+    {
+      "id": "44d0362d-a412-56c0-b27b-402bf2c97860",
+      "source_id": "b567df85-b533-5fec-bb63-7a1d65e76f0c",
+      "locator": "synthetic:requirements:paragraph:1",
+      "exact_excerpt": "Synthetic scenario: software QA roles require test design, evidence interpretation, and critical review of automated outputs.",
+      "claim_type": "SKILL_REQUIREMENT",
+      "is_synthetic": true
+    }
+  ],
+  "snapshots": [
+    {
+      "id": "004e5fce-02d3-5499-88a6-1a2df9b04284",
+      "name": "SYN-Q1",
+      "captured_at": "2026-04-01T00:00:00Z",
+      "coverage_start": "2026-01-01",
+      "coverage_end": "2026-03-31",
+      "is_synthetic": true,
+      "passage_ids": [
+        "e963a586-dcfb-5cd8-b99a-a85c39f7fa7c",
+        "44d0362d-a412-56c0-b27b-402bf2c97860"
+      ]
+    },
+    {
+      "id": "b70ad2fe-791c-5f7a-be84-f937dabca4e2",
+      "name": "SYN-Q2",
+      "captured_at": "2026-07-01T00:00:00Z",
+      "coverage_start": "2026-04-01",
+      "coverage_end": "2026-06-30",
+      "is_synthetic": true,
+      "passage_ids": [
+        "1adeae72-e601-5584-9cf4-95d52c35ea02",
+        "44d0362d-a412-56c0-b27b-402bf2c97860"
+      ]
+    }
+  ],
+  "occupations": [
+    {
+      "id": "06d0e936-0ad2-5b34-8ea8-86bc8a565c1e",
+      "title": "Software QA Engineer (Synthetic)",
+      "jurisdiction": "MY",
+      "is_synthetic": true
+    }
+  ],
+  "skills": [
+    {
+      "id": "6807525d-ee7a-51cf-9fef-c7de60834b69",
+      "name": "Software test design",
+      "taxonomy": "LOCAL",
+      "is_synthetic": true
+    },
+    {
+      "id": "4cd5b14c-5c76-527d-a70f-5fc650d0c2d1",
+      "name": "Critical validation of AI-assisted tests",
+      "taxonomy": "LOCAL",
+      "is_synthetic": true
+    }
+  ],
+  "occupation_skill_mappings": [
+    {
+      "occupation_id": "06d0e936-0ad2-5b34-8ea8-86bc8a565c1e",
+      "skill_id": "6807525d-ee7a-51cf-9fef-c7de60834b69",
+      "source_passage_id": "44d0362d-a412-56c0-b27b-402bf2c97860"
+    },
+    {
+      "occupation_id": "06d0e936-0ad2-5b34-8ea8-86bc8a565c1e",
+      "skill_id": "4cd5b14c-5c76-527d-a70f-5fc650d0c2d1",
+      "source_passage_id": "44d0362d-a412-56c0-b27b-402bf2c97860"
+    }
+  ]
+}
