@@ -11,6 +11,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from shiftos.core.access import authenticate, require_api_access
 from shiftos.core.enums import JobStatus
 from shiftos.core.errors import DomainError
 from shiftos.db.session import get_session
@@ -33,6 +34,8 @@ def require_analysis_access(
     request: Request,
     x_analysis_token: Annotated[str | None, Header()] = None,
 ) -> None:
+    if authenticate(request) is not None:
+        return
     token = getattr(request.app.state.settings, "analysis_write_token", None)
     if token is None:
         raise DomainError(
@@ -49,8 +52,8 @@ def require_analysis_access(
 router = APIRouter(
     prefix="/api/v1",
     tags=["Programme analysis"],
-    dependencies=[Depends(require_analysis_access)],
-    responses={code: {"model": ErrorResponse} for code in (401, 404, 409, 422, 503)},
+    dependencies=[Depends(require_api_access), Depends(require_analysis_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 409, 422, 503)},
 )
 SessionDep = Annotated[Session, Depends(get_session)]
 Limit = Annotated[int, Query(ge=1, le=100)]

@@ -6,6 +6,8 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 
 ## Current foundation
 
+Phase 7 integrates the complete synthetic workflow, adds scoped operator/institution authorization, controlled evaluation/replay, bounded private PDF processing, runtime preflight and Phase 8 API examples. See [the Phase 7 runbook](docs/29_PHASE7_INTEGRATION_EVALUATION_SECURITY.md) for measured results, security boundaries and Replit prerequisites. This is not production or real academic validation.
+
 Phase 6 adds versioned Academic Action Plans: exact Phase 5 lineage, conservative pathways, reviewed resources/workload bases, two hypothetical scenarios, UN target links and append-only review. See [the Phase 6 runbook](docs/28_PHASE6_ACADEMIC_PATHWAYS_ACTION_PLANS.md). No live AI/search request or deployment is implied.
 
 Phase 5 adds protected programme career-alignment jobs, reviewed competency coverage/gap findings, minimum sufficient academic actions and append-only human review. The [Phase 5 methodology and runbook](docs/27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) describe explicit mapping/passage requirements, calculation abstention and the synthetic demonstration. Phase 4.3 remains PARTIAL; no live research admission or real curriculum accuracy is implied.
@@ -20,7 +22,7 @@ Phase 5 adds protected programme career-alignment jobs, reviewed competency cove
 - Separate worker, reviewed structured imports, duplicate checks and safe snapshot re-imports/history.
 - Protected programme analysis jobs and history, internal evidence retrieval, Replit-managed `claude-opus-5`, separate Brave discovery, structured citation validation and explicit insufficient-evidence results. The real FastAPI → worker → Claude → PostgreSQL → protected FastAPI workflow passed on two fictional courses. Gemini is disabled for the MVP. [Phase 4.3](docs/26_PHASE43_BRAVE_SEARCH_VERIFICATION.md) verified one live Brave search, while original-source admission remains blocked by exact registration and robots checks. See [Phase 4.2 acceptance](docs/25_PHASE42_LIVE_BACKEND_VERIFICATION.md) and STATUS.md for measured results and evidence limits.
 
-Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. Phase 4 adds bounded evidence-grounded screening; [its runbook](docs/21_PHASE4_COURSE_RELEVANCE.md) and the Phase 4.2 record distinguish live backend acceptance from academic validation and partial Brave research. Legacy/language/currentness/identity/permission limits remain. See also [Phase 3 ingestion](docs/17_PHASE3_EVIDENCE_INGESTION.md), [measured evidence](docs/PHASE3_INGESTION_REPORT.md) and [workforce methodology](docs/18_WORKFORCE_TRENDS.md). Phase 5 provides evidence-bound action proposals; Phase 6 adds pathways/scenarios/action plans; integration/security and frontend remain later phases.
+Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. Phase 4 adds bounded evidence-grounded screening; [its runbook](docs/21_PHASE4_COURSE_RELEVANCE.md) and the Phase 4.2 record distinguish live backend acceptance from academic validation and partial Brave research. Legacy/language/currentness/identity/permission limits remain. See also [Phase 3 ingestion](docs/17_PHASE3_EVIDENCE_INGESTION.md), [measured evidence](docs/PHASE3_INGESTION_REPORT.md) and [workforce methodology](docs/18_WORKFORCE_TRENDS.md). Phase 5 provides evidence-bound action proposals; Phase 6 adds pathways/scenarios/action plans; Phase 7 adds integration/security controls; frontend and deployment remain Phase 8 work.
 
 ## Revised product contract
 
@@ -57,7 +59,7 @@ The original fixture contains 12 invented courses, two electives and six without
 
 ## Existing database upgrade
 
-Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002`–`0006`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, curriculum jobs, reference evidence, programme-analysis and Phase 5 career/review tables. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata and career history; see [the data model](docs/03_DATA_MODEL.md).
+Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002`–`0007`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, curriculum jobs, reference evidence, programme-analysis and Phase 5 career/review tables. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata and career history; see [the data model](docs/03_DATA_MODEL.md).
 
 ## Curriculum discovery and imports
 
@@ -124,3 +126,24 @@ Tests use randomly named `shiftos_test_*` schemas and clean them up; they do not
 | `prompts/` | One-phase instructions; legacy filenames redirect |
 
 Phase 4 is functional for a bounded offline proof. Phase 4.1 adds configurable managed Claude with explicit Gemini fallback; actual Claude/Gemini/Brave requests remain unverified here. Final local verification passed **756 tests**, including 13 PostgreSQL cases. The user explicitly authorized GitHub publication and [Replit handover](docs/23_PHASE41_REPLIT_CLAUDE.md#replit-handover); actual managed access still needs verification in Replit. Future Career Alignment and ordered Academic Reskilling Pathways extend existing later phases, not standalone products; individual-workflow substitution remains UNCONFIRMED. No Phase 5/6 implementation, frontend or public application deployment is authorized. See [STATUS](STATUS.md) for publication results and [the roadmap](docs/12_MVP_ROADMAP.md).
+
+
+## Phase 7 safe operation and Phase 8 handoff
+
+Legacy API access is for trusted loopback development only. Production refuses legacy access; Replit preview and `scripts/run_backend.py` require a valid scoped operator policy. Configure `API_ACCESS_MODE=scoped` and private `API_ACCESS_POLICY_PATH` using the intentionally invalid [template](examples/access-policy.template.json), with locally generated bearer credentials, token hashes, explicit institutions and read/write/review/admin grants. This is not named academic identity or production SSO. Do not publish the private policy or credential.
+
+Run from the project root after configuring the intended database:
+
+```powershell
+python -m shiftos.cli runtime-preflight
+# Explicit read of the selected database; never performs migrations/model calls:
+python -m shiftos.cli runtime-preflight --check-database --component api
+python -m shiftos.cli runtime-preflight --check-database --component worker
+# Apply migrations separately only after confirming an owned development DB:
+python -m alembic upgrade head
+python scripts/run_backend.py
+# In a separately supervised process with the same DB/policy/private storage:
+python -m shiftos.cli worker
+```
+
+Managed `postgresql://`/`postgres://` URLs normalize to the existing psycopg3 driver. No database is provisioned or copied by startup. External processing, research and Gemini remain disabled by default. The API launcher performs no automatic migration or worker start; local legacy development can continue with loopback `uvicorn` as above. Review [the integration/evaluation commands, synthetic API examples and deployment gates](docs/29_PHASE7_INTEGRATION_EVALUATION_SECURITY.md) before Phase 8. No frontend or deployment is included.

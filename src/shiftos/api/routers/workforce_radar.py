@@ -5,6 +5,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
+from shiftos.core.access import require_api_access
 from shiftos.db.session import get_session
 from shiftos.schemas.common import ErrorResponse
 from shiftos.schemas.workforce_radar import (
@@ -17,7 +18,8 @@ from shiftos.services.evidence.trends import compare_observations, occupation_ai
 router = APIRouter(
     prefix="/api/v1/evidence",
     tags=["Future Workforce Radar"],
-    responses={code: {"model": ErrorResponse} for code in (404, 422, 503)},
+    dependencies=[Depends(require_api_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 422, 503)},
 )
 SessionDependency = Annotated[Session, Depends(get_session)]
 

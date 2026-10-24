@@ -1,0 +1,1012 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "limitations": "Bounded, redacted schema example from an actual synthetic API response; not a live provider or production result. Normalised version hashes must never be submitted as real review approvals.",
+  "normalised_fields": [
+    "UUIDs",
+    "timestamps",
+    "content digests"
+  ],
+  "provider_execution": "mocked",
+  "response": {
+    "error": null,
+    "evidence_access_limitations": [],
+    "items": [
+      {
+        "alternatives": [
+          {
+            "action": "Request the missing source, applicability or assessment confirmation.",
+            "category": "request_review",
+            "conditions": [
+              "Use verified passages and record reviewer rationale."
+            ],
+            "rationale": "Resolve the precise uncertainty before implementing a larger intervention."
+          }
+        ],
+        "automatic_curriculum_change": false,
+        "citations": [
+          {
+            "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+            "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+          },
+          {
+            "quote": "Synthetic Data Systems Analyst has the fictional optional requirement Synthetic data pipeline transformation.",
+            "reference_id": "occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f"
+          },
+          {
+            "quote": "Fictional competency requirement: Synthetic data pipeline transformation.",
+            "reference_id": "skill:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+          },
+          {
+            "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+            "reference_id": "curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+          }
+        ],
+        "dependencies": [
+          "recommendation:c3770865-ddbe-5409-a535-b1388fd3628b:409f7824068a2675b512205cf7b165af912be5e99d59c1ee75aa65590d491a8c",
+          "evidence:occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+          "evidence:occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f",
+          "evidence:skill:37d18376-22ba-5fcb-85ae-e21bd10209a7",
+          "evidence:curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+        ],
+        "duration_basis": "Sum of separately identified learning/contact/assessment components where known. Unknown steps prevent a total; effort hours are not calendar duration or a completion guarantee.",
+        "evidence_sufficiency": "partial",
+        "key": "path-skill-37d18376-22ba-5fcb-85ae-e21bd10209a7",
+        "known_hours": "0",
+        "limitations": [
+          "No student performance, graduate mastery or existing taught outcome is asserted.",
+          "Unknown prerequisites, resources, cost, staff availability and calendar time stay unknown.",
+          "Operator consideration is not a named academic identity or institutional approval.",
+          "No suitable original resource is admitted; verify resources before delivery."
+        ],
+        "no_change_option": {
+          "action": "Retain current arrangements while monitoring the identified evidence and review conditions.",
+          "category": "no_change",
+          "conditions": [
+            "Record the academic decision and reassess when the linked evidence changes."
+          ],
+          "rationale": "Human reviewers may decide that no curriculum change is justified; uncertainty is not proof of a deficiency."
+        },
+        "objective": "Proposed review objective: verify source-supported preparation for Synthetic data pipeline transformation; this is not a claim of existing university teaching.",
+        "occupation_ids": [
+          "43f4c112-601d-5a31-bba2-517a784d5b23"
+        ],
+        "pathway_type": "academic_intervention",
+        "prerequisites": [],
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "recommendation_id": "c3770865-ddbe-5409-a535-b1388fd3628b",
+        "recommendation_version": "0000000000000000000000000000000000000000000000000000000000000000",
+        "review_status": "proposed",
+        "skill_id": "37d18376-22ba-5fcb-85ae-e21bd10209a7",
+        "steps": [
+          {
+            "achieved_competence": false,
+            "activity": "Academic reviewers inspect the linked evidence and preserve foundational learning.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional optional requirement Synthetic data pipeline transformation.",
+                "reference_id": "occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic data pipeline transformation.",
+                "reference_id": "skill:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+                "reference_id": "curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "review",
+            "objective": "Proposed review: identify what the admitted passages establish and what remains unknown.",
+            "ordering_basis": "procedural_review",
+            "position": 1,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Inspect the current reviewed learning outcomes and occupational requirement.",
+            "resource_keys": [],
+            "step_type": "curriculum_review"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Inspect the relevant assignment or syllabus; obtain missing evidence rather than infer content from titles.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional optional requirement Synthetic data pipeline transformation.",
+                "reference_id": "occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic data pipeline transformation.",
+                "reference_id": "skill:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+                "reference_id": "curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "review"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "investigate",
+            "objective": "Proposed review: distinguish documented intent, assessed evidence and unknown coverage.",
+            "ordering_basis": "procedural_review",
+            "position": 2,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Check the existing assessment opportunity and documentation before proposing training.",
+            "resource_keys": [],
+            "step_type": "evidence_review"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Conditionally propose an existing-course exercise or small applied project; no technology, provider or partner is mandated.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional optional requirement Synthetic data pipeline transformation.",
+                "reference_id": "occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic data pipeline transformation.",
+                "reference_id": "skill:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+                "reference_id": "curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "investigate"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "practice",
+            "objective": "Proposed learning objective: practise the cited competency in a bounded assessed setting.",
+            "ordering_basis": "procedural_review",
+            "position": 3,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Consider the smallest appropriate practical activity only if academic review confirms need.",
+            "resource_keys": [],
+            "step_type": "proposed_practice"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Academic staff propose criteria, review validity and distinguish participation from demonstrated performance.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional optional requirement Synthetic data pipeline transformation.",
+                "reference_id": "occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic data pipeline transformation.",
+                "reference_id": "skill:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+                "reference_id": "curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "practice"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "assess",
+            "objective": "Proposed assessment objective: specify the evidence a suitable practical task would need to produce.",
+            "ordering_basis": "procedural_review",
+            "position": 4,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Define observable criteria for the proposed competency and its actual scope.",
+            "resource_keys": [],
+            "step_type": "assessment_design"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Submit the proposal to the institution's academic review process; this system records no automatic implementation approval.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional optional requirement Synthetic data pipeline transformation.",
+                "reference_id": "occupation_skill:278db990-192a-5bda-8c52-e597b32cbe4f"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic data pipeline transformation.",
+                "reference_id": "skill:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+                "reference_id": "curriculum:79f2f137-dea2-5ce8-b7c9-04f6903f1aab:37d18376-22ba-5fcb-85ae-e21bd10209a7"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "assess"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "academic_review",
+            "objective": "Proposed review objective: decide whether any intervention is justified by the evidence.",
+            "ordering_basis": "procedural_review",
+            "position": 5,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Record the academic decision, conditions, alternatives and legitimate no-change outcome.",
+            "resource_keys": [],
+            "step_type": "academic_review"
+          }
+        ],
+        "total_hours": null,
+        "unknown_duration_steps": 5
+      },
+      {
+        "alternatives": [
+          {
+            "action": "Request the missing source, applicability or assessment confirmation.",
+            "category": "request_review",
+            "conditions": [
+              "Use verified passages and record reviewer rationale."
+            ],
+            "rationale": "Resolve the precise uncertainty before implementing a larger intervention."
+          }
+        ],
+        "automatic_curriculum_change": false,
+        "citations": [
+          {
+            "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+            "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+          },
+          {
+            "quote": "Synthetic Secure Data Steward has the fictional essential requirement Synthetic threat modelling.",
+            "reference_id": "occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe"
+          },
+          {
+            "quote": "Fictional competency requirement: Synthetic threat modelling.",
+            "reference_id": "skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+          },
+          {
+            "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+            "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+          }
+        ],
+        "dependencies": [
+          "recommendation:537c829b-965f-57de-8b1e-cb2e7c4aa929:8aa872d806cbc7fcfe03ac9acc07d506093086fa69129e77f19ce0b8899edd3d",
+          "evidence:occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a",
+          "evidence:occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe",
+          "evidence:skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b",
+          "evidence:curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+        ],
+        "duration_basis": "Sum of separately identified learning/contact/assessment components where known. Unknown steps prevent a total; effort hours are not calendar duration or a completion guarantee.",
+        "evidence_sufficiency": "supported",
+        "key": "path-skill-2ddcee45-01c3-5d4b-aee5-a784ed64da4b",
+        "known_hours": "0",
+        "limitations": [
+          "No student performance, graduate mastery or existing taught outcome is asserted.",
+          "Unknown prerequisites, resources, cost, staff availability and calendar time stay unknown.",
+          "Operator consideration is not a named academic identity or institutional approval."
+        ],
+        "no_change_option": {
+          "action": "Retain current arrangements while monitoring the identified evidence and review conditions.",
+          "category": "no_change",
+          "conditions": [
+            "Record the academic decision and reassess when the linked evidence changes."
+          ],
+          "rationale": "Human reviewers may decide that no curriculum change is justified; uncertainty is not proof of a deficiency."
+        },
+        "objective": "Proposed review objective: verify source-supported preparation for Synthetic threat modelling; this is not a claim of existing university teaching.",
+        "occupation_ids": [
+          "1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+        ],
+        "pathway_type": "academic_intervention",
+        "prerequisites": [],
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "recommendation_id": "537c829b-965f-57de-8b1e-cb2e7c4aa929",
+        "recommendation_version": "0000000000000000000000000000000000000000000000000000000000000000",
+        "review_status": "proposed",
+        "skill_id": "2ddcee45-01c3-5d4b-aee5-a784ed64da4b",
+        "steps": [
+          {
+            "achieved_competence": false,
+            "activity": "Academic reviewers inspect the linked evidence and preserve foundational learning.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional essential requirement Synthetic threat modelling.",
+                "reference_id": "occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic threat modelling.",
+                "reference_id": "skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+                "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "review",
+            "objective": "Proposed review: identify what the admitted passages establish and what remains unknown.",
+            "ordering_basis": "procedural_review",
+            "position": 1,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Inspect the current reviewed learning outcomes and occupational requirement.",
+            "resource_keys": [],
+            "step_type": "curriculum_review"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Inspect the relevant assignment or syllabus; obtain missing evidence rather than infer content from titles.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional essential requirement Synthetic threat modelling.",
+                "reference_id": "occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic threat modelling.",
+                "reference_id": "skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+                "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "review"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "investigate",
+            "objective": "Proposed review: distinguish documented intent, assessed evidence and unknown coverage.",
+            "ordering_basis": "procedural_review",
+            "position": 2,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Check the existing assessment opportunity and documentation before proposing training.",
+            "resource_keys": [],
+            "step_type": "evidence_review"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Conditionally propose an existing-course exercise or small applied project; no technology, provider or partner is mandated.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional essential requirement Synthetic threat modelling.",
+                "reference_id": "occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic threat modelling.",
+                "reference_id": "skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+                "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic original: proposed practical review of Synthetic threat modelling. Duration and prerequisites are not specified. Access and cost are unknown; no actual training offer exists.",
+                "reference_id": "learning_resource:ac782f68-8a2a-5a54-8384-9675867a5af9"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "investigate"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "practice",
+            "objective": "Proposed learning objective: practise the cited competency in a bounded assessed setting.",
+            "ordering_basis": "procedural_review",
+            "position": 3,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Consider the smallest appropriate practical activity only if academic review confirms need.",
+            "resource_keys": [
+              "resource:ac782f68-8a2a-5a54-8384-9675867a5af9:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+            ],
+            "step_type": "proposed_practice"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Academic staff propose criteria, review validity and distinguish participation from demonstrated performance.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional essential requirement Synthetic threat modelling.",
+                "reference_id": "occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic threat modelling.",
+                "reference_id": "skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+                "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic original: proposed practical review of Synthetic threat modelling. Duration and prerequisites are not specified. Access and cost are unknown; no actual training offer exists.",
+                "reference_id": "learning_resource:ac782f68-8a2a-5a54-8384-9675867a5af9"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "practice"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "assess",
+            "objective": "Proposed assessment objective: specify the evidence a suitable practical task would need to produce.",
+            "ordering_basis": "procedural_review",
+            "position": 4,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Define observable criteria for the proposed competency and its actual scope.",
+            "resource_keys": [
+              "resource:ac782f68-8a2a-5a54-8384-9675867a5af9:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+            ],
+            "step_type": "assessment_design"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Submit the proposal to the institution's academic review process; this system records no automatic implementation approval.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional essential requirement Synthetic threat modelling.",
+                "reference_id": "occupation_skill:e5fb5b69-ce11-5f5c-b77c-d31b608b64fe"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic threat modelling.",
+                "reference_id": "skill:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              },
+              {
+                "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+                "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "assess"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "academic_review",
+            "objective": "Proposed review objective: decide whether any intervention is justified by the evidence.",
+            "ordering_basis": "procedural_review",
+            "position": 5,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Record the academic decision, conditions, alternatives and legitimate no-change outcome.",
+            "resource_keys": [],
+            "step_type": "academic_review"
+          }
+        ],
+        "total_hours": null,
+        "unknown_duration_steps": 5
+      },
+      {
+        "alternatives": [
+          {
+            "action": "Request the missing source, applicability or assessment confirmation.",
+            "category": "request_review",
+            "conditions": [
+              "Use verified passages and record reviewer rationale."
+            ],
+            "rationale": "Resolve the precise uncertainty before implementing a larger intervention."
+          }
+        ],
+        "automatic_curriculum_change": false,
+        "citations": [
+          {
+            "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+            "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+          },
+          {
+            "quote": "Synthetic Data Systems Analyst has the fictional essential requirement Synthetic relational data modelling.",
+            "reference_id": "occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1"
+          },
+          {
+            "quote": "Fictional competency requirement: Synthetic relational data modelling.",
+            "reference_id": "skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+          },
+          {
+            "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints.",
+            "reference_id": "curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+          },
+          {
+            "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+            "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+          },
+          {
+            "quote": "Synthetic Secure Data Steward has the fictional optional requirement Synthetic relational data modelling.",
+            "reference_id": "occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+          }
+        ],
+        "dependencies": [
+          "recommendation:7651c8f3-be4a-5f75-b9db-b553eb6bffa0:1afc12a6a50c8cd69c405de454598c76eb5709acb6d578d2e4e3ea42433dec3a",
+          "evidence:occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+          "evidence:occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1",
+          "evidence:skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb",
+          "evidence:curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb",
+          "evidence:occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a",
+          "evidence:occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+        ],
+        "duration_basis": "Sum of separately identified learning/contact/assessment components where known. Unknown steps prevent a total; effort hours are not calendar duration or a completion guarantee.",
+        "evidence_sufficiency": "partial",
+        "key": "path-skill-9d1da505-37c5-58d3-8d4b-d616c5ac65eb",
+        "known_hours": "3",
+        "limitations": [
+          "No student performance, graduate mastery or existing taught outcome is asserted.",
+          "Unknown prerequisites, resources, cost, staff availability and calendar time stay unknown.",
+          "Operator consideration is not a named academic identity or institutional approval."
+        ],
+        "no_change_option": {
+          "action": "Retain current arrangements while monitoring the identified evidence and review conditions.",
+          "category": "no_change",
+          "conditions": [
+            "Record the academic decision and reassess when the linked evidence changes."
+          ],
+          "rationale": "Human reviewers may decide that no curriculum change is justified; uncertainty is not proof of a deficiency."
+        },
+        "objective": "Proposed review objective: verify source-supported preparation for Synthetic relational data modelling; this is not a claim of existing university teaching.",
+        "occupation_ids": [
+          "43f4c112-601d-5a31-bba2-517a784d5b23",
+          "1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+        ],
+        "pathway_type": "academic_intervention",
+        "prerequisites": [],
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "recommendation_id": "7651c8f3-be4a-5f75-b9db-b553eb6bffa0",
+        "recommendation_version": "0000000000000000000000000000000000000000000000000000000000000000",
+        "review_status": "proposed",
+        "skill_id": "9d1da505-37c5-58d3-8d4b-d616c5ac65eb",
+        "steps": [
+          {
+            "achieved_competence": false,
+            "activity": "Academic reviewers inspect the linked evidence and preserve foundational learning.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional essential requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic relational data modelling.",
+                "reference_id": "skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints.",
+                "reference_id": "curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional optional requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "review",
+            "objective": "Proposed review: identify what the admitted passages establish and what remains unknown.",
+            "ordering_basis": "procedural_review",
+            "position": 1,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Inspect the current reviewed learning outcomes and occupational requirement.",
+            "resource_keys": [],
+            "step_type": "curriculum_review"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Inspect the relevant assignment or syllabus; obtain missing evidence rather than infer content from titles.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional essential requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic relational data modelling.",
+                "reference_id": "skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints.",
+                "reference_id": "curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional optional requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "review"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "investigate",
+            "objective": "Proposed review: distinguish documented intent, assessed evidence and unknown coverage.",
+            "ordering_basis": "procedural_review",
+            "position": 2,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Check the existing assessment opportunity and documentation before proposing training.",
+            "resource_keys": [],
+            "step_type": "evidence_review"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Conditionally propose an existing-course exercise or small applied project; no technology, provider or partner is mandated.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional essential requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic relational data modelling.",
+                "reference_id": "skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints.",
+                "reference_id": "curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional optional requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+              },
+              {
+                "quote": "Synthetic original: proposed practical review of Synthetic relational data modelling. Provider learning effort is 3 hours; assessment and calendar time are unspecified. Access and cost are unknown; no actual training offer exists.",
+                "reference_id": "learning_resource:da268294-0ddc-52ca-9ff1-ae78e8c8f21a"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "investigate"
+            ],
+            "duration": {
+              "basis": "Synthetic provider effort only; other durations remain unknown.",
+              "basis_type": "source",
+              "citations": [
+                {
+                  "quote": "Synthetic original: proposed practical review of Synthetic relational data modelling. Provider learning effort is 3 hours; assessment and calendar time are unspecified. Access and cost are unknown; no actual training offer exists.",
+                  "reference_id": "learning_resource:da268294-0ddc-52ca-9ff1-ae78e8c8f21a"
+                }
+              ],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": "3",
+              "reviewed_at": "2026-10-25T00:00:00+00:00"
+            },
+            "key": "practice",
+            "objective": "Proposed learning objective: practise the cited competency in a bounded assessed setting.",
+            "ordering_basis": "procedural_review",
+            "position": 3,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Consider the smallest appropriate practical activity only if academic review confirms need.",
+            "resource_keys": [
+              "resource:da268294-0ddc-52ca-9ff1-ae78e8c8f21a:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+            ],
+            "step_type": "proposed_practice"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Academic staff propose criteria, review validity and distinguish participation from demonstrated performance.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional essential requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic relational data modelling.",
+                "reference_id": "skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints.",
+                "reference_id": "curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional optional requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+              },
+              {
+                "quote": "Synthetic original: proposed practical review of Synthetic relational data modelling. Provider learning effort is 3 hours; assessment and calendar time are unspecified. Access and cost are unknown; no actual training offer exists.",
+                "reference_id": "learning_resource:da268294-0ddc-52ca-9ff1-ae78e8c8f21a"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "practice"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "assess",
+            "objective": "Proposed assessment objective: specify the evidence a suitable practical task would need to produce.",
+            "ordering_basis": "procedural_review",
+            "position": 4,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Define observable criteria for the proposed competency and its actual scope.",
+            "resource_keys": [
+              "resource:da268294-0ddc-52ca-9ff1-ae78e8c8f21a:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+            ],
+            "step_type": "assessment_design"
+          },
+          {
+            "achieved_competence": false,
+            "activity": "Submit the proposal to the institution's academic review process; this system records no automatic implementation approval.",
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23"
+              },
+              {
+                "quote": "Synthetic Data Systems Analyst has the fictional essential requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e319a19a-c248-59ca-b03f-81c8025dc2d1"
+              },
+              {
+                "quote": "Fictional competency requirement: Synthetic relational data modelling.",
+                "reference_id": "skill:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints.",
+                "reference_id": "curriculum:ce959ce8-64b9-505a-bced-1c087acbfa3f:9d1da505-37c5-58d3-8d4b-d616c5ac65eb"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Secure Data Steward.",
+                "reference_id": "occupation:1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+              },
+              {
+                "quote": "Synthetic Secure Data Steward has the fictional optional requirement Synthetic relational data modelling.",
+                "reference_id": "occupation_skill:e553e3b3-0aa3-526d-bd7e-d952227dc99b"
+              }
+            ],
+            "conditions": [
+              "Resolve missing or contradictory curriculum evidence before implementation.",
+              "All objectives and activities are future proposals, not existing taught outcomes.",
+              "Procedural review order does not assert a subject prerequisite or calendar schedule."
+            ],
+            "depends_on": [
+              "assess"
+            ],
+            "duration": {
+              "basis": "Duration unknown; obtain a reviewed activity/workload specification.",
+              "basis_type": "unknown",
+              "citations": [],
+              "component": "learning",
+              "guaranteed_completion_time": false,
+              "hours": null,
+              "reviewed_at": null
+            },
+            "key": "academic_review",
+            "objective": "Proposed review objective: decide whether any intervention is justified by the evidence.",
+            "ordering_basis": "procedural_review",
+            "position": 5,
+            "proposed_assessment": "Proposed only: an appropriate assessed task and stated criteria would be needed before any bounded demonstration claim. Attendance, enrolment, completion, seminars and talks do not establish technical competency.",
+            "purpose": "Record the academic decision, conditions, alternatives and legitimate no-change outcome.",
+            "resource_keys": [],
+            "step_type": "academic_review"
+          }
+        ],
+        "total_hours": null,
+        "unknown_duration_steps": 4
+      }
+    ],
+    "limit": 3,
+    "needs_evidence_revalidation": false,
+    "offset": 0,
+    "status": "PARTIAL",
+    "total": 4
+  }
+}

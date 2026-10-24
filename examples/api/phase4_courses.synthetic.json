@@ -1,0 +1,421 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "limitations": "Bounded, redacted schema example from an actual synthetic API response; not a live provider or production result. Normalised version hashes must never be submitted as real review approvals.",
+  "normalised_fields": [
+    "UUIDs",
+    "timestamps",
+    "content digests"
+  ],
+  "provider_execution": "mocked",
+  "response": {
+    "items": [
+      {
+        "course_id": "753afd59-9415-5a85-b2f5-c1bbc7bdde5b",
+        "created_at": "2026-10-25T00:00:00+00:00",
+        "evidence_access_limitations": [],
+        "id": "852f8931-3145-529a-9bd0-7c8ff30e1334",
+        "is_synthetic": true,
+        "needs_evidence_revalidation": false,
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "result_json": {
+          "ai_transformation": {
+            "citations": [],
+            "limitations": [
+              "no_admissible_evidence",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content"
+            ],
+            "review_questions": [
+              "Review whether assessments require critical evaluation of AI-assisted task outputs."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "course_id": "753afd59-9415-5a85-b2f5-c1bbc7bdde5b",
+          "course_name": "Synthetic computing Inventory Topic 6",
+          "curriculum_currency": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Confirm whether current syllabus evidence addresses the cited knowledge expectation."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "evidence_level": "title_only",
+          "foundational_relevance": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Confirm the intended foundational educational purpose with academic reviewers."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "future_resilience": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Review whether transferable judgement and communication skills are assessed."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "is_final_curriculum_verdict": false,
+          "needs_syllabus_confirmation": true,
+          "review_flag": "needs_syllabus_confirmation",
+          "workforce_alignment": {
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Query Practitioner.",
+                "reference_id": "occupation:4aa5e41b-5816-52bc-a3c7-fd54a2e99615",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content"
+            ],
+            "review_questions": [
+              "Confirm whether a reviewed Malaysian occupation crosswalk and suitable demand observations are available."
+            ],
+            "status": "insufficient_evidence"
+          }
+        },
+        "run_id": "efd084cb-b656-59f9-8c7d-626599fad2f6",
+        "updated_at": "2026-10-25T00:00:00+00:00"
+      },
+      {
+        "course_id": "0a84f1d8-efff-5d1a-a4da-aba37c98081c",
+        "created_at": "2026-10-25T00:00:00+00:00",
+        "evidence_access_limitations": [],
+        "id": "fb57c228-09da-5349-93f6-d8ded07684d1",
+        "is_synthetic": true,
+        "needs_evidence_revalidation": false,
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "result_json": {
+          "ai_transformation": {
+            "citations": [
+              {
+                "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation.",
+                "reference_id": "syllabus:79f2f137-dea2-5ce8-b7c9-04f6903f1aab",
+                "scope": "verified_syllabus"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "unknown_source_date"
+            ],
+            "review_questions": [
+              "Review whether assessments require critical evaluation of AI-assisted task outputs."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "course_id": "0a84f1d8-efff-5d1a-a4da-aba37c98081c",
+          "course_name": "Synthetic Pipeline Studio",
+          "curriculum_currency": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Confirm whether current syllabus evidence addresses the cited knowledge expectation."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "evidence_level": "detailed_syllabus",
+          "foundational_relevance": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Confirm the intended foundational educational purpose with academic reviewers."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "future_resilience": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Review whether transferable judgement and communication skills are assessed."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "is_final_curriculum_verdict": false,
+          "needs_syllabus_confirmation": false,
+          "review_flag": "insufficient_evidence",
+          "workforce_alignment": {
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Query Practitioner.",
+                "reference_id": "occupation:4aa5e41b-5816-52bc-a3c7-fd54a2e99615",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic"
+            ],
+            "review_questions": [
+              "Confirm whether a reviewed Malaysian occupation crosswalk and suitable demand observations are available."
+            ],
+            "status": "insufficient_evidence"
+          }
+        },
+        "run_id": "efd084cb-b656-59f9-8c7d-626599fad2f6",
+        "updated_at": "2026-10-25T00:00:00+00:00"
+      },
+      {
+        "course_id": "2f521201-bca3-5df0-bade-c87a92b08442",
+        "created_at": "2026-10-25T00:00:00+00:00",
+        "evidence_access_limitations": [],
+        "id": "07d6cc6d-498b-5d54-a345-7a83f9cb6512",
+        "is_synthetic": true,
+        "needs_evidence_revalidation": false,
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "result_json": {
+          "ai_transformation": {
+            "citations": [],
+            "limitations": [
+              "no_admissible_evidence",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content"
+            ],
+            "review_questions": [
+              "Review whether assessments require critical evaluation of AI-assisted task outputs."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "course_id": "2f521201-bca3-5df0-bade-c87a92b08442",
+          "course_name": "Synthetic computing Inventory Topic 5",
+          "curriculum_currency": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Confirm whether current syllabus evidence addresses the cited knowledge expectation."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "evidence_level": "title_only",
+          "foundational_relevance": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Confirm the intended foundational educational purpose with academic reviewers."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "future_resilience": {
+            "citations": [
+              {
+                "quote": "Fictional benchmark: review computing disciplinary foundations against the admitted requirements. This is not university teaching evidence.",
+                "reference_id": "academic_standard:b6b7f64e-f7f9-5666-be3e-de0d180afd70",
+                "scope": "academic_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content",
+              "benchmark_not_teaching_evidence"
+            ],
+            "review_questions": [
+              "Review whether transferable judgement and communication skills are assessed."
+            ],
+            "status": "insufficient_evidence"
+          },
+          "is_final_curriculum_verdict": false,
+          "needs_syllabus_confirmation": true,
+          "review_flag": "needs_syllabus_confirmation",
+          "workforce_alignment": {
+            "citations": [
+              {
+                "quote": "Fictional computing occupation: Synthetic Data Systems Analyst.",
+                "reference_id": "occupation:43f4c112-601d-5a31-bba2-517a784d5b23",
+                "scope": "occupation_benchmark"
+              },
+              {
+                "quote": "Fictional computing occupation: Synthetic Query Practitioner.",
+                "reference_id": "occupation:4aa5e41b-5816-52bc-a3c7-fd54a2e99615",
+                "scope": "occupation_benchmark"
+              }
+            ],
+            "limitations": [
+              "candidate_match_not_identity",
+              "engineering_review_not_academic_approval",
+              "offline_synthetic",
+              "needs_syllabus_confirmation",
+              "title_only_not_taught_content"
+            ],
+            "review_questions": [
+              "Confirm whether a reviewed Malaysian occupation crosswalk and suitable demand observations are available."
+            ],
+            "status": "insufficient_evidence"
+          }
+        },
+        "run_id": "efd084cb-b656-59f9-8c7d-626599fad2f6",
+        "updated_at": "2026-10-25T00:00:00+00:00"
+      }
+    ],
+    "limit": 3,
+    "offset": 0,
+    "total": 6
+  }
+}

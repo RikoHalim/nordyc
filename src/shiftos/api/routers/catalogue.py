@@ -9,6 +9,7 @@ from fastapi import APIRouter, Depends, Header, Query, Request
 from pydantic import HttpUrl, ValidationError
 from sqlalchemy.orm import Session
 
+from shiftos.core.access import authenticate, require_api_access, require_permission
 from shiftos.core.errors import DomainError
 from shiftos.db.session import get_session
 from shiftos.schemas.academic import CoursePage, ProgrammeRevisionRead
@@ -32,7 +33,8 @@ from shiftos.services.ingestion.worker import PROVIDERS, provider_institution, q
 router = APIRouter(
     prefix="/api/v1",
     tags=["Curriculum ingestion"],
-    responses={code: {"model": ErrorResponse} for code in (401, 404, 409, 413, 422, 503)},
+    dependencies=[Depends(require_api_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 409, 413, 422, 503)},
 )
 SessionDep = Annotated[Session, Depends(get_session)]
 
@@ -40,6 +42,10 @@ SessionDep = Annotated[Session, Depends(get_session)]
 def require_writer(
     request: Request, x_catalogue_token: Annotated[str | None, Header()] = None
 ) -> None:
+    principal = authenticate(request)
+    if principal is not None:
+        require_permission(principal, "write")
+        return
     settings = request.app.state.settings
     token = settings.catalogue_write_token
     if settings.app_env == "production" and token is None:
@@ -164,10 +170,20 @@ def read_job(
     x_analysis_token: Annotated[str | None, Header()] = None,
 ):
     job = require_job(session, id)
-    if job.kind == "PROGRAMME_ANALYSIS":
+    if job.kind in {"PROGRAMME_ANALYSIS", "CAREER_ANALYSIS", "ACTION_PLAN"}:
         from shiftos.api.routers.analysis import require_analysis_access
 
         require_analysis_access(request, x_analysis_token)
+        response = JobRead.model_validate(job)
+        response.result = (
+            {
+                "source_content_withheld": True,
+                "detail": "Read results through the protected analysis resource",
+            }
+            if job.result_json
+            else {}
+        )
+        return response
     return job
 
 

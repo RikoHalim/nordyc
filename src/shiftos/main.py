@@ -21,6 +21,7 @@ from shiftos.api.routers import (
     evidence,
     health,
     pathways,
+    replay,
     workforce_radar,
 )
 from shiftos.core.config import Settings
@@ -39,6 +40,10 @@ def error_response(code: str, message: str, status_code: int, details: list | No
 
 def create_app(settings: Settings | None = None, database: Database | None = None) -> FastAPI:
     settings = settings or Settings()
+    if settings.app_env == "production":
+        from shiftos.core.access import validate_access_configuration
+
+        validate_access_configuration(settings)
     owns_database = database is None
     database = database or create_database(settings.database_url.get_secret_value())
 
@@ -89,8 +94,13 @@ def create_app(settings: Settings | None = None, database: Database | None = Non
         request_id = str(uuid4())
         started = perf_counter()
         response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        if request.url.path.startswith("/api/"):
+            response.headers["Cache-Control"] = "no-store"
         response.headers["X-Request-ID"] = request_id
         route = request.scope.get("route")
+        principal = getattr(request.state, "access_principal", None)
         logger.info(
             json.dumps(
                 {
@@ -98,6 +108,7 @@ def create_app(settings: Settings | None = None, database: Database | None = Non
                     "request_id": request_id,
                     "method": request.method,
                     "route": getattr(route, "path", "unmatched"),
+                    "operator_alias": principal.principal_id if principal else "legacy_or_public",
                     "status_code": response.status_code,
                     "duration_ms": round((perf_counter() - started) * 1000, 2),
                 }
@@ -113,6 +124,7 @@ def create_app(settings: Settings | None = None, database: Database | None = Non
     application.include_router(analysis.router)
     application.include_router(career.router)
     application.include_router(pathways.router)
+    application.include_router(replay.router)
     application.add_middleware(BodyLimitMiddleware)
     return application
 

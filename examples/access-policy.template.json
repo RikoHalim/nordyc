@@ -1,0 +1,11 @@
+{
+  "version": "phase7-access-1",
+  "principals": [
+    {
+      "principal_id": "replace-with-operator-alias-not-an-academic-identity",
+      "token_sha256": "REPLACE_WITH_SHA256_OF_A_PRIVATE_32_OR_MORE_CHARACTER_CREDENTIAL",
+      "institution_ids": ["REPLACE_WITH_AN_AUTHORISED_INSTITUTION_UUID"],
+      "permissions": ["read", "write", "review"]
+    }
+  ]
+}

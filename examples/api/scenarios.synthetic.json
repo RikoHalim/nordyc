@@ -1,0 +1,210 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "limitations": "Bounded, redacted schema example from an actual synthetic API response; not a live provider or production result. Normalised version hashes must never be submitted as real review approvals.",
+  "normalised_fields": [
+    "UUIDs",
+    "timestamps",
+    "content digests"
+  ],
+  "provider_execution": "mocked",
+  "response": {
+    "error": null,
+    "evidence_access_limitations": [],
+    "items": [
+      {
+        "assumption": {
+          "assumption": "prioritise_incremental_coverage",
+          "contradicting_citations": [],
+          "key": "gradual_workforce_transformation",
+          "planning_horizon": null,
+          "rationale": "Hypothetical planning assumption: review incremental coverage changes while preserving disciplinary foundations and the no-change option.",
+          "supporting_citations": []
+        },
+        "comparison_dimensions": [
+          "competency_coverage",
+          "evidence_sufficiency",
+          "assessment_review_priority",
+          "academic_dependencies",
+          "minimum_intervention_and_no_change"
+        ],
+        "contradicting_citations": [],
+        "description": "Compare review priorities under the stated assumption, with unchanged observed evidence and parent academic recommendations. No job, wage, placement, displacement or numerical adoption forecast is produced.",
+        "is_forecast": false,
+        "key": "gradual_workforce_transformation",
+        "name": "Gradual workforce transformation \u2014 hypothetical planning",
+        "occupation_ids": [
+          "43f4c112-601d-5a31-bba2-517a784d5b23",
+          "4aa5e41b-5816-52bc-a3c7-fd54a2e99615",
+          "1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+        ],
+        "planning_horizon": null,
+        "priorities": [
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "monitor",
+            "rationale": "The recorded no-change outcome is preserved under both assumptions.",
+            "recommendation_id": "35d048ad-b48f-54d3-9ef1-fa05f2e672ef"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Retain the minimum sufficient intervention and staged academic review. No sufficiently scoped, uncontradicted task evidence justifies escalation.",
+            "recommendation_id": "c3770865-ddbe-5409-a535-b1388fd3628b"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Retain the minimum sufficient intervention and staged academic review. No sufficiently scoped, uncontradicted task evidence justifies escalation.",
+            "recommendation_id": "537c829b-965f-57de-8b1e-cb2e7c4aa929"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Retain the minimum sufficient intervention and staged academic review. No sufficiently scoped, uncontradicted task evidence justifies escalation.",
+            "recommendation_id": "7651c8f3-be4a-5f75-b9db-b553eb6bffa0"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Missing evidence, rejection or consideration review prevents a substantive intervention; the assumption cannot establish coverage or approval.",
+            "recommendation_id": "ce4592fb-3307-5601-8b4f-dfd9b908e7c1"
+          }
+        ],
+        "probability": null,
+        "skill_ids": [
+          "274eb417-620b-56bd-9a78-a38ef32c7da5",
+          "37d18376-22ba-5fcb-85ae-e21bd10209a7",
+          "2ddcee45-01c3-5d4b-aee5-a784ed64da4b",
+          "9d1da505-37c5-58d3-8d4b-d616c5ac65eb",
+          "062fa578-9571-5f01-8c63-a8ae4dabd0b6"
+        ],
+        "supporting_citations": [],
+        "uncertainties": [
+          "Assumptions are hypothetical and do not measure future adoption.",
+          "Source scope, dates, geography and unknown coverage remain binding.",
+          "No action flip is required; unsupported sensitivity remains unknown."
+        ]
+      },
+      {
+        "assumption": {
+          "assumption": "prioritise_assessment_review",
+          "contradicting_citations": [],
+          "key": "accelerated_ai_adoption",
+          "planning_horizon": null,
+          "rationale": "Hypothetical planning assumption: prioritise assessment review for eligible cited professional tasks if their adoption becomes more rapid. No adoption rate, job displacement or deadline is predicted.",
+          "supporting_citations": []
+        },
+        "comparison_dimensions": [
+          "competency_coverage",
+          "evidence_sufficiency",
+          "assessment_review_priority",
+          "academic_dependencies",
+          "minimum_intervention_and_no_change"
+        ],
+        "contradicting_citations": [],
+        "description": "Compare review priorities under the stated assumption, with unchanged observed evidence and parent academic recommendations. No job, wage, placement, displacement or numerical adoption forecast is produced.",
+        "is_forecast": false,
+        "key": "accelerated_ai_adoption",
+        "name": "Accelerated AI adoption \u2014 hypothetical planning",
+        "occupation_ids": [
+          "43f4c112-601d-5a31-bba2-517a784d5b23",
+          "4aa5e41b-5816-52bc-a3c7-fd54a2e99615",
+          "1fd81a23-2f6b-5673-bc04-7785ae2dda0a"
+        ],
+        "planning_horizon": null,
+        "priorities": [
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "monitor",
+            "rationale": "The recorded no-change outcome is preserved under both assumptions.",
+            "recommendation_id": "35d048ad-b48f-54d3-9ef1-fa05f2e672ef"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Retain the minimum sufficient intervention and staged academic review. No sufficiently scoped, uncontradicted task evidence justifies escalation.",
+            "recommendation_id": "c3770865-ddbe-5409-a535-b1388fd3628b"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Retain the minimum sufficient intervention and staged academic review. No sufficiently scoped, uncontradicted task evidence justifies escalation.",
+            "recommendation_id": "537c829b-965f-57de-8b1e-cb2e7c4aa929"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Retain the minimum sufficient intervention and staged academic review. No sufficiently scoped, uncontradicted task evidence justifies escalation.",
+            "recommendation_id": "7651c8f3-be4a-5f75-b9db-b553eb6bffa0"
+          },
+          {
+            "conditions": [
+              "The parent coverage findings and workforce calculations remain unchanged.",
+              "Review conflicting and missing evidence before implementation.",
+              "Authenticated operator consideration is not institutional approval."
+            ],
+            "priority": "review_first",
+            "rationale": "Missing evidence, rejection or consideration review prevents a substantive intervention; the assumption cannot establish coverage or approval.",
+            "recommendation_id": "ce4592fb-3307-5601-8b4f-dfd9b908e7c1"
+          }
+        ],
+        "probability": null,
+        "skill_ids": [
+          "274eb417-620b-56bd-9a78-a38ef32c7da5",
+          "37d18376-22ba-5fcb-85ae-e21bd10209a7",
+          "2ddcee45-01c3-5d4b-aee5-a784ed64da4b",
+          "9d1da505-37c5-58d3-8d4b-d616c5ac65eb",
+          "062fa578-9571-5f01-8c63-a8ae4dabd0b6"
+        ],
+        "supporting_citations": [],
+        "uncertainties": [
+          "Assumptions are hypothetical and do not measure future adoption.",
+          "Source scope, dates, geography and unknown coverage remain binding.",
+          "No action flip is required; unsupported sensitivity remains unknown."
+        ]
+      }
+    ],
+    "limit": 3,
+    "needs_evidence_revalidation": false,
+    "offset": 0,
+    "status": "PARTIAL",
+    "total": 2
+  }
+}

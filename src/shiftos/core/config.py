@@ -54,6 +54,8 @@ class Settings(BaseSettings):
     )
 
     app_env: Literal["development", "test", "production"] = "development"
+    api_access_mode: Literal["legacy", "scoped"] = "legacy"
+    api_access_policy_path: Path | None = None
     database_url: SecretStr = SecretStr("postgresql+psycopg://shiftos@localhost:5432/shiftos")
     discovery_enabled: bool = False
     discovery_terms_reviewed: bool = False
@@ -128,6 +130,11 @@ class Settings(BaseSettings):
             url = make_url(value.get_secret_value())
         except Exception:
             raise ValueError("DATABASE_URL must be a valid database URL") from None
+        # Managed PostgreSQL services commonly supply the standard URI scheme.
+        # Keep SQLAlchemy on the existing synchronous psycopg3 driver explicitly.
+        if url.drivername in {"postgresql", "postgres"}:
+            url = url.set(drivername="postgresql+psycopg")
+            value = SecretStr(url.render_as_string(hide_password=False))
         allowed = {"postgresql+psycopg"}
         if info.data.get("app_env") == "test":
             allowed.add("sqlite+pysqlite")

@@ -39,7 +39,6 @@ def test_explicit_test_mode_accepts_sqlite() -> None:
         "mysql+pymysql://synthetic:disposable-test-password@localhost/shiftos_test",
         "postgresql+psycopg2://synthetic:disposable-test-password@localhost/shiftos_test",
         "postgresql+asyncpg://synthetic:disposable-test-password@localhost/shiftos_test",
-        "postgresql://synthetic:disposable-test-password@localhost/shiftos_test",
     ],
 )
 def test_unsupported_drivers_fail_without_exposing_credentials(database_url: str) -> None:
@@ -57,6 +56,19 @@ def test_malformed_database_url_error_redacts_input() -> None:
     assert "DATABASE_URL must be a valid database URL" in str(error.value)
     assert "disposable-test-password" not in str(error.value)
     assert "disposable-test-password" not in repr(error.value)
+
+
+@pytest.mark.parametrize("scheme", ["postgresql", "postgres"])
+def test_managed_postgresql_uri_preserves_tls_and_uses_existing_psycopg_driver(scheme):
+    settings = Settings(
+        _env_file=None,
+        app_env="production",
+        database_url=f"{scheme}://synthetic:disposable-test-password@db.example.invalid/shiftos_test?sslmode=require",
+    )
+    actual = settings.database_url.get_secret_value()
+    assert actual.startswith("postgresql+psycopg://")
+    assert actual.endswith("/shiftos_test?sslmode=require")
+    assert "disposable-test-password" not in settings.model_dump_json()
 
 
 def test_settings_load_dotenv_and_environment_takes_precedence(

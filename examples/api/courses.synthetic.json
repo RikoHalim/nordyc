@@ -1,0 +1,108 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "limitations": "Bounded, redacted schema example from an actual synthetic API response; not a live provider or production result. Normalised version hashes must never be submitted as real review approvals.",
+  "normalised_fields": [
+    "UUIDs",
+    "timestamps",
+    "content digests"
+  ],
+  "provider_execution": "mocked",
+  "response": {
+    "items": [
+      {
+        "course_code": "SYN006",
+        "course_name": "Synthetic computing Inventory Topic 6",
+        "course_type": "COMPULSORY",
+        "created_at": "2026-10-25T00:00:00+00:00",
+        "credit_hours": null,
+        "data_quality": "synthetic",
+        "detailed_syllabus_available": false,
+        "elective_group": null,
+        "evidence_level": "title_only",
+        "extraction_status": "INVENTORY_ONLY",
+        "id": "753afd59-9415-5a85-b2f5-c1bbc7bdde5b",
+        "inventory_source_anchor_id": "91efd2a2-b6b4-5f62-b3b6-1a0b57a82ae5",
+        "is_synthetic": true,
+        "is_verified": false,
+        "missing_fields": [
+          "semester",
+          "syllabus"
+        ],
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "raw_semester_label": null,
+        "raw_year_label": null,
+        "review_notes": [],
+        "semester": null,
+        "source_id": "d2e818a6-4801-523a-b264-370c4a16e010",
+        "source_locator": "synthetic:inventory:inventory-6",
+        "source_url": "https://curriculum.example.invalid/programme",
+        "updated_at": "2026-10-25T00:00:00+00:00",
+        "year": 1
+      },
+      {
+        "course_code": "SYN003",
+        "course_name": "Synthetic Pipeline Studio",
+        "course_type": "COMPULSORY",
+        "created_at": "2026-10-25T00:00:00+00:00",
+        "credit_hours": null,
+        "data_quality": "synthetic",
+        "detailed_syllabus_available": true,
+        "elective_group": null,
+        "evidence_level": "synthetic_detail",
+        "extraction_status": "INVENTORY_ONLY",
+        "id": "0a84f1d8-efff-5d1a-a4da-aba37c98081c",
+        "inventory_source_anchor_id": "89f35534-c17b-5d1b-a540-12cf70eee606",
+        "is_synthetic": true,
+        "is_verified": false,
+        "missing_fields": [
+          "semester"
+        ],
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "raw_semester_label": null,
+        "raw_year_label": null,
+        "review_notes": [],
+        "semester": null,
+        "source_id": "d2e818a6-4801-523a-b264-370c4a16e010",
+        "source_locator": "synthetic:inventory:pipeline",
+        "source_url": "https://curriculum.example.invalid/programme",
+        "updated_at": "2026-10-25T00:00:00+00:00",
+        "year": 1
+      },
+      {
+        "course_code": "SYN005",
+        "course_name": "Synthetic computing Inventory Topic 5",
+        "course_type": "COMPULSORY",
+        "created_at": "2026-10-25T00:00:00+00:00",
+        "credit_hours": null,
+        "data_quality": "synthetic",
+        "detailed_syllabus_available": false,
+        "elective_group": null,
+        "evidence_level": "title_only",
+        "extraction_status": "INVENTORY_ONLY",
+        "id": "2f521201-bca3-5df0-bade-c87a92b08442",
+        "inventory_source_anchor_id": "5dbd58bc-eb60-5849-950f-01e381f63997",
+        "is_synthetic": true,
+        "is_verified": false,
+        "missing_fields": [
+          "semester",
+          "syllabus"
+        ],
+        "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+        "raw_semester_label": null,
+        "raw_year_label": null,
+        "review_notes": [],
+        "semester": null,
+        "source_id": "d2e818a6-4801-523a-b264-370c4a16e010",
+        "source_locator": "synthetic:inventory:inventory-5",
+        "source_url": "https://curriculum.example.invalid/programme",
+        "updated_at": "2026-10-25T00:00:00+00:00",
+        "year": 1
+      }
+    ],
+    "limit": 3,
+    "offset": 0,
+    "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+    "total": 6
+  }
+}

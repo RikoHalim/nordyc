@@ -57,6 +57,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     commands.add_parser(
         "fail-stale-jobs", help="Explicitly fail abandoned catalogue jobs older than one hour"
     )
+    preflight = commands.add_parser(
+        "runtime-preflight", help="Inspect safe configuration without model calls or migrations"
+    )
+    preflight.add_argument(
+        "--check-database",
+        action="store_true",
+        help="Read the explicitly configured database and migration version",
+    )
+    preflight.add_argument("--component", choices=("api", "worker"), default="api")
     evidence = commands.add_parser("ingest-evidence", help="Explicit registry-driven evidence ETL")
     evidence.add_argument("--registry", type=Path, default=Path("data/dataset_registry.csv"))
     evidence.add_argument("--policy", type=Path, default=Path("data/evidence_acquisition.json"))
@@ -70,6 +79,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     database = None
     try:
         settings = Settings()
+        if args.command == "runtime-preflight":
+            from shiftos.services.runtime import runtime_report
+
+            if args.check_database:
+                database = create_database(settings.database_url.get_secret_value())
+            report = runtime_report(
+                settings,
+                database=database,
+                check_database=args.check_database,
+                component=args.component,
+            )
+            print(json.dumps(report, indent=2))
+            return int(report["status"] == "blocked")
         if args.command == "verify-claude":
             from shiftos.services.analysis.claude_verification import (
                 inspect_claude_configuration,

@@ -15,6 +15,7 @@ from shiftos.api.routers.analysis import (
     _public_metadata,
     require_analysis_access,
 )
+from shiftos.core.access import require_api_access
 from shiftos.core.enums import JobStatus
 from shiftos.core.errors import DomainError
 from shiftos.models import Job
@@ -27,6 +28,7 @@ from shiftos.schemas.pathways import (
     LearningResource,
     PathwayStep,
     PlanRequest,
+    PlanResult,
     PlanReviewRequest,
     ScenarioComparison,
     SDGAlignment,
@@ -35,8 +37,8 @@ from shiftos.schemas.pathways import (
 router = APIRouter(
     prefix="/api/v1",
     tags=["Academic action plans"],
-    dependencies=[Depends(require_analysis_access)],
-    responses={code: {"model": ErrorResponse} for code in (401, 404, 409, 422, 503)},
+    dependencies=[Depends(require_api_access), Depends(require_analysis_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 409, 422, 503)},
 )
 
 
@@ -59,7 +61,12 @@ class PlanRead(BaseModel):
     error: str | None
     request_json: dict[str, Any]
     manifest_json: dict[str, Any]
-    result_json: dict[str, Any]
+    result_json: PlanResult | dict[str, Any] = Field(
+        description=(
+            "Completed validated PlanResult, or an empty/pending/withheld metadata object. "
+            "The metadata alternative does not establish a validated academic result."
+        )
+    )
     model_usage_json: dict[str, Any]
     fingerprint: str | None
     method_version: str | None

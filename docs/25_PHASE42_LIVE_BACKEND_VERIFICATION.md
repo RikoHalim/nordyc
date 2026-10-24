@@ -84,3 +84,7 @@ Replit remains the official future host. Managed Anthropic credentials/base URL 
 Run existing Alembic upgrades against the selected environment before starting FastAPI, and run the existing durable worker separately. Production ports/secrets, worker supervision, persistent database service, network access to the managed bridge/Brave and application-level authentication/security need the later hosting/integration phase. Preserve timeouts, source gates, safe error metadata and false persistent external-processing gate. This loopback cluster is a test tool, not production provisioning.
 
 Phase 4.2's bounded backend completion criteria are met. Phase 5 may be planned after owner review, with genuine syllabus/benchmark/workforce admission, conservative evidence gaps and pending Brave acceptance carried forward. No Phase 5 implementation is authorised by this result.
+
+## Later Phase 7 compatibility note
+
+The historical ordinary-runtime DATABASE_URL rejection above describes Phase 4.2, not a new failure result. Phase 7 now normalizes explicitly configured standard PostgreSQL URIs to the existing psycopg3 driver and adds non-billable runtime/access/schema inspection. It does not provision, access or migrate the original Replit database or transfer local data. See [the current operations contract](29_PHASE7_INTEGRATION_EVALUATION_SECURITY.md).

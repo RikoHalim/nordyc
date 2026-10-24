@@ -1,6 +1,7 @@
 """Offline boundary/security checks for Phase 2 writes and request buffering."""
 
 import asyncio
+import hashlib
 import json
 from datetime import UTC, datetime, timedelta
 from uuid import UUID, uuid4
@@ -22,7 +23,7 @@ from shiftos.services.ingestion import worker
 from shiftos.services.ingestion.catalogue import check_origin
 from shiftos.services.ingestion.fetcher import FetchedPage
 
-TOKEN = "synthetic-local-test-token"
+TOKEN = "synthetic-local-security-test-token-no-live-credential"
 
 
 def manifest(**updates):
@@ -44,13 +45,32 @@ def manifest(**updates):
     return {**value, **updates}
 
 
-def production_client(database, token=None):
+def production_client(database, tmp_path, token=None):
     # Settings keeps its valid PostgreSQL default URL; the injected isolated
     # SQLite database supplies the offline test storage.
+    policy_path = tmp_path / "synthetic-access-policy.json"
+    if token:
+        policy_path.write_text(
+            json.dumps(
+                {
+                    "version": "phase7-access-1",
+                    "principals": [
+                        {
+                            "principal_id": "synthetic-test-operator",
+                            "token_sha256": hashlib.sha256(token.encode()).hexdigest(),
+                            "permissions": ["read", "write", "review", "admin"],
+                        }
+                    ],
+                }
+            ),
+            encoding="utf-8",
+        )
     settings = Settings(
         _env_file=None,
         app_env="production",
         catalogue_write_token=token,
+        api_access_mode="scoped" if token else "legacy",
+        api_access_policy_path=policy_path if token else None,
     )
     return TestClient(create_app(settings=settings, database=database))
 
@@ -140,14 +160,14 @@ def test_fastapi_size_limit_precedes_json_decoding(client):
     ],
 )
 def test_production_write_requires_matching_token_without_creating_records(
-    database, token, endpoint
+    database, tmp_path, token, endpoint
 ):
     if endpoint.endswith("/imports"):
         body = manifest() if endpoint.startswith("/programmes/") else {"programmes": [manifest()]}
     else:
         body = {"provider": "xmum"}
-    headers = {"X-Catalogue-Token": token} if token is not None else {}
-    with production_client(database, TOKEN) as client:
+    headers = {"Authorization": f"Bearer {token}"} if token is not None else {}
+    with production_client(database, tmp_path, TOKEN) as client:
         response = client.post(
             "/api/v1" + endpoint.replace("{id}", str(uuid4())), json=body, headers=headers
         )
@@ -159,26 +179,26 @@ def test_production_write_requires_matching_token_without_creating_records(
         assert session.scalar(select(func.count()).select_from(Institution)) == 0
 
 
-def test_unconfigured_production_writes_fail_closed(database):
-    with production_client(database) as client:
-        response = client.post("/api/v1/catalogue/discover", json={"provider": "xmum"})
-        public = client.get("/api/v1/catalogue/providers")
-    assert response.status_code == 503
-    assert response.json()["error"]["code"] == "CATALOGUE_WRITE_DISABLED"
-    assert public.status_code == 200
+def test_unconfigured_production_writes_fail_closed(database, tmp_path):
+    with pytest.raises(DomainError) as error:
+        production_client(database, tmp_path)
+    assert error.value.status_code == 503
+    assert error.value.code == "ACCESS_POLICY_REQUIRED"
 
 
-def test_matching_production_token_can_enqueue_but_does_not_fetch(database):
-    with production_client(database, TOKEN) as client:
+def test_matching_production_token_can_enqueue_but_does_not_fetch(database, tmp_path):
+    headers = {"Authorization": f"Bearer {TOKEN}"}
+    with production_client(database, tmp_path, TOKEN) as client:
         response = client.post(
             "/api/v1/catalogue/discover",
             json={"provider": "xmum"},
-            headers={"X-Catalogue-Token": TOKEN},
+            headers=headers,
         )
         assert response.status_code == 202
         payload = response.json()
         assert payload["status"] == "QUEUED"
-        read = client.get(f"/api/v1/catalogue/jobs/{payload['id']}")
+        assert client.get(f"/api/v1/catalogue/jobs/{payload['id']}").status_code == 401
+        read = client.get(f"/api/v1/catalogue/jobs/{payload['id']}", headers=headers)
     assert read.status_code == 200
     assert "payload_json" not in read.json()
     assert TOKEN not in response.text + read.text

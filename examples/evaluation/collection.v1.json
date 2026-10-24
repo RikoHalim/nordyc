@@ -1,0 +1,589 @@
+{
+  "collection_id": "shiftos-controlled-academic-consistency",
+  "version": "1.0.0",
+  "is_synthetic": true,
+  "label": "Versioned fictional software-consistency collection; no expert-labelled real-world academic accuracy dataset.",
+  "disciplines": {
+    "computing": {
+      "fixture_id": "phase5-fictional-computing-1",
+      "is_synthetic": true,
+      "label": "Entirely fictional curriculum, occupation requirements, assessments and operator review. Controlled software evaluation only; no real institutional or occupational accuracy assertion.",
+      "programme": "Bachelor of Synthetic Computing",
+      "course_inventory_scope": "All four fictional courses are compulsory in this complete synthetic revision; this is not a real university assertion.",
+      "institution": "Fictional Career Evidence University",
+      "taxonomy": "Synthetic teaching taxonomy 1",
+      "discipline": "computing",
+      "courses": [
+        {
+          "key": "query",
+          "title": "Synthetic Query Laboratory",
+          "quote": "Synthetic reviewed assessment demonstrates parameterised SQL query construction against a fictional database.",
+          "demonstration_reviewed": true
+        },
+        {
+          "key": "model",
+          "title": "Synthetic Data Modelling",
+          "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints."
+        },
+        {
+          "key": "pipeline",
+          "title": "Synthetic Pipeline Studio",
+          "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation."
+        },
+        {
+          "key": "inventory",
+          "title": "Synthetic Data Security Capstone",
+          "quote": null
+        }
+      ],
+      "skills": [
+        {
+          "key": "sql",
+          "label": "Synthetic parameterised SQL construction"
+        },
+        {
+          "key": "model",
+          "label": "Synthetic relational data modelling"
+        },
+        {
+          "key": "pipeline",
+          "label": "Synthetic data pipeline transformation"
+        },
+        {
+          "key": "security",
+          "label": "Synthetic threat modelling"
+        },
+        {
+          "key": "governance",
+          "label": "Synthetic governance review"
+        }
+      ],
+      "occupations": [
+        {
+          "key": "analyst",
+          "label": "Synthetic Data Systems Analyst",
+          "requirements": {
+            "sql": "essential",
+            "model": "essential",
+            "pipeline": "optional"
+          }
+        },
+        {
+          "key": "practitioner",
+          "label": "Synthetic Query Practitioner",
+          "requirements": {
+            "sql": "essential"
+          }
+        },
+        {
+          "key": "steward",
+          "label": "Synthetic Secure Data Steward",
+          "requirements": {
+            "security": "essential",
+            "governance": "essential",
+            "model": "optional"
+          }
+        }
+      ],
+      "support": [
+        {
+          "skill": "sql",
+          "course": "query",
+          "support": "demonstrated",
+          "extent": "full"
+        },
+        {
+          "skill": "model",
+          "course": "model",
+          "support": "documented_intent",
+          "extent": "full"
+        },
+        {
+          "skill": "pipeline",
+          "course": "pipeline",
+          "support": "documented_intent",
+          "extent": "partial"
+        }
+      ],
+      "gap": {
+        "skill": "security",
+        "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all four listed courses; this is a fictional reviewed deficiency finding, not an inference from a missing title."
+      },
+      "unknown": "governance",
+      "review_basis": "Explicit fictional academic review for deterministic acceptance tests only; not real academic approval.",
+      "malaysia_applicability": "Fictional Malaysian pilot context only; this synthetic taxonomy measures no Malaysian demand.",
+      "expected_states": {
+        "sql": "supported",
+        "model": "partial",
+        "pipeline": "partial",
+        "security": "documented_gap",
+        "governance": "unknown"
+      }
+    },
+    "accounting": {
+      "fixture_id": "phase7-fictional-accounting-1",
+      "is_synthetic": true,
+      "label": "Entirely fictional curriculum, occupation requirements, assessments and operator review. Controlled software evaluation only; no real institutional or occupational accuracy assertion.",
+      "programme": "Bachelor of Synthetic Accounting",
+      "course_inventory_scope": "All four fictional courses are compulsory in this complete synthetic revision; this is not a real university assertion.",
+      "institution": "Fictional Career Evidence University",
+      "taxonomy": "Synthetic teaching taxonomy 1",
+      "discipline": "accounting",
+      "courses": [
+        {
+          "key": "query",
+          "title": "Synthetic Ledger Reconciliation Laboratory",
+          "quote": "Synthetic reviewed assessment demonstrates reconciling a fictional ledger to documented bank entries.",
+          "demonstration_reviewed": true
+        },
+        {
+          "key": "model",
+          "title": "Synthetic Reporting Principles",
+          "quote": "Synthetic learning outcome: students are intended to explain recognition and reporting of fictional transactions."
+        },
+        {
+          "key": "pipeline",
+          "title": "Synthetic Audit Sampling Studio",
+          "quote": "Synthetic learning outcome: students are intended to practise one introductory audit sampling procedure."
+        },
+        {
+          "key": "inventory",
+          "title": "Synthetic Professional Ethics Capstone",
+          "quote": null
+        }
+      ],
+      "skills": [
+        {
+          "key": "sql",
+          "label": "Synthetic ledger reconciliation"
+        },
+        {
+          "key": "model",
+          "label": "Synthetic financial reporting principles"
+        },
+        {
+          "key": "pipeline",
+          "label": "Synthetic audit sampling"
+        },
+        {
+          "key": "security",
+          "label": "Synthetic fraud-control review"
+        },
+        {
+          "key": "governance",
+          "label": "Synthetic professional governance"
+        }
+      ],
+      "occupations": [
+        {
+          "key": "analyst",
+          "label": "Synthetic Financial Reporting Analyst",
+          "requirements": {
+            "sql": "essential",
+            "model": "essential",
+            "pipeline": "optional"
+          }
+        },
+        {
+          "key": "practitioner",
+          "label": "Synthetic Ledger Reconciliation Practitioner",
+          "requirements": {
+            "sql": "essential"
+          }
+        },
+        {
+          "key": "steward",
+          "label": "Synthetic Audit Control Reviewer",
+          "requirements": {
+            "security": "essential",
+            "governance": "essential",
+            "model": "optional"
+          }
+        }
+      ],
+      "support": [
+        {
+          "skill": "sql",
+          "course": "query",
+          "support": "demonstrated",
+          "extent": "full"
+        },
+        {
+          "skill": "model",
+          "course": "model",
+          "support": "documented_intent",
+          "extent": "full"
+        },
+        {
+          "skill": "pipeline",
+          "course": "pipeline",
+          "support": "documented_intent",
+          "extent": "partial"
+        }
+      ],
+      "gap": {
+        "skill": "security",
+        "quote": "Synthetic whole-revision academic audit explicitly confirms no documented fraud-control teaching or assessment across all listed fictional courses; this is an explicit fictional deficiency audit, not inferred from a title."
+      },
+      "unknown": "governance",
+      "review_basis": "Explicit fictional academic review for deterministic acceptance tests only; not real academic approval.",
+      "malaysia_applicability": "Fictional Malaysian pilot context only; this synthetic taxonomy measures no Malaysian demand.",
+      "expected_states": {
+        "sql": "supported",
+        "model": "partial",
+        "pipeline": "partial",
+        "security": "documented_gap",
+        "governance": "unknown"
+      }
+    },
+    "biotechnology": {
+      "fixture_id": "phase7-fictional-biotechnology-1",
+      "is_synthetic": true,
+      "label": "Entirely fictional curriculum, occupation requirements, assessments and operator review. Controlled software evaluation only; no real institutional or occupational accuracy assertion.",
+      "programme": "Bachelor of Synthetic Biotechnology",
+      "course_inventory_scope": "All four fictional courses are compulsory in this complete synthetic revision; this is not a real university assertion.",
+      "institution": "Fictional Career Evidence University",
+      "taxonomy": "Synthetic teaching taxonomy 1",
+      "discipline": "biotechnology",
+      "courses": [
+        {
+          "key": "query",
+          "title": "Synthetic Aseptic Technique Laboratory",
+          "quote": "Synthetic reviewed assessment demonstrates aseptic handling of a fictional non-biological training sample.",
+          "demonstration_reviewed": true
+        },
+        {
+          "key": "model",
+          "title": "Synthetic Experimental Design",
+          "quote": "Synthetic learning outcome: students are intended to explain controls and replication in a fictional experimental design."
+        },
+        {
+          "key": "pipeline",
+          "title": "Synthetic Bioprocess Data Studio",
+          "quote": "Synthetic learning outcome: students are intended to practise one introductory bioprocess measurement-recording procedure."
+        },
+        {
+          "key": "inventory",
+          "title": "Synthetic Biosafety Governance Capstone",
+          "quote": null
+        }
+      ],
+      "skills": [
+        {
+          "key": "sql",
+          "label": "Synthetic aseptic handling"
+        },
+        {
+          "key": "model",
+          "label": "Synthetic experimental design"
+        },
+        {
+          "key": "pipeline",
+          "label": "Synthetic bioprocess measurement recording"
+        },
+        {
+          "key": "security",
+          "label": "Synthetic biosafety risk review"
+        },
+        {
+          "key": "governance",
+          "label": "Synthetic research governance"
+        }
+      ],
+      "occupations": [
+        {
+          "key": "analyst",
+          "label": "Synthetic Experimental Design Analyst",
+          "requirements": {
+            "sql": "essential",
+            "model": "essential",
+            "pipeline": "optional"
+          }
+        },
+        {
+          "key": "practitioner",
+          "label": "Synthetic Aseptic Technique Practitioner",
+          "requirements": {
+            "sql": "essential"
+          }
+        },
+        {
+          "key": "steward",
+          "label": "Synthetic Biosafety Review Steward",
+          "requirements": {
+            "security": "essential",
+            "governance": "essential",
+            "model": "optional"
+          }
+        }
+      ],
+      "support": [
+        {
+          "skill": "sql",
+          "course": "query",
+          "support": "demonstrated",
+          "extent": "full"
+        },
+        {
+          "skill": "model",
+          "course": "model",
+          "support": "documented_intent",
+          "extent": "full"
+        },
+        {
+          "skill": "pipeline",
+          "course": "pipeline",
+          "support": "documented_intent",
+          "extent": "partial"
+        }
+      ],
+      "gap": {
+        "skill": "security",
+        "quote": "Synthetic whole-revision academic audit explicitly confirms no documented biosafety risk-review teaching or assessment across all listed fictional courses; this is an explicit fictional deficiency audit, not inferred from a title."
+      },
+      "unknown": "governance",
+      "review_basis": "Explicit fictional academic review for deterministic acceptance tests only; not real academic approval.",
+      "malaysia_applicability": "Fictional Malaysian pilot context only; this synthetic taxonomy measures no Malaysian demand.",
+      "expected_states": {
+        "sql": "supported",
+        "model": "partial",
+        "pipeline": "partial",
+        "security": "documented_gap",
+        "governance": "unknown"
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "valid_career",
+      "dimension": "evidence_grounding",
+      "method": "observed_output",
+      "operation": "career_valid",
+      "expected": "accept",
+      "description": "Actual career output passes the existing exact evidence and canonical output validator."
+    },
+    {
+      "id": "valid_plan",
+      "dimension": "plan_completion",
+      "method": "observed_output",
+      "operation": "plan_valid",
+      "expected": "accept",
+      "description": "Actual action-plan output passes its existing lineage, resource, scenario and SDG validators."
+    },
+    {
+      "id": "citations",
+      "dimension": "citation_validation",
+      "method": "observed_output",
+      "operation": "citations_valid",
+      "expected": "accept",
+      "description": "Every actual career citation resolves to its frozen permitted exact excerpt."
+    },
+    {
+      "id": "coverage",
+      "dimension": "api_correctness",
+      "method": "observed_output",
+      "operation": "coverage",
+      "expected": "preserve",
+      "description": "Protected persisted programme and all-course inventories agree across phases."
+    },
+    {
+      "id": "classification",
+      "dimension": "competency_classification",
+      "method": "observed_output",
+      "operation": "classification",
+      "expected": "preserve",
+      "description": "Actual competency states match explicit fictional assessed, intended, partial, audited and unknown labels."
+    },
+    {
+      "id": "title_only",
+      "dimension": "uncertainty",
+      "method": "observed_output",
+      "operation": "title_only",
+      "expected": "abstain",
+      "description": "Title-only inventory course supplies no positive competency finding."
+    },
+    {
+      "id": "intent",
+      "dimension": "curriculum_fidelity",
+      "method": "observed_output",
+      "operation": "intent",
+      "expected": "preserve",
+      "description": "Documented fictional learning intent is not promoted to demonstrated attainment."
+    },
+    {
+      "id": "review",
+      "dimension": "review_integrity",
+      "method": "observed_output",
+      "operation": "review",
+      "expected": "preserve",
+      "description": "Generated action plan is proposed, without academic approval or implementation authority."
+    },
+    {
+      "id": "scenarios",
+      "dimension": "scenario_integrity",
+      "method": "observed_output",
+      "operation": "scenarios",
+      "expected": "preserve",
+      "description": "Two distinct conditional assumptions remain non-forecasts without probability."
+    },
+    {
+      "id": "sdgs",
+      "dimension": "sdg_integrity",
+      "method": "observed_output",
+      "operation": "sdgs",
+      "expected": "preserve",
+      "description": "Any source-admitted SDG relation remains possible contribution without measured impact."
+    },
+    {
+      "id": "occupation",
+      "dimension": "occupation_mapping",
+      "method": "observed_output",
+      "operation": "occupation",
+      "expected": "preserve",
+      "description": "Actual occupations and their reviewed fixture requirements retain exact skill labels."
+    },
+    {
+      "id": "fabricated_quote",
+      "dimension": "unsupported_claim_rejection",
+      "method": "output_mutation",
+      "operation": "fabricated_quote",
+      "expected": "reject",
+      "description": "Replace one real output citation quote; actual career validator must reject it."
+    },
+    {
+      "id": "unsupported_action",
+      "dimension": "recommendation_lineage",
+      "method": "output_mutation",
+      "operation": "unsupported_action",
+      "expected": "reject",
+      "description": "Promote unknown competency to unsupported elective proposal; canonical validator must reject."
+    },
+    {
+      "id": "wrong_relation",
+      "dimension": "occupation_mapping",
+      "method": "output_mutation",
+      "operation": "wrong_relation",
+      "expected": "reject",
+      "description": "Assign an unregistered skill to an actual requirement output; typed source validation must reject."
+    },
+    {
+      "id": "wrong_revision",
+      "dimension": "recommendation_lineage",
+      "method": "output_mutation",
+      "operation": "wrong_revision",
+      "expected": "reject",
+      "description": "Change the output programme revision while retaining frozen evidence."
+    },
+    {
+      "id": "outdated_review",
+      "dimension": "review_integrity",
+      "method": "output_mutation",
+      "operation": "outdated_review",
+      "expected": "reject",
+      "description": "Change a consideration review content version; exact version validation must reject."
+    },
+    {
+      "id": "malformed_output",
+      "dimension": "structured_output",
+      "method": "output_mutation",
+      "operation": "malformed_output",
+      "expected": "reject",
+      "description": "Give a list in place of the academic programme UUID; Pydantic must reject."
+    },
+    {
+      "id": "injected_instruction",
+      "dimension": "unsupported_claim_rejection",
+      "method": "output_mutation",
+      "operation": "injected_instruction",
+      "expected": "reject",
+      "description": "A model-style instruction masquerading as an academic recommendation cannot pass canonical validation. This tests output rejection, not model prompt resistance."
+    },
+    {
+      "id": "exposure_replacement",
+      "dimension": "unsupported_claim_rejection",
+      "method": "output_mutation",
+      "operation": "exposure_replacement",
+      "expected": "reject",
+      "description": "A replacement claim inserted in recommendation text cannot pass canonical validation."
+    },
+    {
+      "id": "unrelated_sdg",
+      "dimension": "sdg_integrity",
+      "method": "output_mutation",
+      "operation": "unrelated_sdg",
+      "expected": "reject",
+      "description": "A fabricated unrelated SDG target cannot replace the frozen admitted mapping."
+    },
+    {
+      "id": "automatic_approval",
+      "dimension": "review_integrity",
+      "method": "output_mutation",
+      "operation": "automatic_approval",
+      "expected": "reject",
+      "description": "Forged academic approval must be rejected."
+    },
+    {
+      "id": "forecast_probability",
+      "dimension": "scenario_integrity",
+      "method": "output_mutation",
+      "operation": "forecast_probability",
+      "expected": "reject",
+      "description": "A scenario cannot claim predictive probability."
+    },
+    {
+      "id": "withdrawal",
+      "dimension": "stale_source_invalidation",
+      "method": "replay_observation",
+      "operation": "source_withdrawn",
+      "expected": "reject",
+      "description": "Actual API revalidation must redact results after source withdrawal."
+    },
+    {
+      "id": "version_change",
+      "dimension": "stale_source_invalidation",
+      "method": "replay_observation",
+      "operation": "source_changed",
+      "expected": "reject",
+      "description": "Actual API revalidation must invalidate modified source content/version."
+    },
+    {
+      "id": "repeat",
+      "dimension": "repeat_consistency",
+      "method": "replay_observation",
+      "operation": "repeat_consistency",
+      "expected": "preserve",
+      "description": "Actual duplicate submission/explicit repeat maintains frozen result consistency."
+    },
+    {
+      "id": "contradiction",
+      "dimension": "uncertainty",
+      "method": "replay_observation",
+      "operation": "conflicting_evidence",
+      "expected": "abstain",
+      "description": "Actual contradictory admitted curriculum assertions must not become supported or confirmed gap."
+    },
+    {
+      "id": "stale_workforce",
+      "dimension": "uncertainty",
+      "method": "replay_observation",
+      "operation": "stale_workforce",
+      "expected": "abstain",
+      "description": "Actual stale workforce context must retain date limitations without new demand claims."
+    },
+    {
+      "id": "prompt_document",
+      "dimension": "curriculum_fidelity",
+      "method": "replay_observation",
+      "operation": "prompt_injection",
+      "expected": "preserve",
+      "description": "Actual document-instruction fixture must preserve admitted facts and review boundaries."
+    }
+  ],
+  "limitations": [
+    "All academic and occupation examples are fictional; classification labels are engineering fixture expectations, not external academic expert judgements.",
+    "Permitted authentic benchmark sources may be reused unchanged; their provenance and synthetic flags remain distinct.",
+    "Output-mutation rejection demonstrates validator behaviour, not live model factuality or prompt-injection resistance.",
+    "Replay checks are only counted when the integration runner supplies actual observations; unexecuted checks are explicitly not_observed.",
+    "No paid model/search requests are performed. No inference about real university curricula, graduates, labour-market accuracy or achieved SDG impact follows."
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "limitations": "Bounded, redacted schema example from an actual synthetic API response; not a live provider or production result. Normalised version hashes must never be submitted as real review approvals.",
+  "normalised_fields": [
+    "UUIDs",
+    "timestamps",
+    "content digests"
+  ],
+  "provider_execution": "mocked",
+  "response": {
+    "error": null,
+    "evidence_access_limitations": [],
+    "items": [
+      {
+        "citations": [],
+        "goal_code": null,
+        "goal_title": null,
+        "limitations": [],
+        "measured_impact": false,
+        "mechanism": null,
+        "rationale": "No justified reviewed SDG contribution was supplied; no automatic goal tag.",
+        "recommendation_id": "35d048ad-b48f-54d3-9ef1-fa05f2e672ef",
+        "status": "unmapped",
+        "target_code": null,
+        "target_title": null
+      },
+      {
+        "citations": [],
+        "goal_code": null,
+        "goal_title": null,
+        "limitations": [],
+        "measured_impact": false,
+        "mechanism": null,
+        "rationale": "No justified reviewed SDG contribution was supplied; no automatic goal tag.",
+        "recommendation_id": "c3770865-ddbe-5409-a535-b1388fd3628b",
+        "status": "unmapped",
+        "target_code": null,
+        "target_title": null
+      },
+      {
+        "citations": [
+          {
+            "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all 6 imported courses; this is a fictional reviewed deficiency finding, not an inference from a missing title.",
+            "reference_id": "curriculum_gap:096d6507-4027-52b6-b870-8348a93170a2:2ddcee45-01c3-5d4b-aee5-a784ed64da4b"
+          },
+          {
+            "quote": "By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship",
+            "reference_id": "sdg:662595f9-bfe9-52c7-b711-d6bf99bafd0a"
+          }
+        ],
+        "goal_code": "4",
+        "goal_title": "Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all",
+        "limitations": [
+          "Reviewed proposed contribution; no measured or achieved SDG impact.",
+          "UN target text is a normative benchmark, not evidence of university teaching."
+        ],
+        "measured_impact": false,
+        "mechanism": "assessed_competency_access",
+        "rationale": "Explicit fictional review: a proposed assessed technical competency activity may contribute to relevant skills preparation under target 4.4; no achieved SDG outcome, employment or proficiency is claimed.",
+        "recommendation_id": "537c829b-965f-57de-8b1e-cb2e7c4aa929",
+        "status": "possible_contribution",
+        "target_code": "4.4",
+        "target_title": "By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship"
+      }
+    ],
+    "limit": 3,
+    "needs_evidence_revalidation": false,
+    "offset": 0,
+    "status": "PARTIAL",
+    "total": 5
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "limitations": "Bounded, redacted schema example from an actual synthetic API response; not a live provider or production result. Normalised version hashes must never be submitted as real review approvals.",
+  "normalised_fields": [
+    "UUIDs",
+    "timestamps",
+    "content digests"
+  ],
+  "provider_execution": "mocked",
+  "response": {
+    "actor": "authenticated_analysis_operator",
+    "created_at": "2026-10-25T00:00:00+00:00",
+    "decision": "under_review",
+    "evidence_access_limitations": [],
+    "id": "77f281fa-ce65-58b9-a995-c21917673757",
+    "is_synthetic": true,
+    "needs_evidence_revalidation": false,
+    "plan_fingerprint": "0000000000000000000000000000000000000000000000000000000000000000",
+    "plan_run_id": "55ac86ee-13c7-5366-a5e2-f4644015a60a",
+    "programme_revision_id": "a2f70db9-de48-56b1-b349-047d4eaa350c",
+    "reason": "Explicit fictional operator review; implementation is not authorised and no named academic identity is asserted.",
+    "reviewed_at": "2026-10-25T00:00:00+00:00"
+  }
+}

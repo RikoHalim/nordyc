@@ -8,6 +8,7 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from shiftos.core.access import require_api_access
 from shiftos.core.errors import DomainError
 from shiftos.db.session import get_session
 from shiftos.models import (
@@ -48,7 +49,8 @@ from shiftos.schemas.evidence import (
 router = APIRouter(
     prefix="/api/v1/evidence",
     tags=["Reference evidence"],
-    responses={code: {"model": ErrorResponse} for code in (404, 422, 503)},
+    dependencies=[Depends(require_api_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 422, 503)},
 )
 SessionDependency = Annotated[Session, Depends(get_session)]
 Limit = Annotated[int, Query(ge=1, le=100)]

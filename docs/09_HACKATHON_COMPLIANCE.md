@@ -21,7 +21,22 @@
 
 Detailed specifications: [Future Career Alignment/actions](07_ACADEMIC_ACTIONS.md), [Academic Reskilling Pathways/scenarios](08_SCENARIOS_SDG_AND_REPORTING.md). Consult [STATUS](../STATUS.md) for measured implementation/test results; a requirement, proposed schema or demo script is not proof of delivery.
 
-## Reported organiser response and clarification required
+## Phase 7 evidence-based compliance handoff
+
+The original brief PDF is still unavailable; this matrix uses the previously recorded brief and does not invent a fresh organiser response. Synthetic software acceptance and the institutional angle do not certify the final-round rubric.
+
+| Requirement | Current implementation | Supporting evidence | Completion status | Remaining gap | Required organiser clarification | Smallest potential mitigation |
+|---|---|---|---|---|---|---|
+| Skills intake | Programme catalogue/upload and reviewed course passages | Phase 2/3 APIs, complete Phase 7 synthetic import | Institutional capability functional; personal intake absent | A curriculum is not an individual's demonstrated skill inventory | Can programme inputs replace individual skills intake? **UNCONFIRMED** | Later authorized self-report questionnaire, clearly distinguished from assessed competence; no mandatory CV |
+| Workforce relevance | Dated deterministic observations and independent AI context | Phase 3 radar, source provenance and controlled stale/exposure tests | Bounded software functional | Current, precise Malaysian role/skill coverage and Brave original admission incomplete | No waiver assumed; confirm required evidence scope | Curated permitted current observations and reviewed identity bridges |
+| Career recommendations/gaps | Reviewed occupation requirements, intended/demonstrated/partial/gap/unknown states and minimum actions | Phase 5 + Phase 7 lineage, mapping and rejection evaluation | Institutional backend complete for controlled fixtures | No person-role matching or real academic accuracy benchmark | Can programme alignment replace personal matching? **UNCONFIRMED** | Expert-reviewed institutional mappings; reuse contracts for a separately authorized individual adapter if required |
+| Ordered pathways/resources/time | Exact recommendation-linked procedures, reviewed prerequisites/resources and based or unknown duration | Phase 6 + controlled 6/30/100-course Phase 7 workflow | Institutional backend complete for controlled fixtures | Real resource suitability/cost/duration data limited; no personalized learner plan | Can academic pathways replace personalized learning plans? **UNCONFIRMED** | Small permitted reviewed resource set; optional individual pathway adapter only after clarification/authorization |
+| Meaningful SDGs | Reviewed potential target contributions, official UN text and exact citations | Existing 186 references, Phase 6/7 SDG provenance/rejection cases | Institutional software functional | No achieved impact or independently evaluated causal outcomes | Confirm acceptable institutional target-level interpretation; no waiver invented | Academic review of specific competency/intervention mechanisms |
+| Multiple future scenarios | Two explicit hypothetical assumptions and comparable review priorities | Phase 6/7 scenario and selective replay tests | Implemented controlled software | No measured future forecasts or adoption probabilities | Confirm final rubric presentation expectations | Render uncertainty, no-change and source scope clearly in authorized Phase 8 UI |
+
+Phase 7 also supplies scoped operator grants, protected backend contracts and synthetic response examples, not a production identity service or final frontend. Remaining readiness and the detailed Phase 8 stop boundary are in [the integration/security runbook](29_PHASE7_INTEGRATION_EVALUATION_SECURITY.md). No student profiles, CV analysis or recruitment system was added. Written organiser clarification remains required before claiming the three institutional substitutions are accepted.
+
+## Reported organiser response and clarification required (original record)
 
 The user reports that organisers accepted the university-focused concept and said CV uploads are unnecessary. No date, channel, exact written response or evidence has been supplied for a waiver of individual skills intake, person-to-role matching or personalised pathways. Record all three substitutions as **UNCONFIRMED**. Do not infer that SDG mapping or multiple scenarios were waived.
 

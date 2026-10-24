@@ -1,0 +1,15 @@
+{
+  "fixture_id": "phase7-system-integration-1",
+  "is_synthetic": true,
+  "label": "Controlled fictional institutional workflow. Every university/course/assessment/taxonomy/workforce/resource/review observation is synthetic; official UN normative text retains its existing attribution. Mocked Claude outputs are software fixtures, not live model or academic validation.",
+  "base_fixture": "career_alignment.synthetic.json",
+  "pathways_fixture": "academic_pathways.synthetic.json",
+  "course_counts": [6, 30, 100],
+  "maximum_courses": 200,
+  "padding_courses": "Additional explicitly synthetic title-only inventory records; no competency inferred.",
+  "expected_requirement_states": {"sql": "supported", "model": "partial", "pipeline": "partial", "security": "documented_gap", "governance": "unknown"},
+  "stage_order": ["curriculum_import", "source_admission", "phase4", "career", "recommendation_review", "action_plan", "plan_review", "independent_persistence"],
+  "live_requests_authorised": false,
+  "billing_observed": null,
+  "safety": "The verification harness prohibits all real HTTP calls and strips provider credentials. Its process-local mocked-mode gate does not grant external-processing permission or alter persistent settings."
+}

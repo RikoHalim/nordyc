@@ -1,6 +1,8 @@
 """Private PDF uploads; extraction runs in the existing separate catalogue worker."""
 
 import hashlib
+import os
+import stat
 from uuid import UUID
 
 from sqlalchemy import select
@@ -25,10 +27,33 @@ from shiftos.services.ingestion.pdf import (
 )
 
 
-def upload_path(settings, digest):
+def upload_path(settings, digest, institution_id=None):
     if len(digest) != 64 or any(c not in "0123456789abcdef" for c in digest):
         raise DomainError("INVALID_UPLOAD", "Invalid stored document identity", 422)
-    return settings.curriculum_upload_dir.resolve() / f"{digest}.pdf"
+    configured = settings.curriculum_upload_dir.absolute()
+    if configured.is_symlink():
+        raise DomainError("UPLOAD_STORAGE_ERROR", "Private upload storage is unsafe", 409)
+    root = configured.resolve()
+    if institution_id is not None:
+        root = root / str(UUID(str(institution_id)))
+        if root.is_symlink():
+            raise DomainError("UPLOAD_STORAGE_ERROR", "Private upload storage is unsafe", 409)
+    path = root / f"{digest}.pdf"
+    if path.is_symlink():
+        raise DomainError("UPLOAD_STORAGE_ERROR", "Private upload storage is unsafe", 409)
+    return path
+
+
+def _read_private_pdf(path):
+    try:
+        descriptor = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+        with os.fdopen(descriptor, "rb") as stored:
+            info = os.fstat(stored.fileno())
+            if not stat.S_ISREG(info.st_mode) or info.st_nlink != 1 or info.st_size > 20_000_000:
+                raise OSError("Unsafe upload object")
+            return stored.read(20_000_001)
+    except OSError:
+        raise DomainError("UPLOAD_STORAGE_ERROR", "Private upload storage is unsafe", 409) from None
 
 
 def enqueue_pdf_upload(session, programme_id, content, settings, *, source_url=None, regions=None):
@@ -41,13 +66,17 @@ def enqueue_pdf_upload(session, programme_id, content, settings, *, source_url=N
     if not content.startswith(b"%PDF-") or not 0 < len(content) <= 20_000_000:
         raise DomainError("INVALID_PDF", "Upload a PDF document up to 20 MB", 422)
     checksum = hashlib.sha256(content).hexdigest()
-    path = upload_path(settings, checksum)
-    path.parent.mkdir(parents=True, exist_ok=True)
+    scoped = getattr(settings, "api_access_mode", "legacy") == "scoped"
+    path = upload_path(settings, checksum, institution.id if scoped else None)
+    path.parent.mkdir(mode=0o700, parents=True, exist_ok=True)
+    if os.name != "nt":
+        path.parent.chmod(0o700)
     try:
-        with path.open("xb") as output:
+        descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        with os.fdopen(descriptor, "wb") as output:
             output.write(content)
     except FileExistsError:
-        if hashlib.sha256(path.read_bytes()).hexdigest() != checksum:
+        if hashlib.sha256(_read_private_pdf(path)).hexdigest() != checksum:
             raise DomainError(
                 "UPLOAD_STORAGE_ERROR", "Stored document failed integrity check", 409
             ) from None
@@ -61,6 +90,7 @@ def enqueue_pdf_upload(session, programme_id, content, settings, *, source_url=N
             "source_url": source_url,
             "source_url_is_programme_pointer": source_url == programme.canonical_url,
             "uploaded_at": utc_now().isoformat(),
+            "storage_scope": "institution" if scoped else "legacy",
             "regions": [r.model_dump() for r in regions] if regions else None,
         },
         None,
@@ -72,10 +102,17 @@ def process_pdf_upload(database, job, settings):
     from shiftos.services.ingestion.worker import lock_running_job
 
     payload = job.payload_json
-    path = upload_path(settings, payload["content_sha256"])
+    scope = payload.get("storage_scope", "legacy")
+    if scope not in {"institution", "legacy"}:
+        raise DomainError("UPLOAD_STORAGE_ERROR", "Invalid private storage scope", 409)
+    path = upload_path(
+        settings,
+        payload["content_sha256"],
+        job.institution_id if scope == "institution" else None,
+    )
     if not path.exists() or path.stat().st_size > 20_000_000:
         raise DomainError("UPLOAD_UNAVAILABLE", "Stored upload unavailable; upload again", 422)
-    content = path.read_bytes()
+    content = _read_private_pdf(path)
     if hashlib.sha256(content).hexdigest() != payload["content_sha256"]:
         raise DomainError("UPLOAD_CHECKSUM_MISMATCH", "Stored upload integrity check failed", 422)
     from datetime import datetime
@@ -87,21 +124,39 @@ def process_pdf_upload(database, job, settings):
         if programme.institution_id != job.institution_id:
             raise DomainError("CONFLICT", "Uploaded programme belongs to another institution", 409)
         name, canonical_url = programme.name, programme.canonical_url
-    regions = (
-        [PdfCourseRegion.model_validate(r) for r in payload["regions"]]
-        if payload.get("regions")
-        else detect_brochure_regions(content)
-    )
-    data = prepare_brochure_import(
-        content,
-        programme_name=name,
-        canonical_url=canonical_url,
-        source_url=payload["source_url"],
-        retrieved_at=uploaded_at,
-        regions=regions,
-        is_synthetic=job.is_synthetic,
-        license_status="private_uploaded_document_reuse_unconfirmed",
-    )
+    if scope == "institution" or getattr(settings, "api_access_mode", "legacy") == "scoped":
+        from shiftos.services.ingestion.pdf_process import prepare_in_process
+
+        data, raw_regions = prepare_in_process(
+            content,
+            regions=payload.get("regions"),
+            metadata={
+                "programme_name": name,
+                "canonical_url": canonical_url,
+                "source_url": payload["source_url"],
+                "retrieved_at": uploaded_at.isoformat(),
+                "is_synthetic": job.is_synthetic,
+                "license_status": "private_uploaded_document_reuse_unconfirmed",
+            },
+        )
+        regions = [PdfCourseRegion.model_validate(row) for row in raw_regions]
+    else:
+        # Preserve existing local queued uploads; deployed scoped uploads use isolation above.
+        regions = (
+            [PdfCourseRegion.model_validate(r) for r in payload["regions"]]
+            if payload.get("regions")
+            else detect_brochure_regions(content)
+        )
+        data = prepare_brochure_import(
+            content,
+            programme_name=name,
+            canonical_url=canonical_url,
+            source_url=payload["source_url"],
+            retrieved_at=uploaded_at,
+            regions=regions,
+            is_synthetic=job.is_synthetic,
+            license_status="private_uploaded_document_reuse_unconfirmed",
+        )
     manifest = data.programmes[0]
     manifest.notes.extend(
         [

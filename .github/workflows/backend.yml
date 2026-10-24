@@ -1,4 +1,4 @@
-name: Backend curriculum ingestion
+name: Backend integration and security
 
 on:
   push:
@@ -29,6 +29,12 @@ jobs:
     env:
       APP_ENV: test
       TEST_DATABASE_URL: postgresql+psycopg://shiftos_ci:shiftos_ci_only@localhost:5432/shiftos_ci_test
+      DATABASE_URL: postgresql+psycopg://shiftos_ci:shiftos_ci_only@localhost:5432/shiftos_ci_test
+      ANALYSIS_MODEL_PROVIDER: replit_claude
+      ANALYSIS_EXTERNAL_PROCESSING_ALLOWED: "false"
+      RESEARCH_ENABLED: "false"
+      GEMINI_ENABLED: "false"
+      ANALYSIS_GEMINI_FALLBACK_ENABLED: "false"
     steps:
       - name: Check out source
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -50,3 +56,10 @@ jobs:
         run: python -m ruff format --check .
       - name: Run catalogue, security and PostgreSQL integration tests
         run: python -m pytest -q
+      - name: Check dependency integrity and isolated schema
+        run: |
+          python -m pip check
+          python -m alembic upgrade head
+          python -m alembic check
+          python -m alembic heads
+          python -m shiftos.cli runtime-preflight --check-database

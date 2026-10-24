@@ -1,10 +1,11 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Request
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from shiftos.core.access import require_api_access, scope_statement
 from shiftos.db.session import get_session
 from shiftos.models import Institution, Programme, Source
 from shiftos.schemas.academic import (
@@ -25,7 +26,8 @@ from shiftos.services import academic
 router = APIRouter(
     prefix="/api/v1",
     tags=["Academic structure"],
-    responses={code: {"model": ErrorResponse} for code in (404, 409, 422, 503)},
+    dependencies=[Depends(require_api_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 409, 422, 503)},
 )
 SessionDependency = Annotated[Session, Depends(get_session)]
 Limit = Annotated[int, Query(ge=1, le=100)]
@@ -38,13 +40,16 @@ def create_institution(data: InstitutionCreate, session: SessionDependency) -> I
 
 
 @router.get("/institutions", response_model=Page[InstitutionRead])
-def list_institutions(session: SessionDependency, limit: Limit = 50, offset: Offset = 0) -> dict:
+def list_institutions(
+    request: Request, session: SessionDependency, limit: Limit = 50, offset: Offset = 0
+) -> dict:
+    statement = scope_statement(request, select(Institution), Institution.id)
     institutions = session.scalars(
-        select(Institution).order_by(Institution.id).limit(limit).offset(offset)
+        statement.order_by(Institution.id).limit(limit).offset(offset)
     ).all()
     return {
         "items": institutions,
-        "total": session.scalar(select(func.count()).select_from(Institution)) or 0,
+        "total": session.scalar(select(func.count()).select_from(statement.subquery())) or 0,
         "limit": limit,
         "offset": offset,
     }
@@ -85,13 +90,14 @@ def create_programme(data: ProgrammeCreate, session: SessionDependency) -> Progr
 
 
 @router.get("/programmes", response_model=Page[ProgrammeRead])
-def list_programmes(session: SessionDependency, limit: Limit = 50, offset: Offset = 0) -> dict:
-    programmes = session.scalars(
-        select(Programme).order_by(Programme.id).limit(limit).offset(offset)
-    ).all()
+def list_programmes(
+    request: Request, session: SessionDependency, limit: Limit = 50, offset: Offset = 0
+) -> dict:
+    statement = scope_statement(request, select(Programme), Programme.institution_id)
+    programmes = session.scalars(statement.order_by(Programme.id).limit(limit).offset(offset)).all()
     return {
         "items": [academic.programme_response(session, programme) for programme in programmes],
-        "total": session.scalar(select(func.count()).select_from(Programme)) or 0,
+        "total": session.scalar(select(func.count()).select_from(statement.subquery())) or 0,
         "limit": limit,
         "offset": offset,
     }

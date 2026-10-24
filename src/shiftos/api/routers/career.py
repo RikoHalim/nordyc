@@ -15,6 +15,7 @@ from shiftos.api.routers.analysis import (
     _public_metadata,
     require_analysis_access,
 )
+from shiftos.core.access import require_api_access
 from shiftos.core.enums import JobStatus
 from shiftos.core.errors import DomainError
 from shiftos.models import CareerRecommendation, CareerRun, Job
@@ -22,6 +23,7 @@ from shiftos.repositories import career
 from shiftos.schemas.analysis import EvidenceItem
 from shiftos.schemas.career import (
     CareerRequest,
+    CareerResult,
     OccupationAlignment,
     RequirementFinding,
     ReviewRequest,
@@ -31,8 +33,8 @@ from shiftos.schemas.common import ErrorResponse, Page
 router = APIRouter(
     prefix="/api/v1",
     tags=["Career alignment"],
-    dependencies=[Depends(require_analysis_access)],
-    responses={code: {"model": ErrorResponse} for code in (401, 404, 409, 422, 503)},
+    dependencies=[Depends(require_api_access), Depends(require_analysis_access)],
+    responses={code: {"model": ErrorResponse} for code in (401, 403, 404, 409, 422, 503)},
 )
 
 
@@ -53,7 +55,12 @@ class CareerRead(BaseModel):
     error: str | None
     request_json: dict[str, Any]
     manifest_json: dict[str, Any]
-    result_json: dict[str, Any]
+    result_json: CareerResult | dict[str, Any] = Field(
+        description=(
+            "Completed validated CareerResult, or an empty/pending/withheld metadata object. "
+            "The metadata alternative does not establish a validated academic result."
+        )
+    )
     model_usage_json: dict[str, Any]
     fingerprint: str | None
     method_version: str | None
