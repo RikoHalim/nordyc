@@ -1,5 +1,11 @@
 # NORDYC — evidence-led academic workspace
 
+# LINKS
+
+Youtube link : https://youtu.be/2g4c97MXiag
+Live prototype link : https://nordyc-academic.replit.app/
+
+# OVERVIEW
 NORDYC helps Malaysian university career centres and academic committees review whole programmes against traceable academic, occupational, workforce and AI evidence. Humans make academic decisions. The pilot catalogue target is **all publicly discoverable XMUM undergraduate programmes**, with deep engine validation on a small set of diverse disciplines first. Other Malaysian institutions will be discovered on demand.
 
 The GitHub repository is [RikoHalim/NORDYC](https://github.com/RikoHalim/NORDYC). NORDYC is the product name; the existing `shiftos` Python package, `SHIFTOS_*` configuration names, database identifiers and documented local paths remain compatible. The name change does not establish a deployment or change recorded verification results.
