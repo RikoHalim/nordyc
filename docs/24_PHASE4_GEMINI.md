@@ -13,6 +13,12 @@ teammate branches, academic schemas, citation rules, workforce calculations and
 migrations are preserved. [STATUS](../STATUS.md) records current checks/publication;
 the earlier 794-test/16-PostgreSQL result is historical.
 
+Published tested implementation:
+[`107fdfbb776cb7b7d02073ead4ba1ac3aa35445f`](https://github.com/RikoHalim/shift-os/commit/107fdfbb776cb7b7d02073ead4ba1ac3aa35445f).
+The remote Gemini ref matched exactly after push; main remained unchanged. A later
+documentation-only publication record may be the tip of
+[feature/phase4-gemini](https://github.com/RikoHalim/shift-os/tree/feature/phase4-gemini).
+
 ## Actual live status and credential handling
 
 **Live Gemini: BLOCKED. Live worker/PostgreSQL/API: BLOCKED pending isolated success.**

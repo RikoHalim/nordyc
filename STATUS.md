@@ -88,8 +88,18 @@ test cluster/random test schemas were used, not an application/user database.
 Argon isolated request and live worker/PostgreSQL/protected-API gates, and retain
 Brave/evidence/currentness/syllabus/occupation-identity and organiser-waiver limits.
 Later source/action coverage must not be inferred from passing software tests.
-Publication outcome will be recorded after staged scope/secret/whitespace review
-and the authorized Gemini-branch commit/push. Stop before Phase 5 or deployment.
+**Publication: SUCCEEDED.** Reviewed implementation
+[`107fdfbb776cb7b7d02073ead4ba1ac3aa35445f`](https://github.com/RikoHalim/shift-os/commit/107fdfbb776cb7b7d02073ead4ba1ac3aa35445f),
+`feat: migrate Gemini 4 Argon to stateless Interactions API`, was pushed to
+**`origin/feature/phase4-gemini`**. The remote ref returned that exact SHA after push;
+remote `main` remained `164255d52b5ceb005647ec670506f10cb5054b10`, and no teammate
+branch was changed. Exactly 18 relevant code/test/example/documentation files were
+staged; scope, credential-pattern and whitespace checks passed. Private/local reports,
+runtime/database files, real credentials and unrelated assets were excluded. AST/diff
+checks confirm Claude/Brave adapters, academic schema/validator, shared input fixture
+and workforce calculations are preserved. This is a documentation-only publication
+follow-up; the final branch tip can include it without changing tested code. No
+merge, force push, deployment or Phase 5/6 implementation occurred. Stop here.
 
 **Next recommended prompt:** “Read AGENTS.md, STATUS.md and docs/24_PHASE4_GEMINI.md.
 I privately configured a replacement Google key, Argon model access/billing/quota
