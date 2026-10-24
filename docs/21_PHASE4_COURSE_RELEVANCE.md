@@ -1,5 +1,10 @@
 # Phase 4 course relevance — operation and validation
 
+The dedicated [Gemini branch verification](24_PHASE4_GEMINI.md) adds `verify-gemini`,
+configurable output bounds and stricter returned-model/part validation. Its latest
+complete suite passes **794 tests**; live Gemini is **BLOCKED** by missing local
+credentials/configuration. The historical Phase 4 measurements below are retained.
+
 Implemented as a bounded backend extension on **24 October 2026**. The current verification is offline/mocked plus genuine persisted evidence; **live Gemini and Brave integration has not been verified**. The user chose offline tests while credentials are unavailable. [STATUS](../STATUS.md) records the final measured checks. Phase 5 recommendations, Phase 6 pathways/scenarios, frontend and deployment remain unimplemented.
 
 ## Stack and retained boundaries

@@ -1,6 +1,6 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24:** Phase 4 remains **FUNCTIONAL for a bounded offline backend proof**. Phase 4.1 adds selectable Replit-managed Claude, explicit optional Gemini fallback, sanitized model/usage auditing and a bounded synthetic verification command. Final publication verification: **756 tests passed**, including **13 PostgreSQL integration cases**, with no failures/skips. **Live Claude verification is BLOCKED:** this Windows checkout has no Replit-managed Anthropic credential/endpoint; the user explicitly chose local completion with the blocker documented. No actual Claude model or billing amount has been observed. Existing Gemini/Brave live gates remain open. Phase 1–4 functionality and evidence limits are preserved; Phases 5–6 remain planning only. The latest request explicitly authorizes GitHub publication and Replit handover; no public deployment or later-phase implementation is authorized.
+**As of 2026-10-24:** Phase 4 remains **FUNCTIONAL for a bounded offline backend proof**. Dedicated `feature/phase4-gemini` adds direct Gemini preflight/one-request verification, bounded configurable output and stricter returned-model/part validation, preserving Claude and Brave. **794 tests passed**, including **16 PostgreSQL integration cases**, zero failures/skips, versus the Phase 4.1 publication baseline of 756 (originally 754). **Live Gemini verification is BLOCKED:** no local key/model, enable/processing gates false; actual preflight/guarded live command made **0 requests**. Preferred documented model: `gemini-4-argon`; actual model/tokens/latency/billing **none observed/unavailable**. Claude remains separately blocked by missing Replit-managed runtime configuration; Brave live verification remains pending. Only this Gemini feature branch is authorized for commit/push; no merge, teammate-branch changes, deployment, frontend or Phase 5/6 implementation.
 
 **Pilot target:** all publicly discoverable XMUM undergraduate programme/course lists. The directory parser found 25 official undergraduate links. Production live retrieval **failed safely** in this environment because `www.xmu.edu.my` resolved to a private network address; no live crawl success is claimed. A separate reviewed manual fallback stored 25 directory programme facts and **141 course appearances across three programmes** in a disposable local PostgreSQL database, retrieved through real FastAPI HTTP. The remaining 22 programmes have no loaded course inventory in that validation database. None of these records certify a complete graduation curriculum or lecturer-taught content.
 
@@ -11,10 +11,79 @@
 | 3 | Evidence acquisition, workforce radar and independent AI task evidence | FUNCTIONAL — bounded evidence gates met; legacy/language/currentness/permission limits explicit |
 | 4 | Internal-first hybrid retrieval, controlled Brave fallback, one Gemini adapter and conservative whole-programme screening | FUNCTIONAL OFFLINE — 637 passed; actual live API acceptance PENDING |
 | 4.1 | Replit-managed Claude selection, optional explicit Gemini fallback, usage lineage and synthetic verification | IMPLEMENTED / OFFLINE VERIFIED — 756 passed; actual Replit/Claude live gate BLOCKED |
+| 4 Gemini branch | Direct Gemini hardening, identical comparison fixture, one-request check and PostgreSQL adapter/usage integration | OFFLINE VERIFIED — 794 passed; actual Gemini live gate BLOCKED |
 | 5 | Future Career Alignment, competency-gap review, minimum sufficient actions, alternatives/no change and human review | PENDING — requirements revised only |
 | 6 | Ordered Academic Reskilling Pathways, scenarios/SDGs/resources/duration and consolidated Action Plans | PENDING — requirements revised only |
 | 7 | Integration, evaluation, change replay and security | PENDING |
 | 8 | Minimal working dashboard and preliminary demo | PENDING |
+
+## Dedicated Gemini branch — 24 October 2026
+
+Shared base: fetched/published `main` at **`164255d52b5ceb005647ec670506f10cb5054b10`**.
+Phase 4 `b586194` and Phase 4.1 implementation `ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb`
+are already in that history. The working tree was clean. Created **`feature/phase4-gemini`**
+from this stable base; no uncommitted work was reset/discarded. The teammate's
+`feature/phase4-replit-claude` was absent from the inspected remote listing and was
+not created, modified, deleted, overwritten or merged. Local `main` is unchanged.
+This request supersedes historical no-publication instructions only for this branch.
+
+Delivered [Gemini runbook](docs/24_PHASE4_GEMINI.md) and `verify-gemini` CLI with a
+zero-call preflight and explicit one-attempt synthetic live check. It reuses the
+exact published Claude packet builder/UUIDs, genuine attributed ESCO skill excerpt,
+source-permission check, instruction, academic Pydantic schema and grounding rules.
+It does not invoke Claude. No comparative accuracy/performance ranking is claimed.
+Usage/latency/hashes and actual request limits are reported safely; missing billing
+stays unknown. One supported citation plus title-only insufficiency must be exercised.
+
+The existing direct Gemini adapter now configures output tokens (1–16,384; helper
+caps at 4,096), requests one candidate, requires an actual returned Gemini identity,
+discards thoughts and rejects malformed/tool/multiple-candidate output. Existing
+provider timeout/retry/byte limits and worker validation repair remain. No dependency,
+database/academic schema, HTTP endpoint, migration, Claude/Brave adapter or evidence
+grading rule changed. Existing JSON manifests already persist model/token outcomes.
+
+| Verification | Actual measured result |
+|---|---|
+| Complete `python -m pytest -q --basetemp=.pytest-gemini-complete --tb=short --junitxml=data/local/gemini-tests.xml` with disposable PostgreSQL `TEST_DATABASE_URL` | **794 passed, zero failures/errors/skips, 94.39s**; one existing upstream Starlette/httpx deprecation warning |
+| PostgreSQL cases included | **16**, versus published 13; new cases use the actual Gemini adapter with mocked HTTP for success, invalid citations and rejected authentication |
+| Separate `python -m pytest -q -m integration --basetemp=.pytest-gemini-integration --tb=short --junitxml=data/local/gemini-integration-tests.xml` | **16 passed, 778 deselected, zero failures/skips, 32.28s** |
+| Existing provider/Claude targeted regressions | **125 passed** |
+| Gemini-specific helper/CLI / new PostgreSQL checks | **35 / 3 passed**; synthetic response metadata, never live observations |
+| Backend proof | Three-course synthetic Accounting inventory; internal academic/AI/workforce retrieval/admission, schema/grounding, deterministic summary/unknowns, complete committed findings, actual-model/usage metadata, protected API and no-call idempotent replay; independent PostgreSQL connection confirms commits |
+| Ruff lint / formatting / dependency integrity | **PASS** |
+| Alembic SQL / heads / migration suite / whitespace | **PASS**, existing five revisions through `0005_programme_analysis`; no new migration or application database change |
+| Documentation checks | **PASS**, five Markdown files, 48 local links/anchors, balanced fences and UTF-8 |
+| Actual Gemini preflight / guarded `--live` | **BLOCKED**, exit 1, **0 requests**; key/model missing, enable/external-processing false; ESCO permission passes |
+| Preferred model / actual model | Officially documented stable **`gemini-4-argon`** / **none observed**; selection rationale and alternative identifiers in runbook |
+| Actual input/output/thought tokens / live latency / observed charge | **Unavailable / unavailable / unavailable**, not estimated or inferred from mocks |
+| Actual live Claude / Gemini / Brave requests | **0 / 0 / 0**; none independently verified |
+
+Environment: Windows, Python **3.13.13**, fresh project virtual environment installed
+from the existing lock and editable dev requirements, disposable loopback PostgreSQL
+**16.15** on port 55434. Automated cases create/drop random `shiftos_test_*` schemas.
+No existing application/user database was migrated. Ignored local reports, binary
+runtime/cluster, credentials/private source material and unrelated assets are excluded
+from Git. The historical 754 baseline became 756 through two earlier report-export
+regressions; this branch adds 38 cases, preserving all existing tests.
+
+**Live blockers:** configure an API-authorized Gemini key/model and project quota/billing,
+approve the actual external-processing terms/settings, then run one controlled real
+request. A consumer Google AI subscription does not prove API credits. Only after
+isolated success perform the live worker/PostgreSQL/protected-API proof; current
+database results used mocked HTTP. Brave's independent search → permitted original →
+verified import/query → citation gate remains pending. Claude is not verified by
+Gemini results. Currentness/coverage/syllabus/occupation-identity limits and the
+organiser waiver gap below remain unchanged.
+
+Publication is prepared for this branch only; the verified implementation SHA and
+remote result will be recorded after commit/push. Stop before merging or later phases.
+
+**Next recommended prompt:** “Read AGENTS.md, STATUS.md and docs/24_PHASE4_GEMINI.md.
+On feature/phase4-gemini, with privately configured API credentials and approved
+source/processing policy, run one synthetic Gemini request, record actual model,
+citations, uncertainty, usage/latency/billing, then verify worker → PostgreSQL →
+protected API. Keep the exact Claude comparison fixture and report any blockers.
+Do not merge, deploy, start Phase 5/6 or claim curriculum accuracy.”
 
 ## Phase 4.1 final verification, publication and Replit handover — 24 October 2026
 

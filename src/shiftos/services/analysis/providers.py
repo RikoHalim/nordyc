@@ -239,7 +239,8 @@ class GeminiProvider(_JsonProvider):
                 "generationConfig": {
                     "responseMimeType": "application/json",
                     "responseJsonSchema": response_schema,
-                    "maxOutputTokens": 16384,
+                    "maxOutputTokens": self.settings.gemini_max_output_tokens,
+                    "candidateCount": 1,
                 },
             },
         )
@@ -254,14 +255,31 @@ class GeminiProvider(_JsonProvider):
                 "totalTokenCount": "total_tokens",
             },
         )
+        actual_model = self.last_response_metadata["actual_model"]
+        if actual_model is None or not actual_model.startswith("gemini-"):
+            self.last_response_metadata["actual_model"] = None
+            raise ProviderError("provider_response_invalid")
         try:
-            candidate = result["candidates"][0]
+            candidates = result["candidates"]
+            if not isinstance(candidates, list) or len(candidates) != 1:
+                raise ProviderError("provider_response_invalid")
+            candidate = candidates[0]
             if candidate.get("finishReason") != "STOP":
                 raise ProviderError("model_output_incomplete")
             parts = candidate["content"]["parts"]
+            if not isinstance(parts, list) or not parts:
+                raise ProviderError("provider_response_invalid")
+            if any(
+                not isinstance(part, dict)
+                or not isinstance(part.get("text"), str)
+                or type(part.get("thought", False)) is not bool
+                or set(part) - {"text", "thought", "thoughtSignature"}
+                for part in parts
+            ):
+                raise ProviderError("provider_response_invalid")
             text = "".join(part["text"] for part in parts if not part.get("thought", False))
             output = json.loads(text, parse_constant=_invalid_constant)
-        except (AttributeError, KeyError, IndexError, TypeError, ValueError):
+        except (AttributeError, KeyError, IndexError, TypeError, ValueError, RecursionError):
             raise ProviderError("provider_response_invalid") from None
         if not isinstance(output, dict):
             raise ProviderError("provider_response_invalid")

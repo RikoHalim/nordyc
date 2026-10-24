@@ -36,7 +36,10 @@ def settings(**overrides):
 
 
 def gemini_reply(text='{"synthetic":true}', finish="STOP"):
-    return {"candidates": [{"finishReason": finish, "content": {"parts": [{"text": text}]}}]}
+    return {
+        "modelVersion": "gemini-synthetic-test",
+        "candidates": [{"finishReason": finish, "content": {"parts": [{"text": text}]}}],
+    }
 
 
 def test_gemini_fixed_origin_header_schema_and_untrusted_data_boundary():

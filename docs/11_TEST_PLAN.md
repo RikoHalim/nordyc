@@ -51,6 +51,18 @@ Preserve all existing Phase 1–4 tests. Add mocked Anthropic Messages/structure
 
 Verify one labelled synthetic course, Pydantic and supporting citations, safe error reporting, idempotent worker execution, PostgreSQL persistence and protected API usage retrieval. Separate mocked PostgreSQL proof from live-provider proof. `verify-claude` preflight must make zero requests; explicit `--live` allows one synthetic-only request with one transport attempt and no fallback. Blocked credentials/model/runtime and unobserved billing must be reported honestly. [Phase 4.1](23_PHASE41_REPLIT_CLAUDE.md) records the live gate; the user chose local/offline completion for this workspace.
 
+### Direct Gemini verification branch
+
+The [Gemini runbook](24_PHASE4_GEMINI.md) retains the exact Phase 4.1 synthetic-course/
+genuine ESCO packet, academic schema, instruction and grounding rules. Gemini tests
+cover zero-call preflight, source-use denial, explicit one-attempt helper, actual
+model identity, strict text/thought/tool parsing, bounded output, token/latency
+reporting, bad citation/title-content rejection and secret-safe report failures.
+Three new real-PostgreSQL cases drive the actual Gemini adapter with mocked HTTP
+through retrieval/sufficiency, worker, committed findings/usage, protected API and
+idempotent replay, including citation/authentication failures. No live service
+success is inferred. Complete suite: **794 passed**, including **16 PostgreSQL cases**.
+
 ### Planned Phase 5–6 enhancement tests
 
 These requirements are documentation only; no alignment/pathway functionality is implemented. Phase 5 must test requirement-to-curriculum support across disciplines, reviewed mappings, title-only unknowns, possible-versus-confirmed gaps, optional deterministic score denominators/weights/missingness, minimum sufficient primary intervention, alternatives/no change and human review. Alignment must never become individual employment probability.

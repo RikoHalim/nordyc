@@ -54,6 +54,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         "--live", action="store_true", help="Make one bounded synthetic-only Claude request"
     )
     claude.add_argument("--report", type=Path, help="Write the secret-free verification report")
+    gemini = commands.add_parser(
+        "verify-gemini",
+        help="Inspect direct Gemini configuration; optionally test one synthetic course",
+    )
+    gemini.add_argument(
+        "--live", action="store_true", help="Make one bounded synthetic-only Gemini request"
+    )
+    gemini.add_argument("--report", type=Path, help="Write the secret-free verification report")
     commands.add_parser(
         "fail-stale-jobs", help="Explicitly fail abandoned catalogue jobs older than one hour"
     )
@@ -70,15 +78,19 @@ def main(argv: Sequence[str] | None = None) -> int:
     database = None
     try:
         settings = Settings()
-        if args.command == "verify-claude":
-            from shiftos.services.analysis.claude_verification import (
-                inspect_claude_configuration,
-                verify_claude,
-            )
+        if args.command in {"verify-claude", "verify-gemini"}:
+            if args.command == "verify-gemini":
+                from shiftos.services.analysis.gemini_verification import (
+                    inspect_gemini_configuration as inspect_configuration,
+                )
+                from shiftos.services.analysis.gemini_verification import verify_gemini as verify
+            else:
+                from shiftos.services.analysis.claude_verification import (
+                    inspect_claude_configuration as inspect_configuration,
+                )
+                from shiftos.services.analysis.claude_verification import verify_claude as verify
 
-            report = (
-                verify_claude(settings) if args.live else inspect_claude_configuration(settings)
-            )
+            report = verify(settings) if args.live else inspect_configuration(settings)
             output = json.dumps(report, indent=2)
             if args.report:
                 try:
@@ -187,12 +199,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"Command rejected: {exc.code}: {exc.message}", file=sys.stderr)
         return 1
     except (ValidationError, ValueError, OSError):
-        if args.command == "verify-claude":
+        if args.command in {"verify-claude", "verify-gemini"}:
             print(
                 json.dumps(
                     {
                         "status": "blocked",
-                        "provider": "replit_claude",
+                        "provider": (
+                            "gemini_direct" if args.command == "verify-gemini" else "replit_claude"
+                        ),
                         "provider_requests": 0,
                         "error_code": "verification_configuration_or_report_invalid",
                     }

@@ -61,6 +61,7 @@ class Settings(BaseSettings):
     curriculum_upload_dir: Path = Path("data/private/curriculum_uploads")
     gemini_api_key: SecretStr | None = None
     gemini_model: str = Field(default="", max_length=100)
+    gemini_max_output_tokens: int = Field(default=16384, ge=1, le=16384)
     gemini_enabled: bool = False
     analysis_model_provider: Literal["gemini", "replit_claude"] = "gemini"
     analysis_gemini_fallback_enabled: bool = False
