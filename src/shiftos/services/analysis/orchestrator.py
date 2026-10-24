@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 import time
 from datetime import UTC, datetime
 
@@ -12,7 +13,7 @@ from sqlalchemy import select
 
 from shiftos.core.enums import JobStatus
 from shiftos.core.errors import DomainError
-from shiftos.models import Job
+from shiftos.models import AnalysisRun, Job
 from shiftos.repositories.analysis import (
     inventory_snapshot,
     lock_analysis_for_job,
@@ -20,7 +21,7 @@ from shiftos.repositories.analysis import (
 )
 from shiftos.repositories.catalogue import digest
 from shiftos.schemas.analysis import AnalysisRequest, EvidencePacket, ProgrammeResult
-from shiftos.services.analysis.providers import GeminiProvider, ProviderError
+from shiftos.services.analysis.providers import GeminiProvider, ProviderError, ReplitClaudeProvider
 from shiftos.services.analysis.research import ResearchService
 from shiftos.services.analysis.retrieval import retrieve_evidence
 from shiftos.services.analysis.validation import assemble_result, offline_result, validate_result
@@ -30,6 +31,57 @@ PROMPT_VERSION = "phase4-grounded-1"
 BATCH_SIZE = 20
 MAX_MODEL_BATCHES = 10
 MAX_RUN_SECONDS = 600
+FALLBACK_ERRORS = {"provider_unavailable", "provider_deadline", "provider_rate_limited"}
+
+
+def _provider_selection(settings):
+    if settings.analysis_model_provider == "replit_claude":
+        return ReplitClaudeProvider, "replit_claude", settings.claude_model
+    return GeminiProvider, "gemini_direct", settings.gemini_model or None
+
+
+def _response_metadata(provider, *, provider_name, requested_model, status, error_code=None):
+    """Persist bounded operational metadata, never headers, prompts or raw replies."""
+    raw = getattr(provider, "last_response_metadata", {})
+    raw = raw if isinstance(raw, dict) else {}
+    actual = raw.get("actual_model")
+    if not isinstance(actual, str) or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9._-]{0,126}", actual):
+        actual = None
+    allowed_usage = {
+        "input_tokens",
+        "output_tokens",
+        "cache_creation_input_tokens",
+        "cache_read_input_tokens",
+        "thought_tokens",
+        "total_tokens",
+    }
+    usage = raw.get("usage", {})
+    usage = usage if isinstance(usage, dict) else {}
+    count = raw.get("request_count", 0)
+    item = {
+        "provider": provider_name,
+        "requested_model": requested_model,
+        "actual_model": actual,
+        "usage": {
+            key: value
+            for key, value in usage.items()
+            if key in allowed_usage and type(value) is int and 0 <= value <= 10**12
+        },
+        "request_count": count if type(count) is int and 0 <= count <= 3 else 0,
+        # Token accounting is not an observed Replit billing statement.
+        "observed_cost": None,
+        "status": status,
+    }
+    if error_code:
+        item["error_code"] = error_code
+    return item
+
+
+def _actual_model_names(model):
+    actual_models = sorted(
+        {item["actual_model"] for item in model.get("responses", []) if item.get("actual_model")}
+    )
+    return ",".join(actual_models)[:255] if actual_models else None
 
 
 def _permissions(settings) -> tuple[dict, dict]:
@@ -93,9 +145,10 @@ def _analyse(packet, settings, provider_factory, deadline):
     fallback = offline_result(packet)
     if not packet.courses:
         return fallback, {"status": "empty_inventory", "calls": 0, "fallback_courses": 0}
-    provider = provider_factory(settings)
+    selected_factory, provider_name, requested_model = _provider_selection(settings)
+    provider = (provider_factory or selected_factory)(settings)
     provider.deadline = deadline
-    findings, errors, calls = [], [], 0
+    findings, errors, calls, responses, fallbacks = [], [], 0, [], []
     aborted = False
     model_courses = 0
     for offset in range(0, len(packet.courses), BATCH_SIZE):
@@ -106,7 +159,10 @@ def _analyse(packet, settings, provider_factory, deadline):
             findings.extend(offline_result(batch).courses)
             continue
         accepted = None
-        for repair in range(2):
+        repair = 0
+        while repair < 2:
+            response_status, error_code = "returned", None
+            switch_provider = False
             try:
                 body = batch.model_dump(mode="json")
                 if repair:
@@ -117,16 +173,51 @@ def _analyse(packet, settings, provider_factory, deadline):
                     )
                 calls += 1
                 raw = provider.generate(body, ProgrammeResult.model_json_schema())
-                accepted = validate_result(raw, batch)
-                if accepted.result_mode != "live_model":
+                candidate = validate_result(raw, batch)
+                if candidate.result_mode != "live_model":
                     raise ValueError("Live provider must disclose live_model output")
+                accepted = candidate
                 break
             except ProviderError as exc:
                 errors.append(exc.code)
-                aborted = True
-                break
+                response_status, error_code = "provider_error", exc.code
+                switch_provider = (
+                    provider_factory is None
+                    and provider_name == "replit_claude"
+                    and settings.analysis_gemini_fallback_enabled
+                    and exc.code in FALLBACK_ERRORS
+                    and repair == 0
+                    and time.monotonic() < deadline
+                )
+                if not switch_provider:
+                    aborted = True
+                    break
             except (ValidationError, ValueError, TypeError, KeyError):
                 errors.append("model_output_not_grounded")
+                response_status, error_code = "validation_rejected", "model_output_not_grounded"
+            finally:
+                responses.append(
+                    _response_metadata(
+                        provider,
+                        provider_name=provider_name,
+                        requested_model=requested_model,
+                        status=response_status,
+                        error_code=error_code,
+                    )
+                )
+            if switch_provider:
+                fallbacks.append(
+                    {
+                        "from_provider": provider_name,
+                        "to_provider": "gemini_direct",
+                        "reason": error_code,
+                    }
+                )
+                provider = GeminiProvider(settings)
+                provider.deadline = deadline
+                provider_name, requested_model = "gemini_direct", settings.gemini_model or None
+                continue
+            repair += 1
         if accepted is None:
             findings.extend(offline_result(batch).courses)
         else:
@@ -145,6 +236,10 @@ def _analyse(packet, settings, provider_factory, deadline):
         "validated_model_courses": model_courses,
         "fallback_courses": len(findings) - model_courses,
         "reasons": sorted(set(errors)),
+        "responses": responses,
+        "fallbacks": fallbacks,
+        "request_count": sum(item["request_count"] for item in responses),
+        "observed_cost": None,
     }
 
 
@@ -153,11 +248,12 @@ def process_analysis_job(
     job: Job,
     settings,
     *,
-    provider_factory=GeminiProvider,
+    provider_factory=None,
     research_factory=ResearchService,
 ) -> None:
     """Fence and atomically publish all findings, manifest and terminal job status."""
     deadline = time.monotonic() + MAX_RUN_SECONDS
+    model = None
     try:
         permissions, permission_policy = _permissions(settings)
         with database.session_factory() as session:
@@ -220,8 +316,9 @@ def process_analysis_job(
             "source_policy_hash": packet.source_policy_hash,
             "permission_policy": permission_policy,
             "rules_version": packet.policy_version,
-            "model_provider": "gemini_direct",
-            "model_configured": settings.gemini_model or None,
+            "model_provider": _provider_selection(settings)[1],
+            "model_configured": _provider_selection(settings)[2],
+            "gemini_fallback_enabled": settings.analysis_gemini_fallback_enabled,
             "prompt_version": PROMPT_VERSION,
             "schema_version": result.schema_version,
             "model_processing": model,
@@ -231,7 +328,9 @@ def process_analysis_job(
                 "packet_hash": packet.manifest_hash,
                 "permission_policy": permission_policy,
                 "request": request.model_dump(mode="json"),
-                "model": settings.gemini_model or None,
+                "model_provider": _provider_selection(settings)[1],
+                "model": _provider_selection(settings)[2],
+                "gemini_fallback_enabled": settings.analysis_gemini_fallback_enabled,
                 "prompt": PROMPT_VERSION,
                 "schema": result.schema_version,
                 "model_processing": model,
@@ -250,7 +349,7 @@ def process_analysis_job(
             run.manifest_json, run.research_json = manifest, research
             run.summary_json = result.model_dump(mode="json", exclude={"courses"})
             run.fingerprint = fingerprint
-            run.model_name = (settings.gemini_model or None) if model.get("calls", 0) else None
+            run.model_name = _actual_model_names(model)
             run.prompt_version, run.schema_version = PROMPT_VERSION, result.schema_version
             stored = session.get(Job, job.id)
             stored.result_json = {
@@ -275,6 +374,20 @@ def process_analysis_job(
         with database.session_factory() as session:
             stored = session.scalar(select(Job).where(Job.id == job.id).with_for_update())
             if stored is not None and stored.status == JobStatus.RUNNING:
+                if model is not None:
+                    # A publication fence can fail after a billable response. Keep
+                    # operational accounting without publishing evidence/findings.
+                    stored.result_json = {"model_processing": model, "error_code": code}
+                    run = session.scalar(select(AnalysisRun).where(AnalysisRun.job_id == job.id))
+                    if run is not None:
+                        run.manifest_json = {
+                            **run.manifest_json,
+                            "model_provider": _provider_selection(settings)[1],
+                            "model_configured": _provider_selection(settings)[2],
+                            "model_processing": model,
+                            "publication_status": "failed",
+                        }
+                        run.model_name = _actual_model_names(model)
                 stored.status, stored.completed_at = JobStatus.FAILED, datetime.now(UTC)
                 stored.error = code + ": Analysis could not be completed; inspect the frozen run"
                 session.commit()

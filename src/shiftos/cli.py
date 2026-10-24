@@ -46,6 +46,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     analysis.add_argument("--mode", choices=("live", "offline"), default="live")
     analysis.add_argument("--no-research", action="store_true")
     analysis.add_argument("--idempotency-key")
+    claude = commands.add_parser(
+        "verify-claude",
+        help="Inspect managed Claude configuration; optionally test one synthetic course",
+    )
+    claude.add_argument(
+        "--live", action="store_true", help="Make one bounded synthetic-only Claude request"
+    )
+    claude.add_argument("--report", type=Path, help="Write the secret-free verification report")
     commands.add_parser(
         "fail-stale-jobs", help="Explicitly fail abandoned catalogue jobs older than one hour"
     )
@@ -62,6 +70,36 @@ def main(argv: Sequence[str] | None = None) -> int:
     database = None
     try:
         settings = Settings()
+        if args.command == "verify-claude":
+            from shiftos.services.analysis.claude_verification import (
+                inspect_claude_configuration,
+                verify_claude,
+            )
+
+            report = (
+                verify_claude(settings) if args.live else inspect_claude_configuration(settings)
+            )
+            output = json.dumps(report, indent=2)
+            if args.report:
+                try:
+                    args.report.parent.mkdir(parents=True, exist_ok=True)
+                    args.report.write_text(output, encoding="utf-8")
+                except OSError:
+                    # A request may already be billable. Preserve its actual
+                    # outcome/usage even when exporting the report fails.
+                    print(
+                        json.dumps(
+                            {
+                                **report,
+                                "report_write_failed": True,
+                                "report_error_code": "verification_report_write_failed",
+                            },
+                            indent=2,
+                        )
+                    )
+                    return 1
+            print(output)
+            return 0 if report["status"] in {"configuration_ready", "live_verified"} else 1
         database = create_database(settings.database_url.get_secret_value())
         if args.command == "analyse-programme":
             from shiftos.repositories.analysis import enqueue_analysis
@@ -149,6 +187,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"Command rejected: {exc.code}: {exc.message}", file=sys.stderr)
         return 1
     except (ValidationError, ValueError, OSError):
+        if args.command == "verify-claude":
+            print(
+                json.dumps(
+                    {
+                        "status": "blocked",
+                        "provider": "replit_claude",
+                        "provider_requests": 0,
+                        "error_code": "verification_configuration_or_report_invalid",
+                    }
+                )
+            )
+            return 1
         print(
             "Import rejected: provide valid bounded JSON or an explicitly synthetic fixture.",
             file=sys.stderr,

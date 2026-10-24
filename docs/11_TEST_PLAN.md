@@ -45,6 +45,12 @@ Separately perform an **opt-in real-data smoke test** with an approved search pr
 
 ## Evaluation: don't claim model accuracy without a labelled benchmark
 
+### Phase 4.1 managed Claude verification
+
+Preserve all existing Phase 1–4 tests. Add mocked Anthropic Messages/structured-output protocol, managed environment aliases, missing/restricted credentials, endpoint validation, redirects, bounded retries/time/bytes, malformed/incomplete/refused responses, transport-schema compatibility without mutating the academic schema, and sanitized actual model/token metadata. Test selected Claude versus compatible Gemini defaults; only explicit Claude operational failures may use the enabled Gemini fallback. Authentication, privacy, schema and citation failures must never switch providers. Offline mode must call neither model.
+
+Verify one labelled synthetic course, Pydantic and supporting citations, safe error reporting, idempotent worker execution, PostgreSQL persistence and protected API usage retrieval. Separate mocked PostgreSQL proof from live-provider proof. `verify-claude` preflight must make zero requests; explicit `--live` allows one synthetic-only request with one transport attempt and no fallback. Blocked credentials/model/runtime and unobserved billing must be reported honestly. [Phase 4.1](23_PHASE41_REPLIT_CLAUDE.md) records the live gate; the user chose local/offline completion for this workspace.
+
 ### Planned Phase 5–6 enhancement tests
 
 These requirements are documentation only; no alignment/pathway functionality is implemented. Phase 5 must test requirement-to-curriculum support across disciplines, reviewed mappings, title-only unknowns, possible-versus-confirmed gaps, optional deterministic score denominators/weights/missingness, minimum sufficient primary intervention, alternatives/no change and human review. Alignment must never become individual employment probability.
