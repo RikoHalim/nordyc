@@ -138,6 +138,8 @@ Full backend acceptance: **1,098 passed**, including **21 real PostgreSQL cases*
 
 The initial hosted CI run found three inherited-environment assumptions in old mocked-provider fixtures: the workflow selects Claude, while those fixtures intended a Gemini/unselected-Claude baseline. The two affected test files now set the intended test provider explicitly and block both sync/async HTTP. The parameterised test checks each explicit mock selection; it no longer misleadingly claims to test an ambient default. **No application provider/default or runtime Gemini flag changed.** The targeted 51 cases and complete 1,098 suite passed under the CI environment. The replacement hosted run must be checked separately after publication; its outcome is not inferred from these local results.
 
+The next hosted run passed backend tests and migration/dependency checks, then found only a Python-version documentation difference: Python 3.12 calls HTTP 422 “Unprocessable Entity”, while 3.13 uses “Unprocessable Content”. `export_frontend_contract.py` now normalises those two known default response descriptions to Content. It preserves custom descriptions and every schema, payload and endpoint. Two actual exports with the alternate standard-library labels produced identical hashes and regenerated the checked-in OpenAPI/TypeScript with no diff. This is deterministic documentation metadata, not a weakened contract comparison; CI still rejects any schema/type drift.
+
 ## Limits and final MVP acceptance
 
 - Brave original-source admission remains **PARTIAL**; no new original is admitted by a frontend view.
