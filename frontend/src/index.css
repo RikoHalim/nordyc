@@ -1,0 +1,60 @@
+:root {
+  --bg: #f6f7f9; --surface: #fff; --text: #16181d; --muted: #5d6470; --border: #dde1e7;
+  --accent: #2f5bea; --accent-text: #fff; --warn-bg: #fff4d6; --warn-text: #7a5400;
+  --changed-bg: #e6ecff; --banner-bg: #3b2a00; --banner-text: #ffe8a3;
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--text); background: var(--bg);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111317; --surface: #1a1d23; --text: #e8eaee; --muted: #9aa2ae; --border: #2c313a;
+    --accent: #6f8dff; --warn-bg: #3a2f10; --warn-text: #ffd479; --changed-bg: #24305a;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); }
+button { font: inherit; color: inherit; cursor: pointer; }
+h1 { font-size: 1.6rem; margin: .25rem 0 .5rem; }
+h2 { font-size: 1.15rem; }
+h3 { font-size: .95rem; margin-top: 1.5rem; }
+
+.synthetic-banner { background: var(--banner-bg); color: var(--banner-text); padding: .5rem 1rem; font-size: .85rem; font-weight: 600; text-align: center; }
+.topbar { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; padding: .75rem 1rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+.brand { background: none; border: 0; font-weight: 800; letter-spacing: .05em; font-size: 1.1rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 1rem; }
+.controls label { display: flex; flex-direction: column; font-size: .75rem; color: var(--muted); gap: .2rem; }
+select { font: inherit; padding: .35rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+main { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
+
+.eyebrow { text-transform: uppercase; font-size: .72rem; letter-spacing: .08em; color: var(--muted); margin: 0; }
+.muted { color: var(--muted); }
+.small { font-size: .82rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: left; display: flex; flex-direction: column; gap: .4rem; }
+.card:hover, .card.active { border-color: var(--accent); }
+.card:focus-visible, button:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tag { align-self: flex-start; font-size: .72rem; padding: .1rem .45rem; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); margin-left: .35rem; }
+.card .tag { margin-left: 0; }
+.tag.warn { background: var(--warn-bg); color: var(--warn-text); border-color: transparent; }
+.tag.changed { background: var(--changed-bg); color: var(--accent); border-color: transparent; font-weight: 600; }
+.primary { background: var(--accent); color: var(--accent-text); border: 0; border-radius: 8px; padding: .6rem 1rem; font-weight: 600; }
+.link { background: none; border: 0; color: var(--accent); padding: 0; margin-bottom: .5rem; }
+.toolbar { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; margin: 1rem 0; }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 1rem; align-items: start; }
+@media (max-width: 800px) { .split { grid-template-columns: 1fr; } }
+.course-list { display: flex; flex-direction: column; gap: .75rem; }
+.row { display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; }
+.action { font-weight: 600; font-size: .9rem; }
+.action-revise_syllabus { color: #c2410c; }
+.action-workshops_and_industry_engagement { color: var(--accent); }
+.action-request_review { color: var(--warn-text); }
+.inspector { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1.25rem; position: sticky; top: 1rem; overflow-x: auto; }
+.inspector h2 { margin-top: 0; }
+.notice { background: var(--warn-bg); color: var(--warn-text); padding: .6rem .8rem; border-radius: 8px; font-size: .85rem; }
+.evidence { display: grid; grid-template-columns: max-content 1fr; gap: .3rem 1rem; font-size: .88rem; margin: 0; }
+.evidence dt { color: var(--muted); }
+.evidence dd { margin: 0; }
+table { width: 100%; border-collapse: collapse; font-size: .84rem; }
+th, td { text-align: left; padding: .45rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.primary-row td { background: var(--changed-bg); }
+.report { max-width: 760px; line-height: 1.55; }
