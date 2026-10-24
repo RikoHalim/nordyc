@@ -1,6 +1,34 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24:** Phase 4 remains **FUNCTIONAL for a bounded offline backend proof**. Phase 4.1 adds selectable Replit-managed Claude, explicit optional Gemini fallback, sanitized model/usage auditing and a bounded synthetic verification command. Final publication verification: **756 tests passed**, including **13 PostgreSQL integration cases**, with no failures/skips. **Live Claude verification is BLOCKED:** this Windows checkout has no Replit-managed Anthropic credential/endpoint; the user explicitly chose local completion with the blocker documented. No actual Claude model or billing amount has been observed. Existing Gemini/Brave live gates remain open. Phase 1–4 functionality and evidence limits are preserved; Phases 5–6 remain planning only. The latest request explicitly authorizes GitHub publication and Replit handover; no public deployment or later-phase implementation is authorized.
+**As of 2026-10-24:** Phase 4 remains **FUNCTIONAL for a bounded offline backend proof**. Phase 4.1's Replit-managed Anthropic connection is now provisioned on `codex/replit-managed-ai`; both managed environment variables are present. The existing adapter is selected with Claude enabled and `claude-opus-5` configured. Its zero-call preflight is **BLOCKED only by the intentionally false external-processing consent gate**; the existing ESCO source permission passes. Current clean offline verification: **743 passed, 13 PostgreSQL-only tests skipped**, zero database connections; application/test Ruff lint and format checks pass. No live Claude, Gemini, Brave, or research requests have been made; model availability and billing remain unverified. Historical publication and full-PostgreSQL test results are retained below.
+
+## Phase 4.1 Replit-managed setup and zero-call verification — 24 October 2026
+
+On the existing `codex/replit-managed-ai` branch, the owner-approved native setup flow `setupReplitAIIntegrations({ providerSlug: "anthropic" })` completed successfully in this SHIFT//OS project. The native setup provisioned `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` and `AI_INTEGRATIONS_ANTHROPIC_API_KEY`; a secret-presence-only check reported both **PRESENT**. Values were not read or printed, no personal key or credential from another project was used, and no general connector search was used.
+
+The following non-secret shared configuration was set:
+
+```text
+ANALYSIS_MODEL_PROVIDER=replit_claude
+CLAUDE_ENABLED=true
+CLAUDE_MODEL=claude-opus-5
+ANALYSIS_GEMINI_FALLBACK_ENABLED=false
+ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=false
+```
+
+The final setting remains false by instruction. Source permissions were not changed; the existing preflight reports the admitted `C-ESCO-V103` permission as allowed. Integration approval does not approve sending evidence to an external model. `availability` remains `not_verified`.
+
+| Current check | Actual result |
+|---|---|
+| Python / dependencies | Python **3.12.12**; pinned `requirements.lock` installed in `.venv`; editable project install completed; `pip check` passed |
+| `python -m shiftos.cli verify-claude` without `--live` | **BLOCKED**, expected exit 1; selected provider/model and managed credential/base URL are configured and valid; `provider_requests=0`; only blocker is `external_processing_not_approved`; source permission passes |
+| Clean offline pytest subprocess | **743 passed, 13 skipped**, one existing Starlette/httpx deprecation warning; `TEST_DATABASE_URL` unset; skipped tests require PostgreSQL; offline SQLite fixtures and mocks were used |
+| `ruff check src tests` / `ruff format --check src tests` | **PASS** |
+| `pip check` / `git diff --check` | **PASS** |
+| Repository-root Ruff checks | `ruff check .` finds two pre-existing issues in `.local/skills/meta-devices/files/ray-ban/favicon-generator.py`; `ruff format --check .` reports 10 unformatted files under `.local` skills. No skill files were modified. |
+| Live model / research / search requests | **0**; no worker, migration, or database connection was started |
+
+The PostgreSQL integration tests were intentionally skipped because this verification forbids database connections and leaves `TEST_DATABASE_URL` unset. The prior 756-test run with 13 PostgreSQL cases remains a historical result; it is not represented as the result of this clean offline run.
 
 **Pilot target:** all publicly discoverable XMUM undergraduate programme/course lists. The directory parser found 25 official undergraduate links. Production live retrieval **failed safely** in this environment because `www.xmu.edu.my` resolved to a private network address; no live crawl success is claimed. A separate reviewed manual fallback stored 25 directory programme facts and **141 course appearances across three programmes** in a disposable local PostgreSQL database, retrieved through real FastAPI HTTP. The remaining 22 programmes have no loaded course inventory in that validation database. None of these records certify a complete graduation curriculum or lecturer-taught content.
 
@@ -10,7 +38,7 @@
 | 2 | XMUM discovery/parser, year/elective extraction, safe import/versioning, worker, APIs and coverage | COMPLETE — live network blocked; reviewed manual fallback verified |
 | 3 | Evidence acquisition, workforce radar and independent AI task evidence | FUNCTIONAL — bounded evidence gates met; legacy/language/currentness/permission limits explicit |
 | 4 | Internal-first hybrid retrieval, controlled Brave fallback, one Gemini adapter and conservative whole-programme screening | FUNCTIONAL OFFLINE — 637 passed; actual live API acceptance PENDING |
-| 4.1 | Replit-managed Claude selection, optional explicit Gemini fallback, usage lineage and synthetic verification | IMPLEMENTED / OFFLINE VERIFIED — 756 passed; actual Replit/Claude live gate BLOCKED |
+| 4.1 | Replit-managed Claude selection, optional explicit Gemini fallback, usage lineage and synthetic verification | IMPLEMENTED / OFFLINE VERIFIED — managed connection present; zero-call preflight blocked by external-processing consent; no live requests |
 | 5 | Future Career Alignment, competency-gap review, minimum sufficient actions, alternatives/no change and human review | PENDING — requirements revised only |
 | 6 | Ordered Academic Reskilling Pathways, scenarios/SDGs/resources/duration and consolidated Action Plans | PENDING — requirements revised only |
 | 7 | Integration, evaluation, change replay and security | PENDING |

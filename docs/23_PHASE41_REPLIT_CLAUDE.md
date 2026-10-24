@@ -2,9 +2,33 @@
 
 This extension preserves the Phase 4 evidence engine, academic Pydantic contract, citation validator, deterministic workforce calculations, background worker and protected APIs. It adds a configurable Replit-managed Anthropic Messages adapter and optional explicit Gemini fallback. The user has authorized GitHub publication and this Replit handover; the completion report must confirm the published commit before it is imported. No Phase 5/6 implementation or public deployment is included.
 
-## Availability and model selection
+## Current Replit setup and zero-call verification — 24 October 2026
 
-On 24 October 2026 this task runs in a local Windows checkout, not an authenticated Replit runtime. Neither `AI_INTEGRATIONS_ANTHROPIC_API_KEY` nor `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` is present in the process or ignored local environment file. No Replit connection/configuration was discovered. **Managed access and a real Claude request cannot be verified here.** The user explicitly selected local completion with this live-test blocker documented. Existing Gemini and Brave live verification also remains open.
+The owner-approved native Replit AI setup was run **inside this SHIFT//OS project** on the existing `codex/replit-managed-ai` branch:
+
+```javascript
+setupReplitAIIntegrations({ providerSlug: "anthropic" })
+```
+
+The native setup succeeded and provisioned `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` and `AI_INTEGRATIONS_ANTHROPIC_API_KEY`. A secret-presence-only check reported both **PRESENT**; their values were not read or printed. Do not use a personal Anthropic key, copy credentials from another project, or substitute a general connector for this native setup.
+
+These non-secret shared settings are configured:
+
+```text
+ANALYSIS_MODEL_PROVIDER=replit_claude
+CLAUDE_ENABLED=true
+CLAUDE_MODEL=claude-opus-5
+ANALYSIS_GEMINI_FALLBACK_ENABLED=false
+ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=false
+```
+
+The zero-call command `python -m shiftos.cli verify-claude` (without `--live`) returned **blocked**, exit 1, with `provider_requests=0`. It confirms the adapter is selected, Claude is enabled, the preferred model is configured, the managed credential and bridge base are present, the bridge base is valid, and the existing `C-ESCO-V103` source permission passes. Its only blocker is `external_processing_not_approved`. The global external-processing gate remains false; approving the native integration does not authorize sending evidence to a model. Source permissions were not changed. Availability, actual model identity, and billing remain unverified.
+
+The clean offline pytest subprocess passed **743 tests** and skipped **13 PostgreSQL-only tests** because `TEST_DATABASE_URL` was unset. SQLite fixtures and mocked providers/workers were used; no PostgreSQL connection, migration, real worker, model, research, or search request was made. `ruff check src tests` and `ruff format --check src tests` passed. Repository-wide checks also scan `.local` skill material: `ruff check .` reports two existing issues in `.local/skills/meta-devices/files/ray-ban/favicon-generator.py`, while `ruff format --check .` reports 10 unformatted `.local` skill files. No skill files were changed.
+
+## Initial local availability snapshot (historical)
+
+At the initial snapshot on 24 October 2026 this work ran in a local Windows checkout, not an authenticated Replit runtime. Neither managed Anthropic environment variable was present there, and no Replit connection/configuration had been discovered. That historical local blocker predates the successful native setup documented above; it did not establish whether managed access worked in Replit.
 
 [Replit's official catalogue](https://docs.replit.com/features/integrations/replit-ai-integrations), checked on this date and labelled last updated 2 October 2026, lists **`claude-opus-5`** and older Opus alternatives. These are catalogue entries, not successful requests here. Keep `claude-opus-5` preferred and confirm it in the actual workspace. Any alternative requires an explicit model setting and a recorded reason. Compatibility of older models, including Opus 4.1, with [structured outputs](https://platform.claude.com/docs/en/build-with-claude/structured-outputs) must be checked separately.
 
@@ -100,30 +124,27 @@ Claude uses the Messages API with `output_config.format` and a copied provider-c
 
 Optional fallback occurs only after Claude unavailability, bounded deadline or rate-limit failure. It requires explicit opt-in and separately enabled/configured Gemini access. Authentication/privacy/configuration/protocol failures and invalid schema/citations do not trigger cross-provider fallback. A grounded-output repair stays on the same provider. Fallback is disclosed and the job remains PARTIAL; it never claims verified Claude output when Gemini supplied the findings. Remaining failures preserve all courses with deterministic insufficiency.
 
-## Provision managed Claude before live verification
+## Native managed Claude setup
 
-In the imported app, request **only** the existing Replit-managed Anthropic connection, without asking Agent to rewrite the backend or start another feature. Confirm the approval prompt and **Anthropic (Replit managed)** label. If the account/organization does not offer that connection or the preferred model, record the exact access limitation and stop live verification.
+After owner approval, use Replit's native AI integration setup in the target project:
 
-Inspect the connection's runtime configuration privately. Map its actual managed credential and actual provisioned bridge base to this application's `AI_INTEGRATIONS_ANTHROPIC_API_KEY` and `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` settings through Secrets if necessary. These names are **our adapter contract**, not a guarantee that Replit automatically exports those exact variables. Do not guess a host, add a personal `ANTHROPIC_API_KEY`, point at the direct Anthropic endpoint or print all environment values. The adapter appends `/v1/messages` once; if the provisioned transport contract differs, retain a blocker rather than weakening endpoint validation.
+```javascript
+setupReplitAIIntegrations({ providerSlug: "anthropic" })
+```
 
-Set these non-sensitive verification flags in the workspace configuration:
+This native setup provisions the managed integration for that project. Confirm only whether the resulting `AI_INTEGRATIONS_ANTHROPIC_API_KEY` and `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` variables are present; never display their values. These variable names are the adapter contract. Do not use a personal `ANTHROPIC_API_KEY`, copy credentials from another project, invoke the general connector catalog, guess a host, or point at Anthropic's direct endpoint. The adapter appends `/v1/messages` once; if the native bridge contract differs, retain a blocker rather than weakening endpoint validation.
+
+The current non-secret shared settings are:
 
 ```text
 ANALYSIS_MODEL_PROVIDER=replit_claude
 CLAUDE_ENABLED=true
 CLAUDE_MODEL=claude-opus-5
-CLAUDE_MAX_OUTPUT_TOKENS=4096
-ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=true
 ANALYSIS_GEMINI_FALLBACK_ENABLED=false
-GEMINI_ENABLED=false
-RESEARCH_ENABLED=false
-DISCOVERY_ENABLED=false
-DISCOVERY_TERMS_REVIEWED=false
-ANALYSIS_PROVIDER_MAX_ATTEMPTS=1
-ANALYSIS_PERMISSIONS_PATH=data/analysis_permissions.json
+ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=false
 ```
 
-The global approval is for this fictional inventory and permitted ESCO excerpt only. Confirm the configured permission file grants all three processing/output flags with a basis for `C-ESCO-V103`. Do not broaden permission to private documents. Restart initialized API/worker Shells after Secrets or configuration changes so they use the intended values.
+Keep external processing disabled unless the owner separately approves it. Before any later live request, re-check the exact source-specific processing/output permissions and their basis; do not broaden permission to private documents. Managed integration approval is not source permission or external-processing consent. The source permission file was not changed during the current setup.
 
 ## Zero-call preflight and bounded one-course check
 
@@ -133,7 +154,7 @@ Configuration inspection makes **zero network requests** and needs no database c
 python -m shiftos.cli verify-claude --report data/local/phase41-claude-preflight.json
 ```
 
-Missing/disabled configuration returns a structured `blocked` report and exit code 1. `configuration_ready` means configuration passes preflight, not that connectivity, authentication, model availability or proxy schema support has been verified.
+Missing/disabled configuration returns a structured `blocked` report and exit code 1. `configuration_ready` means configuration passes preflight, not that connectivity, authentication, model availability or proxy schema support has been verified. The current Replit preflight is blocked only by `external_processing_not_approved`, reports that the existing ESCO permission passes, and confirms zero provider requests. Do not pass `--live` without separate authorization.
 
 Only after Replit provisions access, the following explicitly opts into one synthetic course request:
 
