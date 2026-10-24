@@ -32,3 +32,9 @@ ANALYSIS_GEMINI_FALLBACK_ENABLED = "false"
 ANALYSIS_MODEL_PROVIDER = "replit_claude"
 CLAUDE_ENABLED = "true"
 CLAUDE_MODEL = "claude-opus-5"
+
+# Deployment preparation only. Publishing and database admission remain explicit.
+[deployment]
+deploymentTarget = "cloudrun"
+build = ["sh", "-c", "python3 -m venv .venv && PIP_USER=false .venv/bin/python -m pip install -r requirements.lock && PIP_USER=false .venv/bin/python -m pip install --no-deps -e . && npm --prefix frontend ci --ignore-scripts && VITE_PUBLIC_DEMO=${NORDYC_PUBLIC_DEMO_ENABLED:-false} npm --prefix frontend run build"]
+run = [".venv/bin/python", "scripts/run_web.py"]

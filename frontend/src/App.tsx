@@ -668,9 +668,11 @@ function SettingsPage() {
 }
 
 export default function App() {
+  const publicDemo = import.meta.env.VITE_PUBLIC_DEMO === "true";
   const [openingDemo, setOpeningDemo] = useState(
-    import.meta.env.DEV &&
-      ["127.0.0.1", "localhost", "[::1]"].includes(window.location.hostname),
+    publicDemo ||
+      (import.meta.env.DEV &&
+        ["127.0.0.1", "localhost", "[::1]"].includes(window.location.hostname)),
   );
   const [session, setSession] = useState<{
     api: ApiClient;
@@ -682,7 +684,7 @@ export default function App() {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 3000);
     let active = true;
-    fetch("/__local_demo", {
+    fetch(publicDemo ? "/__public_demo" : "/__local_demo", {
       signal: controller.signal,
       credentials: "same-origin",
       cache: "no-store",
@@ -745,7 +747,7 @@ export default function App() {
   return (
     <Boundary>
       {openingDemo ? (
-        <Loading label="Opening local demonstration…" />
+        <Loading label="Opening workspace…" />
       ) : !value ? (
         <Connect onConnect={(api, access) => setSession({ api, access })} />
       ) : (

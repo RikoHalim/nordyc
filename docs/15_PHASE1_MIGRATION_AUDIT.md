@@ -56,7 +56,7 @@ Create/read scope matches Phase 1's endpoint contract. Generic PATCH/DELETE, aut
 
 [STATUS.md](../STATUS.md) records exact results: 144 tests passed, including three live PostgreSQL migration cases; Ruff and dependency checks passed. Real localhost Uvicorn/PostgreSQL checks created three synthetic disciplines with six courses and imported the original 12-course fixture twice without duplication. One upstream Starlette/httpx deprecation warning remains; no test failure remains.
 
-No Phase 1 acceptance blocker remains. Python 3.13/Windows and PostgreSQL 16.15 were tested locally. Python 3.12/PostgreSQL 16 also passed in [GitHub Actions run 39998532797](https://github.com/RikoHalim/shift-os/actions/runs/39998532797) for implementation commit `866df6c`; installation, lint, formatting and all test steps succeeded. This result was checked independently of the original commit's CI run.
+No Phase 1 acceptance blocker remains. Python 3.13/Windows and PostgreSQL 16.15 were tested locally. Python 3.12/PostgreSQL 16 also passed in [GitHub Actions run 39998532797](https://github.com/RikoHalim/NORDYC/actions/runs/39998532797) for implementation commit `866df6c`; installation, lint, formatting and all test steps succeeded. This result was checked independently of the original commit's CI run.
 
 ## Next step and external gap
 

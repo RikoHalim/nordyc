@@ -1,6 +1,10 @@
-# SHIFT//OS — evidence-led academic workspace
+# NORDYC — evidence-led academic workspace
 
-SHIFT//OS helps Malaysian university career centres and academic committees review whole programmes against traceable academic, occupational, workforce and AI evidence. Humans make academic decisions. The pilot catalogue target is **all publicly discoverable XMUM undergraduate programmes**, with deep engine validation on a small set of diverse disciplines first. Other Malaysian institutions will be discovered on demand.
+NORDYC helps Malaysian university career centres and academic committees review whole programmes against traceable academic, occupational, workforce and AI evidence. Humans make academic decisions. The pilot catalogue target is **all publicly discoverable XMUM undergraduate programmes**, with deep engine validation on a small set of diverse disciplines first. Other Malaysian institutions will be discovered on demand.
+
+The GitHub repository is [RikoHalim/NORDYC](https://github.com/RikoHalim/NORDYC). NORDYC is the product name; the existing `shiftos` Python package, `SHIFTOS_*` configuration names, database identifiers and documented local paths remain compatible. The name change does not establish a deployment or change recorded verification results.
+
+See [NORDYC Replit release preparation](docs/32_NORDYC_REPLIT_RELEASE.md) for the same-origin web entrypoint, explicit read-only example, managed PostgreSQL transfer, recovery/cleanup receipt and remaining release checks. Public deployment is pending.
 
 Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallback and immutable catalogue snapshots to the existing Phase 1 backend. See [STATUS.md](STATUS.md) for measured results and [the Phase 2 handoff](docs/16_PHASE2_CURRICULUM_INGESTION.md) for commands and source-access limits. In the historical Phase 2 environment, private DNS prevented live discovery; a real PostgreSQL/FastAPI manual-fallback check loaded 25 official directory programme records and 141 course appearances across three diverse programmes. That observation does not certify full curriculum coverage or current live discovery.
 

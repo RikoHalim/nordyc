@@ -57,7 +57,7 @@ An analysis run must reference exact curriculum revision, evidence snapshot hash
 
 ## Proposed refresh policy, distinct from publisher cadence
 
-| Family | Publisher cadence verified | SHIFT//OS proposed policy |
+| Family | Publisher cadence verified | NORDYC proposed policy |
 |---|---|---|
 | XMUM | No fixed course-page update schedule found | On demand; cached results; termly catalogue check and before demo; conditional requests where supported |
 | MQA/MQF/EAC | Version/circular-driven; no common release schedule verified | Quarterly index check and whenever new circular is noticed; academic applicability review before switching |

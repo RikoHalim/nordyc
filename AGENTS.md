@@ -1,4 +1,4 @@
-# Codex project-wide instructions — SHIFT//OS
+# Codex project-wide instructions — NORDYC
 
 This file applies to all development phases. Read `README.md`, `STATUS.md`, and the relevant docs before touching code.
 

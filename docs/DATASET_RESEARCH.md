@@ -1,4 +1,4 @@
-# SHIFT//OS dataset research
+# NORDYC dataset research
 
 Research date: **24 October 2026** (Asia/Makassar). Scope: research and acquisition design only. No backend feature, database migration, live-source import or AI assessment was implemented.
 
@@ -23,7 +23,7 @@ The authoritative structured inventory is [dataset_registry.csv](../data/dataset
 - **Unverified:** inaccessible/unconfirmed candidate; no factual evidence may be admitted from it. The legacy XMUM route is explicitly recorded this way.
 - `acquired_into_backend=No` applies to every registry row. Access, rights, automation policy and backend import are separate states.
 
-Each row records the requested 15 dimensions: official name/publisher; exact source and download/API URLs; type/format; geography/discipline; available editions, newest verified publication/update and observation period; publisher cadence; licence/rights; registration/payment; relevance; missing fields; acquisition method; verification. It also records evidence subtype, quality, integration, reliability, reuse, maintenance and course-analysis limits. Empty download/API means **no verified endpoint**, not an invitation to construct one. “Unknown” is intentional. Dates in paths, upload timestamps, search-engine crawl dates and site copyright years are not publication dates. Proposed SHIFT//OS polling intervals are in the acquisition plan, separately from publisher schedules.
+Each row records the requested 15 dimensions: official name/publisher; exact source and download/API URLs; type/format; geography/discipline; available editions, newest verified publication/update and observation period; publisher cadence; licence/rights; registration/payment; relevance; missing fields; acquisition method; verification. It also records evidence subtype, quality, integration, reliability, reuse, maintenance and course-analysis limits. Empty download/API means **no verified endpoint**, not an invitation to construct one. “Unknown” is intentional. Dates in paths, upload timestamps, search-engine crawl dates and site copyright years are not publication dates. Proposed NORDYC polling intervals are in the acquisition plan, separately from publisher schedules.
 
 ## A. University curriculum
 
@@ -138,7 +138,7 @@ Use evidence cards, not a single disruption score. Each card needs publication d
 
 ILO's report and the inspected HBS-hosted journal article have CC BY 4.0 notices. ILO's annex is extractable report content, **not a verified standalone CSV/API**. The [A-Lab correction](https://www.nature.com/articles/s41586-025-09992-y.pdf) is a mandatory dependency if that example is used; retain a supersession relation rather than silently replacing old evidence. MyMahir's [published terms](https://www.mymahir.my/assets/document/NOTICE_PRIVACY_POLICY_TERMS_OF_USE_AND_RETURN_POLICY_GROUP.pdf), section 3.3, restrict scraping/aggregation without written consent. An accessible report link does not grant portal crawling rights.
 
-There is no verified comprehensive Malaysian course-to-AI-impact dataset. The proposed bridge from occupational task evidence to an academic review question is SHIFT//OS inference. TCM clinical competency, marine fieldwork, language pedagogy and many discipline-specific practices need further evidence; absence is a valid result.
+There is no verified comprehensive Malaysian course-to-AI-impact dataset. The proposed bridge from occupational task evidence to an academic review question is NORDYC inference. TCM clinical competency, marine fieldwork, language pedagogy and many discipline-specific practices need further evidence; absence is a valid result.
 
 ## F. SDG and learning-resource support
 

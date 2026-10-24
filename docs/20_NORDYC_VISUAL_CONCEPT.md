@@ -48,7 +48,7 @@ Suggested next prompt: “Refine Nordyc logo option A/B/C. Keep the sailing conn
 
 ## Earlier app exploration — not approved
 
-Nordyc is the proposed public-facing identity for the curriculum review product currently documented as SHIFT//OS. This concept helps Malaysian university academic affairs teams, programme leads and career services review curricula with traceable evidence. Authorised humans make academic decisions.
+This archived concept introduced the NORDYC public-facing identity, which is now the selected product name. Its proposed logo studies remain historical design explorations. The product helps Malaysian university academic affairs teams, programme leads and career services review curricula with traceable evidence. Authorised humans make academic decisions.
 
 **Headline:** Curriculum, with direction.  
 **Functional description:** Evidence-led academic review

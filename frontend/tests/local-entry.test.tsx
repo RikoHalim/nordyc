@@ -55,3 +55,51 @@ it("does not attempt automatic access in a production build", () => {
   expect(screen.getByLabelText("Scoped operator credential")).toBeVisible();
   expect(fetch).not.toHaveBeenCalled();
 });
+
+it("opens an explicitly enabled public read-only workspace using server access context", async () => {
+  vi.stubEnv("DEV", false);
+  vi.stubEnv("VITE_PUBLIC_DEMO", "true");
+  const fetch = vi.fn().mockResolvedValue(new Response('{"enabled":true}'));
+  vi.stubGlobal("fetch", fetch);
+  const api = vi.spyOn(ApiClient.prototype, "get").mockResolvedValue({
+    permissions: ["read"],
+    institution_ids: ["00000000-0000-4000-8000-000000000001"],
+  });
+  render(<App />);
+  expect(await screen.findByText("Direct local demonstration")).toBeVisible();
+  expect(fetch).toHaveBeenCalledWith("/__public_demo", expect.any(Object));
+  expect(api).toHaveBeenCalledWith("/api/v1/access-context", "AccessContext");
+  expect(screen.queryByLabelText("Scoped operator credential")).toBeNull();
+});
+
+it("retains sign-in when the public marker is disabled", async () => {
+  vi.stubEnv("DEV", false);
+  vi.stubEnv("VITE_PUBLIC_DEMO", "true");
+  vi.stubGlobal(
+    "fetch",
+    vi.fn().mockResolvedValue(new Response('{"enabled":false}')),
+  );
+  const api = vi.spyOn(ApiClient.prototype, "get");
+  render(<App />);
+  expect(
+    await screen.findByLabelText("Scoped operator credential"),
+  ).toBeVisible();
+  expect(api).not.toHaveBeenCalled();
+});
+
+it("does not open a public workspace when the server denies access", async () => {
+  vi.stubEnv("DEV", false);
+  vi.stubEnv("VITE_PUBLIC_DEMO", "true");
+  vi.stubGlobal(
+    "fetch",
+    vi.fn().mockResolvedValue(new Response('{"enabled":true}')),
+  );
+  vi.spyOn(ApiClient.prototype, "get").mockRejectedValue(
+    new Error("Forbidden"),
+  );
+  render(<App />);
+  expect(
+    await screen.findByLabelText("Scoped operator credential"),
+  ).toBeVisible();
+  expect(screen.queryByText("Direct local demonstration")).toBeNull();
+});

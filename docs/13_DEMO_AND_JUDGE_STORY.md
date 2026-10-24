@@ -37,7 +37,7 @@ The following is the **intended end-to-end walkthrough after the relevant phases
 
 ## 30-second value proposition
 
-“SHIFT//OS helps university reviewers connect available curriculum evidence with traceable occupational, workforce and AI developments. It makes unknowns visible, identifies questions worth investigating and will compare proportionate academic interventions and learning pathways before people decide what to change.”
+“NORDYC helps university reviewers connect available curriculum evidence with traceable occupational, workforce and AI developments. It makes unknowns visible, identifies questions worth investigating and will compare proportionate academic interventions and learning pathways before people decide what to change.”
 
 ## Questions judges may ask
 

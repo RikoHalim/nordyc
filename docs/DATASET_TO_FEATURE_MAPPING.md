@@ -2,7 +2,7 @@
 
 Baseline: 24 October 2026. IDs resolve to [dataset_registry.csv](../data/dataset_registry.csv). “Direct” means what the source itself establishes; the resulting academic judgement may still be an inference.
 
-| Function | Minimum source dependencies | Direct evidence | SHIFT//OS inference / missing evidence / permitted result |
+| Function | Minimum source dependencies | Direct evidence | NORDYC inference / missing evidence / permitted result |
 |---|---|---|---|
 | University programme discovery | `A-XMUM-DIRECTORY`, brochure index | Official observed programme labels/URLs | Current directory is not a complete historical census; report every discovered entry and blocked source |
 | Course catalogue extraction | `A-XMUM-01..25`, `A-XMUM-MPU`, brochures | Published titles, explicit study-year and elective groups; EEE programme PLOs separately | Main Courses ≠ certified graduation curriculum; unknown semesters/types null; no made-up description |

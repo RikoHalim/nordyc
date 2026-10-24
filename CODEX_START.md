@@ -1,4 +1,4 @@
-# Continue the existing SHIFT//OS repository
+# Continue the existing NORDYC repository
 
 This checkout already contains Phase 1. Do not create a new repository, re-run a greenfield foundation prompt, reset Git history or replace working components. `STATUS.md` records tested completion; later specifications are not implemented features.
 

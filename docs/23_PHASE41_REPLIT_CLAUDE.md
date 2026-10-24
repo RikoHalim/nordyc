@@ -68,7 +68,7 @@ The ignored preflight, CLI stdout/report, and supplemental audit remain under `d
 
 ## Historical Phase 4.1 managed setup and zero-call baseline — 24 October 2026
 
-The owner-approved native Replit AI setup was run **inside this SHIFT//OS project** on the existing `codex/replit-managed-ai` branch:
+The owner-approved native Replit AI setup was run **inside this NORDYC project** on the existing `codex/replit-managed-ai` branch:
 
 ```javascript
 setupReplitAIIntegrations({ providerSlug: "anthropic" })
@@ -104,9 +104,9 @@ Replit documents paid-plan access, organization controls and an approval flow fo
 
 The import example below describes the older Phase 4.1 baseline. For the current Claude development branch, isolated PostgreSQL setup and completed live acceptance, follow [Phase 4.2](25_PHASE42_LIVE_BACKEND_VERIFICATION.md). Preserve divergent Replit changes; do not pull or switch to main for this work.
 
-The implementation was published to `origin/main` as [ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb](https://github.com/RikoHalim/shift-os/commit/ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb), with the exact remote SHA verified after push. A subsequent documentation-only publication record may be the branch tip. Compare the imported tip with the final publication report; the linked implementation is the tested code baseline, not a reason to discard later documentation. [STATUS](../STATUS.md) records the checks and publication scope.
+The implementation was published to `origin/main` as [ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb](https://github.com/RikoHalim/NORDYC/commit/ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb), with the exact remote SHA verified after push. A subsequent documentation-only publication record may be the branch tip. Compare the imported tip with the final publication report; the linked implementation is the tested code baseline, not a reason to discard later documentation. [STATUS](../STATUS.md) records the checks and publication scope.
 
-Use a separate development workspace and database for this verification. Import [RikoHalim/shift-os](https://github.com/RikoHalim/shift-os) through **Import → GitHub**, selecting `main`, after the publication report confirms the new commit. Replit's [GitHub import instructions](https://docs.replit.com/build/import-from-providers) describe connecting the repository. For an already imported workspace, inspect local changes and use the [Git pane's Pull action](https://docs.replit.com/features/workspace-tools/git-interface). Do not overwrite divergent work. The Shell equivalent below stops if a fast-forward is impossible:
+Use a separate development workspace and database for this verification. Import [RikoHalim/NORDYC](https://github.com/RikoHalim/NORDYC) through **Import → GitHub**, selecting `main`, after the publication report confirms the new commit. Replit's [GitHub import instructions](https://docs.replit.com/build/import-from-providers) describe connecting the repository. For an already imported workspace, inspect local changes and use the [Git pane's Pull action](https://docs.replit.com/features/workspace-tools/git-interface). Do not overwrite divergent work. The Shell equivalent below stops if a fast-forward is impossible:
 
 ```bash
 git status --short
@@ -128,7 +128,7 @@ python -m pip install -e '.[dev]'
 python -m pip check
 ```
 
-In Replit's Database tool, select the **development** PostgreSQL database intended for this isolated check, then inspect **Settings** for its actual connection details. Use the provisioned host, database, user, credential and SSL options, without substituting guessed values. Replit documents the supplied [`DATABASE_URL`](https://docs.replit.com/features/data-and-storage/connection-details). SHIFT//OS requires SQLAlchemy's `postgresql+psycopg` driver prefix. If the managed value starts with `postgres://` or `postgresql://`, the following Shell-only normalization preserves its actual connection details and prints no credential. Repeat it in each new Shell used for migrations, API or worker; do not change the provider-managed database configuration:
+In Replit's Database tool, select the **development** PostgreSQL database intended for this isolated check, then inspect **Settings** for its actual connection details. Use the provisioned host, database, user, credential and SSL options, without substituting guessed values. Replit documents the supplied [`DATABASE_URL`](https://docs.replit.com/features/data-and-storage/connection-details). NORDYC requires SQLAlchemy's `postgresql+psycopg` driver prefix. If the managed value starts with `postgres://` or `postgresql://`, the following Shell-only normalization preserves its actual connection details and prints no credential. Repeat it in each new Shell used for migrations, API or worker; do not change the provider-managed database configuration:
 
 ```bash
 shiftos_db_url="$(python - <<'PY'
@@ -188,7 +188,7 @@ From a second initialized Shell, `curl --fail http://127.0.0.1:8000/health/ready
 
 Existing `ANALYSIS_PROVIDER_TIMEOUT_SECONDS`, bounded attempts and byte limits apply. Endpoint validation rejects embedded credentials, query/fragment injection, malformed/traversal paths and unsafe HTTP destinations; redirects are forbidden. Safe operator-provisioned bridge prefixes are supported; there is no guessed endpoint or public endpoint override. The managed endpoint is administrator-controlled server configuration, never request/user input. Source-specific processing permissions and admitted evidence remain mandatory for both providers; approving an integration does not authorize private university documents. Brave discovery, cache rules, source allowlists and deterministic workforce services are unchanged.
 
-Claude uses the Messages API with `output_config.format` and a copied provider-compatible JSON schema. Unsupported schema constraints remain enforced by the original application Pydantic schema and grounding validator. [Anthropic documents this schema transformation pattern](https://platform.claude.com/docs/en/build-with-claude/structured-outputs). Native Anthropic citations, tool use, web search and prompt caching are not enabled; SHIFT//OS retains its existing citation IDs, exact excerpts, course associations and rights validation. Thinking blocks are not persisted as findings. Incomplete/refused/malformed responses cannot become accepted course results.
+Claude uses the Messages API with `output_config.format` and a copied provider-compatible JSON schema. Unsupported schema constraints remain enforced by the original application Pydantic schema and grounding validator. [Anthropic documents this schema transformation pattern](https://platform.claude.com/docs/en/build-with-claude/structured-outputs). Native Anthropic citations, tool use, web search and prompt caching are not enabled; NORDYC retains its existing citation IDs, exact excerpts, course associations and rights validation. Thinking blocks are not persisted as findings. Incomplete/refused/malformed responses cannot become accepted course results.
 
 Optional fallback occurs only after Claude unavailability, bounded deadline or rate-limit failure. It requires explicit opt-in and separately enabled/configured Gemini access. Authentication/privacy/configuration/protocol failures and invalid schema/citations do not trigger cross-provider fallback. A grounded-output repair stays on the same provider. Fallback is disclosed and the job remains PARTIAL; it never claims verified Claude output when Gemini supplied the findings. Remaining failures preserve all courses with deterministic insufficiency.
 

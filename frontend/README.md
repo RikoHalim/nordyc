@@ -1,6 +1,6 @@
 # NORDYC academic workspace
 
-React + TypeScript + Vite frontend for the existing SHIFT//OS FastAPI/PostgreSQL backend. The NORDYC concept is visually reconstructed from its seven revised screenshots; authored NORDYC source was not recovered. Branding is provisional and configurable. See [the complete Phase 8 design, API, privacy and Replit runbook](../docs/30_PHASE8_FRONTEND_REPLIT_MVP.md).
+React + TypeScript + Vite frontend for the existing NORDYC FastAPI/PostgreSQL backend. The NORDYC concept is visually reconstructed from its seven revised screenshots; authored NORDYC source was not recovered. NORDYC is the selected product name; the logo remains provisional and branding stays configurable. See [the complete Phase 8 design, API, privacy and Replit runbook](../docs/30_PHASE8_FRONTEND_REPLIT_MVP.md).
 
 Install a compatible Node runtime, run `npm ci`, then `npm run dev`. Development requests use the same-origin API proxy; configure `BACKEND_ORIGIN` for your explicitly selected loopback backend. The server does not create a database or worker. Use the documented owned PostgreSQL synthetic preview for a reproducible demonstration, with provider HTTP blocked and actual stored results.
 
