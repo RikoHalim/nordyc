@@ -198,6 +198,12 @@ def _curriculum(client, database, settings, spec, count, worker):
     return institution, programme_id, revision_id, mapped, inputs, request, completed
 
 
+def _fixture_registry_key(spec, suffix):
+    namespace = spec.get("_fixture_namespace")
+    prefix = f"SYNTHETIC-SYSTEM-{namespace}" if namespace else "SYNTHETIC-SYSTEM"
+    return f"{prefix}-{suffix}"
+
+
 def _taxonomy(database, workdir, spec):
     """Use the existing reviewed source importer, with explicit synthetic facts."""
     records = []
@@ -292,7 +298,7 @@ def _taxonomy(database, workdir, spec):
     path.write_text(json.dumps({"reviewed": True, "records": records}), encoding="utf-8")
     registry = dict.fromkeys(REGISTRY_COLUMNS, "")
     registry.update(
-        id="SYNTHETIC-SYSTEM-INPUTS",
+        id=_fixture_registry_key(spec, "INPUTS"),
         category="C",
         priority="P1",
         name=f"Fictional {spec['discipline']} inputs",
@@ -493,7 +499,7 @@ def _resource_inputs(database, spec, skills):
                 collected_at=datetime.now(UTC) - timedelta(minutes=1),
             )
             dataset = Dataset(
-                registry_key=f"SYNTHETIC-SYSTEM-RESOURCE-{key.upper()}",
+                registry_key=_fixture_registry_key(spec, f"RESOURCE-{key.upper()}"),
                 name=title,
                 category="learning_resource",
                 is_synthetic=True,
@@ -676,6 +682,7 @@ def run_synthetic_system(
     fixture=None,
     input_transform=None,
     include_replay=True,
+    fixture_namespace=None,
 ):
     """Run committed cross-phase acceptance; callers explicitly provide mocked mode.
 
@@ -702,6 +709,14 @@ def run_synthetic_system(
     if mode == "live" and not getattr(worker, "synthetic_mock_only", False):
         raise ValueError("Mocked mode requires an explicitly marked non-network worker harness")
     spec = fixture_for(discipline, fixture)
+    if fixture_namespace is not None:
+        import re
+
+        if not isinstance(fixture_namespace, str) or not re.fullmatch(
+            r"[A-Z0-9][A-Z0-9-]{0,39}", fixture_namespace
+        ):
+            raise ValueError("Synthetic fixture namespaces require 1–40 uppercase safe characters")
+        spec["_fixture_namespace"] = fixture_namespace
     spec["gap"]["quote"] = spec["gap"]["quote"].replace(
         "all four listed courses", f"all {course_count} imported courses"
     )

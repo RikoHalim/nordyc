@@ -1,10 +1,12 @@
-# SHIFT//OS — academic decision-support backend
+# SHIFT//OS — evidence-led academic workspace
 
 SHIFT//OS helps Malaysian university career centres and academic committees review whole programmes against traceable academic, occupational, workforce and AI evidence. Humans make academic decisions. The pilot catalogue target is **all publicly discoverable XMUM undergraduate programmes**, with deep engine validation on a small set of diverse disciplines first. Other Malaysian institutions will be discovered on demand.
 
 Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallback and immutable catalogue snapshots to the existing Phase 1 backend. See [STATUS.md](STATUS.md) for measured results and [the Phase 2 handoff](docs/16_PHASE2_CURRICULUM_INGESTION.md) for commands and source-access limits. Live discovery was refused by this environment's private DNS; a real PostgreSQL/FastAPI manual-fallback check loaded 25 official directory programme records and 141 course appearances across three diverse programmes. This does not certify full curriculum coverage.
 
 ## Current foundation
+
+Phase 8 adds the NORDYC React/TypeScript workspace over the Phase 7 protected APIs: programme library/creation, actual PDF and reviewed-input ingestion, course intelligence, career and competency evidence, recommendations, pathways, scenarios, SDG contributions, Action Plans and version-bound review. The design is reconstructed from the original revised NORDYC screenshots; original authored NORDYC source was not recovered. See [the Phase 8 setup, design recovery and controlled Replit preview runbook](docs/30_PHASE8_FRONTEND_REPLIT_MVP.md) and [current measured acceptance](STATUS.md). This is a controlled operator MVP, not public production identity or independent academic validation.
 
 Phase 7 integrates the complete synthetic workflow, adds scoped operator/institution authorization, controlled evaluation/replay, bounded private PDF processing, runtime preflight and Phase 8 API examples. See [the Phase 7 runbook](docs/29_PHASE7_INTEGRATION_EVALUATION_SECURITY.md) for measured results, security boundaries and Replit prerequisites. This is not production or real academic validation.
 
@@ -124,6 +126,8 @@ Tests use randomly named `shiftos_test_*` schemas and clean them up; they do not
 | `examples/` | Preserved executable synthetic fixtures |
 | `fixtures/`, `references/` | Later acceptance cases and candidate sources |
 | `prompts/` | One-phase instructions; legacy filenames redirect |
+
+### Historical Phase 4 handoff (superseded by current STATUS)
 
 Phase 4 is functional for a bounded offline proof. Phase 4.1 adds configurable managed Claude with explicit Gemini fallback; actual Claude/Gemini/Brave requests remain unverified here. Final local verification passed **756 tests**, including 13 PostgreSQL cases. The user explicitly authorized GitHub publication and [Replit handover](docs/23_PHASE41_REPLIT_CLAUDE.md#replit-handover); actual managed access still needs verification in Replit. Future Career Alignment and ordered Academic Reskilling Pathways extend existing later phases, not standalone products; individual-workflow substitution remains UNCONFIRMED. No Phase 5/6 implementation, frontend or public application deployment is authorized. See [STATUS](STATUS.md) for publication results and [the roadmap](docs/12_MVP_ROADMAP.md).
 

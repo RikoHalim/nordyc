@@ -26,7 +26,7 @@ from shiftos.models import (
 )
 from shiftos.repositories import analysis
 from shiftos.repositories.catalogue import digest
-from shiftos.schemas.analysis import AnalysisRequest
+from shiftos.schemas.analysis import AnalysisRequest, CourseFindingResult
 from shiftos.schemas.common import ErrorResponse, Page
 
 
@@ -98,7 +98,13 @@ class FindingRead(BaseModel):
     run_id: UUID
     course_id: UUID
     programme_revision_id: UUID
-    result_json: dict[str, Any]
+    result_json: CourseFindingResult | dict[str, Any] = Field(
+        description=(
+            "Completed validated CourseFindingResult, "
+            "or an empty/pending/withheld metadata object. "
+            "The metadata alternative does not establish a validated academic result."
+        )
+    )
     needs_evidence_revalidation: bool = False
     evidence_access_limitations: list[str] = Field(default_factory=list)
 

@@ -35,3 +35,11 @@ temp/
 *.p12
 *.pfx
 secrets/
+node_modules/
+.vite/
+frontend/dist/
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+frontend/.env*
+!frontend/.env.example

@@ -15,6 +15,7 @@ from shiftos import __version__
 from shiftos.api.body_limit import BodyLimitMiddleware
 from shiftos.api.routers import (
     academic,
+    access,
     analysis,
     career,
     catalogue,
@@ -117,6 +118,7 @@ def create_app(settings: Settings | None = None, database: Database | None = Non
         return response
 
     application.include_router(health.router)
+    application.include_router(access.router)
     application.include_router(academic.router)
     application.include_router(evidence.router)
     application.include_router(workforce_radar.router)

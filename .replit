@@ -1,5 +1,17 @@
-modules = ["python-3.12"]
-run = ["python", "scripts/run_backend.py"]
+modules = ["python-3.12", "nodejs-22"]
+run = ["node", "frontend/node_modules/vite/bin/vite.js", "frontend", "--config", "frontend/vite.config.ts", "--host", "0.0.0.0"]
+
+[[ports]]
+localPort = 5173
+externalPort = 80
+
+[[ports]]
+localPort = 8008
+exposeLocalhost = false
+
+[[ports]]
+localPort = 55450
+exposeLocalhost = false
 
 [nix]
 channel = "stable-25_05"
@@ -10,6 +22,8 @@ expertMode = true
 [userenv]
 
 [userenv.shared]
+BACKEND_ORIGIN = "http://127.0.0.1:8008"
+FRONTEND_PORT = "5173"
 API_ACCESS_MODE = "scoped"
 ANALYSIS_EXTERNAL_PROCESSING_ALLOWED = "false"
 RESEARCH_ENABLED = "false"

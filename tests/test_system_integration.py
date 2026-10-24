@@ -126,6 +126,37 @@ def test_source_prompt_injection_remains_data_and_cannot_approve_a_plan(database
     assert report["responses"]["plan_review"]["decision"] == "under_review"
 
 
+def test_opt_in_fixture_namespaces_keep_three_discipline_snapshots_eligible(database, tmp_path):
+    settings = runner.test_settings("sqlite+pysqlite:///:memory:")
+    reports = []
+    with runner.mocked_workers() as (worker, _):
+        for discipline in ("computing", "accounting", "biotechnology"):
+            reports.append(
+                run_synthetic_system(
+                    database,
+                    settings,
+                    workdir=tmp_path / discipline,
+                    discipline=discipline,
+                    fixture_namespace=discipline.upper(),
+                    mode="live",
+                    worker=worker,
+                    include_replay=False,
+                )
+            )
+        from fastapi.testclient import TestClient
+
+        from shiftos.main import create_app
+
+        with TestClient(create_app(settings, database)) as client:
+            client.headers["X-Analysis-Token"] = settings.analysis_write_token.get_secret_value()
+            for report in reports:
+                current = client.get(f"/api/v1/action-plans/{report['lineage']['plan_id']}")
+                assert current.status_code == 200
+                assert current.json()["result_json"]["overview"]["course_ids"]
+                assert current.json()["needs_evidence_revalidation"] is False
+    assert len({report["labels"]["programme_id"] for report in reports}) == 3
+
+
 def test_meaningful_new_curriculum_revision_runs_all_downstream_jobs_without_old_approvals(
     database, tmp_path
 ):

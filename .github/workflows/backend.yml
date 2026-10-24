@@ -1,4 +1,4 @@
-name: Backend integration and security
+name: Backend and frontend integration
 
 on:
   push:
@@ -63,3 +63,25 @@ jobs:
           python -m alembic check
           python -m alembic heads
           python -m shiftos.cli runtime-preflight --check-database
+      - name: Set up frontend Node runtime
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install pinned frontend dependencies
+        working-directory: frontend
+        run: npm ci --ignore-scripts
+      - name: Verify generated frontend contracts
+        run: |
+          python scripts/export_frontend_contract.py
+          npm --prefix frontend run contracts
+          git diff --exit-code -- frontend/src/api/openapi.json frontend/src/api/generated.ts
+      - name: Check frontend types, tests, formatting and build
+        working-directory: frontend
+        run: |
+          npm run typecheck
+          npm run test
+          npm run format:check
+          npm run build
+          npm audit
