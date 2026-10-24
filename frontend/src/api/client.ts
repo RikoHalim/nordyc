@@ -144,7 +144,9 @@ export class ApiClient {
         redirect: "error",
         mode: "same-origin",
         headers: {
-          Authorization: `Bearer ${this.#credential}`,
+          ...(this.#credential
+            ? { Authorization: `Bearer ${this.#credential}` }
+            : {}),
           Accept: "application/json",
           ...(options.pdf
             ? { "Content-Type": "application/pdf" }

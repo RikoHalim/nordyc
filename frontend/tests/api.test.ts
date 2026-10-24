@@ -20,6 +20,12 @@ afterEach(() => {
 });
 
 describe("actual OpenAPI response validation", () => {
+  it("does not send a placeholder bearer when the local server supplies demo access", async () => {
+    const fetch = vi.fn().mockResolvedValue(json(courses.response));
+    vi.stubGlobal("fetch", fetch);
+    await new ApiClient("").get(path, "CoursePage");
+    expect(fetch.mock.calls[0][1].headers).not.toHaveProperty("Authorization");
+  });
   it("accepts the normalized real synthetic course-page response and preserves unknowns", () => {
     const accepted = validateResponse<typeof courses.response>(
       courses.response,

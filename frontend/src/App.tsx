@@ -675,11 +675,49 @@ function SettingsPage() {
 }
 
 export default function App() {
+  const [openingDemo, setOpeningDemo] = useState(
+    import.meta.env.DEV &&
+      ["127.0.0.1", "localhost", "[::1]"].includes(window.location.hostname),
+  );
   const [session, setSession] = useState<{
     api: ApiClient;
     access: AccessContext;
   } | null>(null);
   const disconnect = () => setSession(null);
+  useEffect(() => {
+    if (!openingDemo) return;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 3000);
+    let active = true;
+    fetch("/__local_demo", {
+      signal: controller.signal,
+      credentials: "same-origin",
+      cache: "no-store",
+      redirect: "error",
+      mode: "same-origin",
+    })
+      .then(async (response) => {
+        if (!response.ok || (await response.json()).enabled !== true) return;
+        const api = new ApiClient("", () =>
+          window.dispatchEvent(new Event("workspace-auth-expired")),
+        );
+        const access = await api.get<AccessContext>(
+          "/api/v1/access-context",
+          "AccessContext",
+        );
+        if (active) setSession({ api, access });
+      })
+      .catch(() => {})
+      .finally(() => {
+        clearTimeout(timeout);
+        if (active) setOpeningDemo(false);
+      });
+    return () => {
+      active = false;
+      clearTimeout(timeout);
+      controller.abort();
+    };
+  }, []);
   useEffect(() => {
     window.addEventListener("workspace-auth-expired", disconnect);
     return () =>
@@ -710,7 +748,9 @@ export default function App() {
   );
   return (
     <Boundary>
-      {!value ? (
+      {openingDemo ? (
+        <Loading label="Opening local demonstration…" />
+      ) : !value ? (
         <Connect onConnect={(api, access) => setSession({ api, access })} />
       ) : (
         <SessionContext.Provider value={value}>
