@@ -59,11 +59,37 @@ test("actual programme creation, PDF worker extraction, reviewed correction and 
       name: /Bring your curriculum into focus/,
     }),
   ).toBeVisible();
-  await page.getByLabel("Curriculum PDF", { exact: true }).setInputFiles({
+  const chooserReady = page.waitForEvent("filechooser");
+  await page.getByLabel("Curriculum PDF", { exact: true }).click();
+  const chooser = await chooserReady;
+  await chooser.setFiles({
     name: "curriculum-upload.synthetic.pdf",
     mimeType: "application/pdf",
     buffer: syntheticPdf(),
   });
+  await expect(page.getByRole("status")).toContainText(
+    "curriculum-upload.synthetic.pdf selected",
+  );
+  // Exercise the fallback used when a host's native picker opens a PDF viewer.
+  // File selection/drop must only attach bytes; the explicit submit does the POST.
+  const attachedUrl = page.url();
+  const droppedFiles = await page.evaluateHandle((bytes) => {
+    const transfer = new DataTransfer();
+    transfer.items.add(
+      new File([new Uint8Array(bytes)], "curriculum-drop.synthetic.pdf", {
+        type: "application/pdf",
+      }),
+    );
+    return transfer;
+  }, Array.from(syntheticPdf()));
+  await page
+    .getByRole("region", { name: "PDF file drop zone" })
+    .dispatchEvent("drop", { dataTransfer: droppedFiles });
+  await droppedFiles.dispose();
+  await expect(page.getByRole("status")).toContainText(
+    "curriculum-drop.synthetic.pdf selected",
+  );
+  expect(page.url()).toBe(attachedUrl);
   const uploadResponse = page.waitForResponse(
     (response) =>
       response.url().includes(`/programmes/${programme.id}/curriculum-pdf`) &&
@@ -98,6 +124,9 @@ test("actual programme creation, PDF worker extraction, reviewed correction and 
     .click();
   manifest.name = name;
   manifest.canonical_url = programme.canonical_url;
+  // This fictional transcription is reviewed now, after the PDF import. Dating
+  // it at test setup would correctly preserve it as an older historical revision.
+  manifest.retrieved_at = new Date().toISOString();
   await page
     .getByLabel("Programme import JSON", { exact: true })
     .fill(JSON.stringify(manifest));
@@ -125,6 +154,21 @@ test("actual programme creation, PDF worker extraction, reviewed correction and 
       { timeout: 75_000 },
     )
     .toMatch(/^(SUCCEEDED|PARTIAL)$/);
+  const reviewedJob = await actualGet(
+    page,
+    `/api/v1/catalogue/jobs/${correctedJob.id}`,
+  );
+  const reviewedEntry = reviewedJob.body.result.entries.find(
+    (entry: { programme_id: string }) => entry.programme_id === programme.id,
+  );
+  expect(reviewedEntry.active).toBe(true);
+  const currentProgramme = await actualGet(
+    page,
+    `/api/v1/programmes/${programme.id}`,
+  );
+  expect(currentProgramme.body.active_revision_id).toBe(
+    reviewedEntry.revision_id,
+  );
   await expect(
     page.getByRole("link", { name: "Inspect this extracted revision" }),
   ).toBeVisible();

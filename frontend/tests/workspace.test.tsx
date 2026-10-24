@@ -1,5 +1,6 @@
 import {
   act,
+  createEvent,
   fireEvent,
   render,
   screen,
@@ -287,6 +288,8 @@ describe("curriculum library and creation", () => {
         return Promise.resolve(json(page([programme, business])));
       if (url.pathname === "/api/v1/institutions")
         return Promise.resolve(json(page([institution])));
+      if (url.pathname.endsWith("/career-analyses"))
+        return Promise.resolve(json(page([])));
       if (coverageResponse)
         return Promise.resolve(coverageResponse(url.pathname.split("/")[4]));
       return Promise.resolve(
@@ -602,6 +605,98 @@ describe("attributed PDF and reviewed input", () => {
       screen.getByRole("heading", { name: "Write permission is required" }),
     ).toBeInTheDocument();
     expect(screen.queryByLabelText("Curriculum PDF")).not.toBeInTheDocument();
+  });
+
+  it("selects one dropped PDF without uploading and prevents browser navigation", () => {
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    renderWorkspace(<UploadPage />, new ApiClient(credential), [
+      "read",
+      "write",
+    ]);
+    const dropZone = screen.getByRole("region", { name: "PDF file drop zone" });
+    const submit = screen.getByRole("button", {
+      name: /Upload and queue extraction/,
+    });
+    expect(submit).toBeDisabled();
+    const file = new File(
+      ["%PDF-1.7\nfictional input"],
+      "dropped.synthetic.pdf",
+      {
+        type: "application/pdf",
+      },
+    );
+    const drop = createEvent.drop(dropZone, {
+      dataTransfer: { files: [file] },
+    });
+    fireEvent(dropZone, drop);
+    expect(drop.defaultPrevented).toBe(true);
+    expect(screen.getByRole("status")).toHaveTextContent(file.name);
+    expect(screen.getByRole("status")).toHaveTextContent(/selected/i);
+    expect(submit).toBeEnabled();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("blocks a non-PDF drop even when a valid PDF was previously selected", () => {
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    renderWorkspace(<UploadPage />, new ApiClient(credential), [
+      "read",
+      "write",
+    ]);
+    const dropZone = screen.getByRole("region", { name: "PDF file drop zone" });
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [
+          new File(["%PDF-1.7\nfictional input"], "previous.synthetic.pdf", {
+            type: "application/pdf",
+          }),
+        ],
+      },
+    });
+    expect(
+      screen.getByRole("button", { name: /Upload and queue extraction/ }),
+    ).toBeEnabled();
+    fireEvent.drop(dropZone, {
+      dataTransfer: {
+        files: [
+          new File(["fictional notes"], "notes.txt", { type: "text/plain" }),
+        ],
+      },
+    });
+    expect(screen.getByRole("alert")).toHaveTextContent(/Choose a PDF/);
+    expect(
+      screen.getByRole("button", { name: /Upload and queue extraction/ }),
+    ).toBeDisabled();
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it("blocks multiple dropped PDFs instead of silently selecting the first", () => {
+    const fetch = vi.fn();
+    vi.stubGlobal("fetch", fetch);
+    renderWorkspace(<UploadPage />, new ApiClient(credential), [
+      "read",
+      "write",
+    ]);
+    const dropZone = screen.getByRole("region", { name: "PDF file drop zone" });
+    const files = ["first.synthetic.pdf", "second.synthetic.pdf"].map(
+      (name) =>
+        new File(["%PDF-1.7\nfictional input"], name, {
+          type: "application/pdf",
+        }),
+    );
+    fireEvent.drop(dropZone, { dataTransfer: { files: files.slice(0, 1) } });
+    expect(
+      screen.getByRole("button", { name: /Upload and queue extraction/ }),
+    ).toBeEnabled();
+    fireEvent.drop(dropZone, { dataTransfer: { files } });
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Choose one PDF at a time.",
+    );
+    expect(
+      screen.getByRole("button", { name: /Upload and queue extraction/ }),
+    ).toBeDisabled();
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it("checks PDF signature before any upload request", async () => {

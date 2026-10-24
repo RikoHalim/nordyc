@@ -6,6 +6,8 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 
 ## Current foundation
 
+Phase 8.1 adds PDF drag-and-drop, explicit extraction/revision states and an **Explore Sample Programme** entry backed by existing synthetic PostgreSQL results. Judges use a separately scoped read-only controlled-preview credential. See [the upload/judge-demo runbook](docs/31_PHASE81_UPLOAD_JUDGE_DEMO.md) for actual diagnostics, access instructions and the outstanding fresh Replit verification gate.
+
 Phase 8 adds the NORDYC React/TypeScript workspace over the Phase 7 protected APIs: programme library/creation, actual PDF and reviewed-input ingestion, course intelligence, career and competency evidence, recommendations, pathways, scenarios, SDG contributions, Action Plans and version-bound review. The design is reconstructed from the original revised NORDYC screenshots; original authored NORDYC source was not recovered. See [the Phase 8 setup, design recovery and controlled Replit preview runbook](docs/30_PHASE8_FRONTEND_REPLIT_MVP.md) and [current measured acceptance](STATUS.md). This is a controlled operator MVP, not public production identity or independent academic validation.
 
 Phase 7 integrates the complete synthetic workflow, adds scoped operator/institution authorization, controlled evaluation/replay, bounded private PDF processing, runtime preflight and Phase 8 API examples. See [the Phase 7 runbook](docs/29_PHASE7_INTEGRATION_EVALUATION_SECURITY.md) for measured results, security boundaries and Replit prerequisites. This is not production or real academic validation.

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, FileCheck2, FileText, UploadCloud } from "lucide-react";
 import { useWorkspace } from "../app/workspace";
@@ -27,6 +27,35 @@ export function validatePdf(file: File) {
   return null;
 }
 
+export function validatePdfOrigin(
+  programmeUrl: string | null | undefined,
+  institutionUrl: string | null | undefined,
+  sourceUrl = "",
+) {
+  if (!programmeUrl || !institutionUrl)
+    return "The institution website and official programme URL must be configured before an attributed PDF upload. Use reviewed input or ask your administrator to confirm the catalogue origins.";
+  try {
+    const host = new URL(institutionUrl).hostname.replace(/^www\./, "");
+    const origins = [new URL(programmeUrl)];
+    if (sourceUrl.trim()) origins.push(new URL(sourceUrl.trim()));
+    if (
+      host &&
+      origins.every(
+        (origin) =>
+          origin.protocol === "https:" &&
+          !origin.username &&
+          !origin.password &&
+          (!origin.port || origin.port === "443") &&
+          origin.hostname.replace(/^www\./, "") === host,
+      )
+    )
+      return null;
+  } catch {
+    // The backend remains authoritative; no origin is changed automatically.
+  }
+  return "The programme URL and any document URL must use the institution’s authorised HTTPS host. For a real university PDF, select the correct authorised institution and programme instead of placing it in a fictional demo. Ask the workspace administrator to confirm the origins; they are not changed automatically.";
+}
+
 export default function UploadPage() {
   const { api, access, programme, institution } = useWorkspace();
   const [params, setParams] = useSearchParams();
@@ -37,6 +66,16 @@ export default function UploadPage() {
   const [manifestText, setManifestText] = useState("");
   const [reviewed, setReviewed] = useState(false);
   const [tab, setTab] = useState<"pdf" | "json">("pdf");
+  const originError = validatePdfOrigin(
+    programme.canonical_url,
+    institution.website_url,
+    sourceUrl,
+  );
+  const pdfInput = useRef<HTMLInputElement>(null);
+  const selectPdf = (value: File | null) => {
+    setFile(value);
+    setError(value ? validatePdf(value) || "" : "");
+  };
   const jobId = params.get("job");
   const job = useResource(
     jobId ? `upload:${programme.id}:${jobId}` : null,
@@ -50,13 +89,33 @@ export default function UploadPage() {
   );
   const entries =
     (job.data?.result?.entries as
-      { programme_id?: string; revision_id?: string | null }[] | undefined) ||
-    [];
-  const revisionId = entries.find(
+      | {
+          programme_id?: string;
+          revision_id?: string | null;
+          active?: boolean;
+        }[]
+      | undefined) || [];
+  const importedEntry = entries.find(
     (entry) => entry.programme_id === programme.id,
-  )?.revision_id;
+  );
+  const revisionId = importedEntry?.revision_id;
+  const importFinished =
+    job.data?.status === "SUCCEEDED" || job.data?.status === "PARTIAL";
+  const pendingLongerThanMinute =
+    job.data &&
+    isPending(job.data.status) &&
+    Date.now() - Date.parse(job.data.started_at || job.data.created_at) >
+      60_000;
+  const needsManualPdfReview =
+    job.data?.kind === "CURRICULUM_PDF_UPLOAD" &&
+    [
+      "pdf_regions_required",
+      "pdf_layout_ambiguous",
+      "pdf_extraction_failed",
+      "pdf_course_candidates_empty",
+    ].includes(job.data.error?.split(":", 1)[0] || "");
   const extracted = useResource(
-    revisionId && !isPending(job.data?.status)
+    revisionId && importFinished
       ? `extracted:${programme.id}:${revisionId}`
       : null,
     (signal) =>
@@ -66,6 +125,10 @@ export default function UploadPage() {
         signal,
       ),
   );
+  const readyCourseCount = extracted.data?.length || 0;
+  const needsReviewCount =
+    extracted.data?.filter((row) => row.extraction_status === "NEEDS_REVIEW")
+      .length || 0;
   const showJob = (id: string) => {
     const next = new URLSearchParams(params);
     next.set("job", id);
@@ -114,6 +177,7 @@ export default function UploadPage() {
       </div>
       {tab === "pdf" ? (
         <Card title="Upload your curriculum PDF">
+          {originError && <Notice tone="caution">{originError}</Notice>}
           <form
             onSubmit={async (event) => {
               event.preventDefault();
@@ -123,10 +187,8 @@ export default function UploadPage() {
                 setError(invalid);
                 return;
               }
-              if (!programme.canonical_url || !institution.website_url) {
-                setError(
-                  "The institution website and official programme URL must be configured before an attributed PDF upload. Use reviewed input or ask your administrator to confirm the catalogue origins.",
-                );
+              if (originError) {
+                setError(originError);
                 return;
               }
               setBusy(true);
@@ -158,26 +220,61 @@ export default function UploadPage() {
               }
             }}
           >
-            <label className="upload-zone">
+            <div
+              className="upload-zone"
+              role="region"
+              aria-label="PDF file drop zone"
+              onDragOver={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                event.dataTransfer.dropEffect = "copy";
+              }}
+              onDrop={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+                if (pdfInput.current) pdfInput.current.value = "";
+                if (event.dataTransfer.files.length !== 1) {
+                  setFile(null);
+                  setError("Choose one PDF at a time.");
+                  return;
+                }
+                selectPdf(event.dataTransfer.files[0]);
+              }}
+            >
               <UploadCloud size={34} strokeWidth={1.3} aria-hidden="true" />
-              <strong>Choose a curriculum or brochure</strong>
+              <strong>Choose or drop a curriculum PDF</strong>
               <span>PDF · up to 20 MB · selectable text recommended</span>
-              <input
-                type="file"
-                accept="application/pdf,.pdf"
-                aria-label="Curriculum PDF"
-                onChange={(e) => {
-                  const value = e.target.files?.[0] || null;
-                  setFile(value);
-                  setError(value ? validatePdf(value) || "" : "");
-                }}
-              />
-              {file && (
-                <Badge>
-                  {file.name} · {(file.size / 1_000_000).toFixed(2)} MB
-                </Badge>
+              <label className="pdf-file-picker">
+                Choose a PDF file
+                <input
+                  ref={pdfInput}
+                  type="file"
+                  accept="application/pdf,.pdf"
+                  aria-label="Curriculum PDF"
+                  aria-describedby="pdf-selection-help"
+                  onChange={(event) =>
+                    selectPdf(event.target.files?.[0] || null)
+                  }
+                />
+              </label>
+              {file && !validatePdf(file) ? (
+                <p id="pdf-selection-help" role="status">
+                  <strong>{file.name}</strong> selected ·{" "}
+                  {(file.size / 1_000_000).toFixed(2)} MB. Next, choose “Upload
+                  and queue extraction” below.
+                </p>
+              ) : (
+                <p id="pdf-selection-help">
+                  {!file
+                    ? "No PDF selected. "
+                    : "This file is not ready to upload. "}
+                  Select the file and click Open in the file picker, or drag it
+                  here from File Explorer. Then use “Upload and queue
+                  extraction” below. Opening the PDF in a viewer does not attach
+                  it.
+                </p>
               )}
-            </label>
+            </div>
             <label>
               Original document URL{" "}
               <span className="muted">
@@ -197,7 +294,12 @@ export default function UploadPage() {
             </p>
             <button
               className="button"
-              disabled={busy || !file || Boolean(file && validatePdf(file))}
+              disabled={
+                busy ||
+                !file ||
+                Boolean(file && validatePdf(file)) ||
+                Boolean(originError)
+              }
             >
               {busy ? "Submitting file…" : "Upload and queue extraction"}
               <ArrowRight size={16} />
@@ -331,17 +433,50 @@ export default function UploadPage() {
             <small>Job {job.data.id}</small>
           </div>
           {isPending(job.data.status) ? (
-            <Notice>
-              The job is {job.data.status.toLowerCase()}. A running worker is
-              required. Queue status does not prove worker availability; no
-              extraction success is assumed.
-            </Notice>
+            <>
+              <Notice>
+                The job is {job.data.status.toLowerCase()}. A running worker is
+                required. Queue status does not prove worker availability; no
+                extraction success is assumed.
+              </Notice>
+              {pendingLongerThanMinute && (
+                <Notice tone="caution">
+                  No completion has been reported after more than a minute.
+                  Worker availability is unknown. Ask the workspace operator to
+                  inspect the worker and database connection before submitting a
+                  duplicate job.
+                </Notice>
+              )}
+            </>
           ) : job.data.status === "FAILED" ? (
+            <>
+              <Notice tone="caution">
+                The worker reported a failure:{" "}
+                {job.data.error || "No additional safe diagnostic available"}.
+                Review the file/layout or use reviewed input. This button does
+                not automatically retry a failed job.
+              </Notice>
+              {needsManualPdfReview && (
+                <Notice tone="caution">
+                  Manual PDF review is required. The extractor could not
+                  identify a supported course list; this does not mean the PDF
+                  has no courses. Check the original document, transcribe its
+                  course titles with exact excerpts and locators, then submit
+                  Reviewed input. Do not infer content from course titles.
+                </Notice>
+              )}
+              <button
+                className="button secondary"
+                onClick={() => setTab("json")}
+              >
+                Use reviewed input
+              </button>
+            </>
+          ) : !revisionId ? (
             <Notice tone="caution">
-              The worker reported a failure:{" "}
-              {job.data.error || "No additional safe diagnostic available"}.
-              Review the file/layout or use reviewed input. This button does not
-              automatically retry a failed job.
+              The job finished but did not report a revision for this programme.
+              No imported course inventory is assumed. Inspect the job and
+              programme history before submitting again.
             </Notice>
           ) : (
             <Notice>
@@ -350,7 +485,15 @@ export default function UploadPage() {
             </Notice>
           )}
           {job.data.is_synthetic && <Badge>Synthetic input</Badge>}
-          {revisionId && (
+          {revisionId && importFinished && importedEntry?.active === false && (
+            <Notice tone="caution">
+              This import was saved as a historical revision. The active
+              curriculum was not replaced. Inspect this exact revision or ask
+              the workspace operator to review its source dates before another
+              import; do not change dates merely to force activation.
+            </Notice>
+          )}
+          {revisionId && readyCourseCount > 0 && (
             <Link
               className="button secondary"
               to={`../courses?revision=${revisionId}`}
@@ -367,8 +510,25 @@ export default function UploadPage() {
       {extracted.error && (
         <ErrorState error={extracted.error} retry={extracted.reload} />
       )}
-      {extracted.data && (
+      {extracted.data && readyCourseCount === 0 && (
+        <Empty title="No course records in this revision">
+          The revision loaded without courses. Check the original document and
+          use reviewed input; this is not a completed course inventory.
+        </Empty>
+      )}
+      {extracted.data && readyCourseCount > 0 && (
         <Card title="Review extracted courses">
+          <h3>Revision ready for review</h3>
+          <p>{readyCourseCount} course records loaded from this revision.</p>
+          {needsReviewCount > 0 && (
+            <Notice tone="caution">
+              Manual review required for {needsReviewCount} of{" "}
+              {readyCourseCount} course records. Check titles, year, semester,
+              elective status and source locators against the original document.
+              Use Reviewed input for corrections; unknown fields can remain
+              unknown.
+            </Notice>
+          )}
           <Notice>
             Extraction flags are not academic verification. Supported
             corrections use reviewed input and create a new revision; there is

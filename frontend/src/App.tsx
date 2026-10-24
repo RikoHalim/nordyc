@@ -563,7 +563,7 @@ function ProgrammeShell() {
         <div className="workspace-banner">
           <span>
             {programme.is_synthetic
-              ? "Synthetic demonstration · model execution is identified on each result"
+              ? "Synthetic demonstration — not real university findings."
               : "Stored curriculum · title-only records need syllabus confirmation"}
           </span>
           <Link to={`${base}/evidence${suffix}`}>Evidence &amp; limits ↗</Link>

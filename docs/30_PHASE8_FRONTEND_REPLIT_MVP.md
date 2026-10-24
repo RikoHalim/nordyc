@@ -1,5 +1,7 @@
 # Phase 8 — NORDYC React frontend and controlled Replit MVP
 
+The [Phase 8.1 upload and controlled judge-demo runbook](31_PHASE81_UPLOAD_JUDGE_DEMO.md) records subsequent PDF usability fixes, the populated sample entry, read-only judging access and fresh verification limits. Historical Phase 8 Replit observations below are not a new Phase 8.1 acceptance result.
+
 ## Scope and acceptance boundaries
 
 Work is isolated to **feature/phase8-react-dashboard**, based on the verified Phase 7 receipt **a921318a2285d33c72df90582b7bdef44108d940**. Phase 7 remains the backend authority. The older **codex/replit-managed-ai** branch is a read-only design reference, not a merge source. FastAPI, PostgreSQL, existing workers, evidence rights, version-bound reviews and managed `claude-opus-5` remain authoritative. Gemini, persistent external processing and research stay disabled. No paid provider request, merge or public release is part of this phase.

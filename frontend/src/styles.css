@@ -1445,6 +1445,7 @@ button {
   max-width: 1150px;
 }
 .report-section {
+  overflow-wrap: anywhere;
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1493,6 +1494,7 @@ button {
   margin: 13px 0;
 }
 .citation {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -1610,7 +1612,21 @@ dialog::backdrop {
 .admin-details form {
   margin-top: 20px;
 }
+.sample-programme-card {
+  background: #f6f9ff;
+  border-color: #b3c9ef;
+  margin-bottom: 28px;
+}
+.sample-programme-card .eyebrow {
+  color: var(--blue);
+  line-height: 1.7;
+}
+.sample-programme-card .button {
+  max-width: 100%;
+}
 .upload-zone {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -1621,6 +1637,19 @@ dialog::backdrop {
   gap: 10px;
   min-height: 220px;
   color: #4c709f;
+  margin-bottom: 18px;
+}
+.upload-zone:focus-within {
+  border-color: var(--blue);
+}
+.upload-zone .pdf-file-picker {
+  width: min(100%, 360px);
+  margin-bottom: 0;
+}
+.upload-zone p {
+  max-width: 660px;
+  margin-bottom: 0;
+  font-size: 12px;
 }
 .upload-zone input {
   max-width: 360px;

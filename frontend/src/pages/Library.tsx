@@ -24,6 +24,7 @@ import {
   type Programme,
 } from "../api/types";
 import { useResource } from "../lib/resource";
+import SampleProgrammeEntry from "../components/SampleProgrammeEntry";
 import {
   Badge,
   Empty,
@@ -310,6 +311,11 @@ export default function Library() {
       <PageHeading title="Your curricula">
         Choose a programme. See what’s changing. Shape what comes next.
       </PageHeading>
+      <SampleProgrammeEntry
+        programmes={programmes}
+        institutions={institutions}
+        coverage={coverage}
+      />
       <div
         className="category-tabs"
         role="group"
