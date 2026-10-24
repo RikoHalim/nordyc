@@ -43,9 +43,22 @@ export function loadLocalDemo(
     )
       throw new Error();
     const operator = auth.operator;
-    const institutions = new Set(
-      receipt.programmes.map((row) => row.institution_id as string),
-    );
+    // A local administrator can separately admit private, unverified uploads.
+    // These are never added to the synthetic programme list or judge scope.
+    const uploads = receipt.local_private_uploads;
+    if (
+      uploads !== undefined &&
+      (!record(uploads) ||
+        uploads.external_processing_allowed !== false ||
+        uploads.mock_analysis_allowed !== false ||
+        !Array.isArray(uploads.institution_ids) ||
+        !uploads.institution_ids.every(uuid))
+    )
+      throw new Error();
+    const institutions = new Set([
+      ...receipt.programmes.map((row) => row.institution_id as string),
+      ...(record(uploads) ? (uploads.institution_ids as string[]) : []),
+    ]);
     if (
       typeof operator.token !== "string" ||
       operator.token.length < 32 ||

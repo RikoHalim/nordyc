@@ -432,6 +432,38 @@ describe("curriculum library and creation", () => {
     });
   });
 
+  it("blocks a real university URL under a fictional institution before creating an unusable upload workspace", async () => {
+    const fetch = library(["read", "write"]);
+    await userEvent.click(
+      await screen.findByRole("button", { name: /New curriculum/ }),
+    );
+    await userEvent.type(
+      screen.getByLabelText("Programme name"),
+      "Bachelor of Engineering in Data Science",
+    );
+    await userEvent.type(
+      screen.getByLabelText(/Official programme URL/),
+      "https://www.xmu.edu.my/courses/data-science",
+    );
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "Choose the programme’s university first",
+    );
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      "curriculum.example.invalid",
+    );
+    const submit = screen.getByRole("button", {
+      name: /Create curriculum workspace/,
+    });
+    expect(submit).toBeDisabled();
+    await userEvent.click(submit);
+    expect(fetch.mock.calls.some(([, init]) => init?.method === "POST")).toBe(
+      false,
+    );
+    expect(screen.getByLabelText("Programme name")).toHaveValue(
+      "Bachelor of Engineering in Data Science",
+    );
+  });
+
   it("keeps a rejected creation in the form without presenting successful navigation", async () => {
     library(["read", "write"], () =>
       json(

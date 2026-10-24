@@ -56,6 +56,46 @@ describe("server-only local demonstration opt-in", () => {
   it("loads only the scoped synthetic operator credential", () => {
     expect(loadLocalDemo(fixture())).toEqual({ credential });
   });
+  it("admits a separately registered private upload institution without granting admin", () => {
+    const real = "00000000-0000-4000-8000-000000000002";
+    const local_private_uploads = {
+      external_processing_allowed: false,
+      mock_analysis_allowed: false,
+      institution_ids: [real],
+    };
+    expect(
+      loadLocalDemo(
+        fixture(
+          { local_private_uploads },
+          {
+            institution_ids: [institution, real],
+          },
+        ),
+      ),
+    ).toEqual({ credential });
+  });
+  it.each([
+    {
+      external_processing_allowed: true,
+      mock_analysis_allowed: false,
+      institution_ids: [institution],
+    },
+    {
+      external_processing_allowed: false,
+      mock_analysis_allowed: true,
+      institution_ids: [institution],
+    },
+    {
+      external_processing_allowed: false,
+      mock_analysis_allowed: false,
+      institution_ids: ["invalid"],
+    },
+  ])(
+    "rejects unsafe local private upload admission %j",
+    (local_private_uploads) => {
+      expect(() => loadLocalDemo(fixture({ local_private_uploads }))).toThrow();
+    },
+  );
   it.each([
     { is_synthetic: false },
     { provider_execution: "live" },

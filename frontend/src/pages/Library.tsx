@@ -24,6 +24,7 @@ import {
   type Programme,
 } from "../api/types";
 import { useResource } from "../lib/resource";
+import { catalogueHost, validatePdfOrigin } from "../lib/catalogue-origin";
 import SampleProgrammeEntry from "../components/SampleProgrammeEntry";
 import {
   Badge,
@@ -72,6 +73,10 @@ function CreateCurriculum({
   const institution = localInstitutions.find(
     (item) => item.id === institutionId,
   );
+  const originError =
+    url.trim() && validatePdfOrigin(url.trim(), institution?.website_url)
+      ? `Choose the programme’s university first. Its HTTPS programme URL must use ${catalogueHost(institution?.website_url) || "the institution’s confirmed website"}.`
+      : "";
   const dialog = useRef<HTMLDialogElement>(null);
   return (
     <dialog
@@ -104,7 +109,7 @@ function CreateCurriculum({
       <form
         onSubmit={async (e) => {
           e.preventDefault();
-          if (!institution || busy) return;
+          if (!institution || busy || originError) return;
           setBusy(true);
           setError(null);
           try {
@@ -162,8 +167,17 @@ function CreateCurriculum({
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://your-university.example/programme"
+            aria-invalid={Boolean(originError)}
+            aria-describedby={
+              originError ? "programme-origin-error" : undefined
+            }
           />
         </label>
+        {originError && (
+          <p role="alert" id="programme-origin-error" className="form-error">
+            {originError}
+          </p>
+        )}
         <label>
           Discipline <span className="muted">(optional)</span>
           <input
@@ -187,7 +201,9 @@ function CreateCurriculum({
         <button
           className="button"
           type="submit"
-          disabled={busy || !institution || !name.trim()}
+          disabled={
+            busy || !institution || !name.trim() || Boolean(originError)
+          }
         >
           {busy ? "Creating record…" : "Create curriculum workspace"}
           <ArrowUpRight size={16} />

@@ -9,6 +9,8 @@ import socket
 import threading
 import time
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import MagicMock
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from uuid import UUID
@@ -21,6 +23,7 @@ from sqlalchemy.engine import make_url
 from test_curriculum_upload import content as fictional_pdf
 
 from shiftos.core.access import AccessPolicy
+from shiftos.core.errors import DomainError
 from shiftos.models import Course, Job
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -33,6 +36,37 @@ import sys  # noqa: E402
 
 sys.modules[_spec.name] = preview_runner
 _spec.loader.exec_module(preview_runner)
+
+
+@pytest.mark.parametrize("mode", ["live", None])
+def test_private_real_uploads_cannot_receive_mock_academic_analysis(mode):
+    from shiftos.services.analysis import orchestrator as analysis
+    from shiftos.services.career import orchestrator as career
+    from shiftos.services.pathways import orchestrator as pathways
+
+    database = MagicMock()
+    database.session_factory.return_value.__enter__.return_value.scalar.return_value = mode
+    with preview_runner.preview_mocked_workers():
+        for process in (
+            analysis.process_analysis_job,
+            career.process_career_job,
+            pathways.process_plan_job,
+        ):
+            with pytest.raises(DomainError, match="Real uploads can be extracted"):
+                process(database, SimpleNamespace(is_synthetic=False, id=UUID(int=1)), None)
+
+
+def test_private_real_uploads_keep_deterministic_offline_screening(monkeypatch):
+    from shiftos.services.analysis import orchestrator as analysis
+
+    original = MagicMock(return_value="offline result")
+    monkeypatch.setattr(analysis, "process_analysis_job", original)
+    database = MagicMock()
+    database.session_factory.return_value.__enter__.return_value.scalar.return_value = "offline"
+    job = SimpleNamespace(is_synthetic=False, id=UUID(int=1))
+    with preview_runner.preview_mocked_workers():
+        assert analysis.process_analysis_job(database, job, None) == "offline result"
+    original.assert_called_once_with(database, job, None)
 
 
 @pytest.mark.parametrize(

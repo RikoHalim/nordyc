@@ -21,7 +21,7 @@ import secrets
 import sys
 import tempfile
 import threading
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from unittest.mock import patch
@@ -30,7 +30,7 @@ from uuid import uuid4
 import uvicorn
 from alembic.config import Config
 from pydantic import SecretStr
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine, select, text
 from sqlalchemy.orm import sessionmaker
 
 from alembic import command
@@ -42,6 +42,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from verify_system import mocked_workers, test_settings, validate_database_url  # noqa: E402
 
 from shiftos.core.access import AccessPolicy, validate_access_configuration  # noqa: E402
+from shiftos.core.errors import DomainError  # noqa: E402
 from shiftos.db.session import Database  # noqa: E402
 from shiftos.main import create_app  # noqa: E402
 from shiftos.services.integration import run_synthetic_system  # noqa: E402
@@ -64,10 +65,40 @@ def preview_mocked_workers():
             raise RuntimeError("External HTTP is prohibited in the synthetic preview")
         return original_connect(connection)
 
+    def synthetic_analysis_only(original, run_type):
+        def process(database, job, settings):
+            if not job.is_synthetic:
+                with database.session_factory() as session:
+                    mode = session.scalar(select(run_type.mode).where(run_type.job_id == job.id))
+                if mode != "offline":
+                    raise DomainError(
+                        "PREVIEW_REAL_ANALYSIS_DISABLED",
+                        "Real uploads can be extracted and screened offline locally. "
+                        "Mock model analysis is available only for fictional programmes.",
+                        409,
+                    )
+            return original(database, job, settings)
+
+        return process
+
     with (
         mocked_workers() as scope,
         patch.object(http.client.HTTPConnection, "connect", loopback_connect),
+        ExitStack() as guards,
     ):
+        from shiftos.models import ActionPlanRun, AnalysisRun, CareerRun
+        from shiftos.services.analysis import orchestrator as analysis
+        from shiftos.services.career import orchestrator as career
+        from shiftos.services.pathways import orchestrator as pathways
+
+        for module, name, run_type in (
+            (analysis, "process_analysis_job", AnalysisRun),
+            (career, "process_career_job", CareerRun),
+            (pathways, "process_plan_job", ActionPlanRun),
+        ):
+            guards.enter_context(
+                patch.object(module, name, synthetic_analysis_only(getattr(module, name), run_type))
+            )
         yield scope
 
 
