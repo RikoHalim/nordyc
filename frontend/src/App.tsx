@@ -48,6 +48,7 @@ import {
   type Revision,
 } from "./api/types";
 import { useResource } from "./lib/resource";
+import { publicWorkspaceAccess } from "./lib/public-upload-session";
 import { SessionContext, useSession } from "./app/session";
 import { Workspace, useWorkspace } from "./app/workspace";
 import { Brand, BRAND } from "./components/Brand";
@@ -316,7 +317,8 @@ function GlobalLayout() {
 }
 
 function ProgrammeShell() {
-  const { api, access } = useSession();
+  const { api, access, publicUploadsEnabled, publicUploadInstitutionId } =
+    useSession();
   const { programmeId } = useParams();
   const [params, setParams] = useSearchParams();
   const location = useLocation();
@@ -420,6 +422,12 @@ function ProgrammeShell() {
     );
   if (!context.data) return null;
   const { programme, institution, revisions } = context.data;
+  const workspaceAccess = publicWorkspaceAccess(
+    access,
+    publicUploadsEnabled,
+    publicUploadInstitutionId,
+    institution.id,
+  );
   const revisionId = params.get("revision") || programme.active_revision_id;
   if (revisionId && !revisions.some((row) => row.id === revisionId))
     return (
@@ -446,7 +454,7 @@ function ProgrammeShell() {
     <Workspace.Provider
       value={{
         api,
-        access,
+        access: workspaceAccess,
         programme,
         institution,
         revisionId,
@@ -510,7 +518,7 @@ function ProgrammeShell() {
             <ClipboardCheck size={17} />
             Review history
           </NavLink>
-          {access.permissions.includes("write") && (
+          {workspaceAccess.permissions.includes("write") && (
             <NavLink to={`${base}/upload${suffix}`}>
               <Upload size={17} />
               Upload &amp; extraction
@@ -627,7 +635,7 @@ export function category(discipline?: string | null) {
   return "other";
 }
 function SettingsPage() {
-  const { programme, revisions } = useWorkspace();
+  const { programme, revisions, access } = useWorkspace();
   return (
     <>
       <PageHeading title="Curriculum settings">
@@ -650,9 +658,11 @@ function SettingsPage() {
           revision. This interface does not silently edit protected historical
           records.
         </Notice>
-        <Link className="button secondary" to="../upload">
-          Upload or import a revision
-        </Link>
+        {access.permissions.includes("write") && (
+          <Link className="button secondary" to="../upload">
+            Upload or import a revision
+          </Link>
+        )}
       </Card>
       <Card title="Revision history">
         <ul className="text-list">
@@ -677,6 +687,8 @@ export default function App() {
   const [session, setSession] = useState<{
     api: ApiClient;
     access: AccessContext;
+    publicUploadsEnabled?: boolean;
+    publicUploadInstitutionId?: string;
   } | null>(null);
   const disconnect = () => setSession(null);
   useEffect(() => {
@@ -692,7 +704,8 @@ export default function App() {
       mode: "same-origin",
     })
       .then(async (response) => {
-        if (!response.ok || (await response.json()).enabled !== true) return;
+        const marker = response.ok ? await response.json() : null;
+        if (marker?.enabled !== true) return;
         const api = new ApiClient("", () =>
           window.dispatchEvent(new Event("workspace-auth-expired")),
         );
@@ -700,7 +713,15 @@ export default function App() {
           "/api/v1/access-context",
           "AccessContext",
         );
-        if (active) setSession({ api, access });
+        if (active)
+          setSession({
+            api,
+            access,
+            publicUploadsEnabled: publicDemo && marker.uploads_enabled === true,
+            publicUploadInstitutionId: validId(marker.upload_institution_id)
+              ? marker.upload_institution_id
+              : undefined,
+          });
       })
       .catch(() => {})
       .finally(() => {
@@ -741,7 +762,31 @@ export default function App() {
     };
   }, [session?.api]);
   const value = useMemo(
-    () => (session ? { ...session, disconnect } : null),
+    () =>
+      session
+        ? {
+            ...session,
+            disconnect,
+            refreshAccess: async (uploadInstitutionId?: string) => {
+              const access = await session.api.get<AccessContext>(
+                "/api/v1/access-context",
+                "AccessContext",
+              );
+              setSession((current) =>
+                current?.api === session.api
+                  ? {
+                      ...current,
+                      access,
+                      publicUploadInstitutionId:
+                        uploadInstitutionId ||
+                        current.publicUploadInstitutionId,
+                    }
+                  : current,
+              );
+              return access;
+            },
+          }
+        : null,
     [session],
   );
   return (

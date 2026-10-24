@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useContext, useState, type ReactNode } from "react";
 import { Printer, RefreshCw } from "lucide-react";
 import { ApiError, validateResponse } from "../api/client";
 import type {
@@ -12,6 +12,7 @@ import type {
 } from "../api/types";
 import { dateLabel, humanise, isPending } from "../api/types";
 import { useWorkspace } from "../app/workspace";
+import { SessionContext } from "../app/session";
 import { useResource } from "../lib/resource";
 import GenerateReview from "../components/GenerateReview";
 import {
@@ -202,10 +203,12 @@ function RunSelection({ state }: { state: Results }) {
 }
 
 function OfflineGeneration({ state }: { state: Results }) {
+  const publicUploadsEnabled = useContext(SessionContext)?.publicUploadsEnabled;
   const { api, access, programme, revisionId } = useWorkspace();
   const [advanced, setAdvanced] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<ApiError | null>(null);
+  if (publicUploadsEnabled) return null;
   if (!access.permissions.includes("write"))
     return (
       <Notice>

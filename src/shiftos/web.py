@@ -6,6 +6,7 @@ The ordinary FastAPI factory remains unchanged and protected.
 
 from __future__ import annotations
 
+import json
 import logging
 import os
 import re
@@ -14,6 +15,7 @@ import threading
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from pathlib import Path
+from time import time
 from uuid import UUID
 
 from fastapi import Request
@@ -22,12 +24,15 @@ from sqlalchemy import func, select, text
 from sqlalchemy.engine import make_url
 from starlette.concurrency import run_in_threadpool
 
+from shiftos import public_uploads
+from shiftos.api.body_limit import BodyLimitMiddleware
 from shiftos.api.routers.analysis import analysis_response
 from shiftos.api.routers.career import career_response
 from shiftos.api.routers.pathways import plan_response
 from shiftos.core.access import AccessPolicy, _policy, validate_access_configuration
 from shiftos.core.config import Settings
 from shiftos.core.enums import JobStatus
+from shiftos.core.errors import DomainError
 from shiftos.db.session import Database, create_database
 from shiftos.models import (
     ActionPlanRun,
@@ -81,6 +86,7 @@ class WebOptions:
     public_programme_id: UUID | None = None
     public_principal_id: str | None = None
     worker_enabled: bool = False
+    public_uploads_enabled: bool = False
 
     @classmethod
     def from_env(cls):
@@ -102,6 +108,7 @@ class WebOptions:
             public_programme_id=identity("NORDYC_PUBLIC_PROGRAMME_ID"),
             public_principal_id=os.environ.get("NORDYC_PUBLIC_PRINCIPAL_ID") or None,
             worker_enabled=flag("NORDYC_WORKER_ENABLED"),
+            public_uploads_enabled=flag("NORDYC_PUBLIC_UPLOADS_ENABLED"),
         )
 
 
@@ -263,15 +270,25 @@ def _public_principal(settings, database, options):
 class WebWorker:
     """Optional ordinary worker; never installs mock providers or retries failed jobs."""
 
-    def __init__(self, database, settings):
+    def __init__(self, database, settings, *, public_uploads_only=False):
         self.database, self.settings = database, settings
+        self.public_uploads_only = public_uploads_only
         self.stop = threading.Event()
         self.thread = threading.Thread(target=self._run, name="shiftos-web-worker")
 
     def _run(self):
         while not self.stop.is_set():
             try:
-                run_once(self.database, self.settings)
+                if self.public_uploads_only:
+                    run_once(
+                        self.database,
+                        self.settings,
+                        allowed_kinds=public_uploads.PUBLIC_JOB_KINDS,
+                        institution_ids=public_uploads.active_session_institutions(self.database),
+                        offline_analysis_only=True,
+                    )
+                else:
+                    run_once(self.database, self.settings)
             except Exception:
                 logger.error("web_worker_iteration_failed")
             self.stop.wait(2)
@@ -298,6 +315,9 @@ def create_web_app(settings=None, database: Database | None = None, options=None
         )
     if settings.gemini_enabled or settings.analysis_gemini_fallback_enabled:
         raise ValueError("Gemini must remain disabled in this web launcher")
+    if options.public_uploads_enabled and not options.public_enabled:
+        raise ValueError("Judge uploads require the explicitly enabled public demonstration")
+    upload_secret = public_uploads.session_secret() if options.public_uploads_enabled else None
     dist = options.dist.resolve()
     if (
         not dist.is_dir()
@@ -350,8 +370,10 @@ def create_web_app(settings=None, database: Database | None = None, options=None
                     raise ValueError("Apply the documented migrations before web startup")
             if options.public_enabled:
                 _public_principal(settings, database, options)
-            if options.worker_enabled:
-                worker = WebWorker(database, settings)
+            if options.worker_enabled or options.public_uploads_enabled:
+                worker = WebWorker(
+                    database, settings, public_uploads_only=options.public_uploads_enabled
+                )
                 worker.start()
             async with prior_lifespan(app):
                 yield
@@ -370,11 +392,67 @@ def create_web_app(settings=None, database: Database | None = None, options=None
 
     @application.middleware("http")
     async def public_boundary(request: Request, call_next):
+        anonymous = "authorization" not in request.headers
+        upload_session = None
+        if upload_secret and anonymous and request.url.path.startswith("/api/v1/"):
+            upload_session = await run_in_threadpool(
+                public_uploads.resolve_session,
+                database,
+                request.cookies.get(public_uploads.COOKIE),
+                upload_secret,
+            )
+        if upload_session:
+            try:
+                await run_in_threadpool(_public_principal, settings, database, options)
+            except Exception:
+                return error_response(
+                    "DEMO_UNAVAILABLE", "The public demonstration is unavailable", 503
+                )
+            if request.method not in {"GET", "HEAD"}:
+                if request.method != "POST" or not public_uploads.same_origin(request):
+                    return error_response("FORBIDDEN", "This judge action is unavailable", 403)
+                try:
+                    if request.url.path.endswith("/curriculum-pdf"):
+                        if request.query_params:
+                            raise DomainError(
+                                "FORBIDDEN", "Judge upload options are not supported", 403
+                            )
+                        payload = None
+                    else:
+                        if int(request.headers.get("content-length", "0")) > 8192:
+                            raise DomainError(
+                                "PAYLOAD_TOO_LARGE", "The judge request is too large", 413
+                            )
+                        raw = await request.body()
+                        if len(raw) > 8192:
+                            raise DomainError(
+                                "PAYLOAD_TOO_LARGE", "The judge request is too large", 413
+                            )
+                        payload = json.loads(raw)
+                    await run_in_threadpool(
+                        public_uploads.reserve_submission,
+                        database,
+                        upload_session,
+                        request.url.path,
+                        payload,
+                    )
+                except DomainError as failure:
+                    return error_response(failure.code, failure.message, failure.status_code)
+                except (TypeError, ValueError):
+                    return error_response(
+                        "VALIDATION_ERROR", "Supply a valid bounded judge request", 422
+                    )
+            request.state.access_principal = public_uploads.principal_for(
+                upload_session,
+                options.public_institution_id,
+                mutation=request.method not in {"GET", "HEAD"},
+            )
         if (
             options.public_enabled
             and request.method in {"GET", "HEAD"}
             and request.url.path.startswith("/api/v1/")
-            and "authorization" not in request.headers
+            and anonymous
+            and not upload_session
         ):
             try:
                 request.state.access_principal = await run_in_threadpool(
@@ -404,14 +482,80 @@ def create_web_app(settings=None, database: Database | None = None, options=None
         return response
 
     @application.get("/__public_demo", include_in_schema=False)
-    def public_marker():
+    def public_marker(request: Request):
         enabled = options.public_enabled
         if enabled:
             try:
                 _public_principal(settings, database, options)
             except Exception:
                 enabled = False
-        return JSONResponse({"enabled": enabled}, headers={"Cache-Control": "no-store"})
+        value = {"enabled": enabled}
+        if options.public_uploads_enabled:
+            value["uploads_enabled"] = bool(enabled and upload_secret)
+            upload_session = (
+                public_uploads.resolve_session(
+                    database, request.cookies.get(public_uploads.COOKIE), upload_secret
+                )
+                if upload_secret
+                else None
+            )
+            if upload_session:
+                value["upload_institution_id"] = str(upload_session["institution_id"])
+        return JSONResponse(value, headers={"Cache-Control": "no-store"})
+
+    @application.post("/__public_upload_session", include_in_schema=False)
+    async def public_upload_session(request: Request):
+        if not upload_secret or not options.public_uploads_enabled:
+            return error_response("NOT_FOUND", "The requested resource was not found", 404)
+        if not public_uploads.same_origin(request) or "authorization" in request.headers:
+            return error_response("FORBIDDEN", "This judge action is unavailable", 403)
+        try:
+            if int(request.headers.get("content-length", "0")) > 8192:
+                raise ValueError
+            raw = await request.body()
+            if len(raw) > 8192:
+                raise ValueError
+            value = public_uploads.PublicUploadRequest.model_validate_json(raw)
+        except ValueError:
+            return error_response(
+                "VALIDATION_ERROR", "Supply the programme and official origin details", 422
+            )
+        existing = await run_in_threadpool(
+            public_uploads.resolve_session,
+            database,
+            request.cookies.get(public_uploads.COOKIE),
+            upload_secret,
+        )
+        if existing:
+            return JSONResponse(
+                {
+                    "programme_id": str(existing["programme_id"]),
+                    "institution_id": str(existing["institution_id"]),
+                    "expires_in_seconds": max(0, existing["expires_at"] - int(time())),
+                },
+                headers={"Cache-Control": "no-store"},
+            )
+        try:
+            value, cookie = await run_in_threadpool(
+                public_uploads.create_session,
+                database,
+                value,
+                upload_secret,
+                request.client.host if request.client else "unknown",
+            )
+        except DomainError as failure:
+            return error_response(failure.code, failure.message, failure.status_code)
+        response = JSONResponse(value, status_code=201, headers={"Cache-Control": "no-store"})
+        response.set_cookie(
+            public_uploads.COOKIE,
+            cookie,
+            max_age=public_uploads.SESSION_SECONDS,
+            httponly=True,
+            secure=settings.app_env == "production",
+            samesite="strict",
+            path="/",
+        )
+        return response
 
     @application.api_route("/{path:path}", methods=["GET", "HEAD"], include_in_schema=False)
     def frontend(path: str):
@@ -448,4 +592,7 @@ def create_web_app(settings=None, database: Database | None = None, options=None
             return FileResponse(dist / "index.html", headers={"Cache-Control": "no-store"})
         return error_response("NOT_FOUND", "The requested resource was not found", 404)
 
+    # Bound bytes/deadlines before the session middleware reads JSON. The
+    # existing API body limiter remains intact; PDF requests retain its 20 MB cap.
+    application.add_middleware(BodyLimitMiddleware)
     return application

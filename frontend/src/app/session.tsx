@@ -5,6 +5,9 @@ export type Session = {
   api: ApiClient;
   access: AccessContext;
   disconnect: () => void;
+  publicUploadsEnabled?: boolean;
+  publicUploadInstitutionId?: string;
+  refreshAccess?: (uploadInstitutionId?: string) => Promise<AccessContext>;
 };
 export const SessionContext = createContext<Session | null>(null);
 export function useSession() {

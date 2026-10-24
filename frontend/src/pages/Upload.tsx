@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, FileCheck2, FileText, UploadCloud } from "lucide-react";
 import { useWorkspace } from "../app/workspace";
+import { SessionContext } from "../app/session";
 import { ApiError, validateResponse } from "../api/client";
 import { humanise, isPending, type Course, type Model } from "../api/types";
 import { useResource } from "../lib/resource";
@@ -30,6 +31,7 @@ export function validatePdf(file: File) {
 }
 
 export default function UploadPage() {
+  const publicUploadsEnabled = useContext(SessionContext)?.publicUploadsEnabled;
   const { api, access, programme, institution } = useWorkspace();
   const [params, setParams] = useSearchParams();
   const [file, setFile] = useState<File | null>(null);
@@ -146,8 +148,9 @@ export default function UploadPage() {
         versioned inventory with traceable origins.
       </PageHeading>
       <Notice>
-        Private originals remain in backend storage. Uploading does not send a
-        document to an external AI service or certify extracted courses.
+        {publicUploadsEnabled
+          ? "Uploads are temporary and private to this session. No paid AI or search call is made. Parsed course titles still need review."
+          : "Private originals remain in backend storage. Uploading does not send a document to an external AI service or certify extracted courses."}
       </Notice>
       <div className="tabs" role="group" aria-label="Curriculum input type">
         <button
@@ -158,14 +161,16 @@ export default function UploadPage() {
           <FileText size={16} />
           PDF brochure
         </button>
-        <button
-          className={tab === "json" ? "active" : ""}
-          aria-pressed={tab === "json"}
-          onClick={() => setTab("json")}
-        >
-          <FileCheck2 size={16} />
-          Reviewed input
-        </button>
+        {!publicUploadsEnabled && (
+          <button
+            className={tab === "json" ? "active" : ""}
+            aria-pressed={tab === "json"}
+            onClick={() => setTab("json")}
+          >
+            <FileCheck2 size={16} />
+            Reviewed input
+          </button>
+        )}
       </div>
       {tab === "pdf" ? (
         <Card title="Upload your curriculum PDF">
@@ -458,12 +463,14 @@ export default function UploadPage() {
                   Reviewed input. Do not infer content from course titles.
                 </Notice>
               )}
-              <button
-                className="button secondary"
-                onClick={() => setTab("json")}
-              >
-                Use reviewed input
-              </button>
+              {!publicUploadsEnabled && (
+                <button
+                  className="button secondary"
+                  onClick={() => setTab("json")}
+                >
+                  Use reviewed input
+                </button>
+              )}
             </>
           ) : !revisionId ? (
             <Notice tone="caution">
@@ -567,9 +574,11 @@ export default function UploadPage() {
               </tbody>
             </table>
           </div>
-          <button className="button secondary" onClick={() => setTab("json")}>
-            Review corrections through structured input
-          </button>
+          {!publicUploadsEnabled && (
+            <button className="button secondary" onClick={() => setTab("json")}>
+              Review corrections through structured input
+            </button>
+          )}
         </Card>
       )}
     </>

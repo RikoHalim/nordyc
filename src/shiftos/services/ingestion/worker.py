@@ -6,14 +6,14 @@ from datetime import UTC, datetime, timedelta
 from uuid import NAMESPACE_URL, UUID, uuid5
 
 from pydantic import ValidationError
-from sqlalchemy import select
+from sqlalchemy import and_, or_, select
 from sqlalchemy.orm import aliased
 
 from shiftos.core.config import Settings
 from shiftos.core.enums import JobStatus
 from shiftos.core.errors import DomainError
 from shiftos.db.session import Database
-from shiftos.models import Institution, Job, Programme
+from shiftos.models import ActionPlanRun, AnalysisRun, CareerRun, Institution, Job, Programme
 from shiftos.repositories.catalogue import canonical_url, lock_institution, source_version
 from shiftos.schemas.ingestion import (
     CatalogueImport,
@@ -31,6 +31,17 @@ from shiftos.services.ingestion.fetcher import FetchError, SafeFetcher
 from shiftos.services.ingestion.parsers import CurriculumParseError, XmumCurriculumParser
 
 logger = logging.getLogger("shiftos.catalogue")
+
+JOB_KINDS = frozenset(
+    {
+        "CURRICULUM_IMPORT",
+        "CURRICULUM_DISCOVERY",
+        "CURRICULUM_PDF_UPLOAD",
+        "PROGRAMME_ANALYSIS",
+        "CAREER_ANALYSIS",
+        "ACTION_PLAN",
+    }
+)
 
 # A new institution supplies a parser + reviewed origin configuration, not new tables.
 PROVIDERS = {
@@ -270,8 +281,31 @@ def _discover(database: Database, job: Job, settings: Settings, fetcher_factory)
     return result
 
 
-def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetcher) -> UUID | None:
-    """Claim once, commit status, do slow work outside request/claim transactions."""
+def run_once(
+    database: Database,
+    settings: Settings,
+    *,
+    fetcher_factory=SafeFetcher,
+    allowed_kinds=None,
+    institution_ids=None,
+    offline_analysis_only=False,
+) -> UUID | None:
+    """Claim once; optional filters bound a public session worker before any claim.
+
+    Defaults retain the ordinary administrative worker. Public upload workers must
+    supply their session institution IDs and explicit job kinds, plus offline-only
+    analysis. Filtering never changes or fails another worker's queued jobs.
+    """
+    kinds = JOB_KINDS if allowed_kinds is None else frozenset(allowed_kinds)
+    if not kinds <= JOB_KINDS:
+        raise ValueError("Select supported worker job kinds")
+    scope = (
+        None
+        if institution_ids is None
+        else frozenset(UUID(str(value)) for value in institution_ids)
+    )
+    if not kinds or scope == frozenset():
+        return None
     with database.session_factory() as session:
         other = aliased(Job)
         institution_busy = (
@@ -279,24 +313,37 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
             .where(other.institution_id == Job.institution_id, other.status == JobStatus.RUNNING)
             .exists()
         )
-        job = session.scalar(
-            select(Job)
-            .where(
-                Job.kind.in_(
-                    [
-                        "CURRICULUM_IMPORT",
-                        "CURRICULUM_DISCOVERY",
-                        "CURRICULUM_PDF_UPLOAD",
-                        "PROGRAMME_ANALYSIS",
-                        "CAREER_ANALYSIS",
-                        "ACTION_PLAN",
-                    ]
-                ),
-                Job.status == JobStatus.QUEUED,
-                ~institution_busy,
+        query = select(Job).where(
+            Job.kind.in_(kinds), Job.status == JobStatus.QUEUED, ~institution_busy
+        )
+        if scope is not None:
+            query = query.where(Job.institution_id.in_(scope))
+        if offline_analysis_only:
+            analysis_modes = {
+                "PROGRAMME_ANALYSIS": AnalysisRun,
+                "CAREER_ANALYSIS": CareerRun,
+                "ACTION_PLAN": ActionPlanRun,
+            }
+            query = query.where(
+                or_(
+                    Job.kind.not_in(analysis_modes),
+                    *(
+                        and_(
+                            Job.kind == kind,
+                            select(model.id)
+                            .where(
+                                model.job_id == Job.id,
+                                model.mode == "offline",
+                                model.request_json["mode"].as_string() == "offline",
+                            )
+                            .exists(),
+                        )
+                        for kind, model in analysis_modes.items()
+                    ),
+                )
             )
-            .order_by(Job.created_at, Job.id)
-            .with_for_update(skip_locked=True)
+        job = session.scalar(
+            query.order_by(Job.created_at, Job.id).with_for_update(skip_locked=True)
         )
         if job is None:
             return None

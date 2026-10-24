@@ -26,6 +26,7 @@ import {
 import { useResource } from "../lib/resource";
 import { catalogueHost, validatePdfOrigin } from "../lib/catalogue-origin";
 import SampleProgrammeEntry from "../components/SampleProgrammeEntry";
+import PublicUploadEntry from "../components/PublicUploadEntry";
 import {
   Badge,
   Empty,
@@ -278,7 +279,7 @@ function CreateCurriculum({
 }
 
 export default function Library() {
-  const { api, access } = useSession();
+  const { api, access, publicUploadsEnabled } = useSession();
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [create, setCreate] = useState(false);
@@ -337,6 +338,7 @@ export default function Library() {
         institutions={institutions}
         coverage={coverage}
       />
+      <PublicUploadEntry />
       <div
         className="category-tabs"
         role="group"
@@ -376,26 +378,28 @@ export default function Library() {
         </label>
       </div>
       <div className="programme-grid">
-        <button
-          className="new-curriculum-card"
-          disabled={!access.permissions.includes("write")}
-          onClick={() => setCreate(true)}
-        >
-          <span className="new-document">
-            <Plus size={28} aria-hidden="true" />
-          </span>
-          <strong>New curriculum</strong>
-          <span>Start with your programme</span>
-          <small>
-            {access.permissions.includes("write") ? (
-              <>
-                Create a workspace <ArrowUpRight size={14} />
-              </>
-            ) : (
-              "Write permission required"
-            )}
-          </small>
-        </button>
+        {!publicUploadsEnabled && (
+          <button
+            className="new-curriculum-card"
+            disabled={!access.permissions.includes("write")}
+            onClick={() => setCreate(true)}
+          >
+            <span className="new-document">
+              <Plus size={28} aria-hidden="true" />
+            </span>
+            <strong>New curriculum</strong>
+            <span>Start with your programme</span>
+            <small>
+              {access.permissions.includes("write") ? (
+                <>
+                  Create a workspace <ArrowUpRight size={14} />
+                </>
+              ) : (
+                "Write permission required"
+              )}
+            </small>
+          </button>
+        )}
         {matches.map((programme) => {
           const key = category(programme.discipline_key),
             Icon = icons[key],
