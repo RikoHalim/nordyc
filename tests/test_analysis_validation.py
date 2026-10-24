@@ -13,9 +13,15 @@ from shiftos.schemas.analysis import (
     CourseEvidence,
     EvidenceItem,
     EvidencePacket,
+    ProgrammeResult,
     RightsDecision,
 )
-from shiftos.services.analysis.validation import assemble_result, offline_result, validate_result
+from shiftos.services.analysis.providers import _claude_transport_schema
+from shiftos.services.analysis.validation import (
+    assemble_result,
+    offline_result,
+    validate_result,
+)
 
 
 @pytest.fixture
@@ -107,6 +113,25 @@ def test_fabricated_unassociated_or_mis_scoped_citations_fail(packet, change):
         packet.courses[0].reference_ids = []
     with pytest.raises(ValueError):
         validate_result(payload, packet)
+
+
+def test_transport_required_fields_do_not_relax_citation_or_privacy_validation(packet):
+    transport_schema = _claude_transport_schema(ProgrammeResult.model_json_schema())
+    payload = offline_result(packet).model_dump(mode="json")
+
+    assert set(transport_schema["required"]) == set(transport_schema["properties"])
+    assert validate_result(payload, packet)
+
+    fabricated = deepcopy(payload)
+    citation = fabricated["courses"][0]["foundational_relevance"]["citations"][0]
+    citation["quote"] = "This synthetic course teaches every skill."
+    with pytest.raises(ValueError, match="Quote does not match"):
+        validate_result(fabricated, packet)
+
+    restricted_packet = packet.model_copy(deep=True)
+    restricted_packet.references[0].rights.external_model_allowed = False
+    with pytest.raises(ValueError, match="permission"):
+        validate_result(payload, restricted_packet)
 
 
 @pytest.mark.parametrize(

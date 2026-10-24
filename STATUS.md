@@ -1,8 +1,72 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24:** Phase 4 remains **FUNCTIONAL for a bounded offline backend proof**. Phase 4.1's Replit-managed Anthropic connection is now provisioned on `codex/replit-managed-ai`; both managed environment variables are present. The existing adapter is selected with Claude enabled and `claude-opus-5` configured. Its zero-call preflight is **BLOCKED only by the intentionally false external-processing consent gate**; the existing ESCO source permission passes. Current clean offline verification: **743 passed, 13 PostgreSQL-only tests skipped**, zero PostgreSQL connections; application/test Ruff lint and format checks pass. No live Claude, Gemini, Brave, or research requests have been made; model availability and billing remain unverified. Historical publication and full-PostgreSQL test results are retained below.
+**As of 2026-10-24:** Replit-managed **`claude-opus-5`** has passed the bounded live synthetic verification (HTTP 200, original Pydantic and citation/grounding validation, three citations). Phase 4.2 remains **PARTIAL** until a fresh live worker → Claude → PostgreSQL → protected FastAPI proof. Final offline results: **750 passed / 13 PostgreSQL-only skipped** in Replit; separately **13 PostgreSQL integration tests passed** on the exact downloaded source. Gemini remains disabled, Replit remains hosting, Brave live verification is pending. The current diagnostic record below supersedes historical attempt/consent snapshots. **This record is saved in the Replit development checkout; GitHub publication of this diagnosis remains pending.**
 
-## Phase 4.1 Replit-managed setup and zero-call verification — 24 October 2026
+## Phase 4.2 diagnostic correction and accepted live result — 24 October 2026
+
+**Assessment: isolated live Claude verification PASS; full live worker/database/API verification PARTIAL (pending).** Replit-managed Anthropic is the primary MVP provider, requested and returned model `claude-opus-5`; Gemini remains disabled, Replit remains the hosting platform, and Brave remains independent and live-unverified. The later owner-approved diagnosis and instruction to continue until success supersede the earlier one-request stop recorded below. Retrying did not remove the $1 diagnostic budget or source restrictions.
+
+The accepted request began at **2026-10-24T14:01:40.426482+00:00**. Exactly one HTTP attempt returned **200**, `application/json`, `stop_reason=end_turn`, actual model **`claude-opus-5`**. Request size was **15,989 UTF-8 bytes**, capped at **16,384**; output cap **4,096 tokens**, timeout **60 seconds**, no retries, repair, Gemini fallback, tools, or search. The external-processing gate was true only inside the consent-scoped process. Persistent `ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=false` and source permissions were unchanged.
+
+| Accepted live check | Actual observation |
+|---|---|
+| Existing `verify-claude --live` workflow | **PASS**, CLI exit 0, `status=live_verified`, one actual request |
+| Model identity | Requested and returned **`claude-opus-5`**; no more specific version was reported |
+| JSON / original Pydantic / grounding | **PASS / PASS / PASS**; academic schemas and validators unchanged |
+| Evidence citations | **3** valid occurrences, exact quotes of the one admitted, attributed ESCO v1.0.3 irrigation excerpt; no private curriculum documents |
+| Uncertainty / course coverage | The sole fictional title-only course was returned; **all five dimensions `insufficient_evidence`**, `needs_syllabus_confirmation=true`, final curriculum verdict false |
+| Usage | **6,828 input**, **1,677 output**, **0 cache creation**, **0 cache read** tokens |
+| Measured client request duration | **18,264.139 ms** (includes network and response processing; not an academic performance metric) |
+| Observed billing | **Unavailable**, `observed_cost=null`; token-price estimates are not invoices; rejected attempts are not asserted free |
+
+There were **five actual transport attempts across Phase 4.2**, including the original failed request: (1) original generic invalid response, HTTP status unavailable, 8,052.512 ms; (2) safe diagnostic HTTP **400**, invalid-request/schema rejection, **3,354.445 ms**; (3) after singleton-enum compatibility adjustment, HTTP **400**, schema-complexity reason tokens, **3,419.794 ms**; (4) reduced choice grammar, HTTP **200**, Pydantic passed but grounding rejected, **6,405 input / 1,752 output**, **27,258.330 ms**; (5) explicit existing grounding instructions, the accepted result above. Only the fifth result was accepted. Diagnostics since the original request used one attempt each. Model calls stopped on acceptance. Known returned usage across the two HTTP-200 attempts totals **13,233 input / 3,429 output tokens**; rejected requests had no reported usage. No automatic or unbounded retry loop was added.
+
+The initial transport grammar had 25 optional-property occurrences after local-reference expansion. Requiring declared properties removed those optional branches but did not itself fix the live rejection; converting literals to singleton enums also did not fix it. Moving repeated multi-value enums into descriptions, with original Pydantic enforcement retained, removed the observed schema rejection. The exact provider error body was not published; safe status, bounded MIME/body metadata and allowlisted reason tokens were captured. This establishes the successful compatibility change, not proof that every earlier rejected keyword was independently unsupported. [Anthropic documents compiled-grammar limits and simplified transport schemas with original application validation](https://platform.claude.com/docs/en/build-with-claude/structured-outputs).
+
+Claude-specific instructions now state existing revision/course identity, title-only abstention, citation quote/scope, source-date limitations and summary-count rules explicitly. No response was repaired to obtain a pass. The successful raw synthetic JSON remains an ignored diagnostic artifact. It contained redundant `offline_synthetic` limitation tags despite `result_mode=live_model`; these conservative extra tags are a reporting-quality limitation, not evidence that a mocked provider generated the response. All programme insights are still rebuilt deterministically from validated course findings and the frozen packet.
+
+| Regression / infrastructure check | Result and practical limit |
+|---|---|
+| Exact final Replit offline suite, Python 3.12.12 | **750 passed, 13 PostgreSQL-only skipped**, one existing Starlette/httpx warning, **35.68 s**; mocked provider tests and offline fixtures, no live calls |
+| Diagnostic harness | **17 offline scenarios passed**, including gzip/oversize errors, success-body preservation, secret canaries, strict request/output/attempt bounds; zero real API calls |
+| Ruff lint / formatting | **PASS** over tracked Python plus new compatibility tests and ignored diagnostic runner |
+| Dependency integrity / whitespace | `pip check` and `git diff --check` **PASS** |
+| Current-source PostgreSQL regressions | Exact downloaded source plus unchanged synthetic fixtures from shared base `7dce033de2980ff6f758030df616a2e78b90fe73`, Windows Python **3.13.13**, isolated loopback PostgreSQL **16.15**: **13 passed, 750 deselected**, **25.19 s**; separate run, mocked models, no live calls; test server stopped |
+| Alembic | Offline PostgreSQL SQL compilation **PASS**, single head **`0005_programme_analysis`**; migration integration tests passed, no application migration added |
+| Baseline comparison | Claude branch offline baseline **743 → 750** passing tests; 13 integration cases unchanged. Gemini's historical 794-test branch is a different source baseline, not a directly comparable test count |
+| Full live worker → Claude → PostgreSQL → protected FastAPI | **PENDING**; isolated live CLI and offline PostgreSQL/API tests are separate evidence, not a single live end-to-end run |
+
+Verification setup failures were corrected rather than hidden: the first direct targeted run inherited ambient SQLite outside test mode and failed collection; an initial full offline run with SQLite overrides produced 12 settings-related failures; clean PostgreSQL-shaped offline configuration then passed all 750 tests. The first downloaded-source PostgreSQL run passed 12 tests and failed one because the review archive omitted its synthetic fixture; restoring that unchanged shared-base fixture made all 13 pass. No application fix was made to accommodate these harness issues.
+
+Replit source branch: **`codex/replit-managed-ai`**; observed checkpoint HEAD **`1b75e7fab2f53a68f08d5c1e9deb49a95019afc0`**, with later tested provider/tests in the working tree. Exact tested provider SHA-256: **`8a450689e1810f95e5707b0c79e7eedec697a486cec77364ab5fc32f9f657203`**. Credential-free source/review archive SHA-256: **`c1dee99a1f00a153a2a9dc1bd380aa7be8b4432cd24eea8387357be7957cf9c0`**. These fingerprints identify tested contents without claiming an uncreated commit. GitHub `codex/replit-managed-ai` remained **`7dce033de2980ff6f758030df616a2e78b90fe73`** at the last read-only check. No push, merge, deployment, main/Gemini branch change or Phase 5 implementation occurred during this diagnosis.
+
+Browser access was temporarily interrupted after the successful live test. The owner restored access and this reviewed record was then saved in the correct Replit development checkout on 24 October 2026. The code fix and accepted audit were preserved throughout. GitHub publication of this diagnosis remains pending. The connected Replit account had resolved a different same-named app during the interruption; that app was not modified. No additional live request was made to restore browser access or save these records.
+
+Remaining Phase 4 limits: one synthetic course and one legacy permitted excerpt do not demonstrate real curriculum accuracy, current Malaysian demand or discipline-wide coverage. Brave live verification and a fresh approved billable worker/database/API proof remain pending. Do not declare Phase 4 fully verified or start Phase 5 implementation yet. Keep the persistent external-processing gate false; obtain the separately requested explicit budget/consent for a further live end-to-end call.
+
+## Historical Phase 4.2 first-request Replit verification — 24 October 2026
+
+The owner supplied consent for exactly one synthetic-only Replit-managed Claude Opus 5 request with a $1 budget. The ordinary zero-call preflight had previously been blocked by `external_processing_not_approved`. In the consent-scoped process, the zero-call preflight returned `configuration_ready`: the managed credential and base URL were present and valid, `replit_claude`/`claude-opus-5` were selected and enabled, and the unchanged `C-ESCO-V103` source permission passed. `ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=true` existed only in that isolated process; the shared `.replit` setting remains `false`.
+
+The existing helper sent one request containing one fictional irrigation course and one attributed public ESCO v1.0.3 excerpt. No private university documents were included. The helper used one attempt, no retry, fallback, repair, or search. The request returned sanitized helper error `provider_response_invalid`; the returned model and token usage are unavailable, schema and grounding validation are false, and citation count is zero. No result was accepted. No HTTP status or upstream error type/code was captured. Do not infer a credential, model, schema, or service root cause from this generic helper code.
+
+| Phase 4.2 check | Actual result |
+|---|---|
+| Consent-scoped zero-call preflight | **READY**, `provider_requests=0`; process-only external-processing gate true; persistent gate false |
+| Single live helper attempt | **FAILED**, one actual attempt; `provider_response_invalid`; requested `claude-opus-5`; returned model/tokens unavailable; schema/grounding false; citations **0** |
+| Timing | Start **2026-10-24T12:37:54.947Z**, end **2026-10-24T12:38:03.000Z**; request-wrapper elapsed **8,052.512 ms**; CLI elapsed **8,059.635 ms** |
+| HTTP diagnostic fields | HTTP status and upstream error type/code were not retained; root cause unresolved; no second request was made |
+| Title-only boundary | One synthetic title-only course; `needs_syllabus_confirmation=true`; final curriculum verdict prohibited; `title_only_not_taught_content` retained. No dimension uncertainty status was available without a validated result. |
+| Billing observation | `observed_cost=null`; no per-request invoice was available and posting may lag. Cost is not confirmed as zero; no price estimate is recorded. |
+| Replit full offline suite, after the attempt | **743 passed, 13 PostgreSQL-only tests skipped, 0 failed**; `TEST_DATABASE_URL` unset; no PostgreSQL connection; one existing Starlette/httpx deprecation warning |
+| Replit focused offline Claude/Phase 4/source-policy suite | Separate run: **267 passed, 1 integration-marked test deselected**, one existing warning |
+| Separate owner-supplied Codex local verification | Windows Python **3.13.13**, archive of source commit `7dce033de2980ff6f758030df616a2e78b90fe73` confirmed as the Claude archive (not the Gemini checkout), isolated loopback PostgreSQL **16.15**: **13 integration tests passed, 743 deselected**, **30.81 s**; mocked providers, zero live calls, server stopped. Ruff lint/format on `src`, `tests`, and `alembic`, `pip check`, offline Alembic SQL, and single head `0005_programme_analysis` passed. This is separate evidence, not a single 756-pass run. |
+
+The ambient runtime database configuration used SQLite, which `Settings` rejects outside test mode. The consent-scoped preflight/live CLI used an inert process-only PostgreSQL-shaped URL only to satisfy settings validation; `verify-claude` returned before creating a database engine. This did not provision or connect to a database. A later worker → PostgreSQL → protected API proof requires a real isolated PostgreSQL database and separate authorization.
+
+All preflight, CLI stdout, and supplemental audit reports remain ignored under `data/local/`. Replit billing UI inspection did not provide a per-request invoice, and posting may lag; do not publish an account balance or claim that the attempt was free. No worker, live PostgreSQL, protected API, migration, search, Gemini, or Brave proof was performed. No code, configuration, or source permission changed; no merge, deployment, or GitHub push occurred. **Live acceptance remains blocked. No further live request is authorized.** A future diagnostic attempt to capture an allowlisted HTTP status/error code requires separate approval; do not silently switch models.
+
+## Historical Phase 4.1 Replit-managed setup and zero-call verification — 24 October 2026
 
 On the existing `codex/replit-managed-ai` branch, the owner-approved native setup flow `setupReplitAIIntegrations({ providerSlug: "anthropic" })` completed successfully in this SHIFT//OS project. The native setup provisioned `AI_INTEGRATIONS_ANTHROPIC_BASE_URL` and `AI_INTEGRATIONS_ANTHROPIC_API_KEY`; a secret-presence-only check reported both **PRESENT**. Values were not read or printed, no personal key or credential from another project was used, and no general connector search was used.
 
@@ -38,14 +102,15 @@ The PostgreSQL integration tests were intentionally skipped because this verific
 | 1 | FastAPI/PostgreSQL multi-institution foundation, provenance, migrations and tests | COMPLETE |
 | 2 | XMUM discovery/parser, year/elective extraction, safe import/versioning, worker, APIs and coverage | COMPLETE — live network blocked; reviewed manual fallback verified |
 | 3 | Evidence acquisition, workforce radar and independent AI task evidence | FUNCTIONAL — bounded evidence gates met; legacy/language/currentness/permission limits explicit |
-| 4 | Internal-first hybrid retrieval, controlled Brave fallback, one Gemini adapter and conservative whole-programme screening | FUNCTIONAL OFFLINE — 637 passed; actual live API acceptance PENDING |
-| 4.1 | Replit-managed Claude selection, optional explicit Gemini fallback, usage lineage and synthetic verification | IMPLEMENTED / OFFLINE VERIFIED — managed connection present; zero-call preflight blocked by external-processing consent; no live requests |
+| 4 | Internal-first hybrid retrieval, controlled Brave fallback and conservative whole-programme screening; Claude selected for the MVP | FUNCTIONAL — isolated Claude live verification PASS; full live worker/database/API acceptance PENDING |
+| 4.1 | Replit-managed Claude selection, optional explicit Gemini fallback, usage lineage and synthetic verification | IMPLEMENTED — Replit-managed Claude configured; see Phase 4.2 for the accepted live result |
+| 4.2 | Bounded live Replit Claude acceptance and backend verification | **PARTIAL** — isolated live test PASS; full live worker/database/API proof PENDING; see current diagnostic record |
 | 5 | Future Career Alignment, competency-gap review, minimum sufficient actions, alternatives/no change and human review | PENDING — requirements revised only |
 | 6 | Ordered Academic Reskilling Pathways, scenarios/SDGs/resources/duration and consolidated Action Plans | PENDING — requirements revised only |
 | 7 | Integration, evaluation, change replay and security | PENDING |
 | 8 | Minimal working dashboard and preliminary demo | PENDING |
 
-## Phase 4.1 final verification, publication and Replit handover — 24 October 2026
+## Historical Phase 4.1 final verification, publication and Replit handover — 24 October 2026
 
 The final-verification request explicitly authorizes committing and pushing Phase 4.1 to the existing SHIFT//OS GitHub repository. This supersedes the original Phase 4.1 no-publication boundary below. Remote `origin` is `https://github.com/RikoHalim/shift-os.git`; fetched `main` matched local `b586194` with no teammate divergence before publication preparation. Only the 19 reviewed Phase 4.1 implementation/configuration/test/documentation paths are approved for this commit. Existing IDE/design assets are unchanged and excluded; real `.env` files, credentials, private/restricted documents, local databases/reports, caches and temporary files are excluded. No credential pattern or actual local credential value was detected in the approved publication content. Staged-content checks are required before commit.
 

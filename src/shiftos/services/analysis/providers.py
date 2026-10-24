@@ -29,6 +29,24 @@ MODEL_SYSTEM_INSTRUCTION = (
     "web research or tool use is authorized."
 )
 
+CLAUDE_ANALYSIS_INSTRUCTION = (
+    " Additional validation rules: return result_mode=live_model. Copy frozen revision, "
+    "course IDs, names, evidence levels and syllabus-confirmation flags exactly. "
+    "Every dimension needs an allowed review_question. For title-only/unconfirmed courses, "
+    "include needs_syllabus_confirmation in EVERY dimension's limitations and use "
+    "insufficient_evidence for foundational_relevance, curriculum_currency and future_resilience. "
+    "Without reviewed dated task-capability evidence use insufficient_evidence for "
+    "ai_transformation; without reviewed occupation identity and granular workforce observations "
+    "use insufficient_evidence for workforce_alignment. An admitted benchmark can be cited "
+    "with insufficient_evidence; include at least one relevant permitted citation when available. "
+    "Copy reference_id and scope exactly; quote a contiguous verbatim source excerpt. Each cited "
+    "finding must retain unknown_source_date for unknown dates and historical_evidence for "
+    "historical sources, plus all applicable scope limitations. Benchmarks never prove teaching. "
+    "Summary inventory_count and returned_count equal course counts; review_required_count "
+    "counts flagged/unconfirmed courses; insufficient_evidence_count counts courses with ANY "
+    "insufficient_evidence dimension. Programme insights are rebuilt by the backend."
+)
+
 
 def _invalid_constant(_value):
     raise ValueError("Non-JSON numeric constant")
@@ -301,6 +319,16 @@ def _claude_transport_schema(schema: dict) -> dict:
         if not isinstance(value, dict):
             return value
         result = {key: deepcopy(item) for key, item in value.items() if key not in unsupported}
+        if "const" in result:
+            # A singleton enum preserves literal validation on stricter bridges.
+            result["enum"] = [result.pop("const")]
+        if "default" in result:
+            default = result.pop("default")
+            default_text = json.dumps(default, ensure_ascii=False, allow_nan=False)
+            result["description"] = (
+                str(result.get("description", ""))
+                + f" Application default when omitted: {default_text}."
+            ).strip()
         for key in ("properties", "$defs", "definitions"):
             if isinstance(result.get(key), dict):
                 result[key] = {name: visit(item) for name, item in result[key].items()}
@@ -308,6 +336,10 @@ def _claude_transport_schema(schema: dict) -> dict:
             if key in result:
                 result[key] = visit(result[key])
         constraints = {key: item for key, item in value.items() if key in unsupported}
+        if isinstance(result.get("enum"), list) and len(result["enum"]) > 1:
+            # Repeated choice lists can exceed the compiled grammar limit. Keep
+            # their instructions here and enforce them with the original Pydantic schema.
+            constraints["enum"] = result.pop("enum")
         if result.get("format") not in {
             None,
             "date-time",
@@ -327,7 +359,11 @@ def _claude_transport_schema(schema: dict) -> dict:
         if result.get("type") == "object" or "properties" in result:
             # Open maps narrow to their declared properties; no tool or arbitrary keys added.
             result["additionalProperties"] = False
-            result.setdefault("properties", {})
+            properties = result.get("properties")
+            if not isinstance(properties, dict):
+                properties = {}
+                result["properties"] = properties
+            result["required"] = list(properties)
         if constraints:
             result["description"] = (
                 str(result.get("description", ""))
@@ -386,7 +422,7 @@ class ClaudeProvider(_JsonProvider):
             body={
                 "model": self.settings.claude_model,
                 "max_tokens": self.settings.claude_max_output_tokens,
-                "system": MODEL_SYSTEM_INSTRUCTION,
+                "system": MODEL_SYSTEM_INSTRUCTION + CLAUDE_ANALYSIS_INSTRUCTION,
                 "messages": [{"role": "user", "content": serialized}],
                 "output_config": {"format": {"type": "json_schema", "schema": schema}},
             },
