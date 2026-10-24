@@ -60,19 +60,45 @@ def migration_database() -> Iterator[tuple[Connection, Config]]:
 
 
 def _assert_metadata_matches(connection: Connection) -> None:
-    assert set(inspect(connection).get_table_names()) == set(Base.metadata.tables) | {
-        "alembic_version"
-    }
+    metadata = Base.metadata
+    # Tests targeting the historical 0003 boundary compare only tables present then.
+    if connection.scalar(text("SELECT version_num FROM alembic_version")) == (
+        "0003_curriculum_ingestion"
+    ):
+        metadata = MetaData(naming_convention=Base.metadata.naming_convention)
+        for name in (
+            "institutions",
+            "programmes",
+            "programme_revisions",
+            "courses",
+            "documents",
+            "document_anchors",
+            "jobs",
+            "sources",
+        ):
+            Base.metadata.tables[name].to_metadata(metadata)
+    assert set(inspect(connection).get_table_names()) == set(metadata.tables) | {"alembic_version"}
     context = MigrationContext.configure(
         connection, opts={"compare_type": True, "compare_server_default": True}
     )
-    assert compare_metadata(context, Base.metadata) == []
+    assert compare_metadata(context, metadata) == []
 
 
 def _seed_original_schema(connection: Connection) -> dict[str, list[dict]]:
     """Reflect 0001 tables so no new-model fields enter the old inserts."""
     original = MetaData()
-    original.reflect(connection, only=list(set(Base.metadata.tables) - {"sources"}))
+    original.reflect(
+        connection,
+        only=[
+            "institutions",
+            "programmes",
+            "programme_revisions",
+            "courses",
+            "documents",
+            "document_anchors",
+            "jobs",
+        ],
+    )
     institution_id, programme_id, revision_id = uuid4(), uuid4(), uuid4()
     course_id, document_id, anchor_id = uuid4(), uuid4(), uuid4()
     connection.execute(
@@ -410,7 +436,7 @@ def test_0003_downgrade_refuses_each_populated_phase2_metadata_family(
     connection.commit()
     snapshot = _seed_original_schema(connection)
     connection.commit()
-    command.upgrade(config, "head")
+    command.upgrade(config, "0003_curriculum_ingestion")
     connection.commit()
     for table_name, column, value, empty in [
         ("programmes", "ingestion_key", "a" * 64, None),

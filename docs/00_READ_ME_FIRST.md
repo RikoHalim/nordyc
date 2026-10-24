@@ -6,6 +6,8 @@ Revised specifications target institution-facing, whole-programme review across 
 
 `AGENTS.md`, revised docs 01–14, migration audit and authorised phase prompt govern development. Older filenames redirect to revised contracts; original content remains in Git. Docs 03 and 10 distinguish implemented foundation from future concepts. A proposed table, endpoint or fixture is not implemented functionality.
 
+For the completed Phase 3 bounded MVP, read docs 17, 18 and the ingestion report. Phase 4 planning now also follows [the hybrid retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md): PostgreSQL evidence first, controlled research for important gaps, verified permitted reuse and one configured existing LLM. This is a documentation revision; model/research services and analysis remain unimplemented. Keep the Phase 3 limitations and title-versus-syllabus distinction visible.
+
 ## Evidence expectations
 
 Public course titles/year grouping suffice for catalogue import and preliminary benchmarking. Syllabi are optional. Never assign fictional content/outcomes to a title. Preserve source URLs, exact locators, dates and unknowns. Distinguish verified university facts from standards, occupation requirements, dated signals, inference and synthetic data.
@@ -15,7 +17,7 @@ Public course titles/year grouping suffice for catalogue import and preliminary 
 1. Preserve and verify the existing multi-institution foundation.
 2. Discover XMUM undergraduate programmes and source-backed course lists.
 3. Import dated cross-disciplinary academic, occupation, workforce and AI references.
-4. Review entire programmes with course-level evidence limits.
+4. Retrieve internal evidence, research important gaps through approved bounded tools, verify original claims, then review entire programmes with one configured LLM and explicit course-level evidence/insufficiency limits.
 5. Propose supported actions and alternatives/no change with human review.
 6. Demonstrate replay/scenarios and a small UI after backend acceptance.
 

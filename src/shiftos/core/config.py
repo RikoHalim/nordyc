@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Literal
 
 from pydantic import SecretStr, ValidationInfo, field_validator
@@ -15,6 +16,7 @@ class Settings(BaseSettings):
     discovery_enabled: bool = False
     discovery_terms_reviewed: bool = False
     catalogue_write_token: SecretStr | None = None
+    curriculum_upload_dir: Path = Path("data/private/curriculum_uploads")
 
     @field_validator("catalogue_write_token")
     @classmethod

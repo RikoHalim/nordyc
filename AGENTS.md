@@ -6,8 +6,8 @@ This file applies to all development phases. Read `README.md`, `STATUS.md`, and 
 
 - Target primary user: **Malaysian university career centres**, in collaboration with academic committees/programme leads. Human reviewers, not AI, make academic decisions.
 - Initial pilot: **all publicly discoverable XMUM undergraduate programmes/course lists**. Validate engine on a **small set of diverse disciplines first**. Support another Malaysian institution later via on-demand discovery.
-- Primary workflow: select university -> discover programmes -> fetch available course titles/year/elective information -> align with MQA standards, multi-disciplinary occupation/skill mappings, dated workforce/AI evidence -> assess **each programme and each course** -> flag review priorities -> generate evidence-aware academic interventions -> compare options/no change -> scenario/reassessment -> programme action plan.
-- University name and programme selection should be minimal; no mandatory syllabus, CV, budget or planning-period inputs. Budget and planning period can be **optional at later feasibility comparison**.
+- Primary workflow: select programme -> upload available university curriculum/brochure or syllabus documents -> extract course titles/year/elective information -> align with MQA standards, multi-disciplinary occupation/skill mappings, dated workforce/AI evidence -> assess **each programme and each course** -> flag review priorities -> generate evidence-aware academic interventions -> compare options/no change -> scenario/reassessment -> programme action plan. Public website discovery remains a secondary acquisition option.
+- University name and programme selection should be minimal; no mandatory detailed syllabus, CV, budget or planning-period inputs. A brochure/title inventory is sufficient for preliminary review. Budget and planning period can be **optional at later feasibility comparison**.
 - Every discovered university/course fact must retain a link to its real origin. Never assign made-up syllabi or learning outcomes to a real university.
 
 ## Mandatory evidence policy

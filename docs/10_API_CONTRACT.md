@@ -18,7 +18,7 @@ JSON UTF-8, `/api/v1` resource prefix, UUID IDs and timezone-aware timestamps. H
 | POST / GET | `/api/v1/sources` | 201 metadata registration / 200 registry page |
 | GET | `/api/v1/sources/{id}` | 200 source metadata / 404 |
 
-The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds the curriculum jobs/imports/revision routes below. Workforce/standards/AI evidence ingestion, analysis, academic actions and frontend APIs remain future phases.
+The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds curriculum jobs/imports/revision routes. Phase 3 adds read-only reference evidence routes below and explicit CLI ingestion. Analysis, academic actions and frontend remain future phases.
 
 Academic resource lists accept `limit` 1-100 (default 50), `offset` >=0 (default 0) and return `{items,total,limit,offset}` sorted by UUID. Course pages add `programme_revision_id`. `total` counts the full matching inventory, not one page. Every known course is retrievable across pages; page limit is not a programme cap. Course lists include compulsory/elective/unknown-type records and those without syllabi. No active revision yields an empty course page; creation requires a mutable active revision. Checksum-protected fixtures and fingerprinted imported revisions refuse course additions with 409. General course POST creates one inventory entry; the Phase 2 import routes perform deduplication and versioned ingestion.
 
@@ -38,7 +38,7 @@ Academic resource lists accept `limit` 1-100 (default 50), `offset` >=0 (default
 
 Discovery bodies are `{"provider":"xmum","idempotency_key":"optional-request-key"}`; `{}` selects `xmum`. The HTTP request only persists a queue record. Start the separate worker with `python -m shiftos.cli worker` (or `worker --once` to process at most one eligible job). Live source retrieval is disabled until both `DISCOVERY_ENABLED=true` and `DISCOVERY_TERMS_REVIEWED=true` are configured. The fetcher still enforces official-host allowlists, HTTPS/public DNS, robots rules, response limits, rate limits and bounded retries. Failed policy/network/parser checks produce job failures with structured-import guidance; a 202 is not evidence of collection. No PDF or CSV upload endpoint is implemented.
 
-Phase 2 POST routes require `X-Catalogue-Token` when `CATALOGUE_WRITE_TOKEN` is configured. Missing/wrong tokens return `NOT_AUTHORIZED` (401). With `APP_ENV=production`, an unset token disables those writes with `CATALOGUE_WRITE_DISABLED` (503). Development/test allow those routes without a token when none is configured. This protection covers the new enqueue routes; preserved Phase 1 write routes retain their existing behavior. All POST/PUT/PATCH request bodies are bounded to 1 MiB before JSON decoding, including chunked requests; exceeding it returns `PAYLOAD_TOO_LARGE` (413).
+Catalogue job POST routes, including PDF upload, require `X-Catalogue-Token` when `CATALOGUE_WRITE_TOKEN` is configured. Missing/wrong tokens return `NOT_AUTHORIZED` (401). With `APP_ENV=production`, an unset token disables those writes with `CATALOGUE_WRITE_DISABLED` (503). Development/test allow them without a token when none is configured. Preserved Phase 1 write routes retain their existing behavior. POST/PUT/PATCH bodies are bounded to 1 MiB before JSON decoding, including chunked requests, except the dedicated raw PDF route's 20 MB bound; exceeding the relevant limit returns `PAYLOAD_TOO_LARGE` (413).
 
 Jobs expose `id`, `institution_id`, nullable `programme_revision_id`, `kind`, `status`, `is_synthetic`, `created_at`, nullable `started_at`/`completed_at`/`error`, and `result`. States are `QUEUED`, `RUNNING`, `SUCCEEDED`, `PARTIAL`, `FAILED`. Result summaries report provider/directory provenance, discovered/imported/unchanged/failed programme counts, course/verified-title counts, missing-directory IDs, per-programme entries and limitations. Entry states include `discovered`, `imported`, `unchanged`, `historical`, `failed`, with nullable IDs, source URL, counts, `active`, `error_code` and `message`. A directory-only programme can have no revision and zero imported courses. Programme failures retain previous snapshots and do not erase successful imports from the same job.
 
@@ -104,13 +104,46 @@ Create a synthetic institution and use its returned ID in the nested route (repl
 
 This creates no verified institution/course facts and requires no source fetch or API key. Use returned IDs, not invented factual university records.
 
+## Phase 3 reference evidence APIs
+
+The upload-first curriculum route is `POST /api/v1/programmes/{id}/curriculum-pdf` with a raw `application/pdf` body, optional official-host `source_url`, and optional `regions` JSON query (`page,x0,top,x1,bottom`). It queues an existing catalogue worker job and returns 202/JobRead; it does not parse documents in the request or analyse courses. The catalogue token/production guard applies. Only this route permits20MB; all other write routes retain 1 MiB. Wrong media returns415, malformed origin/regions/PDF returns422, oversized content413, and unsupported PDF layouts fail visibly on the queued job. Private originals and page anchors are retained; parsed titles remain unreviewed and syllabus detail unavailable.
+
+Paths below are under `/api/v1/evidence`. All are GET; there is **no public ingestion trigger**. List responses use `{items,total,limit,offset}` with limits 1–100 and nonnegative offsets. Historical versions are returned unless filtered; missing taxonomy/standard/SDG imports return empty pages, not invented data. Read-only access does not imply public redistribution permission for stored source text; deployment operators must restrict access according to source rights.
+
+| Routes | Purpose |
+|---|---|
+| `/datasets`, `/datasets/{id}`, `/datasets/{id}/versions`, `/datasets/{id}/jobs` | Registry metadata and actual ingestion/version status |
+| `/versions/{id}`, `/versions/{id}/provenance` | Frozen registry/transform metadata, source, dates, hashes, record counts |
+| `/references`, `/references/{id}`, `/references/{id}/provenance` | Exact source locators/excerpts, PDF candidate text/tables, review state and lineage |
+| `/occupations`, `/occupations/{id}`, `/occupations/{id}/skills`, `/occupations/{id}/tasks`, `/skills` | Version-scoped occupation requirements and relationships |
+| `/workforce-observations` | Dated historical indicators, values/units/periods, source pointers |
+| `/ai-impact` | AI evidence subtype, supported statement, limitations and provenance |
+| `/academic-standards` | Source-attributed benchmarks, no university teaching assertion |
+| `/sdg-references` | Permitted official goals/targets; no skill mappings |
+| `/ingestion-jobs`, `/ingestion-jobs/{id}`, `/ingestion-jobs/{id}/logs` | Durable per-dataset outcomes and diagnostics |
+| `/workforce-trends?before_id=...&after_id=...` | Deterministic source-bound directional change, scope, limitations, policy and fingerprint |
+| `/occupations/{id}/ai-transformation` | Independent reviewed task/capability attribute or insufficient evidence |
+
+List filters include `dataset_id`, `version_id`, `is_synthetic` where applicable; registry has category; workforce has `indicator`, `classification_code`, `period_start`, `period_end`; AI has `impact_type`, `occupation_label`; standards have `discipline`; SDGs have `kind`, `goal_code`. OpenAPI gives exact parameter names/availability and typed response fields. Errors retain the existing shape. Review state is a supplied engineering assertion, not academic approval. See [the runbook](17_PHASE3_EVIDENCE_INGESTION.md) for CLI access controls, supported formats and manual/rights gates.
+
+Radar accepts configurable finite nonnegative `percent_threshold` (default5, max1000) and `absolute_threshold` (default0, max10^18). Response classifications are `RISING`, `DECLINING`, `STABLE`, `INSUFFICIENT_DATA`; `AI-TRANSFORMING` is a separate nested attribute, never a fifth demand class. Results contain both full observations/version/source/reference inputs, exact decimal deltas, policy/method version, compatible dimensions and a reproducibility fingerprint. Results are computed without overwriting or adding source observations. Two-point comparisons never claim a sustained trend. Missing identities return404; invalid query values422; insufficient/incompatible observations return200 with explicit abstention/reasons. See [the methodology](18_WORKFORCE_TRENDS.md) for units/populations/periods and independent AI admission gates.
+
 ## Later endpoint targets - not implemented
 
 | Phase | Proposed endpoints | Purpose |
 |---|---|---|
-| 3 | `GET /evidence/sources`, `POST /evidence/imports`, `GET /evidence/snapshots` | Reuse the source registry; versioned evidence passages/dated snapshots |
 | 4 | `POST /programmes/{id}/analyses`, `GET /analyses/{id}`, `/analyses/{id}/courses`, `/analyses/{id}/courses/{course_id}` | Whole-programme run and course drill-down |
 | 5 | `GET /analyses/{id}/actions`, `POST /analyses/{id}/compare` | Supported primary action/alternatives including no change |
 | 6 | `POST /analyses/{id}/scenarios`, `GET /analyses/{id}/report` | Reproducible scenario/review draft |
 
 Resource paths above carry `/api/v1`; async activities return 202 and a job ID. Finalise later contracts in the authorised phase without removing compatible foundation routes. Future title-only results must expose `needs_syllabus_confirmation`, sources, dates, unknown taught content and `is_final_curriculum_verdict=false`. A proposed action is never an approved academic decision.
+
+### Phase 4 planned retrieval/result behavior
+
+The [hybrid retrieval plan](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) is documentation only; these analysis routes are still unimplemented. Proposed submission selects a programme revision and allowed evidence/as-known policy with an idempotency key; operator configuration owns search/model providers, source allowlists, credentials, permissions and finite research budgets. A caller cannot supply arbitrary fetch URLs, credentials or a host-policy override. Authorize job submission and result/provenance access for the relevant operator/institution before enabling research; the existing catalogue token alone is not full tenant authorization.
+
+The durable job retrieves internal evidence first and researches important gaps only when the approved fallback is configured/enabled. Return 202 plus the analysis job identifier; expose progress and sanitized outcomes in the run read rather than performing network/model work in the request. Final field names/schemas and any additive migrations are to be tested during authorized implementation, not implied to exist today.
+
+Each completed run/course read must include all available course appearances, catalogue/content verification level, admitted reference/version IDs, original locators and source dates, deterministic indicator scope/method, coverage gaps, research enabled/disabled/blocked/failed/cached outcomes, limitations and the disclosed model/prompt/policy versions. Preserve review questions separately from substantiated content claims. Use `insufficient_evidence` (display **INSUFFICIENT EVIDENCE**) for unsupported conclusions and retain `needs_syllabus_confirmation` for title-based benchmarking. Valid partial/insufficient findings are typed results, not fabricated evidence or unhandled errors; operational failures use the existing error envelope and explicit job state.
+
+Public responses must obey excerpt/redistribution rights and private-document access policy; return permitted provenance pointers where text cannot be exposed. Completed-run replay uses frozen evidence without external calls; an authorized refresh creates a new run. No standalone unrestricted research/ingestion endpoint, startup acquisition or Phase 5 action generation is part of this Phase 4 contract.

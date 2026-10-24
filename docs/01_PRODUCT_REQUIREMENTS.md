@@ -6,9 +6,9 @@ Institution-facing application for university career centres, working with progr
 
 ## Primary user journey
 
-1. Search/select `Xiamen University Malaysia` (Malaysia fixed for pilot).
-2. Discover/list all publicly discoverable undergraduate degree programmes; select one or view a university summary.
-3. See every extracted course and year when provided; manually correct missing data with provenance, or optionally upload catalogue/syllabus.
+1. Select an institution/programme, beginning with XMUM in Malaysia.
+2. Upload available university curriculum/brochure or syllabus documents. Detailed syllabi are optional. Public website discovery is a secondary way to acquire programme/course lists.
+3. See every extracted course and explicit year/elective information; review ambiguous PDF candidates and correct missing data with provenance. Scans/unsupported layouts use explicit extraction regions or reviewed structured import.
 4. Run programme-wide benchmarking against relevant accreditation/discipline standards, occupational skills, dated AI developments and Malaysian workforce evidence.
 5. See an **evidence coverage overview** first: verified catalogue, description-only, title-only, unavailable syllabus, matched disciplines, affected roles.
 6. View a course review priority list: verified continuing relevance, potential review needed, insufficient evidence. Drill into course details with precise citations and uncertainty.
@@ -31,6 +31,7 @@ Institution-facing application for university career centres, working with progr
 - Per-course evidence trail and review flags.
 - One defensible primary action recommendation, legitimate alternatives, relative academic disruption + feasibility assumptions; compare against **no change**.
 - Scenario sensitivity and dated source re-evaluation.
+- Observed `RISING`, `DECLINING`, `STABLE` or `INSUFFICIENT_DATA` indicators, with `AI-TRANSFORMING` as a separate task-evidence attribute. Broad group statistics never become individual occupational trends; two quarters show only short-term change.
 - SDG rationale with evidence where genuinely appropriate.
 
 ## No false certainty

@@ -1,5 +1,6 @@
 """Bound request bytes before FastAPI JSON decoding, including chunked input."""
 
+import re
 from uuid import uuid4
 
 from starlette.responses import JSONResponse
@@ -14,18 +15,25 @@ class BodyLimitMiddleware:
             await self.app(scope, receive, send)
             return
         chunks, total = [], 0
+        limit = self.max_bytes
+        if re.fullmatch(
+            r"/api/v1/programmes/[0-9a-fA-F-]{36}/curriculum-pdf", scope.get("path", "")
+        ):
+            limit = 20_000_000
         while True:
             message = await receive()
             if message["type"] == "http.disconnect":
                 return
             total += len(message.get("body", b""))
-            if total > self.max_bytes:
+            if total > limit:
                 response = JSONResponse(
                     status_code=413,
                     content={
                         "error": {
                             "code": "PAYLOAD_TOO_LARGE",
-                            "message": "Request exceeds the 1 MiB catalogue limit",
+                            "message": "Request exceeds the permitted upload size"
+                            if limit != self.max_bytes
+                            else "Request exceeds the 1 MiB catalogue limit",
                             "details": [],
                         }
                     },

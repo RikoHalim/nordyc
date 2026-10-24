@@ -51,9 +51,38 @@ Run `python -m alembic upgrade head` on a backed-up existing database. Additive 
 
 Downgrade from 0003 to 0002 refuses populated ingestion keys/fingerprints, revision metadata, course extraction metadata or institution job keys/payloads/results. Downgrade from 0002 to 0001 separately refuses source records or attribution metadata loss. Export/preserve data before a deliberately planned rollback; a guard failure is not permission to delete it. Empty/default-only new fields allow a safe migration roundtrip. PostgreSQL tests verify populated 0002 preservation, each new metadata guard, migrated-schema imports and historical API retrieval; [STATUS](../STATUS.md) records actual results.
 
-## Future concepts - not implemented by this migration
+## Implemented Phase 3 reference evidence
 
-Programme revisions already cover catalogue versioning; later phases should map snapshot requirements onto them before introducing a redundant snapshot table. Learning outcomes, descriptions, evidence passages, standards/skills/occupations, signal snapshots, analysis results, actions/reviews and SDG links are deferred. The following conceptual target is a planning contract, not a second required Phase 1 schema.
+Additive `0004_reference_evidence` introduces 13 UUID/UTC/synthetic-aware tables. Existing `sources` is reused; no catalogue source/history is replaced. PostgreSQL JSONB fields use JSON variants in isolated SQLite tests.
+
+| Table | Snapshot/provenance contract |
+|---|---|
+| `datasets` | Unique research registry key, name/category, full registry metadata; registration does not establish acquisition |
+| `dataset_versions` | Dataset/source FKs, original input SHA256, parser/context hashes, artifact URL, UTC retrieval, raw publication-date precision and immutable metadata; unique dataset/hash/parser/context |
+| `evidence_references` | Version FK, unique locator, excerpt, optional positive page, review status and candidate extraction metadata |
+| `occupations`, `skills` | Version/evidence FKs, provider external IDs, taxonomy, labels/descriptions; occupation classification code nullable |
+| `occupation_skills`, `occupational_tasks` | Version-local occupation/skill FKs and published relation/task text; no guessed crosswalks |
+| `workforce_observations` | Population/classification/sector/geography, observation start/end, metric, nullable decimal value, unit, missing-value status and limitations |
+| `ai_impact_evidence` | Occupation label/optional FK, task, statement, impact subtype, capability, limitations and study-period text |
+| `academic_standards` | Discipline/title/benchmark statement/code; no university teaching claim |
+| `sdg_references` | Official goal/target identifiers and text when permitted; no automatic skill-to-SDG relationship |
+| `evidence_ingestion_jobs`, `evidence_processing_logs` | Separate reference-import outcomes/counts/errors and processing diagnostics; existing curriculum jobs require an institution/revision |
+
+Every normalized fact has a version/evidence pointer; composite FKs enforce evidence and linked occupations/skills belong to the same version. Exact record identity is unique within the version. Publication strings preserve unknown/year-only/prose rather than inventing a day; observation periods use separate dates. Original file retrieval time is not publication. Parser validation enforces source evidence classes and AI subtype/limitations. API consumers must distinguish engineering review assertions from independent academic verification.
+
+PDF extraction writes page candidates/text/tables to references, not automatic standards or AI findings. Narrow reviewed-card imports create their own checksum/version and retain original document hashes/pages and review basis in metadata. Replaying unchanged bytes/context returns the original version; source changes preserve old rows. Downgrade refuses populated Phase 3 data loss. See [the runbook](17_PHASE3_EVIDENCE_INGESTION.md) for supported adapters and unmatched classification behavior.
+
+Phase 3 completion reuses these tables: workforce radar calculations are read-only derived responses referencing exact observation IDs, input versions, method/threshold policy and fingerprints; no analysis/result table is introduced before Phase4. AI transformation reads reviewed task evidence independently and never rewrites occupational demand. The existing `jobs` kind `CURRICULUM_PDF_UPLOAD` queues private originals; the worker atomically writes the existing curriculum revision/course inventory, a `documents` PDF record with hash/private storage metadata, and page anchors. Catalogue evidence remains unreviewed/inference unless separately confirmed. No additional migration beyond0004 is necessary. Original Source evidence classes remain intact, including OECD workforce-derived exposure context rather than invented AI capability.
+
+## Future analysis concepts - not implemented
+
+The [Phase 4 hybrid retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) revises the next-phase plan only; no new table or migration is introduced by this documentation update. Reuse existing source/dataset/version/reference and typed evidence tables for permitted, source-verified research findings. Preserve same-version FK constraints and explicit reviewed identity bridges; a new result cache must not join incompatible taxonomy editions.
+
+Plan minimal additional analysis-run/finding and research-attempt/cache metadata: programme revision; admitted record/version/reference IDs; original source/locator/date/rights/verification pointers; query/provider and sanitized attempt outcome; coverage gaps; `as_of` and admission/freshness/rights policy versions; deterministic workforce inputs/method/thresholds; and the single actual model/provider, prompt and schema versions. Cache discovery metadata separately from admitted facts; raw PDF candidates and model claims cannot populate factual findings automatically. Content/excerpt retention and output/model sharing require separate allowed-use decisions. Unknown rights permit bibliographic metadata only, not an unrestricted text cache.
+
+Freeze completed run manifests/results; refresh creates a new run and permitted changed evidence creates a new immutable version. Cache hits retain original retrieval dates; corrections/retractions and changed rights invalidate future admission and flag dependent results. Decide concrete additive schema/job changes with migrations and PostgreSQL tests during authorized implementation. Existing curriculum jobs require an institution/revision; external imports retain their separate evidence-job provenance.
+
+Programme revisions already cover catalogue versioning; later phases should map snapshot requirements onto them before introducing a redundant snapshot table. Phase 3 already implements standards, skills, occupations, dated signals, source passages and SDG references. Additional verified curriculum content, derived analysis results, actions/reviews and justified SDG relationships remain deferred. The following conceptual target spans later phases and is a planning contract, not a second required Phase 1 schema.
 
 ### Future minimum relational concepts
 
@@ -67,15 +96,7 @@ Use surrogate UUID primary keys, TIMESTAMPTZ UTC timestamps, source references a
 | `curriculum_snapshots` | id, programme_id, observed_at, source_version/hash, completeness_notes | Historical evidence and idempotent imports |
 | `course_descriptions` | id, course_id, content, claim_type, evidence_id | Description and syllabi optional and must have origin |
 | `sources` | id, publisher, title, url, license_status, source_kind, published_at, observed_at, collected_at, content_hash | Distinguish missing dates |
-| `evidence_items` | id, source_id, excerpt, exact_locator, evidence_class, validation_status | Traceable quotes/passages and verified vs synthetic |
-| `skills` | id, canonical_label, taxonomy, taxonomy_uri | Cross-major taxonomy |
-| `occupations` | id, label, taxonomy_code, taxonomy | ESCO/MyNSR mapping, no employment probability |
-| `occupation_skills` | occupation_id, skill_id, source_id, relationship, confidence_label | Evidence backed; don't infer from totals |
-| `standards` | id, discipline_key, publisher, version, source_id | MQA benchmark by discipline |
-| `standard_competencies` | id, standard_id, skill_id nullable, text, evidence_id | Normative benchmark, NOT taught claim |
-| `workforce_signals` | id, occupation_id nullable, skill_id nullable, metric, value nullable, unit, geography, period_start, period_end, source_id | Occupation counts stay occupation counts |
-| `ai_task_impacts` | id, occupation_id, task_text, impact_type, evidence_id, date_label, limitations | AI exposure != automation inevitability |
-| `analysis_runs` | id, programme_id, curriculum_snapshot_id, workforce_snapshot_hash, scenario, model_name nullable, version, status, started_at | Reproducible input fingerprint |
+| `analysis_runs` | id, programme_id, programme_revision_id, evidence_manifest, gaps, as_of, policy/model/prompt/schema versions, status, started_at | Frozen input/result lineage; model absence explicit; scenarios remain Phase 6 |
 | `course_findings` | id, run_id, course_id, finding_type, level, rationale, evidence_ids, missing_evidence | Clearly provisional with title-only |
 | `programme_findings` | id, run_id, theme, rationale, evidence_ids, missing_evidence | Cross-course analysis; do not hallucinate gaps |
 | `academic_actions` | id, run_id, course_id nullable, action_type, proposed, rationale, source_ids, conditions, decision_status | Includes programme-level elective and no change |

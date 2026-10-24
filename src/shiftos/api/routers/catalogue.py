@@ -1,10 +1,12 @@
 """Catalogue jobs, structured fallback and reproducible revision access."""
 
 import hmac
+import json
 from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Header, Query, Request
+from pydantic import HttpUrl, ValidationError
 from sqlalchemy.orm import Session
 
 from shiftos.core.errors import DomainError
@@ -53,6 +55,58 @@ def require_writer(
 
 
 Writer = Annotated[None, Depends(require_writer)]
+
+
+@router.post(
+    "/programmes/{id}/curriculum-pdf",
+    response_model=JobRead,
+    status_code=202,
+    openapi_extra={
+        "requestBody": {
+            "required": True,
+            "content": {"application/pdf": {"schema": {"type": "string", "format": "binary"}}},
+        }
+    },
+)
+async def upload_curriculum_pdf(
+    id: UUID,
+    request: Request,
+    session: SessionDep,
+    _writer: Writer,
+    source_url: HttpUrl | None = None,
+    regions: Annotated[str | None, Query(max_length=15000)] = None,
+):
+    """Upload application/pdf; optional regions is a JSON list of page rectangles."""
+    from shiftos.services.ingestion.pdf import PdfCourseRegion
+    from shiftos.services.ingestion.uploads import enqueue_pdf_upload
+
+    if request.headers.get("content-type", "").split(";", 1)[0] != "application/pdf":
+        raise DomainError(
+            "UNSUPPORTED_MEDIA_TYPE", "Upload the original PDF as application/pdf", 415
+        )
+    try:
+        supplied = json.loads(regions) if regions is not None else None
+        if supplied is not None and (
+            not isinstance(supplied, list) or not 1 <= len(supplied) <= 50
+        ):
+            raise ValueError
+        selected = [PdfCourseRegion.model_validate(r) for r in supplied] if supplied else None
+    except (ValueError, ValidationError, TypeError):
+        raise DomainError(
+            "VALIDATION_ERROR", "Supply between 1 and 50 valid PDF regions", 422
+        ) from None
+    content = await request.body()
+    from starlette.concurrency import run_in_threadpool
+
+    return await run_in_threadpool(
+        enqueue_pdf_upload,
+        session,
+        id,
+        content,
+        request.app.state.settings,
+        source_url=str(source_url) if source_url else None,
+        regions=selected,
+    )
 
 
 @router.get("/catalogue/providers")

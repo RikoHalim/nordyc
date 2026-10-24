@@ -13,18 +13,21 @@ Boundaries remain `api/routers`, `schemas`, `models`, `services`, `core`, `db`. 
 ## Future data flow
 
 ```text
-Official programme directory/pages + optional CSV/documents
-  -> bounded discovery/extraction + coverage diagnostics
+Selected programme + uploaded curriculum/brochure/syllabus
+  -> existing extraction + coverage diagnostics (public discovery secondary)
   -> versioned programme/course catalogue with provenance
-  -> MQA / occupations/skills / dated workforce and AI evidence
+  -> internal PostgreSQL MQA / occupations/skills / dated workforce and AI evidence
+  -> sufficiency check -> controlled external research only for important gaps
+  -> original-source verification + permitted versioned evidence cache
+  -> deterministic workforce indicators + one LLM over admitted evidence
   -> conservative whole-programme findings + course review questions
   -> supported primary intervention + alternatives/no change
   -> scenario replay + human review + draft report
 ```
 
-Add `CurriculumSource`, `StandardsSource`, `WorkforceSignalSource`, `AIImpactSource` and optional `LLMExtractor` in their phases, with offline adapters. Access needs bounded timeouts/retries, terms/robots, lawful reuse and manual fallback. The Phase 1 source registry does not fetch or authenticate URLs.
+Phase 2–3 already supply curriculum providers and source-specific evidence adapters. Extend those boundaries for internal evidence retrieval, approved external search and one configured LLM when Phase 4 is authorized; do not replace the implemented pipeline with hypothetical interfaces. Access needs bounded timeouts/retries, terms/robots, lawful reuse and manual fallback. The Phase 1 source registry itself does not fetch or authenticate URLs.
 
-Reuse jobs (`QUEUED|RUNNING|SUCCEEDED|PARTIAL|FAILED`) and choose a simple durable worker in Phase 2. Existing jobs are storage, not an execution queue. Slow activities should return 202/job IDs rather than block requests.
+Phase 2 implements the separate durable catalogue worker and job states (`QUEUED|RUNNING|SUCCEEDED|PARTIAL|FAILED`). Phase 3 evidence imports use separate import jobs. Extend an appropriate worker/job boundary for Phase 4; the current curriculum target constraint is not a generic research queue. Slow activities should return 202/job IDs rather than block requests.
 
 ## Reproducibility and evidence gates
 
@@ -36,4 +39,22 @@ Title-only means unknown taught content and preliminary questions, never definit
 
 ## Deferred
 
-Parsing, learning-outcome/topic/assessment tables, evidence passages/snapshots, workers, analysis/actions/reports and frontend remain future work. No microservices, default vector database, knowledge graph, custom training or per-major agents are required.
+Learning-outcome/topic/assessment tables, analysis/actions/reports, automatic research fallback and frontend remain future work. No microservices, default vector database, knowledge graph, custom training or per-major agents are required.
+
+## Implemented Phase 3 evidence boundary
+
+`services/evidence/registry.py` validates the primary CSV catalogue; the explicit acquisition policy chooses supported endpoints/adapters and access/reuse decisions. `acquisition.py` subclasses the existing bounded HTTP transport with separate data host/type rules, preserving curriculum HTML defaults. `parsers.py` supplies deterministic source-specific CSV/XLSX/JSON transforms and PDF page/table candidates. Pydantic validates normalized records before `repositories/evidence.py` loads immutable version/evidence-linked facts in a per-dataset transaction. `pipeline.py` coordinates those layers and persists independent job/log outcomes. No automatic runtime AI or LLM interpretation is involved.
+
+The local `ingest-evidence` CLI is the administrative worker mechanism; no ingestion HTTP endpoint or startup acquisition is exposed. Read-only evidence routers provide historical observations and full provenance. Original allowed bytes stay in ignored hash-addressed storage, subject to individual source rules. Unavailable/restricted sources remain explicit failures/manual requirements. Synthetic fixtures are separate and require an explicit flag.
+
+Version-local classification relationships prevent accidental joins across editions; unresolved relationships fail atomically. Publication precision, observation periods and UTC retrieval are stored separately. Reviewed cards retain original artifact hashes/locators and review basis; automatic PDF pages remain candidates. The Future Workforce Radar is a deterministic read-only service over frozen observations, with independent AI admission and method/threshold fingerprints. No derived analysis schema is introduced. Protected curriculum PDF upload only stores/queues; the existing separate worker handles bounded layout detection/extraction and atomic document/catalogue/page provenance. The primary workflow is upload-first and public discovery secondary. See [the runbook](17_PHASE3_EVIDENCE_INGESTION.md) and [report](PHASE3_INGESTION_REPORT.md): a bounded prototype evidence baseline is available; broad current coverage/identity/permission gates remain open.
+
+## Planned Phase 4 hybrid retrieval boundary
+
+The [Phase 4 retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) is the design authority for this extension; none of its new components is implemented by this documentation revision. A small coordinator retrieves PostgreSQL evidence first and applies deterministic claim-specific relevance, quality, date/edition, rights and coverage gates. Sufficient local evidence incurs no external request. Important gaps automatically invoke an approved, configured search adapter within a durable job and finite budgets. Source-specific original acquisition and verification remain separate from search discovery; only supported, permitted findings can be imported and reused.
+
+Reuse the evidence repository/tables, immutable versions, exact locators and source-class constraints. Add minimal analysis/finding and research-attempt/cache persistence only in the authorized implementation, with additive migrations/tests. Cache eligibility includes freshness, review, source-policy and rights versions; refresh produces a new run and does not rewrite a frozen manifest. Failed/blocked research is observable and yields partial coverage or `insufficient_evidence`, without synthetic substitution.
+
+One disclosed existing model receives the bounded admitted evidence packet and produces schema-validated, citation-checked explanations. A runtime LLM connection/provider/model is currently absent and must be explicitly configured during implementation. No extra model, training or tool-using research agent is required. Workforce arithmetic stays in the existing deterministic radar, and exposure stays separate from observed AI task change.
+
+External search/model egress must respect private upload and content-use policy. Use generic nonprivate search terms, restrict original-source hosts and redirects, retain transport SSRF/robots/size/rate/timeout controls, and treat retrieved instructions as untrusted data. Authorize analysis submission/result access; the catalogue token alone is not production tenant isolation. Research has no public arbitrary-URL trigger and does not run on backend startup. A missing provider, blocked source or unsupported claim remains an explicit limitation in every affected course result.

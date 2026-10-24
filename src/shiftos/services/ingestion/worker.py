@@ -282,7 +282,9 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         job = session.scalar(
             select(Job)
             .where(
-                Job.kind.in_(["CURRICULUM_IMPORT", "CURRICULUM_DISCOVERY"]),
+                Job.kind.in_(
+                    ["CURRICULUM_IMPORT", "CURRICULUM_DISCOVERY", "CURRICULUM_PDF_UPLOAD"]
+                ),
                 Job.status == JobStatus.QUEUED,
                 ~institution_busy,
             )
@@ -303,11 +305,16 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         session.commit()
         session.expunge(job)
     try:
-        result = (
-            _manual(database, job)
-            if job.kind == "CURRICULUM_IMPORT"
-            else _discover(database, job, settings, fetcher_factory)
-        )
+        if job.kind == "CURRICULUM_PDF_UPLOAD":
+            from shiftos.services.ingestion.uploads import process_pdf_upload
+
+            result = process_pdf_upload(database, job, settings)
+        else:
+            result = (
+                _manual(database, job)
+                if job.kind == "CURRICULUM_IMPORT"
+                else _discover(database, job, settings, fetcher_factory)
+            )
         status = JobStatus.PARTIAL if result.failed_programmes else JobStatus.SUCCEEDED
         if result.entries and all(e.status == "failed" for e in result.entries):
             status = JobStatus.FAILED
@@ -348,7 +355,9 @@ def fail_stale_jobs(database: Database) -> int:
         jobs = session.scalars(
             select(Job)
             .where(
-                Job.kind.in_(["CURRICULUM_IMPORT", "CURRICULUM_DISCOVERY"]),
+                Job.kind.in_(
+                    ["CURRICULUM_IMPORT", "CURRICULUM_DISCOVERY", "CURRICULUM_PDF_UPLOAD"]
+                ),
                 Job.status == JobStatus.RUNNING,
                 Job.started_at < cutoff,
             )

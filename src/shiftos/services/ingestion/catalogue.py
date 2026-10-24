@@ -155,6 +155,7 @@ def import_programme(
     parser_version: str,
     acquisition_mode: str,
     target_id: UUID | None = None,
+    commit: bool = True,
 ) -> dict:
     institution = validate_import(
         session,
@@ -193,7 +194,8 @@ def import_programme(
     )
     if existing:
         # Old manifests are never silently reactivated over a newer snapshot.
-        session.commit()
+        if commit:
+            session.commit()
         return {
             "programme_id": str(programme.id),
             "revision_id": str(existing.id),
@@ -337,7 +339,10 @@ def import_programme(
         programme.canonical_url = str(manifest.canonical_url)
         programme.source_id = source.id
         programme.source_locator = manifest.source_locator
-    session.commit()
+    if commit:
+        session.commit()
+    else:
+        session.flush()
     return {
         "programme_id": str(programme.id),
         "revision_id": str(revision.id),

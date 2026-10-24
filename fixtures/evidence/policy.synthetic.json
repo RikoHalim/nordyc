@@ -1,0 +1,8 @@
+{
+  "SYNTHETIC-EVIDENCE": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "reuse_reviewed": true,
+    "instructions": "Offline invented fixture; never live evidence."
+  }
+}

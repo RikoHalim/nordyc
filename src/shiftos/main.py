@@ -13,7 +13,7 @@ from starlette.exceptions import HTTPException
 
 from shiftos import __version__
 from shiftos.api.body_limit import BodyLimitMiddleware
-from shiftos.api.routers import academic, catalogue, health
+from shiftos.api.routers import academic, catalogue, evidence, health, workforce_radar
 from shiftos.core.config import Settings
 from shiftos.core.errors import DomainError
 from shiftos.db.session import Database, create_database
@@ -98,6 +98,8 @@ def create_app(settings: Settings | None = None, database: Database | None = Non
 
     application.include_router(health.router)
     application.include_router(academic.router)
+    application.include_router(evidence.router)
+    application.include_router(workforce_radar.router)
     application.include_router(catalogue.router)
     application.add_middleware(BodyLimitMiddleware)
     return application

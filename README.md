@@ -15,11 +15,11 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 - Dynamic XMUM undergraduate discovery, conservative title/year/elective parsing, source dates/hashes and coverage/missing-field reporting.
 - Separate worker, reviewed structured imports, duplicate checks and safe snapshot re-imports/history.
 
-Workforce/academic/AI reference imports, analysis, recommendations, scenarios, reports and frontend remain future phases. Source registration and reviewed-file flags are supplied assertions; they do not independently verify actual teaching content.
+Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. **Ready for a bounded Phase 4 prototype using frozen subsets**, with legacy/multilingual taxonomy, currentness, crosswalk and permission limits explicit. See [the runbook](docs/17_PHASE3_EVIDENCE_INGESTION.md), [actual ingestion report](docs/PHASE3_INGESTION_REPORT.md) and [trend methodology](docs/18_WORKFORCE_TRENDS.md). Source registration/review flags are assertions, not proof of taught content. Course analysis, recommendations and frontend remain future phases.
 
 ## Revised product contract
 
-University name and programme selection are minimal inputs. Public course titles are required where available; year/elective information is retained when shown and **detailed syllabi are optional**. Individual-course analysis is a drill-down from programme review. A title proves no taught content: future outputs must use preliminary questions and `needs_syllabus_confirmation` where appropriate.
+The primary journey is **select programme → upload available curriculum/brochure or syllabus documents → review extraction → analyse every available course**. Detailed syllabi are optional; public discovery remains secondary. Phase 3 implements the upload/extraction portion, with explicit year columns or reviewed-region fallback and unreviewed title candidates; analysis is Phase 4. A title proves no taught content, so later outputs must preserve `needs_syllabus_confirmation` where appropriate.
 
 Future analysis proposes no change, syllabus revision, evidence-gated redesign/consolidation, new courses/electives, workshops and industry engagement, or request review. Staff compare alternatives including no change and approve decisions. Budget/time constraints are optional at later comparison. Recommendations need admissible citations or `insufficient_evidence`; benchmarks are not XMUM teaching facts.
 
@@ -52,7 +52,7 @@ The original fixture contains 12 invented courses, two electives and six without
 
 ## Existing database upgrade
 
-Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002` and `0003`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, import metadata and institution-scoped jobs. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md).
+Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002`, `0003` and `0004`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, curriculum jobs and reference evidence tables. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md).
 
 ## Curriculum discovery and imports
 
@@ -61,6 +61,23 @@ Read the [Phase 2 runbook](docs/16_PHASE2_CURRICULUM_INGESTION.md) before live a
 For verified files, `python -m shiftos.cli import-curriculum path/to/reviewed.json --institution <UUID>` queues the same persistence path; `python -m shiftos.cli worker --once` processes the next eligible job. [The clearly synthetic example](examples/curriculum_import.synthetic.json) works offline with a matching synthetic institution. Real imports require official URLs, actual retrieval dates, locators and title excerpts. No syllabus is invented. In production configure a nonempty `CATALOGUE_WRITE_TOKEN` for new HTTP job submissions; this is not full deployment authentication.
 
 ## Development checks
+
+Upload-first catalogue ingestion is explicit and uses the existing worker:
+
+```powershell
+python -m shiftos.cli upload-curriculum-pdf path/to/brochure.pdf --programme <UUID>
+python -m shiftos.cli worker --once
+```
+
+The protected HTTP equivalent is `POST /api/v1/programmes/{id}/curriculum-pdf` with an `application/pdf` body. Supported labelled year-column brochures can be detected automatically; unsupported/scanned layouts need explicit regions or reviewed JSON. Private originals are retained separately from unreviewed course candidates. This performs no course relevance analysis.
+
+Phase 3 administration is explicit, outside HTTP requests:
+
+```powershell
+python -m shiftos.cli ingest-evidence --dataset D-JMI-Q1-2026 --dataset D-JMI-Q2-2026 --live --report data/local/workforce-report.json
+```
+
+Per-source access/rights gates still apply. Without `--live`, acquisition remains disabled; permitted manual files and explicitly synthetic offline fixtures are supported. See the Phase 3 runbook for commands, formats, provenance, restricted sources and brochure review.
 
 ```powershell
 python -m pytest -q --basetemp=.pytest-tmp
@@ -90,9 +107,12 @@ Tests use randomly named `shiftos_test_*` schemas and clean them up; they do not
 | `docs/12_MVP_ROADMAP.md` | Preliminary, final and post-hackathon priorities |
 | `docs/15_PHASE1_MIGRATION_AUDIT.md` | Phase 1 compatibility review |
 | `docs/16_PHASE2_CURRICULUM_INGESTION.md` | Discovery, structured import, worker and actual coverage handoff |
+| `docs/17_PHASE3_EVIDENCE_INGESTION.md`, `docs/PHASE3_INGESTION_REPORT.md` | Evidence ETL, manual procedures, measured counts and readiness blockers |
+| `docs/18_WORKFORCE_TRENDS.md`, `data/reference_packs/README.md` | Demand/AI separation, reproducible calculations and permitted frozen real subsets |
+| `docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md` | Planned PostgreSQL-first retrieval, controlled research fallback, verification/cache and single-model analysis |
 | `docs/DATASET_RESEARCH.md`, `data/dataset_registry.csv` | Verified research and acquisition candidates |
 | `examples/` | Preserved executable synthetic fixtures |
 | `fixtures/`, `references/` | Later acceptance cases and candidate sources |
 | `prompts/` | One-phase instructions; legacy filenames redirect |
 
-Phase 2 stops here. The user subsequently authorised merging `feature/phase-2-curriculum-ingestion` into `main` and synchronising the local checkout. The next recommended development task is Phase 3 reference evidence ingestion, guided by the completed dataset research; start only when explicitly requested. See STATUS for the merge verification and remaining source-access limits.
+Phase 3 remains the implemented boundary. Phase 4 documentation now plans PostgreSQL-first retrieval, controlled authoritative research for important evidence gaps, permitted versioned caching and one configured existing LLM. The repository currently has no runtime LLM connection or automatic research service; these remain implementation work. See [the retrieval contract](docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) and [roadmap](docs/12_MVP_ROADMAP.md). All source-scope/old-edition/identity limits remain. The planning revision authorized documentation only; subsequent explicit GitHub publication authorization is recorded in STATUS and does not authorize Phase 4 implementation.

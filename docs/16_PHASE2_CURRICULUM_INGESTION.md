@@ -1,5 +1,7 @@
 # Phase 2 — curriculum discovery and ingestion
 
+Phase 3 compatibility addendum: [the evidence runbook](17_PHASE3_EVIDENCE_INGESTION.md#phase-2-brochure-compatibility) documents the new bounded local brochure-to-manifest helper. The original HTML discovery/worker/JSON contract below is preserved. Raw brochure PDFs previously required manual transcription; explicit page regions now support reviewed candidate preparation without a general PDF crawler.
+
 Implemented 2026-10-24. This phase ends at source-backed catalogue retrieval. Standards/evidence ingestion, AI relevance, recommendations and frontend remain later work. Read [dataset research](DATASET_RESEARCH.md), [the acquisition plan](DATA_ACQUISITION_PLAN.md), [schema](03_DATA_MODEL.md) and [API contract](10_API_CONTRACT.md) alongside this handoff.
 
 ## What runs

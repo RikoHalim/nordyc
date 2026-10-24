@@ -1,0 +1,267 @@
+{
+  "reviewed": true,
+  "metadata": {
+    "is_synthetic": true,
+    "notice": "All content is invented DEMO ONLY"
+  },
+  "records": [
+    {
+      "kind": "occupation",
+      "key": "accounting",
+      "data": {
+        "taxonomy": "SYNTHETIC",
+        "label": "Synthetic accounting role"
+      },
+      "locator": "Synthetic fixture: occupation/accounting",
+      "excerpt": "Invented synthetic example accounting; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "accounting",
+      "data": {
+        "taxonomy": "SYNTHETIC",
+        "label": "Synthetic accounting skill"
+      },
+      "locator": "Synthetic fixture: skill/accounting",
+      "excerpt": "Invented synthetic example accounting; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "accounting",
+      "data": {
+        "occupation_external_id": "accounting",
+        "skill_external_id": "accounting",
+        "relationship": "essential"
+      },
+      "locator": "Synthetic fixture: occupation_skill/accounting",
+      "excerpt": "Invented synthetic example accounting; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "task",
+      "key": "accounting",
+      "data": {
+        "occupation_external_id": "accounting",
+        "description": "Invented synthetic accounting task"
+      },
+      "locator": "Synthetic fixture: task/accounting",
+      "excerpt": "Invented synthetic example accounting; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "ai_evidence",
+      "key": "accounting",
+      "data": {
+        "occupation_label": "Synthetic accounting role",
+        "statement": "Invented synthetic accounting exposure example.",
+        "impact_type": "occupational_exposure",
+        "limitations": "Synthetic testing input only; not a measured capability or prediction."
+      },
+      "locator": "Synthetic fixture: ai_evidence/accounting",
+      "excerpt": "Invented synthetic example accounting; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "academic_standard",
+      "key": "accounting",
+      "data": {
+        "discipline": "Synthetic accounting",
+        "title": "Synthetic benchmark",
+        "statement": "Invented benchmark for offline tests only."
+      },
+      "locator": "Synthetic fixture: academic_standard/accounting",
+      "excerpt": "Invented synthetic example accounting; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "biology",
+      "data": {
+        "taxonomy": "SYNTHETIC",
+        "label": "Synthetic biology role"
+      },
+      "locator": "Synthetic fixture: occupation/biology",
+      "excerpt": "Invented synthetic example biology; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "biology",
+      "data": {
+        "taxonomy": "SYNTHETIC",
+        "label": "Synthetic biology skill"
+      },
+      "locator": "Synthetic fixture: skill/biology",
+      "excerpt": "Invented synthetic example biology; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "biology",
+      "data": {
+        "occupation_external_id": "biology",
+        "skill_external_id": "biology",
+        "relationship": "essential"
+      },
+      "locator": "Synthetic fixture: occupation_skill/biology",
+      "excerpt": "Invented synthetic example biology; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "task",
+      "key": "biology",
+      "data": {
+        "occupation_external_id": "biology",
+        "description": "Invented synthetic biology task"
+      },
+      "locator": "Synthetic fixture: task/biology",
+      "excerpt": "Invented synthetic example biology; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "ai_evidence",
+      "key": "biology",
+      "data": {
+        "occupation_label": "Synthetic biology role",
+        "statement": "Invented synthetic biology exposure example.",
+        "impact_type": "occupational_exposure",
+        "limitations": "Synthetic testing input only; not a measured capability or prediction."
+      },
+      "locator": "Synthetic fixture: ai_evidence/biology",
+      "excerpt": "Invented synthetic example biology; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "academic_standard",
+      "key": "biology",
+      "data": {
+        "discipline": "Synthetic biology",
+        "title": "Synthetic benchmark",
+        "statement": "Invented benchmark for offline tests only."
+      },
+      "locator": "Synthetic fixture: academic_standard/biology",
+      "excerpt": "Invented synthetic example biology; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "computing",
+      "data": {
+        "taxonomy": "SYNTHETIC",
+        "label": "Synthetic computing role"
+      },
+      "locator": "Synthetic fixture: occupation/computing",
+      "excerpt": "Invented synthetic example computing; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "computing",
+      "data": {
+        "taxonomy": "SYNTHETIC",
+        "label": "Synthetic computing skill"
+      },
+      "locator": "Synthetic fixture: skill/computing",
+      "excerpt": "Invented synthetic example computing; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "computing",
+      "data": {
+        "occupation_external_id": "computing",
+        "skill_external_id": "computing",
+        "relationship": "essential"
+      },
+      "locator": "Synthetic fixture: occupation_skill/computing",
+      "excerpt": "Invented synthetic example computing; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "task",
+      "key": "computing",
+      "data": {
+        "occupation_external_id": "computing",
+        "description": "Invented synthetic computing task"
+      },
+      "locator": "Synthetic fixture: task/computing",
+      "excerpt": "Invented synthetic example computing; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "ai_evidence",
+      "key": "computing",
+      "data": {
+        "occupation_label": "Synthetic computing role",
+        "statement": "Invented synthetic computing exposure example.",
+        "impact_type": "occupational_exposure",
+        "limitations": "Synthetic testing input only; not a measured capability or prediction."
+      },
+      "locator": "Synthetic fixture: ai_evidence/computing",
+      "excerpt": "Invented synthetic example computing; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "academic_standard",
+      "key": "computing",
+      "data": {
+        "discipline": "Synthetic computing",
+        "title": "Synthetic benchmark",
+        "statement": "Invented benchmark for offline tests only."
+      },
+      "locator": "Synthetic fixture: academic_standard/computing",
+      "excerpt": "Invented synthetic example computing; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "workforce",
+      "key": "Q1",
+      "data": {
+        "occupation_external_id": "accounting",
+        "geography": "MY",
+        "period_start": "2025-01-01",
+        "period_end": "2025-03-31",
+        "indicator": "synthetic_demonstration",
+        "value": "10",
+        "unit": "synthetic_count",
+        "limitations": "Invented example; not Malaysian statistics."
+      },
+      "locator": "Synthetic fixture: workforce/Q1",
+      "excerpt": "Invented synthetic example Q1; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "workforce",
+      "key": "Q2",
+      "data": {
+        "occupation_external_id": "accounting",
+        "geography": "MY",
+        "period_start": "2025-04-01",
+        "period_end": "2025-06-30",
+        "indicator": "synthetic_demonstration",
+        "value": "12",
+        "unit": "synthetic_count",
+        "limitations": "Invented example; not Malaysian statistics."
+      },
+      "locator": "Synthetic fixture: workforce/Q2",
+      "excerpt": "Invented synthetic example Q2; no real-world evidence.",
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "sdg",
+      "key": "8.2",
+      "data": {
+        "code": "8.2",
+        "kind": "target",
+        "goal_code": "8",
+        "title": "Synthetic test label for target 8.2",
+        "description": "Invented description for schema testing; consult UN for official text."
+      },
+      "locator": "Synthetic fixture: sdg/8.2",
+      "excerpt": "Invented synthetic example 8.2; no real-world evidence.",
+      "review_status": "reviewed"
+    }
+  ]
+}
