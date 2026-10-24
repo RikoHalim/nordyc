@@ -50,19 +50,7 @@ jobs:
         run: |
           python -m pip install -r requirements.lock
           python -m pip install -e '.[dev]'
-      - name: Check lint
-        run: python -m ruff check .
-      - name: Check formatting
-        run: python -m ruff format --check .
-      - name: Run catalogue, security and PostgreSQL integration tests
-        run: python -m pytest -q
-      - name: Check dependency integrity and isolated schema
-        run: |
-          python -m pip check
-          python -m alembic upgrade head
-          python -m alembic check
-          python -m alembic heads
-          python -m shiftos.cli runtime-preflight --check-database
+      # Catch frontend/contract drift before the longer PostgreSQL regression run.
       - name: Set up frontend Node runtime
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -85,3 +73,16 @@ jobs:
           npm run format:check
           npm run build
           npm audit
+      - name: Check lint
+        run: python -m ruff check .
+      - name: Check formatting
+        run: python -m ruff format --check .
+      - name: Run catalogue, security and PostgreSQL integration tests
+        run: python -m pytest -q
+      - name: Check dependency integrity and isolated schema
+        run: |
+          python -m pip check
+          python -m alembic upgrade head
+          python -m alembic check
+          python -m alembic heads
+          python -m shiftos.cli runtime-preflight --check-database

@@ -6,6 +6,13 @@ from pathlib import Path
 from shiftos.core.config import Settings
 from shiftos.main import create_app
 
+HTTP_REASON_ALIASES = {
+    "413": ("Content Too Large", "Request Entity Too Large"),
+    "414": ("URI Too Long", "Request-URI Too Long"),
+    "416": ("Range Not Satisfiable", "Requested Range Not Satisfiable"),
+    "422": ("Unprocessable Content", "Unprocessable Entity"),
+}
+
 
 def main():
     root = Path(__file__).resolve().parents[1]
@@ -20,18 +27,16 @@ def main():
         )
     )
     contract = app.openapi()
-    # Python 3.12/3.13 name HTTP 422 differently. Canonicalise only the default
-    # documentation label; preserve every response schema and custom description.
+    # CPython 3.13 renamed four standard reason phrases. Canonicalise only these
+    # known default labels; preserve all response schemas and custom descriptions.
     for path_item in contract.get("paths", {}).values():
         for operation in path_item.values():
             if not isinstance(operation, dict):
                 continue
-            response = operation.get("responses", {}).get("422")
-            if isinstance(response, dict) and response.get("description") in {
-                "Unprocessable Entity",
-                "Unprocessable Content",
-            }:
-                response["description"] = "Unprocessable Content"
+            for code, aliases in HTTP_REASON_ALIASES.items():
+                response = operation.get("responses", {}).get(code)
+                if isinstance(response, dict) and response.get("description") in aliases:
+                    response["description"] = aliases[0]
     path = root / "frontend/src/api/openapi.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(contract, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
