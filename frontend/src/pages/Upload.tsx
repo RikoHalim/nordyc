@@ -86,6 +86,7 @@ export default function UploadPage() {
         signal,
       ),
     2000,
+    true,
   );
   const entries =
     (job.data?.result?.entries as
@@ -124,6 +125,8 @@ export default function UploadPage() {
         "CoursePage",
         signal,
       ),
+    30_000,
+    true,
   );
   const readyCourseCount = extracted.data?.length || 0;
   const needsReviewCount =
@@ -252,9 +255,10 @@ export default function UploadPage() {
                   accept="application/pdf,.pdf"
                   aria-label="Curriculum PDF"
                   aria-describedby="pdf-selection-help"
-                  onChange={(event) =>
-                    selectPdf(event.target.files?.[0] || null)
-                  }
+                  onChange={(event) => {
+                    const selected = event.target.files?.[0];
+                    if (selected) selectPdf(selected);
+                  }}
                 />
               </label>
               {file && !validatePdf(file) ? (

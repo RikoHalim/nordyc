@@ -51,6 +51,8 @@ export default function Overview() {
         ),
       };
     },
+    30_000,
+    true,
   );
   if (data.loading) return <Loading />;
   if (data.error) return <ErrorState error={data.error} retry={data.reload} />;

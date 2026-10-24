@@ -61,6 +61,8 @@ export default function Courses() {
             signal,
           )
         : Promise.resolve([]),
+    30_000,
+    true,
   );
   const history = useResource(
     `course-history:${programme.id}:${revisionId}:${historyOffset}`,
@@ -71,6 +73,7 @@ export default function Courses() {
         signal,
       ),
     3000,
+    true,
   );
   const rows =
     history.data?.items
@@ -112,6 +115,7 @@ export default function Courses() {
       };
     },
     3000,
+    true,
   );
   if (inventory.loading)
     return <Loading label="Loading the learning journey" />;
@@ -166,9 +170,21 @@ export default function Courses() {
         </Link>
       </div>
       <Notice>
-        Course titles are not proof of taught skills. Inspect syllabus and
-        assessment evidence before proposing academic changes.
+        Start here: choose a course to see its finding and next step. Titles
+        alone cannot confirm what is taught.
       </Notice>
+      {result.data?.findings.length ? (
+        <Card title="What this review means">
+          <p>
+            {result.data.findings.length} courses reviewed. Open a course for
+            the main finding; supporting checks and sources are inside.
+          </p>
+          <p className="muted">
+            Missing evidence means “check the syllabus”, not “remove the
+            course”. Academic staff decide any changes.
+          </p>
+        </Card>
+      ) : null}
       <div className="year-grid">
         <button
           className={`year-panel ${year === "all" ? "selected" : ""}`}
@@ -439,22 +455,30 @@ export default function Courses() {
                     <>
                       <h4>Preliminary course findings</h4>
                       <Status value={finding.review_flag} />
-                      {dimensions.map((key) => (
-                        <section key={key} className="dimension">
-                          <h4>{humanise(key)}</h4>
-                          <Status value={finding[key].status} />
-                          <TextList
-                            items={(finding[key].review_questions || []).map(
-                              humanise,
-                            )}
-                            empty="No further question recorded in this dimension."
-                          />
-                          <Citations
-                            citations={finding[key].citations}
-                            evidencePath={`/api/v1/analyses/${run?.id}`}
-                          />
-                        </section>
-                      ))}
+                      <p>
+                        {finding.review_flag === "insufficient_evidence"
+                          ? "Next step: add or review syllabus evidence before deciding on changes."
+                          : "Next step: review the supporting evidence with academic staff."}
+                      </p>
+                      <details>
+                        <summary>Supporting checks and sources</summary>
+                        {dimensions.map((key) => (
+                          <section key={key} className="dimension">
+                            <h4>{humanise(key)}</h4>
+                            <Status value={finding[key].status} />
+                            <TextList
+                              items={(finding[key].review_questions || []).map(
+                                humanise,
+                              )}
+                              empty="No further question recorded in this dimension."
+                            />
+                            <Citations
+                              citations={finding[key].citations}
+                              evidencePath={`/api/v1/analyses/${run?.id}`}
+                            />
+                          </section>
+                        ))}
+                      </details>
                     </>
                   ) : (
                     <p className="muted">

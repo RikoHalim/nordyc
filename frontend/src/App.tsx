@@ -379,6 +379,7 @@ function ProgrammeShell() {
       return { programme, institution, revisions };
     },
     0,
+    true,
   );
   useEffect(() => {
     setMenu(false);
@@ -730,7 +731,10 @@ export default function App() {
         .get<AccessContext>("/api/v1/access-context", "AccessContext")
         .then((access) =>
           setSession((current) =>
-            current?.api === session.api ? { ...current, access } : current,
+            current?.api === session.api &&
+            JSON.stringify(current.access) !== JSON.stringify(access)
+              ? { ...current, access }
+              : current,
           ),
         )
         .catch(() => disconnect());

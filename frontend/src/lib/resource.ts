@@ -5,50 +5,53 @@ export function useResource<T>(
   key: string | null,
   loader: (signal: AbortSignal) => Promise<T>,
   pollMs = 30_000,
+  keepMountedOnRefresh = false,
 ) {
   const load = useRef(loader);
   load.current = loader;
-  const [data, setData] = useState<T>();
-  const [error, setError] = useState<ApiError | null>(null);
-  const [loading, setLoading] = useState(Boolean(key));
-  const [epoch, setEpoch] = useState(0);
-  const [resolved, setResolved] = useState<{
+  const [state, setState] = useState<{
     key: string | null;
-    epoch: number;
-  } | null>(null);
+    data?: T;
+    error: ApiError | null;
+    loading: boolean;
+  }>({ key, error: null, loading: Boolean(key) });
+  const [epoch, setEpoch] = useState(0);
   const reload = useCallback(() => setEpoch((n) => n + 1), []);
   useEffect(() => {
     let active = true;
     const controller = new AbortController();
-    setData(undefined);
-    setError(null);
-    setLoading(Boolean(key));
+    setState((previous) =>
+      keepMountedOnRefresh &&
+      previous.key === key &&
+      previous.data !== undefined &&
+      !document.hidden
+        ? { ...previous, error: null, loading: false }
+        : { key, error: null, loading: Boolean(key) },
+    );
     if (key && !document.hidden) {
       load
         .current(controller.signal)
         .then((value) => {
           if (active && !document.hidden) {
-            setResolved({ key, epoch });
-            setData(value);
-            setLoading(false);
+            setState({ key, data: value, error: null, loading: false });
           }
         })
         .catch((error) => {
           if (active && error?.name !== "AbortError") {
-            setResolved({ key, epoch });
-            setData(undefined);
-            setError(
-              error instanceof ApiError
-                ? error
-                : new ApiError("INVALID_RESPONSE"),
-            );
-            setLoading(false);
+            setState({
+              key,
+              error:
+                error instanceof ApiError
+                  ? error
+                  : new ApiError("INVALID_RESPONSE"),
+              loading: false,
+            });
           }
         });
     }
     const visibility = () => {
       active = false;
-      setData(undefined);
+      setState({ key, error: null, loading: Boolean(key) });
       controller.abort();
       if (!document.hidden) reload();
     };
@@ -68,12 +71,12 @@ export function useResource<T>(
       document.removeEventListener("visibilitychange", visibility);
       window.removeEventListener("focus", focus);
     };
-  }, [key, epoch, pollMs, reload]);
-  const current = resolved?.key === key && resolved?.epoch === epoch;
+  }, [key, epoch, pollMs, reload, keepMountedOnRefresh]);
+  const current = state.key === key;
   return {
-    data: current ? data : undefined,
-    error: current ? error : null,
-    loading: Boolean(key) && (!current || loading),
+    data: current ? state.data : undefined,
+    error: current ? state.error : null,
+    loading: Boolean(key) && (!current || state.loading),
     reload,
   };
 }

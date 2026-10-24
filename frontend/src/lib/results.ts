@@ -101,14 +101,19 @@ export function useAnalysisResults() {
   const historyKey = revisionId
     ? `${scope}:career-history:${careerOffset}`
     : null;
-  const history = useResource(historyKey, async (signal) => ({
-    key: historyKey,
-    page: await api.get<Page<CareerRun>>(
-      `/api/v1/programmes/${programme.id}/career-analyses?limit=10&offset=${careerOffset}`,
-      "Page_CareerRead_",
-      signal,
-    ),
-  }));
+  const history = useResource(
+    historyKey,
+    async (signal) => ({
+      key: historyKey,
+      page: await api.get<Page<CareerRun>>(
+        `/api/v1/programmes/${programme.id}/career-analyses?limit=10&offset=${careerOffset}`,
+        "Page_CareerRead_",
+        signal,
+      ),
+    }),
+    30_000,
+    true,
+  );
   const careerPage =
     history.data?.key === historyKey ? history.data.page : undefined;
   const careerChoices = byCreatedAt(
@@ -121,36 +126,46 @@ export function useAnalysisResults() {
   const careerId = requestedCareer || careerChoices[0]?.id;
   const careerKey =
     revisionId && careerId ? `${scope}:career:${careerId}` : null;
-  const career = useResource(careerKey, async (signal) => {
-    const run = await api.get<CareerRun>(
-      `/api/v1/career-analyses/${encodeURIComponent(careerId || "")}`,
-      "CareerRead",
-      signal,
-    );
-    if (
-      run.programme_id !== programme.id ||
-      run.programme_revision_id !== revisionId
-    )
-      throw new ApiError("NOT_FOUND");
-    return {
-      key: careerKey,
-      run,
-      result: safeCareerResult(run, programme.id, revisionId),
-    };
-  });
+  const career = useResource(
+    careerKey,
+    async (signal) => {
+      const run = await api.get<CareerRun>(
+        `/api/v1/career-analyses/${encodeURIComponent(careerId || "")}`,
+        "CareerRead",
+        signal,
+      );
+      if (
+        run.programme_id !== programme.id ||
+        run.programme_revision_id !== revisionId
+      )
+        throw new ApiError("NOT_FOUND");
+      return {
+        key: careerKey,
+        run,
+        result: safeCareerResult(run, programme.id, revisionId),
+      };
+    },
+    30_000,
+    true,
+  );
   const selectedCareer =
     career.data?.key === careerKey ? career.data : undefined;
   const planHistoryKey = selectedCareer
     ? `${scope}:plans:${selectedCareer.run.id}:${planOffset}`
     : null;
-  const planHistory = useResource(planHistoryKey, async (signal) => ({
-    key: planHistoryKey,
-    page: await api.get<Page<PlanRun>>(
-      `/api/v1/career-analyses/${selectedCareer!.run.id}/action-plans?limit=10&offset=${planOffset}`,
-      "Page_PlanRead_",
-      signal,
-    ),
-  }));
+  const planHistory = useResource(
+    planHistoryKey,
+    async (signal) => ({
+      key: planHistoryKey,
+      page: await api.get<Page<PlanRun>>(
+        `/api/v1/career-analyses/${selectedCareer!.run.id}/action-plans?limit=10&offset=${planOffset}`,
+        "Page_PlanRead_",
+        signal,
+      ),
+    }),
+    30_000,
+    true,
+  );
   const planPage =
     planHistory.data?.key === planHistoryKey
       ? planHistory.data.page
@@ -168,29 +183,34 @@ export function useAnalysisResults() {
     selectedCareer && planId
       ? `${scope}:${selectedCareer.run.id}:plan:${planId}`
       : null;
-  const plan = useResource(planKey, async (signal) => {
-    const run = await api.get<PlanRun>(
-      `/api/v1/action-plans/${encodeURIComponent(planId || "")}`,
-      "PlanRead",
-      signal,
-    );
-    if (
-      run.career_run_id !== selectedCareer!.run.id ||
-      run.programme_id !== programme.id ||
-      run.programme_revision_id !== revisionId
-    )
-      throw new ApiError("NOT_FOUND");
-    return {
-      key: planKey,
-      run,
-      result: safePlanResult(
+  const plan = useResource(
+    planKey,
+    async (signal) => {
+      const run = await api.get<PlanRun>(
+        `/api/v1/action-plans/${encodeURIComponent(planId || "")}`,
+        "PlanRead",
+        signal,
+      );
+      if (
+        run.career_run_id !== selectedCareer!.run.id ||
+        run.programme_id !== programme.id ||
+        run.programme_revision_id !== revisionId
+      )
+        throw new ApiError("NOT_FOUND");
+      return {
+        key: planKey,
         run,
-        selectedCareer!.run,
-        programme.id,
-        revisionId,
-      ),
-    };
-  });
+        result: safePlanResult(
+          run,
+          selectedCareer!.run,
+          programme.id,
+          revisionId,
+        ),
+      };
+    },
+    30_000,
+    true,
+  );
   const selectedPlan = plan.data?.key === planKey ? plan.data : undefined;
   function select(kind: "career" | "plan", id: string) {
     setParams((previous) => {

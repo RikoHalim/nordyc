@@ -106,96 +106,101 @@ function ResultLabels({ run }: { run: CareerRun | PlanRun }) {
 
 function RunSelection({ state }: { state: Results }) {
   return (
-    <Card className="analysis-toolbar">
-      <div className="filter-row">
-        <label>
-          Career assessment
-          <select
-            value={state.careerId || ""}
-            onChange={(event) => state.select("career", event.target.value)}
-          >
-            <option value="">Latest on this history page</option>
-            {state.careerChoices.map((row) => (
-              <option key={row.id} value={row.id}>
-                {dateLabel(row.created_at)} · {humanise(row.status)} ·{" "}
-                {row.id.slice(0, 8)}
-              </option>
-            ))}
-            {state.careerId &&
-              !state.careerChoices.some((row) => row.id === state.careerId) && (
-                <option value={state.careerId}>
-                  Selected historical assessment
+    <details>
+      <summary>Assessment history and versions</summary>
+      <Card className="analysis-toolbar">
+        <div className="filter-row">
+          <label>
+            Career assessment
+            <select
+              value={state.careerId || ""}
+              onChange={(event) => state.select("career", event.target.value)}
+            >
+              <option value="">Latest on this history page</option>
+              {state.careerChoices.map((row) => (
+                <option key={row.id} value={row.id}>
+                  {dateLabel(row.created_at)} · {humanise(row.status)} ·{" "}
+                  {row.id.slice(0, 8)}
                 </option>
-              )}
-          </select>
-        </label>
-        <label>
-          Action plan
-          <select
-            value={state.planId || ""}
-            onChange={(event) => state.select("plan", event.target.value)}
-            disabled={!state.careerRun}
+              ))}
+              {state.careerId &&
+                !state.careerChoices.some(
+                  (row) => row.id === state.careerId,
+                ) && (
+                  <option value={state.careerId}>
+                    Selected historical assessment
+                  </option>
+                )}
+            </select>
+          </label>
+          <label>
+            Action plan
+            <select
+              value={state.planId || ""}
+              onChange={(event) => state.select("plan", event.target.value)}
+              disabled={!state.careerRun}
+            >
+              <option value="">Latest for selected assessment</option>
+              {state.planChoices.map((row) => (
+                <option key={row.id} value={row.id}>
+                  {dateLabel(row.created_at)} · {humanise(row.status)} ·{" "}
+                  {row.id.slice(0, 8)}
+                </option>
+              ))}
+              {state.planId &&
+                !state.planChoices.some((row) => row.id === state.planId) && (
+                  <option value={state.planId}>Selected historical plan</option>
+                )}
+            </select>
+          </label>
+          <button className="button secondary" onClick={state.reload}>
+            <RefreshCw size={15} aria-hidden="true" />
+            Refresh records
+          </button>
+        </div>
+        <div className="history-pagination">
+          <span>
+            Career history: {state.careerPage?.total ?? 0} stored runs across
+            revisions. Only the selected revision is shown.
+          </span>
+          <button
+            className="button quiet"
+            disabled={!state.careerOffset}
+            onClick={() => state.page("career", state.careerOffset - 10)}
           >
-            <option value="">Latest for selected assessment</option>
-            {state.planChoices.map((row) => (
-              <option key={row.id} value={row.id}>
-                {dateLabel(row.created_at)} · {humanise(row.status)} ·{" "}
-                {row.id.slice(0, 8)}
-              </option>
-            ))}
-            {state.planId &&
-              !state.planChoices.some((row) => row.id === state.planId) && (
-                <option value={state.planId}>Selected historical plan</option>
-              )}
-          </select>
-        </label>
-        <button className="button secondary" onClick={state.reload}>
-          <RefreshCw size={15} aria-hidden="true" />
-          Refresh records
-        </button>
-      </div>
-      <div className="history-pagination">
-        <span>
-          Career history: {state.careerPage?.total ?? 0} stored runs across
-          revisions. Only the selected revision is shown.
-        </span>
-        <button
-          className="button quiet"
-          disabled={!state.careerOffset}
-          onClick={() => state.page("career", state.careerOffset - 10)}
-        >
-          Previous assessments
-        </button>
-        <button
-          className="button quiet"
-          disabled={
-            !state.careerPage ||
-            state.careerOffset + 10 >= state.careerPage.total
-          }
-          onClick={() => state.page("career", state.careerOffset + 10)}
-        >
-          Older assessments
-        </button>
-        {state.planPage && (
-          <>
-            <button
-              className="button quiet"
-              disabled={!state.planOffset}
-              onClick={() => state.page("plan", state.planOffset - 10)}
-            >
-              Previous plans
-            </button>
-            <button
-              className="button quiet"
-              disabled={state.planOffset + 10 >= state.planPage.total}
-              onClick={() => state.page("plan", state.planOffset + 10)}
-            >
-              Older plans
-            </button>
-          </>
-        )}
-      </div>
-    </Card>
+            Previous assessments
+          </button>
+          <button
+            className="button quiet"
+            disabled={
+              !state.careerPage ||
+              state.careerOffset + 10 >= state.careerPage.total
+            }
+            onClick={() => state.page("career", state.careerOffset + 10)}
+          >
+            Older assessments
+          </button>
+          {state.planPage && (
+            <>
+              <button
+                className="button quiet"
+                disabled={!state.planOffset}
+                onClick={() => state.page("plan", state.planOffset - 10)}
+              >
+                Previous plans
+              </button>
+              <button
+                className="button quiet"
+                disabled={state.planOffset + 10 >= state.planPage.total}
+                onClick={() => state.page("plan", state.planOffset + 10)}
+              >
+                Older plans
+              </button>
+            </>
+          )}
+        </div>
+      </Card>
+    </details>
   );
 }
 
@@ -340,9 +345,6 @@ function Occupations({ result, path }: { result: CareerResult; path: string }) {
           eyebrow={role.taxonomy}
         >
           <Status value={role.status} />
-          <p>{role.description || "No occupation description was admitted."}</p>
-          <p>{role.mapping_basis}</p>
-          <p className="muted">{role.malaysia_applicability}</p>
           {role.measure?.value != null ? (
             <div className="measure">
               <strong>{role.measure.value}%</strong>
@@ -376,6 +378,11 @@ function Occupations({ result, path }: { result: CareerResult; path: string }) {
           <Citations citations={role.citations} evidencePath={path} />
           <details>
             <summary>Requirement details and limits</summary>
+            <p>
+              {role.description || "No occupation description was admitted."}
+            </p>
+            <p>{role.mapping_basis}</p>
+            <p className="muted">{role.malaysia_applicability}</p>
             {role.requirements?.map((row) => (
               <div key={row.relationship_id} className="detail-row">
                 <strong>{row.skill_name}</strong>
@@ -516,34 +523,39 @@ function RecommendationDetail({
         <Status value={row.evidence_sufficiency} />
         <Status value={row.review_status || "proposed"} />
       </div>
-      <p>{row.rationale}</p>
-      {career && (
-        <p>
-          Occupation contexts:{" "}
-          {career.occupations
-            ?.filter((role) => row.occupation_ids?.includes(role.occupation_id))
-            .map((role) => role.occupation_name)
-            .join(" · ") || "No reviewed occupation binding"}
-          . Target competency:{" "}
-          {career.competencies?.find(
-            (finding) => finding.skill_id === row.skill_id,
-          )?.skill_name || "Requires evidence review"}
-          .
-        </p>
-      )}
-      <p>
-        {row.course_ids?.length
-          ? `${row.course_ids.length} documented course reference(s): ${row.course_ids.map((value) => value.slice(0, 8)).join(", ")}. Inspect the linked curriculum evidence.`
-          : "A specific course binding is not documented; review the programme-level evidence."}
-      </p>
-      <h3>Minimum sufficient intervention</h3>
+      <h3>Suggested next step</h3>
       <p>{row.minimum_sufficient_intervention}</p>
-      <h3>Competency objective</h3>
-      <p>{row.competency_objective}</p>
-      <p>
-        <strong>Priority basis:</strong> {row.priority_basis}
-      </p>
       <Citations citations={row.citations} evidencePath={path} />
+      <details>
+        <summary>Why this action and which courses it concerns</summary>
+        <p>{row.rationale}</p>
+        {career && (
+          <p>
+            Occupation contexts:{" "}
+            {career.occupations
+              ?.filter((role) =>
+                row.occupation_ids?.includes(role.occupation_id),
+              )
+              .map((role) => role.occupation_name)
+              .join(" · ") || "No reviewed occupation binding"}
+            . Target competency:{" "}
+            {career.competencies?.find(
+              (finding) => finding.skill_id === row.skill_id,
+            )?.skill_name || "Requires evidence review"}
+            .
+          </p>
+        )}
+        <p>
+          {row.course_ids?.length
+            ? `${row.course_ids.length} documented course reference(s): ${row.course_ids.map((value) => value.slice(0, 8)).join(", ")}. Inspect the linked curriculum evidence.`
+            : "A specific course binding is not documented; review the programme-level evidence."}
+        </p>
+        <h3>Competency objective</h3>
+        <p>{row.competency_objective}</p>
+        <p>
+          <strong>Priority basis:</strong> {row.priority_basis}
+        </p>
+      </details>
       <details>
         <summary>Alternatives, no change and feasibility</summary>
         {row.alternatives.map((option, index) => (
@@ -769,7 +781,11 @@ function Pathways({ plan, path }: { plan: PlanResult; path: string }) {
               · {route.known_hours} known hours · {route.unknown_duration_steps}{" "}
               steps without an estimate.
             </p>
-            <p className="muted">{route.duration_basis}</p>
+            <details>
+              <summary>Effort estimate and limitations</summary>
+              <p className="muted">{route.duration_basis}</p>
+              <TextList items={route.limitations} />
+            </details>
             <ol className="pathway-timeline">
               {[...route.steps]
                 .sort((a, b) => a.position - b.position)
@@ -783,9 +799,9 @@ function Pathways({ plan, path }: { plan: PlanResult; path: string }) {
                         {humanise(step.step_type)} · proposal
                       </p>
                       <h3>{step.purpose}</h3>
-                      <p>{step.activity}</p>
                       <details>
                         <summary>Activity, dependencies and assessment</summary>
+                        <p>{step.activity}</p>
                         <p>{step.objective}</p>
                         <p>
                           <strong>Proposed assessment:</strong>{" "}
@@ -846,23 +862,24 @@ function Pathways({ plan, path }: { plan: PlanResult; path: string }) {
                   </li>
                 ))}
             </ol>
-            <h3>Documented prerequisites</h3>
-            {route.prerequisites?.length ? (
-              route.prerequisites.map((item) => (
-                <div key={item.skill_id}>
-                  <Status value={item.status || "source_supported"} />
-                  <p>{item.basis}</p>
-                  <Citations citations={item.citations} evidencePath={path} />
-                </div>
-              ))
-            ) : (
-              <p>
-                No technical prerequisite is documented; timeline order is
-                procedural review, not inferred skill mastery.
-              </p>
-            )}
-            <TextList items={route.limitations} />
-            <Citations citations={route.citations} evidencePath={path} />
+            <details>
+              <summary>Prerequisites and supporting evidence</summary>
+              {route.prerequisites?.length ? (
+                route.prerequisites.map((item) => (
+                  <div key={item.skill_id}>
+                    <Status value={item.status || "source_supported"} />
+                    <p>{item.basis}</p>
+                    <Citations citations={item.citations} evidencePath={path} />
+                  </div>
+                ))
+              ) : (
+                <p>
+                  No technical prerequisite is documented; timeline order is
+                  procedural review, not inferred skill mastery.
+                </p>
+              )}
+              <Citations citations={route.citations} evidencePath={path} />
+            </details>
           </Card>
         ))
       ) : (
@@ -895,27 +912,30 @@ function Scenarios({ plan, path }: { plan: PlanResult; path: string }) {
             eyebrow="Planning assumption"
           >
             <p>{scenario.description}</p>
-            <p>{scenario.assumption.rationale}</p>
             <p className="muted">
               {scenario.planning_horizon || "No planning horizon supplied."}
             </p>
-            {scenario.priorities.map((item) => (
-              <div key={item.recommendation_id} className="detail-row">
-                <Status value={item.priority} />
-                <p>{item.rationale}</p>
-                <TextList items={item.conditions} />
-              </div>
-            ))}
-            <h3>Supporting context</h3>
-            <Citations
-              citations={scenario.supporting_citations}
-              evidencePath={path}
-            />
-            <h3>Contradictory context</h3>
-            <Citations
-              citations={scenario.contradicting_citations}
-              evidencePath={path}
-            />
+            <details>
+              <summary>Priority choices and supporting context</summary>
+              <p>{scenario.assumption.rationale}</p>
+              {scenario.priorities.map((item) => (
+                <div key={item.recommendation_id} className="detail-row">
+                  <Status value={item.priority} />
+                  <p>{item.rationale}</p>
+                  <TextList items={item.conditions} />
+                </div>
+              ))}
+              <h3>Supporting context</h3>
+              <Citations
+                citations={scenario.supporting_citations}
+                evidencePath={path}
+              />
+              <h3>Contradictory context</h3>
+              <Citations
+                citations={scenario.contradicting_citations}
+                evidencePath={path}
+              />
+            </details>
             <details>
               <summary>Comparison dimensions and uncertainty</summary>
               <TextList items={scenario.comparison_dimensions} />
@@ -932,8 +952,11 @@ function Scenarios({ plan, path }: { plan: PlanResult; path: string }) {
           {plan.comparison.no_regret_recommendation_ids.length} shared review
           options. These counts do not measure efficacy.
         </p>
-        <TextList items={plan.comparison.dimensions} />
-        <TextList items={plan.comparison.limitations} />
+        <details>
+          <summary>Comparison details and limitations</summary>
+          <TextList items={plan.comparison.dimensions} />
+          <TextList items={plan.comparison.limitations} />
+        </details>
       </Card>
     </>
   );
@@ -970,7 +993,10 @@ function SDGs({ plan, path }: { plan: PlanResult; path: string }) {
                 </p>
               )}
               <Citations citations={item.citations} evidencePath={path} />
-              <TextList items={item.limitations} />
+              <details>
+                <summary>Evidence limitations</summary>
+                <TextList items={item.limitations} />
+              </details>
             </Card>
           ))
         ) : (
@@ -1086,16 +1112,19 @@ function Industry({ result, path }: { result: CareerResult; path: string }) {
                 .map((reference_id) => ({ reference_id }))}
               evidencePath={path}
             />
-            <TextList
-              items={
-                Array.isArray(role.ai_transformation?.limitations)
-                  ? role.ai_transformation.limitations.filter(
-                      (value): value is string => typeof value === "string",
-                    )
-                  : []
-              }
-            />
-            <TextList items={role.limitations} />
+            <details>
+              <summary>Evidence limits and study scope</summary>
+              <TextList
+                items={
+                  Array.isArray(role.ai_transformation?.limitations)
+                    ? role.ai_transformation.limitations.filter(
+                        (value): value is string => typeof value === "string",
+                      )
+                    : []
+                }
+              />
+              <TextList items={role.limitations} />
+            </details>
           </Card>
         ))
       ) : (
@@ -1142,15 +1171,18 @@ function EvidenceList({ items, path }: { items: Evidence[]; path: string }) {
               {item.observation_start || "Unknown"}
               {item.observation_end ? ` to ${item.observation_end}` : ""}
             </p>
-            <p>
-              Version {item.version_id.slice(0, 8)} · Locator {item.locator} ·{" "}
-              {humanise(item.scope)}
-            </p>
             <Citations
               citations={[{ reference_id: item.id }]}
               evidencePath={path}
             />
-            <TextList items={item.limitations} />
+            <details>
+              <summary>Source details and limitations</summary>
+              <p>
+                Version {item.version_id.slice(0, 8)} · Locator {item.locator} ·{" "}
+                {humanise(item.scope)}
+              </p>
+              <TextList items={item.limitations} />
+            </details>
           </Card>
         ))
       ) : (
@@ -1325,7 +1357,10 @@ function ActionPlan({ state, path }: { state: Results; path: string }) {
             requirement findings · {plan.evidence?.length || 0} admitted source
             pointers.
           </p>
-          <TextList items={plan.overview.limitations} />
+          <details>
+            <summary>Programme evidence limitations</summary>
+            <TextList items={plan.overview.limitations} />
+          </details>
         </Card>
       </section>
       <section className="report-section">
@@ -1370,7 +1405,10 @@ function ActionPlan({ state, path }: { state: Results; path: string }) {
           Generated status: proposed. Academic implementation is not authorised
           by generation. Inspect separate human review history for decisions.
         </Notice>
-        <TextList items={plan.limitations} />
+        <details>
+          <summary>Plan limitations</summary>
+          <TextList items={plan.limitations} />
+        </details>
         <PlanReview state={state} />
       </section>
     </article>
@@ -1494,7 +1532,26 @@ export default function IntelligencePage({ section }: { section: string }) {
         plan: <ActionPlan state={state} path={planPath} />,
         reviews: <Reviews state={state} />,
       });
-    content = sections[section] || <Empty title="Section unavailable" />;
+    content = (
+      <>
+        <section className="notice" aria-label="At a glance">
+          <div>
+            <strong>At a glance</strong>
+            <p>
+              {career.course_ids.length} recorded courses ·{" "}
+              {career.recommendations?.length || 0} proposed actions
+              {plan ? ` · ${plan.pathways?.length || 0} proposed pathways` : ""}
+              .
+            </p>
+            <p>
+              These are review proposals, not academic approval. Open details
+              and sources to see the reasoning and missing evidence.
+            </p>
+          </div>
+        </section>
+        {sections[section] || <Empty title="Section unavailable" />}
+      </>
+    );
   }
   return (
     <>

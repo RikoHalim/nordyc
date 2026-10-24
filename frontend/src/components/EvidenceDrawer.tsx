@@ -177,11 +177,14 @@ function EvidenceContent({
             </p>
           )}
           {(row.limitations || []).length > 0 && (
-            <ul className="text-list">
-              {row.limitations?.map((value, index) => (
-                <li key={index}>{value}</li>
-              ))}
-            </ul>
+            <details>
+              <summary>Source limitations</summary>
+              <ul className="text-list">
+                {row.limitations?.map((value, index) => (
+                  <li key={index}>{value}</li>
+                ))}
+              </ul>
+            </details>
           )}
         </article>
       ))}

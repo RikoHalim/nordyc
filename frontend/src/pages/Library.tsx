@@ -266,34 +266,39 @@ export default function Library() {
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
   const [create, setCreate] = useState(false);
-  const records = useResource("library", async (signal) => {
-    const [programmes, institutions] = await Promise.all([
-      api.all<Programme>("/api/v1/programmes", "Page_ProgrammeRead_", signal),
-      api.all<Institution>(
-        "/api/v1/institutions",
-        "Page_InstitutionRead_",
-        signal,
-      ),
-    ]);
-    const coverage = await Promise.all(
-      programmes.map(async (programme) => {
-        try {
-          return [
-            programme.id,
-            await api.get<Model<"CoverageRead">>(
-              `/api/v1/programmes/${programme.id}/coverage`,
-              "CoverageRead",
-              signal,
-            ),
-          ] as const;
-        } catch (error) {
-          if (signal.aborted) throw error;
-          return [programme.id, null] as const;
-        }
-      }),
-    );
-    return { programmes, institutions, coverage: new Map(coverage) };
-  });
+  const records = useResource(
+    "library",
+    async (signal) => {
+      const [programmes, institutions] = await Promise.all([
+        api.all<Programme>("/api/v1/programmes", "Page_ProgrammeRead_", signal),
+        api.all<Institution>(
+          "/api/v1/institutions",
+          "Page_InstitutionRead_",
+          signal,
+        ),
+      ]);
+      const coverage = await Promise.all(
+        programmes.map(async (programme) => {
+          try {
+            return [
+              programme.id,
+              await api.get<Model<"CoverageRead">>(
+                `/api/v1/programmes/${programme.id}/coverage`,
+                "CoverageRead",
+                signal,
+              ),
+            ] as const;
+          } catch (error) {
+            if (signal.aborted) throw error;
+            return [programme.id, null] as const;
+          }
+        }),
+      );
+      return { programmes, institutions, coverage: new Map(coverage) };
+    },
+    30_000,
+    true,
+  );
   if (records.loading) return <Loading label="Loading accessible curricula" />;
   if (records.error)
     return <ErrorState error={records.error} retry={records.reload} />;
