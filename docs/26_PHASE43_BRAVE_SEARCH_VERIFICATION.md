@@ -98,6 +98,12 @@ The PostgreSQL test's fictional programme deliberately simulates the non-synthet
 
 The baseline is **770 → 788** passing tests, **13 → 14** PostgreSQL cases. One existing Starlette/httpx deprecation warning remains. A new fixture-import setup error was corrected before the final complete pass. Mocked tests do not close the live source-admission gate.
 
+## Publication and workspace boundaries
+
+The tested implementation, 18 additional regressions and reviewed documentation were published on **25 October 2026** to **`codex/replit-managed-ai`** as **[ef2b9a83db6533dc3130951895f486a0d8aba79c](https://github.com/RikoHalim/shift-os/commit/ef2b9a83db6533dc3130951895f486a0d8aba79c)**. The remote SHA was verified. The staged 15-file review passed whitespace, credential-pattern and private-path checks; **71** local Markdown links resolved. Credentials, original files, raw reports, database files and audit receipts were excluded. This documentation-only follow-up records the implementation publication without implying that live source admission succeeded.
+
+The root Windows Gemini checkout was untouched. GitHub main remained **`cb299325dff989a4922aefaac317cb89c0dc1193`**, Gemini remained **`a07d039ad38712fb5b5ce953077c0e279349a877`**. Reviewed public source/docs were copied to the correct Replit development checkout only after matching baseline or reviewed-content hashes, allowing Windows line endings, with backups before writing. Native Replit checkpoint history was not reset, merged or pushed over GitHub. No public deployment occurred.
+
 ## Reproduce safely and remaining gates
 
 ```bash
