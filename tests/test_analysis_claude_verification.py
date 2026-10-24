@@ -18,6 +18,18 @@ from shiftos.services.analysis.providers import ClaudeProvider, ProviderError
 from shiftos.services.analysis.validation import offline_result, validate_result
 
 
+@pytest.fixture(autouse=True)
+def forbid_external_http(monkeypatch):
+    def forbidden(*args, **kwargs):
+        pytest.fail("Synthetic verification tests cannot make external HTTP requests")
+
+    async def async_forbidden(*args, **kwargs):
+        pytest.fail("Synthetic verification tests cannot make external HTTP requests")
+
+    monkeypatch.setattr(httpx.HTTPTransport, "handle_request", forbidden)
+    monkeypatch.setattr(httpx.AsyncHTTPTransport, "handle_async_request", async_forbidden)
+
+
 @pytest.fixture
 def configured(tmp_path):
     policy = tmp_path / "synthetic_test_permissions.json"
@@ -39,6 +51,7 @@ def configured(tmp_path):
     )
     return Settings(
         _env_file=None,
+        analysis_model_provider="gemini",  # Explicit unselected-Claude test baseline only.
         claude_enabled=True,
         analysis_external_processing_allowed=True,
         replit_anthropic_api_key="SYNTHETIC_managed_test_credential",

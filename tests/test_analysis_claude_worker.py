@@ -32,7 +32,11 @@ def forbid_external_http(monkeypatch):
     def forbidden(*args, **kwargs):
         raise AssertionError("Synthetic provider tests cannot make external HTTP requests")
 
+    async def async_forbidden(*args, **kwargs):
+        raise AssertionError("Synthetic provider tests cannot make external HTTP requests")
+
     monkeypatch.setattr(httpx.HTTPTransport, "handle_request", forbidden)
+    monkeypatch.setattr(httpx.AsyncHTTPTransport, "handle_async_request", async_forbidden)
 
 
 def synthetic_settings(tmp_path, **changes):
@@ -43,6 +47,7 @@ def synthetic_settings(tmp_path, **changes):
     values = {
         "_env_file": None,
         "app_env": "test",
+        "analysis_model_provider": "gemini",  # Explicit mocked fixture baseline, overridable below.
         "analysis_permissions_path": permission_path,
         "analysis_write_token": "synthetic-claude-worker-access",
         "analysis_external_processing_allowed": True,
@@ -135,11 +140,10 @@ def assert_complete_synthetic_findings(session, run):
 
 
 @pytest.mark.parametrize("selected", ["gemini", "replit_claude"])
-def test_default_gemini_and_explicit_claude_selection_preserve_actual_identity(
+def test_explicit_mocked_provider_selection_preserves_actual_identity(
     database, session, monkeypatch, tmp_path, selected
 ):
-    changes = {"analysis_model_provider": selected} if selected == "replit_claude" else {}
-    settings = synthetic_settings(tmp_path, **changes)
+    settings = synthetic_settings(tmp_path, analysis_model_provider=selected)
     calls = synthetic_models(monkeypatch)
     run, job = process_live(database, session, settings)
     assert calls == [selected]
@@ -213,7 +217,7 @@ def test_safe_http_status_and_latency_are_persisted(database, session, monkeypat
     assert response["http_status"] == 200 and response["duration_ms"] == 123.5
 
 
-def test_fallback_flag_never_switches_default_gemini_to_claude(
+def test_fallback_flag_never_switches_configured_mocked_gemini_to_claude(
     database, session, monkeypatch, tmp_path
 ):
     calls = synthetic_models(monkeypatch, gemini=ProviderError("provider_unavailable"))
