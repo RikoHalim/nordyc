@@ -37,8 +37,10 @@ def settings(**overrides):
 
 def gemini_reply(text='{"synthetic":true}', finish="STOP"):
     return {
-        "modelVersion": "gemini-synthetic-test",
-        "candidates": [{"finishReason": finish, "content": {"parts": [{"text": text}]}}],
+        "id": "synthetic-interaction-id",
+        "model": "gemini-3.1-flash-lite",
+        "status": "completed" if finish == "STOP" else "incomplete",
+        "steps": [{"type": "model_output", "content": [{"type": "text", "text": text}]}],
     }
 
 
@@ -55,15 +57,15 @@ def test_gemini_fixed_origin_header_schema_and_untrusted_data_boundary():
         )
     assert result == {"synthetic": True}
     request = seen[0]
-    assert (
-        str(request.url)
-        == "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent"
-    )
+    assert str(request.url) == "https://generativelanguage.googleapis.com/v1beta/interactions"
     assert SECRET not in str(request.url)
     assert request.headers["x-goog-api-key"] == SECRET
     body = json.loads(request.content)
-    assert body["generationConfig"]["responseJsonSchema"] == {"type": "object"}
-    assert "untrusted data" in body["systemInstruction"]["parts"][0]["text"]
+    assert body["response_format"][0]["schema"] == {"type": "object"}
+    assert "untrusted data" in body["system_instruction"]
+    assert body["model"] == "gemini-3.1-flash-lite"
+    assert body["generation_config"]["thinking_level"] == "medium"
+    assert body["store"] is body["background"] is body["stream"] is False
     assert "tools" not in body
 
 
@@ -146,8 +148,8 @@ def test_temporary_failure_retries_same_model_with_bounded_attempts():
     "payload",
     [
         {},
-        {"candidates": []},
-        {"candidates": ["invalid"]},
+        {**gemini_reply(), "steps": []},
+        {**gemini_reply(), "steps": ["invalid"]},
         gemini_reply("not JSON"),
         gemini_reply("[]"),
         gemini_reply('{"invalid":NaN}'),
@@ -245,5 +247,7 @@ def test_total_provider_deadline_is_checked_during_response_reading():
 
     with httpx.Client(transport=httpx.MockTransport(handler)) as client:
         with pytest.raises(ProviderError) as error:
-            GeminiProvider(settings(), client, monotonic=lambda: clock[0]).generate({}, {})
+            GeminiProvider(
+                settings(gemini_timeout_seconds=20), client, monotonic=lambda: clock[0]
+            ).generate({}, {})
     assert error.value.code == "provider_deadline"

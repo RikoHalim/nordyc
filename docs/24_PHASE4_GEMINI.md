@@ -1,227 +1,177 @@
-# Phase 4 direct Gemini — isolated development and verification
+# Phase 4 — direct Gemini 4 Argon
 
-Branch **`feature/phase4-gemini`**, based on published `main`
-**`164255d52b5ceb005647ec670506f10cb5054b10`**, fetched/inspected on **24 October 2026**.
-Phase 4 was already published as `b586194`, Phase 4.1 Claude implementation as
-`ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb`; the base includes its later publication record.
-The working tree was clean; no stash/reset/overwriting was needed. The teammate's
-`feature/phase4-replit-claude` was absent from the remote listing at inspection and
-was not created/modified/merged/deleted. [STATUS](../STATUS.md) records Gemini's
-implementation commit and publication result. Only this Gemini branch is authorized
-for publication; stop before merging, Phase 5/6, frontend or deployment.
+Current MVP decision, **24 October 2026**: **Gemini 4 Argon is primary AI,
+Google Gemini API is the direct provider, Brave Search is external research, and
+Replit remains the official future hosting platform.** Replit AI Integrations and
+managed Claude are discontinued for this MVP. Legacy code/tests remain for
+compatibility; no Claude development resumes. Development stays in Codex/VS Code;
+React/TypeScript and deployment remain future work.
 
-Published implementation:
-[`c95384004e9563f3f00e2d69d8936aef7ec0956b`](https://github.com/RikoHalim/shift-os/commit/c95384004e9563f3f00e2d69d8936aef7ec0956b).
-After push, the remote feature ref matched exactly and `main` remained at the shared
-base. A documentation-only publication record can be the later tip of
-[`feature/phase4-gemini`](https://github.com/RikoHalim/shift-os/tree/feature/phase4-gemini).
+Work continues on **feature/phase4-gemini**, starting at published
+`63a7aff5727baa7c1849ce7835c929928dae6c95`. The initial tree was clean. Main,
+teammate branches, academic schemas, citation rules, workforce calculations and
+migrations are preserved. [STATUS](../STATUS.md) records current checks/publication;
+the earlier 794-test/16-PostgreSQL result is historical.
 
-## Actual acceptance result
+## Actual live status and credential handling
 
-**Implemented and offline verified; live Gemini verification is BLOCKED.**
-No `GEMINI_API_KEY`/`GEMINI_MODEL` is configured in the process and no local `.env`
-exists. Enable/external-processing settings retain false defaults. Actual preflight
-and explicit `verify-gemini --live` both returned blocked, exit 1, **zero requests**.
-The bounded ESCO source permission passes. This is a configuration blocker, not
-attempted authentication or an observed Google outage.
+**Live Gemini: BLOCKED. Live worker/PostgreSQL/API: BLOCKED pending isolated success.**
+There is no local .env; Gemini key/model are absent and enable/processing flags are
+false. Zero-call preflight confirms these blockers; ESCO source permission passes.
+**No live Gemini, Brave or Claude request was attempted.** Project access, billing
+and quotas cannot be established without privately configured credentials/project
+access. Actual model, tokens, live latency and observed billing remain unavailable.
 
-Actual model **none observed**; actual input/output/thought tokens, live latency and
-observed cost **unavailable**. No zero-dollar bill or estimated charge is represented
-as observed cost. Claude and Brave remain independently live-unverified. This does
-not establish curriculum accuracy or provider superiority.
+A credential appeared in chat. Its value was not copied into configuration, source,
+requests, logs, reports or documentation. Revoke/replace exposed keys and enter the
+replacement only in ignored local .env or, later, Replit Secrets. Do not paste
+credentials into chat or reuse the exposed value.
 
-## Model, protocol and limits
+## Official compatibility and migration
 
-Official Google documentation checked on 24 October 2026 lists these identifiers:
+Google's [Argon model page](https://ai.google.dev/gemini-api/docs/models/gemini-4-argon)
+documents stable reasoning/structured-output support. The
+[Argon migration guidance](https://ai.google.dev/gemini-api/docs/latest-model)
+recommends reviewing thinking, token limits and timeouts, removing obsolete sampling/
+explicit-cache settings, and documents no free-tier access. It lists a unified
+1,048,576-token window and synchronous output up to 65,536. Public documentation
+does not prove this project's access or remaining quota.
 
-| Model | Documented selection/status |
+The [Interactions overview](https://ai.google.dev/gemini-api/docs/interactions)
+recommends Interactions and also says generateContent remains supported. This is
+a deliberate migration, not a claim that the old endpoint stopped working. The
+[API reference](https://ai.google.dev/api/interactions-api) and
+[migration mapping](https://ai.google.dev/gemini-api/docs/migrate-to-interactions)
+describe a different envelope. We follow the current model-guide/reference
+/v1beta/interactions endpoint. Some migration examples show /v1beta2; no automatic
+endpoint probing/fallback or paid request resolves documentation inconsistencies.
+Actual account/protocol acceptance remains pending.
+
+| Contract | Implemented behavior |
 |---|---|
-| `gemini-4-argon` | Stable flagship reasoning model; preferred quality-first candidate. Account access is unverified. |
-| `gemini-3.8-flash` | Stable thinking/structured-output alternative, requiring explicit selection. |
-| `gemini-3.1-pro-preview` | Preview reasoning alternative; preview lifecycle/quotas need separate consideration. |
-| `gemini-2.5-pro` | Older stable thinking/structured-output model; recheck lifecycle/project availability before use. |
+| Endpoint/auth | POST https://generativelanguage.googleapis.com/v1beta/interactions; x-goog-api-key header from GEMINI_API_KEY |
+| Input | Explicit model, serialized admitted packet as input, unchanged system_instruction |
+| Reasoning | generation_config.thinking_level: medium by default, configurable low/medium/high; thinking_summaries=none |
+| Structure | response_format=[{type: text, mime_type: application/json, schema: original Pydantic schema}] |
+| State/tools | store=false, background=false, stream=false, tool_choice=none; no tools, agent, prior interaction, polling or continuation |
+| Output | Require status=completed; join text from model_output steps; discard thought steps; reject tools/media/unexpected steps/incomplete status |
+| Identity | Require a safe returned model equal to the requested code; different models fail visibly |
+| Usage | Map usage.total_input_tokens, total_output_tokens, total_thought_tokens, total_cached_tokens and total_tokens into existing safe usage names |
+| Errors | Fixed sanitized codes, bounded requests/bytes/time; available model/usage retained on rejected output |
 
-Sources: [model catalogue](https://ai.google.dev/gemini-api/docs/models),
-[Argon specification](https://ai.google.dev/gemini-api/docs/models/gemini-4-argon),
-[Argon API changes](https://ai.google.dev/gemini-api/docs/latest-model),
-[Flash specification](https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash),
-[Pro preview](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview),
-[older stable Pro](https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro).
-These are documentation observations, not successful model requests. There is no
-automatic model substitution or Gemini-to-Claude fallback.
+Returned model is the API-reported identity, not a separately resolved backend-version
+identifier. Old candidates/parts/camelCase responses are not treated as Interactions
+results. Original Pydantic and quote/scope/rights/course-coverage validation remain
+mandatory. No academic schema is relaxed. Google's
+[structured-output guide](https://ai.google.dev/gemini-api/docs/structured-output)
+documents schema subset/complexity limits; actual service acceptance remains unproven.
 
-The existing `httpx` adapter uses direct REST, not Replit AI Integrations:
-`POST https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent`.
-Authentication uses the server-side `x-goog-api-key` header, never a URL parameter.
-Use a project-authorized key restricted appropriately to the Gemini API. This
-application deliberately reads `GEMINI_API_KEY`, not SDK key discovery or Replit
-credentials. See [Google key setup](https://ai.google.dev/gemini-api/docs/api-key)
-and [GenerateContent REST](https://ai.google.dev/api/generate-content).
+## Required local configuration
 
-Requests use `responseMimeType=application/json`, the unchanged
-`ProgrammeResult.model_json_schema()` as `responseJsonSchema`, and `candidateCount=1`.
-Original Pydantic and citation/rights/scope/course-coverage validation always run
-locally. Google's schema subset/complexity is still a live compatibility gate;
-do not relax the academic schema to make a request succeed. See
-[structured outputs](https://ai.google.dev/gemini-api/docs/structured-output).
-The adapter now requires an actual returned Gemini model and a complete `STOP`
-response, rejects malformed/tool parts and unexpected candidate counts, and discards
-thought text. Returned model/whitelisted tokens survive invalid/incomplete output
-where available. No tools, external grounding, sampling override, training or
-additional agent is introduced. Claude/Brave adapters are unchanged.
-
-Google documents Argon's unified 1,048,576-token context and default synchronous
-maximum output of 65,536. SHIFT//OS uses narrower bounds:
-
-| Limit | Application behavior |
-|---|---|
-| Request/response bytes | 1,000,000 each |
-| Output tokens | `GEMINI_MAX_OUTPUT_TOKENS`: 1–16,384; isolated verification caps at 4,096 |
-| HTTP attempts | Configurable 1–3 per generation; verification forces **one** |
-| Timeout | Configurable 1–60 seconds, default 20; explicitly use 60 for a reasoning-model check |
-| Retries | Bounded 429/5xx/HTTP retries, backoff/Retry-After and deadline; none in the isolated helper |
-| Worker | Existing 20-course batches, ten-batch maximum, one validation repair, 600-second budget; unprocessed courses abstain |
-
-Argon thinking and visible output share the token cap; 4,096 may truncate a response.
-Inspect failure/usage before authorizing another request; do not auto-loop or
-silently raise the verification cap. Worker repair is separate from the one-request
-helper. Byte limits are not token predictions. RPM/TPM/RPD depend on project/model/
-tier, not key count; inspect the project's [active rate limits](https://ai.google.dev/gemini-api/docs/rate-limits).
-No account quota/credit entitlement is assumed. A consumer Google AI subscription
-does not establish API credits; inspect project [billing](https://ai.google.dev/gemini-api/docs/billing)
-and [current API pricing](https://ai.google.dev/gemini-api/docs/pricing).
-
-## Privacy and local configuration
-
-The helper sends one fictional course and one existing attributed, permitted ESCO
-excerpt. Unknown/restricted sources remain denied by the existing source policy;
-private uploads/restricted MQA documents are excluded. Public access alone is not
-processing permission. Google documents different paid/unpaid data-use terms:
-unpaid inputs may support improvement/human review; paid prompts are not used for
-product improvement under the stated terms, with limited abuse-detection processing.
-Review actual project status, applicable [terms](https://ai.google.dev/gemini-api/terms)
-and institutional policy before enabling processing. An ESCO grant does not approve
-all future uploaded documents.
-
-Install locked dependencies as in README. Keep credentials in environment variables
-or ignored `.env`, never in chat/Git. For a later authorized check, set locally:
+Inspect .env.example and configure these in ignored .env yourself:
 
 ```dotenv
 ANALYSIS_MODEL_PROVIDER=gemini
 GEMINI_ENABLED=true
+GEMINI_API_KEY=<PRIVATE_REPLACEMENT_KEY_SET_LOCALLY>
 GEMINI_MODEL=gemini-4-argon
-GEMINI_MAX_OUTPUT_TOKENS=16384
+GEMINI_THINKING_LEVEL=medium
+GEMINI_MAX_OUTPUT_TOKENS=32768
+GEMINI_TIMEOUT_SECONDS=180
 ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=true
-ANALYSIS_PROVIDER_TIMEOUT_SECONDS=60
 ANALYSIS_PROVIDER_MAX_ATTEMPTS=1
 ANALYSIS_GEMINI_FALLBACK_ENABLED=false
-RESEARCH_ENABLED=false
 ANALYSIS_PERMISSIONS_PATH=data/analysis_permissions.json
+CLAUDE_ENABLED=false
+RESEARCH_ENABLED=false
 ```
 
-Configure `GEMINI_API_KEY` privately and verify API billing/quota separately. Inspect
-configuration first; this constructs neither a provider nor a database:
+Use a real authorized replacement credential, not the placeholder. Keep DATABASE_URL
+valid for PostgreSQL/psycopg settings; no database is constructed by preflight/the
+isolated helper. Set a private nonempty ANALYSIS_WRITE_TOKEN for later protected
+API reads/writes. Source permission is independent; a key does not grant rights.
+
+In the actual Google project, verify Argon access, active paid billing and
+[project quotas](https://ai.google.dev/gemini-api/docs/rate-limits) before spending.
+A consumer Google AI subscription does not establish API credits; review
+[API billing](https://ai.google.dev/gemini-api/docs/billing) and
+[pricing](https://ai.google.dev/gemini-api/docs/pricing). Prices are not observed charges.
+
+[Google data-use terms](https://ai.google.dev/gemini-api/terms) differ for paid/unpaid
+services. Store=false opts out of Interactions history storage; it does not replace
+provider abuse-monitoring/retention terms or source/privacy approval. The helper
+includes one fictional course and the permitted, attributed ESCO excerpt, excluding
+private real curricula and restricted MQA documents.
+
+## Bounded verification
+
+First run local inspection; it constructs no provider/database and makes zero requests:
 
 ```powershell
-python -m shiftos.cli verify-gemini --report data/local/gemini-preflight.json
+python -m shiftos.cli verify-gemini --report data/local/argon-preflight.json
 ```
 
-When configuration/processing permission is ready, run **once**:
+Stop when blocked. Once credentials, source permission, project access and billing
+are ready, one explicitly authorized call is:
 
 ```powershell
-python -m shiftos.cli verify-gemini --live --report data/local/gemini-verification.json
+python -m shiftos.cli verify-gemini --live --report data/local/argon-verification.json
 ```
 
-There is at most one transport attempt, no repair/fallback/search/database call.
-Exit 0 requires actual model identity, one request, schema/grounding/insufficiency
-validation, at least one exact supported citation, and observed input/output tokens.
-Reports include thought/total/cache tokens when supplied, provider latency, packet/
-schema/instruction/result hashes and request bounds. Costs remain unknown without
-billing evidence. Fixed error codes replace raw rejected output. A report-export
-failure preserves outcome/usage in stdout and returns exit 1. Reports remain ignored
-under `data/local`. Preflight readiness is not proof of account/model availability.
+The helper forces **one HTTP attempt**, no repair/search/other provider, and at most
+**32,768 total thinking/output tokens**, further limited by GEMINI_MAX_OUTPUT_TOKENS.
+The old 4,096 cap was raised because Argon migration guidance recommends at least
+32,768 when an application previously used smaller budgets. This is a ceiling,
+not claimed consumption. Academic criteria and the exact one-course ESCO packet/
+UUIDs are unchanged. Its shared packet builder remains in the legacy Claude helper;
+importing that input fixture never constructs/calls Claude.
 
-## Backend, tests and live follow-up
+Normal output bounds: 1–65,536, default 32,768. GEMINI_TIMEOUT_SECONDS: 1–300, default
+180. The worker's remaining 600-second deadline also applies; byte limits remain
+1,000,000 per request/response. Normal worker transport retries (1–3) and one
+validation repair are separate from the one-attempt helper. The timeout override
+does not change Claude/Brave timeout behavior. This synchronous 180-second bound is
+deliberately narrower than Google's long/hard-prompt guidance; difficult batches
+may time out and remain PARTIAL rather than run indefinitely.
 
-FastAPI routes, academic schemas and PostgreSQL tables are unchanged. No migration
-is needed; existing revisions 0001–0005 remain the complete history. Existing JSON
-manifests persist actual model/token/request/validation outcomes. Network work stays
-in the separate worker, outside HTTP handlers.
+Verification requires actual model identity, one request, original schema/grounding,
+at least one supported citation, syllabus confirmation, all five dimensions
+insufficient on this title-only/legacy case, and observed input/output tokens.
+Reports include available thought/cache/total tokens, latency, hashes and bounds.
+Cost stays unknown without billing evidence. Export failure preserves safe activity/
+usage in stdout. Diagnose failure before authorizing another paid request.
 
-New PostgreSQL tests exercise the actual Gemini adapter with mocked HTTP:
-three-course synthetic Accounting inventory → internal academic/AI/workforce records
-→ sufficiency/rights → structured request → schema/citation validation → deterministic
-programme summary/unknowns → committed findings/usage → protected FastAPI reads.
-An independent connection verifies committed state; replay makes no further call.
-Authentication/citation failures preserve all courses as PARTIAL/insufficient results.
-These are backend/transport tests, **not live Gemini acceptance**. Existing genuine
-ESCO-pack retrieval/provenance tests remain in the complete suite.
+## Backend verification and remaining gates
 
-Measured on Windows/Python 3.13.13 with disposable loopback PostgreSQL 16.15:
+[STATUS](../STATUS.md) records current measured tests. Real PostgreSQL cases use the
+actual Interactions adapter with mocked HTTP: synthetic Accounting inventory,
+internal academic/AI/workforce admission, sufficiency gaps, schema/citations,
+deterministic programme insights, committed findings/usage/configuration/latency,
+protected API and no-call replay. An independent connection verifies commits.
+Authentication/citation failures preserve every course as PARTIAL/insufficient.
+Existing genuine ESCO provenance cases remain. These checks establish software
+behavior, not live provider acceptance or academic accuracy.
 
-| Check | Actual result |
-|---|---|
-| Existing provider/Claude targeted regressions | 125 passed |
-| New Gemini helper/CLI targeted checks | 35 passed |
-| New Gemini PostgreSQL/worker/API checks | 3 passed, mocked HTTP only |
-| Separate complete PostgreSQL integration selection | **16 passed**, 778 deselected, zero failures/skips; 32.28s |
-| Complete PostgreSQL-enabled pytest suite | **794 passed**, zero failed/errors/skipped; **94.39s**, one existing Starlette/httpx deprecation warning |
-| Baseline comparison | Original Phase 4.1 754; publication baseline 756; Gemini adds 38 cases |
-| Ruff lint/format, dependency integrity, Alembic SQL/heads, whitespace | PASS; existing five revisions, no schema/API change |
-| Actual Gemini preflight and guarded `--live` | BLOCKED, exit 1, 0 requests; missing key/model and false enable/processing gates |
-| Actual Claude / Gemini / Brave requests | **0 / 0 / 0** |
+Existing manifest JSON now also admits sanitized Gemini API/thinking/token-budget/
+timeout/latency metadata. No table, route or academic schema changes/migration are
+needed; existing revisions 0001–0005 and deterministic workforce calculations remain.
 
-Commands (set `TEST_DATABASE_URL` to a disposable schema-capable PostgreSQL account):
+After isolated live success, use a new idle verification PostgreSQL database with
+synthetic academic records and permitted imports. The historical
+[one-course dataset preparation](23_PHASE41_REPLIT_CLAUDE.md#separate-worker--postgresql--protected-api-proof)
+can be reused as data preparation only: use current Gemini settings and
+inspect_gemini_configuration, not managed Anthropic setup. Submit with a new
+idempotency key, run the separate worker, confirm its exact job ID, then retrieve
+the run/every course through protected endpoints. Require gemini_direct, actual
+Argon model, supported quotes/rights/uncertainty, usage/configuration and committed
+rows. Isolated success alone does not prove this live backend gate.
 
-```powershell
-python -m pytest -q tests/test_analysis_gemini_integration.py --basetemp=.pytest-gemini-pg
-python -m pytest -q --basetemp=.pytest-gemini-complete --tb=short --junitxml=data/local/gemini-tests.xml
-python -m ruff check .
-python -m ruff format --check .
-python -m pip check
-python -m alembic heads
-python -m alembic upgrade head --sql
-git diff --check
-```
+Brave remains independent and pending without BRAVE_SEARCH_API_KEY and explicit
+RESEARCH_ENABLED approval. Respect acquisition/source policies and subscription
+rights for bounded search → registered original → verified import/query → citation.
+Snippets/model memory are never evidence; private uploads never enter public search.
 
-Live worker/PostgreSQL/API acceptance remains **blocked until the isolated request
-succeeds**. Then use a new idle verification database and the same one-course ESCO
-copy/inventory from [the Phase 4.1 backend proof](23_PHASE41_REPLIT_CLAUDE.md#separate-worker--postgresql--protected-api-proof).
-Select Gemini, replace its Claude preflight with `inspect_gemini_configuration`, use
-a new Gemini idempotency key and verify `model_provider=gemini_direct`, actual model/
-usage and all citations through protected reads. Its Bash here-doc examples require
-PowerShell here-strings on Windows. Keep fixture IDs/source text unchanged for
-comparison; historical `claude`/`replit` fixture labels do not select a provider.
-Inspect worker/validation failures before retrying and reconcile billing separately.
-
-Brave remains independent and live-unverified: search → permitted registered
-original → verified import/query → cited finding is still a separate acceptance
-gate. No Brave request occurred. Source permissions, private-upload isolation,
-SSRF/robots/research limits and deterministic workforce calculations are preserved.
-
-## Fair comparison with Claude
-
-Gemini deliberately imports the unchanged Phase 4.1 packet builder/permission check,
-including original UUIDs; it never invokes Claude. Both use the same source excerpt,
-`MODEL_SYSTEM_INSTRUCTION`, `ProgrammeResult`, `validate_result`, one course/one
-request and the 4,096-output-token cap. Use identical timeout/policy and compare
-canonical packet hashes. Preserve the legacy edition, unknown publication date,
-title-only constraints and missing workforce/AI capability evidence. Academic
-criteria and the Claude adapter/helper are unchanged.
-
-| Criterion | Shared assessment |
-|---|---|
-| Evidence fidelity | Human review of supplied-evidence support; no accuracy percentage from one case |
-| Unsupported claims | Reject invented IDs/quotes, extra fields, altered inventory, taught-content claims and academic verdicts |
-| Citations | Exact admitted ID/quote/scope/rights, with at least one supporting citation exercised |
-| Structure | Original Pydantic and grounding rules pass without repair in the isolated request |
-| Uncertainty | All five dimensions remain insufficient for this title-only/legacy-benchmark case; syllabus confirmation retained |
-| Latency | Same CLI wall-time measurement and timeout for both providers; Gemini provider-only timing is supplemental |
-| Tokens | Observed input/output/reasoning/cache/total counts, missing values and provider-accounting differences explicit |
-| Cost | Exact-run project/Replit billing observation; any later list-price estimate must be labelled separately |
-
-Gemini additionally requires input/output usage to call verification complete; this
-is an observability gate, not different academic grading. Apply the same usage and
-insufficiency checks to Claude reports during comparison even though its published
-helper does not expose those explicit flags. No live ranking, latency/cost comparison
-or Claude live-success claim is available. Stop after Gemini branch publication.
+The [Replit hosting plan](25_REPLIT_HOSTING_PLAN.md) assesses future compatibility.
+No deployment, frontend, merge or Phase 5/6 work occurs here. Close Phase 4 live
+acceptance before treating Phase 5 as unblocked. Syllabus, currentness, coverage,
+occupation-identity and organiser-waiver limits remain.

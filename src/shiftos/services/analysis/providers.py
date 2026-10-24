@@ -14,6 +14,7 @@ import httpx
 from shiftos.core.config import normalize_replit_anthropic_base_url
 
 GEMINI_ORIGIN = "https://generativelanguage.googleapis.com"
+GEMINI_INTERACTIONS_ENDPOINT = f"{GEMINI_ORIGIN}/v1beta/interactions"
 BRAVE_ENDPOINT = "https://api.search.brave.com/res/v1/web/search"
 MAX_REQUEST_BYTES = 1_000_000
 MAX_RESPONSE_BYTES = 1_000_000
@@ -51,6 +52,7 @@ class ProviderError(Exception):
         "provider_response_too_large": "The provider response exceeded its byte limit.",
         "provider_request_invalid": "The provider input does not meet the bounded contract.",
         "model_output_incomplete": "The model did not finish a complete structured response.",
+        "provider_model_mismatch": "The provider returned a different model than requested.",
     }
 
     def __init__(self, code: str):
@@ -118,6 +120,7 @@ class _JsonProvider:
         headers: dict,
         body: dict | None = None,
         params: dict | None = None,
+        timeout_seconds: int | None = None,
     ) -> dict[str, Any]:
         try:
             encoded = (
@@ -129,7 +132,7 @@ class _JsonProvider:
             raise ProviderError("provider_request_invalid")
         deadline = min(
             self.deadline or float("inf"),
-            self.monotonic() + self.settings.analysis_provider_timeout_seconds,
+            self.monotonic() + (timeout_seconds or self.settings.analysis_provider_timeout_seconds),
         )
         owned = self.client is None
         client = self.client or httpx.Client(trust_env=False)
@@ -204,10 +207,20 @@ class _JsonProvider:
 class GeminiProvider(_JsonProvider):
     def generate(self, packet: dict, response_schema: dict) -> dict:
         started = self._begin_generation("gemini_direct", self.settings.gemini_model)
+        began = self.monotonic()
+        self.last_response_metadata.update(
+            api="interactions",
+            thinking_level=self.settings.gemini_thinking_level,
+            max_output_tokens=self.settings.gemini_max_output_tokens,
+            timeout_seconds=self.settings.gemini_timeout_seconds,
+        )
         try:
             return self._generate(packet, response_schema)
         finally:
             self.last_response_metadata["request_count"] = self.request_attempts - started
+            self.last_response_metadata["latency_seconds"] = round(
+                max(0.0, self.monotonic() - began), 6
+            )
 
     def _generate(self, packet: dict, response_schema: dict) -> dict:
         if not self.settings.gemini_enabled:
@@ -223,62 +236,82 @@ class GeminiProvider(_JsonProvider):
             raise ProviderError("model_not_configured")
         try:
             serialized = json.dumps(packet, ensure_ascii=False, allow_nan=False)
-        except (TypeError, ValueError, OverflowError):
+        except (TypeError, ValueError, OverflowError, RecursionError):
             raise ProviderError("provider_request_invalid") from None
         result = self._request(
             "POST",
-            f"{GEMINI_ORIGIN}/v1beta/models/{self.settings.gemini_model}:generateContent",
+            GEMINI_INTERACTIONS_ENDPOINT,
             headers={
                 "x-goog-api-key": self.settings.gemini_api_key.get_secret_value(),
                 "Content-Type": "application/json",
                 "Accept": "application/json",
             },
             body={
-                "systemInstruction": {"parts": [{"text": MODEL_SYSTEM_INSTRUCTION}]},
-                "contents": [{"role": "user", "parts": [{"text": serialized}]}],
-                "generationConfig": {
-                    "responseMimeType": "application/json",
-                    "responseJsonSchema": response_schema,
-                    "maxOutputTokens": self.settings.gemini_max_output_tokens,
-                    "candidateCount": 1,
+                "model": self.settings.gemini_model,
+                "system_instruction": MODEL_SYSTEM_INSTRUCTION,
+                "input": serialized,
+                "generation_config": {
+                    "max_output_tokens": self.settings.gemini_max_output_tokens,
+                    "thinking_level": self.settings.gemini_thinking_level,
+                    "thinking_summaries": "none",
+                    "tool_choice": "none",
                 },
+                "response_format": [
+                    {"type": "text", "mime_type": "application/json", "schema": response_schema}
+                ],
+                "store": False,
+                "background": False,
+                "stream": False,
             },
+            timeout_seconds=self.settings.gemini_timeout_seconds,
         )
         self._response_metadata(
-            result.get("modelVersion"),
-            result.get("usageMetadata"),
+            result.get("model"),
+            result.get("usage"),
             {
-                "promptTokenCount": "input_tokens",
-                "candidatesTokenCount": "output_tokens",
-                "cachedContentTokenCount": "cache_read_input_tokens",
-                "thoughtsTokenCount": "thought_tokens",
-                "totalTokenCount": "total_tokens",
+                "total_input_tokens": "input_tokens",
+                "total_output_tokens": "output_tokens",
+                "total_cached_tokens": "cache_read_input_tokens",
+                "total_thought_tokens": "thought_tokens",
+                "total_tokens": "total_tokens",
             },
         )
         actual_model = self.last_response_metadata["actual_model"]
         if actual_model is None or not actual_model.startswith("gemini-"):
             self.last_response_metadata["actual_model"] = None
             raise ProviderError("provider_response_invalid")
+        if actual_model != self.settings.gemini_model:
+            raise ProviderError("provider_model_mismatch")
+        if result.get("status") != "completed" or result.get("continuation_token"):
+            raise ProviderError("model_output_incomplete")
         try:
-            candidates = result["candidates"]
-            if not isinstance(candidates, list) or len(candidates) != 1:
+            steps = result["steps"]
+            if not isinstance(steps, list) or not steps:
                 raise ProviderError("provider_response_invalid")
-            candidate = candidates[0]
-            if candidate.get("finishReason") != "STOP":
-                raise ProviderError("model_output_incomplete")
-            parts = candidate["content"]["parts"]
-            if not isinstance(parts, list) or not parts:
-                raise ProviderError("provider_response_invalid")
-            if any(
-                not isinstance(part, dict)
-                or not isinstance(part.get("text"), str)
-                or type(part.get("thought", False)) is not bool
-                or set(part) - {"text", "thought", "thoughtSignature"}
-                for part in parts
-            ):
-                raise ProviderError("provider_response_invalid")
-            text = "".join(part["text"] for part in parts if not part.get("thought", False))
-            output = json.loads(text, parse_constant=_invalid_constant)
+            texts = []
+            for step in steps:
+                if not isinstance(step, dict):
+                    raise ProviderError("provider_response_invalid")
+                if step.get("status", "done") != "done":
+                    raise ProviderError("model_output_incomplete")
+                if step.get("type") == "thought":
+                    continue  # Never expose reasoning summaries/signatures as analysis output.
+                if step.get("type") != "model_output":
+                    raise ProviderError("provider_response_invalid")
+                content = step["content"]
+                if not isinstance(content, list) or not content:
+                    raise ProviderError("provider_response_invalid")
+                for part in content:
+                    if (
+                        not isinstance(part, dict)
+                        or part.get("type") != "text"
+                        or not isinstance(part.get("text"), str)
+                        or set(part) - {"type", "text", "annotations"}
+                        or part.get("annotations") not in (None, [])
+                    ):
+                        raise ProviderError("provider_response_invalid")
+                    texts.append(part["text"])
+            output = json.loads("".join(texts), parse_constant=_invalid_constant)
         except (AttributeError, KeyError, IndexError, TypeError, ValueError, RecursionError):
             raise ProviderError("provider_response_invalid") from None
         if not isinstance(output, dict):

@@ -1,9 +1,13 @@
 # Phase 4 course relevance — operation and validation
 
-The dedicated [Gemini branch verification](24_PHASE4_GEMINI.md) adds `verify-gemini`,
-configurable output bounds and stricter returned-model/part validation. Its latest
-complete suite passes **794 tests**; live Gemini is **BLOCKED** by missing local
-credentials/configuration. The historical Phase 4 measurements below are retained.
+The current [Gemini 4 Argon integration](24_PHASE4_GEMINI.md) uses direct Google
+Interactions with configurable thinking (initially medium), output/time bounds,
+strict returned identity/step validation and safe usage/configuration/latency audit.
+The complete suite passes **816 tests**, including 16 PostgreSQL cases with mocked
+HTTP. Live Gemini remains **BLOCKED** by missing local configuration. Managed Claude
+is discontinued for this MVP; its historical code/results below remain. Brave is
+the research provider; [Replit remains future hosting](25_REPLIT_HOSTING_PLAN.md).
+The historical Phase 4 measurements below are retained.
 
 Implemented as a bounded backend extension on **24 October 2026**. The current verification is offline/mocked plus genuine persisted evidence; **live Gemini and Brave integration has not been verified**. The user chose offline tests while credentials are unavailable. [STATUS](../STATUS.md) records the final measured checks. Phase 5 recommendations, Phase 6 pathways/scenarios, frontend and deployment remain unimplemented.
 

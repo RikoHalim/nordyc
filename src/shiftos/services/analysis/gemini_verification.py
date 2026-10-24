@@ -11,7 +11,6 @@ import time
 from shiftos.core.config import Settings
 from shiftos.schemas.analysis import DIMENSIONS, ProgrammeResult
 from shiftos.services.analysis.claude_verification import (
-    VERIFICATION_MAX_OUTPUT_TOKENS,
     _esco_permissions,
     _sha256,
     _synthetic_packet,
@@ -24,6 +23,7 @@ from shiftos.services.analysis.providers import (
 from shiftos.services.analysis.validation import validate_result
 
 PREFERRED_MODEL = "gemini-4-argon"
+VERIFICATION_MAX_OUTPUT_TOKENS = 32768
 _TOKEN_FIELDS = {
     "input_tokens",
     "output_tokens",
@@ -63,6 +63,12 @@ def inspect_gemini_configuration(settings: Settings) -> dict:
         "preferred_model": PREFERRED_MODEL,
         "requested_model": model,
         "preferred_model_configured": model == PREFERRED_MODEL,
+        "api": "interactions",
+        "thinking_level": settings.gemini_thinking_level,
+        "max_output_tokens": min(settings.gemini_max_output_tokens, VERIFICATION_MAX_OUTPUT_TOKENS),
+        "timeout_seconds": settings.gemini_timeout_seconds,
+        "interaction_storage_enabled": False,
+        "project_access_and_billing": "not_verified",
         "selected_for_analysis": settings.analysis_model_provider == "gemini",
         "gemini_enabled": settings.gemini_enabled,
         "external_processing_allowed": settings.analysis_external_processing_allowed,
@@ -104,6 +110,8 @@ def verify_gemini(settings: Settings, *, provider_factory=GeminiProvider) -> dic
         "preflight": preflight,
         "provider": "gemini_direct",
         "requested_model": preflight["requested_model"],
+        "api": "interactions",
+        "thinking_level": settings.gemini_thinking_level,
         "actual_model": None,
         "usage": {},
         "provider_requests": 0,
@@ -140,7 +148,7 @@ def verify_gemini(settings: Settings, *, provider_factory=GeminiProvider) -> dic
         schema_sha256=_sha256(schema),
         instruction_sha256=_sha256({"system": MODEL_SYSTEM_INSTRUCTION}),
         max_output_tokens=bounded.gemini_max_output_tokens,
-        timeout_seconds=bounded.analysis_provider_timeout_seconds,
+        timeout_seconds=bounded.gemini_timeout_seconds,
     )
     provider = None
     try:

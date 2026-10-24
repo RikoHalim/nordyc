@@ -293,15 +293,16 @@ def test_missing_foreign_or_unsafe_actual_model_fails_closed(model):
 
 def test_gemini_metadata_token_mapping_and_reset_after_configuration_failure():
     payload = {
-        "modelVersion": "gemini-3.1-flash-lite",
-        "usageMetadata": {
-            "promptTokenCount": 17,
-            "candidatesTokenCount": 9,
-            "thoughtsTokenCount": 1,
-            "totalTokenCount": 27,
-            "cachedContentTokenCount": False,
+        "model": "gemini-3.1-flash-lite",
+        "status": "completed",
+        "usage": {
+            "total_input_tokens": 17,
+            "total_output_tokens": 9,
+            "total_thought_tokens": 1,
+            "total_tokens": 27,
+            "total_cached_tokens": False,
         },
-        "candidates": [{"finishReason": "STOP", "content": {"parts": [{"text": "{}"}]}}],
+        "steps": [{"type": "model_output", "content": [{"type": "text", "text": "{}"}]}],
     }
     with httpx.Client(
         transport=httpx.MockTransport(lambda _: httpx.Response(200, json=payload))
@@ -313,7 +314,17 @@ def test_gemini_metadata_token_mapping_and_reset_after_configuration_failure():
             client,
         )
         provider.generate({}, {})
-        assert provider.last_response_metadata == {
+        assert {
+            key: provider.last_response_metadata[key]
+            for key in (
+                "provider",
+                "requested_model",
+                "actual_model",
+                "usage",
+                "request_count",
+                "observed_cost",
+            )
+        } == {
             "provider": "gemini_direct",
             "requested_model": "gemini-3.1-flash-lite",
             "actual_model": "gemini-3.1-flash-lite",

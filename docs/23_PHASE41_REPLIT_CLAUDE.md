@@ -1,5 +1,12 @@
 # Phase 4.1 — Replit-managed Claude
 
+**Historical compatibility record — discontinued for the current MVP.** The latest
+decision selects [Gemini 4 Argon directly through Google](24_PHASE4_GEMINI.md), with
+Brave research and [Replit retained as future hosting](25_REPLIT_HOSTING_PLAN.md).
+Do not follow the managed Anthropic provisioning/development instructions below for
+the current MVP. Existing code/tests and the shared synthetic ESCO fixture remain;
+the historical handover/results are preserved without claiming live Claude success.
+
 This extension preserves the Phase 4 evidence engine, academic Pydantic contract, citation validator, deterministic workforce calculations, background worker and protected APIs. It adds a configurable Replit-managed Anthropic Messages adapter and optional explicit Gemini fallback. The user has authorized GitHub publication and this Replit handover; the completion report must confirm the published commit before it is imported. No Phase 5/6 implementation or public deployment is included.
 
 ## Availability and model selection

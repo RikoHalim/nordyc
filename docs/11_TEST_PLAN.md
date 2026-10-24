@@ -54,14 +54,16 @@ Verify one labelled synthetic course, Pydantic and supporting citations, safe er
 ### Direct Gemini verification branch
 
 The [Gemini runbook](24_PHASE4_GEMINI.md) retains the exact Phase 4.1 synthetic-course/
-genuine ESCO packet, academic schema, instruction and grounding rules. Gemini tests
-cover zero-call preflight, source-use denial, explicit one-attempt helper, actual
-model identity, strict text/thought/tool parsing, bounded output, token/latency
-reporting, bad citation/title-content rejection and secret-safe report failures.
-Three new real-PostgreSQL cases drive the actual Gemini adapter with mocked HTTP
-through retrieval/sufficiency, worker, committed findings/usage, protected API and
-idempotent replay, including citation/authentication failures. No live service
-success is inferred. Complete suite: **794 passed**, including **16 PostgreSQL cases**.
+genuine ESCO packet, academic schema, instruction and grounding rules. Current tests
+cover stateless Interactions request/steps/usage, configurable low/medium/high thinking,
+actual identity/mismatch, no tools/polling/old-envelope substitution, bounded timeout/
+worker deadline and output, safe usage/configuration/latency audit, source denial,
+bad citations/title-content claims and report failures. Three real-PostgreSQL cases
+drive the actual adapter with mocked HTTP through retrieval/sufficiency, worker,
+committed findings/metadata, protected API and no-call replay, including failures.
+Full suite: **816 passed**, including **16 PostgreSQL cases**, versus the previous
+794 baseline. The 22 added cases test migration boundaries; no academic accuracy or
+live success is inferred. Claude remains legacy compatibility coverage only.
 
 ### Planned Phase 5–6 enhancement tests
 

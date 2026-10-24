@@ -19,6 +19,153 @@ from shiftos.services.analysis.providers import GeminiProvider, ProviderError
 from shiftos.services.analysis.validation import offline_result
 
 
+@pytest.mark.parametrize("level", ["low", "medium", "high"])
+def test_configurable_thinking_uses_stateless_interactions_only(level):
+    requests = []
+
+    def handler(request):
+        requests.append(request)
+        return httpx.Response(200, json=gemini_reply())
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        provider = GeminiProvider(settings(gemini_thinking_level=level), client)
+        assert provider.generate({"synthetic": True}, {"type": "object"}) == {"synthetic": True}
+    body = json.loads(requests[0].content)
+    assert requests[0].url.path == "/v1beta/interactions"
+    assert body["generation_config"]["thinking_level"] == level
+    assert body["generation_config"]["max_output_tokens"] == 32768
+    assert body["generation_config"]["tool_choice"] == "none"
+    assert body["store"] is body["stream"] is body["background"] is False
+    assert not set(body) & {"tools", "agent", "previous_interaction_id", "generationConfig"}
+    assert not set(body["generation_config"]) & {"temperature", "top_p", "top_k"}
+    assert provider.last_response_metadata["thinking_level"] == level
+    assert provider.last_response_metadata["api"] == "interactions"
+    assert provider.last_response_metadata["timeout_seconds"] == 180
+    assert provider.last_response_metadata["latency_seconds"] >= 0
+
+
+@pytest.mark.parametrize("value", ["minimal", "unbounded", "MEDIUM"])
+def test_argon_thinking_rejects_unsupported_values(value):
+    with pytest.raises(ValidationError):
+        settings(gemini_thinking_level=value)
+
+
+@pytest.mark.parametrize("value", [0, 301])
+def test_argon_timeout_is_bounded(value):
+    with pytest.raises(ValidationError):
+        settings(gemini_timeout_seconds=value)
+
+
+@pytest.mark.parametrize(
+    "status", ["in_progress", "requires_action", "failed", "cancelled", "incomplete", None]
+)
+def test_incomplete_interactions_fail_without_polling_and_keep_usage(status):
+    response = gemini_reply()
+    response["status"] = status
+    response["usage"] = {"total_input_tokens": 10, "total_output_tokens": 20}
+    requests = []
+
+    def handler(request):
+        requests.append(request)
+        return httpx.Response(200, json=response)
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        provider = GeminiProvider(settings(), client)
+        with pytest.raises(ProviderError) as error:
+            provider.generate({}, {})
+    assert error.value.code == "model_output_incomplete"
+    assert len(requests) == 1
+    assert provider.last_response_metadata["usage"] == {"input_tokens": 10, "output_tokens": 20}
+
+
+def test_different_returned_gemini_model_is_not_silently_accepted():
+    response = gemini_reply()
+    response["model"] = "gemini-other-synthetic-model"
+    with httpx.Client(
+        transport=httpx.MockTransport(lambda _: httpx.Response(200, json=response))
+    ) as c:
+        provider = GeminiProvider(settings(), c)
+        with pytest.raises(ProviderError) as error:
+            provider.generate({}, {})
+    assert error.value.code == "provider_model_mismatch"
+    assert provider.last_response_metadata["actual_model"] == "gemini-other-synthetic-model"
+
+
+@pytest.mark.parametrize(
+    "kind", ["function_call", "google_search_call", "url_context_call", "user_input"]
+)
+def test_unrequested_steps_rejected_even_with_valid_json_output(kind):
+    response = gemini_reply()
+    response["steps"].insert(0, {"type": kind, "content": []})
+    with httpx.Client(
+        transport=httpx.MockTransport(lambda _: httpx.Response(200, json=response))
+    ) as c:
+        with pytest.raises(ProviderError) as error:
+            GeminiProvider(settings(), c).generate({}, {})
+    assert error.value.code == "provider_response_invalid"
+
+
+def test_prior_generate_content_envelope_is_not_interpreted_as_interactions():
+    legacy = {"modelVersion": "gemini-3.1-flash-lite", "candidates": []}
+    with httpx.Client(
+        transport=httpx.MockTransport(lambda _: httpx.Response(200, json=legacy))
+    ) as c:
+        with pytest.raises(ProviderError) as error:
+            GeminiProvider(settings(), c).generate({}, {})
+    assert error.value.code == "provider_response_invalid"
+
+
+def test_gemini_timeout_honours_remaining_worker_deadline():
+    clock = [0.0]
+    seen = []
+
+    def handler(request):
+        seen.append(request.extensions["timeout"])
+        clock[0] = 8.0
+        return httpx.Response(200, json=gemini_reply())
+
+    with httpx.Client(transport=httpx.MockTransport(handler)) as client:
+        provider = GeminiProvider(
+            settings(gemini_timeout_seconds=180), client, monotonic=lambda: clock[0]
+        )
+        provider.deadline = 7.0
+        with pytest.raises(ProviderError) as error:
+            provider.generate({}, {})
+    assert error.value.code == "provider_deadline"
+    assert all(timeout <= 7 for timeout in seen[0].values())
+
+
+def test_gemini_audit_metadata_rejects_unsafe_shapes():
+    from shiftos.services.analysis.orchestrator import _response_metadata
+
+    provider = type(
+        "SyntheticMetadata",
+        (),
+        {
+            "last_response_metadata": {
+                "api": "interactions",
+                "thinking_level": ["medium"],
+                "max_output_tokens": True,
+                "timeout_seconds": 10**9,
+                "latency_seconds": float("nan"),
+                "api_key": "SYNTHETIC-private-secret",
+            }
+        },
+    )()
+    audit = _response_metadata(
+        provider, provider_name="gemini_direct", requested_model="gemini-4-argon", status="returned"
+    )
+    assert audit["api"] == "interactions"
+    assert not set(audit) & {
+        "thinking_level",
+        "max_output_tokens",
+        "timeout_seconds",
+        "latency_seconds",
+        "api_key",
+    }
+    assert "SYNTHETIC-private" not in json.dumps(audit)
+
+
 @pytest.fixture
 def configured(claude_configured):  # noqa: F811
     return claude_configured.model_copy(
@@ -38,16 +185,16 @@ def synthetic_transport(configured, *, mutate=None, status=200):
         if status != 200:
             return httpx.Response(status, text="SYNTHETIC-private-upstream-error")
         body = json.loads(request.content)
-        packet = EvidencePacket.model_validate_json(body["contents"][0]["parts"][0]["text"])
+        packet = EvidencePacket.model_validate_json(body["input"])
         result = offline_result(packet).model_dump(mode="json")
         result["result_mode"] = "live_model"
         response = gemini_reply(json.dumps(result))
-        response["modelVersion"] = "gemini-4-argon"
-        response["usageMetadata"] = {
-            "promptTokenCount": 100,
-            "candidatesTokenCount": 250,
-            "thoughtsTokenCount": 30,
-            "totalTokenCount": 380,
+        response["model"] = "gemini-4-argon"
+        response["usage"] = {
+            "total_input_tokens": 100,
+            "total_output_tokens": 250,
+            "total_thought_tokens": 30,
+            "total_tokens": 380,
         }
         if mutate:
             mutate(response, result)
@@ -131,15 +278,17 @@ def test_exact_claude_packet_schema_grounding_and_token_accounting(configured):
     assert report["packet_sha256"] == _sha256(expected_packet.model_dump(mode="json"))
     assert report["schema_sha256"] == _sha256(ProgrammeResult.model_json_schema())
     body = json.loads(requests[0].content)
-    assert body["generationConfig"]["responseJsonSchema"] == ProgrammeResult.model_json_schema()
-    assert body["generationConfig"]["maxOutputTokens"] == 4096
-    assert body["generationConfig"]["candidateCount"] == 1
-    assert "tools" not in body and "SYNTHETIC" in body["contents"][0]["parts"][0]["text"]
+    assert body["response_format"][0]["schema"] == ProgrammeResult.model_json_schema()
+    assert body["generation_config"]["max_output_tokens"] == 32768
+    assert body["generation_config"]["thinking_level"] == "medium"
+    assert body["generation_config"]["thinking_summaries"] == "none"
+    assert "tools" not in body and "SYNTHETIC" in body["input"]
+    assert body["store"] is False
     bounded = instances[0].settings
     assert bounded.analysis_provider_max_attempts == 1
     assert not bounded.research_enabled and not bounded.analysis_gemini_fallback_enabled
     assert configured.analysis_provider_max_attempts == 3
-    assert configured.gemini_max_output_tokens == 16384
+    assert configured.gemini_max_output_tokens == 32768
 
 
 @pytest.mark.parametrize("failure", ["schema", "citation", "title_claim", "no_citation", "usage"])
@@ -162,8 +311,8 @@ def test_invalid_output_retains_usage_without_publishing_result(configured, fail
             ):
                 course[dimension]["citations"] = []
         elif failure == "usage":
-            response["usageMetadata"] = {"promptTokenCount": True, "candidatesTokenCount": -1}
-        response["candidates"][0]["content"]["parts"][0]["text"] = json.dumps(result)
+            response["usage"] = {"total_input_tokens": True, "total_output_tokens": -1}
+        response["steps"][0]["content"][0]["text"] = json.dumps(result)
 
     client, factory, requests, _ = synthetic_transport(configured, mutate=mutate)
     with client:
@@ -197,7 +346,7 @@ def test_verification_makes_one_attempt_even_for_retryable_errors(configured, st
 @pytest.mark.parametrize("model", [None, "claude-synthetic-test", "https://private.invalid/key"])
 def test_response_requires_actual_gemini_identity(model):
     response = gemini_reply()
-    response["modelVersion"] = model
+    response["model"] = model
     with httpx.Client(
         transport=httpx.MockTransport(lambda _: httpx.Response(200, json=response))
     ) as c:
@@ -214,14 +363,14 @@ def test_response_requires_actual_gemini_identity(model):
         [],
         {},
         ["bad"],
-        [{"text": "{}", "thought": "false"}],
-        [{"text": "{}", "functionCall": {"name": "unapproved"}}],
-        [{"functionCall": {"name": "unapproved"}}],
+        [{"type": "text", "text": "{}", "thought": "false"}],
+        [{"type": "text", "text": "{}", "function_call": {"name": "unapproved"}}],
+        [{"type": "function_call", "name": "unapproved"}],
     ],
 )
 def test_malformed_and_tool_parts_are_rejected(parts):
     response = deepcopy(gemini_reply())
-    response["candidates"][0]["content"]["parts"] = parts
+    response["steps"][0]["content"] = parts
     with httpx.Client(
         transport=httpx.MockTransport(lambda _: httpx.Response(200, json=response))
     ) as c:
@@ -232,28 +381,30 @@ def test_malformed_and_tool_parts_are_rejected(parts):
 
 def test_thoughts_are_discarded_and_usage_survives_truncated_response():
     response = gemini_reply()
-    response["candidates"][0]["content"]["parts"].insert(
+    response["steps"].insert(
         0,
         {
-            "text": "SYNTHETIC thinking must not enter the JSON result",
-            "thought": True,
-            "thoughtSignature": "synthetic-signature",
+            "type": "thought",
+            "summary": [
+                {"type": "text", "text": "SYNTHETIC thinking must not enter the JSON result"}
+            ],
+            "signature": "synthetic-signature",
         },
     )
-    response["usageMetadata"] = {"promptTokenCount": 12, "candidatesTokenCount": 3}
+    response["usage"] = {"total_input_tokens": 12, "total_output_tokens": 3}
     with httpx.Client(
         transport=httpx.MockTransport(lambda _: httpx.Response(200, json=response))
     ) as c:
         provider = GeminiProvider(settings(gemini_max_output_tokens=100), c)
         assert provider.generate({}, {}) == {"synthetic": True}
-        response["candidates"][0]["finishReason"] = "MAX_TOKENS"
+        response["status"] = "incomplete"
         with pytest.raises(ProviderError) as error:
             provider.generate({}, {})
     assert error.value.code == "model_output_incomplete"
     assert provider.last_response_metadata["usage"] == {"input_tokens": 12, "output_tokens": 3}
 
 
-@pytest.mark.parametrize("limit", [0, 16385])
+@pytest.mark.parametrize("limit", [0, 65537])
 def test_output_budget_must_stay_bounded(limit):
     with pytest.raises(ValidationError):
         settings(gemini_max_output_tokens=limit)

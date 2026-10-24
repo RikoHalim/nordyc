@@ -1,6 +1,6 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24:** Phase 4 remains **FUNCTIONAL for a bounded offline backend proof**. Dedicated `feature/phase4-gemini` adds direct Gemini preflight/one-request verification, bounded configurable output and stricter returned-model/part validation, preserving Claude and Brave. **794 tests passed**, including **16 PostgreSQL integration cases**, zero failures/skips, versus the Phase 4.1 publication baseline of 756 (originally 754). **Live Gemini verification is BLOCKED:** no local key/model, enable/processing gates false; actual preflight/guarded live command made **0 requests**. Preferred documented model: `gemini-4-argon`; actual model/tokens/latency/billing **none observed/unavailable**. Claude remains separately blocked by missing Replit-managed runtime configuration; Brave live verification remains pending. Only this Gemini feature branch is authorized for commit/push; no merge, teammate-branch changes, deployment, frontend or Phase 5/6 implementation.
+**As of 2026-10-24:** Primary AI is **Gemini 4 Argon via direct Google Gemini Interactions**, initially medium thinking; **Brave Search** remains research and **Replit** remains official future hosting. Replit AI Integrations/managed Claude are **DISCONTINUED for this MVP**; legacy code remains for compatibility. Phase 4 is **FUNCTIONAL OFFLINE**, with **816 passed**, including **16 PostgreSQL integration cases**, zero failures/skips, versus the previous 794-test Gemini baseline. **Live Gemini and live end-to-end verification are BLOCKED:** no local `.env`/key/model, enable/processing flags false; this run performed only zero-call preflight. Actual model/tokens/live latency/billing remain **none observed/unavailable**; project access/billing/quota are unverified. No posted credential was used or copied. Only `feature/phase4-gemini` is authorized for publication; no merge, teammate-branch changes, deployment, frontend or Phase 5/6 work.
 
 **Pilot target:** all publicly discoverable XMUM undergraduate programme/course lists. The directory parser found 25 official undergraduate links. Production live retrieval **failed safely** in this environment because `www.xmu.edu.my` resolved to a private network address; no live crawl success is claimed. A separate reviewed manual fallback stored 25 directory programme facts and **141 course appearances across three programmes** in a disposable local PostgreSQL database, retrieved through real FastAPI HTTP. The remaining 22 programmes have no loaded course inventory in that validation database. None of these records certify a complete graduation curriculum or lecturer-taught content.
 
@@ -9,15 +9,97 @@
 | 1 | FastAPI/PostgreSQL multi-institution foundation, provenance, migrations and tests | COMPLETE |
 | 2 | XMUM discovery/parser, year/elective extraction, safe import/versioning, worker, APIs and coverage | COMPLETE — live network blocked; reviewed manual fallback verified |
 | 3 | Evidence acquisition, workforce radar and independent AI task evidence | FUNCTIONAL — bounded evidence gates met; legacy/language/currentness/permission limits explicit |
-| 4 | Internal-first hybrid retrieval, controlled Brave fallback, one Gemini adapter and conservative whole-programme screening | FUNCTIONAL OFFLINE — 637 passed; actual live API acceptance PENDING |
-| 4.1 | Replit-managed Claude selection, optional explicit Gemini fallback, usage lineage and synthetic verification | IMPLEMENTED / OFFLINE VERIFIED — 756 passed; actual Replit/Claude live gate BLOCKED |
-| 4 Gemini branch | Direct Gemini hardening, identical comparison fixture, one-request check and PostgreSQL adapter/usage integration | OFFLINE VERIFIED — 794 passed; actual Gemini live gate BLOCKED |
+| 4 | Internal-first retrieval, controlled Brave research and conservative whole-programme screening | FUNCTIONAL OFFLINE — live provider/backend acceptance BLOCKED |
+| 4.1 | Historical managed Claude | DISCONTINUED for MVP; legacy code/tests preserved, no live success claimed |
+| 4 Gemini branch | Direct Argon Interactions, medium thinking/configurable limits, same academic fixture/schema and protected backend | OFFLINE VERIFIED — 816 passed; live Gemini/backend BLOCKED |
 | 5 | Future Career Alignment, competency-gap review, minimum sufficient actions, alternatives/no change and human review | PENDING — requirements revised only |
 | 6 | Ordered Academic Reskilling Pathways, scenarios/SDGs/resources/duration and consolidated Action Plans | PENDING — requirements revised only |
 | 7 | Integration, evaluation, change replay and security | PENDING |
 | 8 | Minimal working dashboard and preliminary demo | PENDING |
 
-## Dedicated Gemini branch — 24 October 2026
+## Gemini 4 Argon Interactions and Phase 4 verification — 24 October 2026
+
+This request fixes the current stack: local Codex/VS Code development, GitHub,
+FastAPI/Python, PostgreSQL/SQLAlchemy/Alembic, **Google Gemini API directly with
+`gemini-4-argon`**, Brave research, React/TypeScript later, and **Replit hosting later**.
+Managed Claude is discontinued; code/tests remain without further development.
+Starting branch `feature/phase4-gemini` at published
+`63a7aff5727baa7c1849ce7835c929928dae6c95` was clean. No reset/stash, main change,
+teammate-branch operation, merge, force push or deployment was performed.
+
+Official Argon/Interactions/migration documentation was checked. The Gemini adapter
+now posts stateless synchronous `/v1beta/interactions` with existing server-side key
+authentication, unchanged academic instructions/schema, `response_format`, medium
+thinking by default and no tools/agent/background/polling/history. It parses model
+output steps, discards thoughts, maps the new usage fields, rejects legacy envelopes,
+incomplete/tools/unexpected content and mismatched returned models. API-reported
+identity is not described as a separately resolved backend model version.
+
+New settings: `GEMINI_THINKING_LEVEL=medium` (low/medium/high),
+`GEMINI_MAX_OUTPUT_TOKENS=32768` (1–65536), `GEMINI_TIMEOUT_SECONDS=180` (1–300).
+The helper forces one attempt and caps at 32768 total thinking/output tokens;
+the previous 4096 cap was raised following Argon's migration guidance. This is a
+maximum, not observed usage. The existing worker's remaining 600-second deadline,
+course/repair limits and byte caps still apply. A small optional transport timeout
+override supports Gemini; Claude/Brave retain previous timeout behavior. Existing
+manifest JSON now admits sanitized Gemini API/thinking/budget/timeout/latency fields,
+including on failed output. No academic schema, HTTP route, table, dependency or
+migration change; no workforce-math or evidence-rule change. All five Alembic
+revisions through `0005_programme_analysis` remain.
+
+| Current check | Actual result |
+|---|---|
+| Complete `python -m pytest -q --basetemp=.pytest-argon-complete --tb=short --junitxml=data/local/argon-tests.xml` with disposable PostgreSQL | **816 passed, 0 failed/errors/skipped, 93.78s**, one existing Starlette/httpx deprecation warning |
+| Baseline comparison | Previous Gemini **794** preserved; **22** new Interactions/thinking/identity/status/tool/deadline/audit cases |
+| Targeted Gemini/provider/legacy compatibility/academic validation/source-permission tests | **246 passed**, 6.21s, mocked/offline only |
+| PostgreSQL coverage | **16 cases** in complete suite; real PostgreSQL, mocked provider HTTP |
+| Separate `python -m pytest -q -m integration --basetemp=.pytest-argon-integration --tb=short --junitxml=data/local/argon-integration-tests.xml` | **16 passed, 800 deselected, 0 failures/skips, 34.79s** |
+| Course pipeline/API proof | Synthetic inventory + academic/AI/workforce retrieval/admission → Interactions adapter → schema/citations/uncertainty → deterministic programme insights → committed findings/configuration/usage/latency → protected FastAPI and idempotent no-call replay; independent connection verifies commits |
+| Actual `verify-gemini --report data/local/argon-preflight.json` | **BLOCKED**, exit 1, **0 requests**; no `.env`/key/model, false enable/processing; ESCO permission passes |
+| Actual live Gemini / live end-to-end | **BLOCKED / BLOCKED**, no request attempted; full live backend waits for isolated success |
+| Actual model / tokens / live latency / observed cost | **None observed / unavailable / unavailable / unavailable** |
+| Google project access / paid billing / quota | **Unverified** without private configuration/project access; no consumer-subscription credit assumption |
+| Brave | Adapter/rules preserved; no credential, live search → original → import/query → citation **PENDING** |
+| Ruff lint/format / dependency integrity / Alembic heads+SQL / whitespace | **PASS** |
+| Documentation links/fences/UTF-8 | **PASS**, 9 Markdown files, 71 local links/anchors |
+
+The initial targeted selection had 147 passed and one PostgreSQL case skipped before
+`TEST_DATABASE_URL` was set. The complete PostgreSQL-enabled run above includes all
+cases with zero skips. No test failure is accepted. Tests/mocked metadata do not
+establish real academic accuracy, service availability, billing or teaching content.
+
+The user supplied a credential in chat; it was not copied to configuration/source/
+requests/logs/reports/docs or used. The user must revoke/replace that exposed key
+and configure the replacement only in ignored local `.env`. Required settings and
+paid-project/source-privacy checks are in [the Gemini runbook](docs/24_PHASE4_GEMINI.md).
+Do not make a live call until missing configuration is resolved; diagnose any first
+failure before another paid request. Real private curricula are excluded from the
+synthetic check. Provider state storage is disabled, but applicable retention/use
+terms still require review.
+
+[Replit hosting preparation](docs/25_REPLIT_HOSTING_PLAN.md) covers Secrets, direct
+Google/Brave egress, PostgreSQL/psycopg/TLS, explicit release migrations, separate
+FastAPI/worker processes, limits, private storage and sanitized logging. Architecture
+is portable; **no actual Replit deployment/runtime acceptance** is claimed. Local
+PostgreSQL/private files do not transfer through Git. Only the disposable loopback
+test cluster/random test schemas were used, not an application/user database.
+
+**Phase 5 recommendation: do not begin implementation yet.** First close the actual
+Argon isolated request and live worker/PostgreSQL/protected-API gates, and retain
+Brave/evidence/currentness/syllabus/occupation-identity and organiser-waiver limits.
+Later source/action coverage must not be inferred from passing software tests.
+Publication outcome will be recorded after staged scope/secret/whitespace review
+and the authorized Gemini-branch commit/push. Stop before Phase 5 or deployment.
+
+**Next recommended prompt:** “Read AGENTS.md, STATUS.md and docs/24_PHASE4_GEMINI.md.
+I privately configured a replacement Google key, Argon model access/billing/quota
+and source-processing settings in local .env. Run preflight, then one bounded
+synthetic Argon Interactions request with medium thinking. Diagnose failures before
+any retry. Only after isolated success verify worker → PostgreSQL → protected API,
+record actual identity/usage/latency/citations/billing when observed, update docs
+and publish only feature/phase4-gemini. No merge, deployment or Phase 5/6.”
+
+## Dedicated Gemini branch — historical 24 October 2026 publication
 
 Shared base: fetched/published `main` at **`164255d52b5ceb005647ec670506f10cb5054b10`**.
 Phase 4 `b586194` and Phase 4.1 implementation `ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb`

@@ -74,6 +74,18 @@ def _response_metadata(provider, *, provider_name, requested_model, status, erro
     }
     if error_code:
         item["error_code"] = error_code
+    if provider_name == "gemini_direct" and raw.get("api") == "interactions":
+        item["api"] = "interactions"
+        value = raw.get("thinking_level")
+        if isinstance(value, str) and value in {"low", "medium", "high"}:
+            item["thinking_level"] = value
+        for key, maximum in (("max_output_tokens", 65536), ("timeout_seconds", 300)):
+            value = raw.get(key)
+            if type(value) is int and 1 <= value <= maximum:
+                item[key] = value
+        value = raw.get("latency_seconds")
+        if type(value) in {int, float} and 0 <= value <= MAX_RUN_SECONDS:
+            item["latency_seconds"] = value
     return item
 
 

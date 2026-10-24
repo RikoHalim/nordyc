@@ -52,7 +52,7 @@ def test_gemini_transport_worker_postgresql_citations_usage_and_protected_api(
         analysis_model_provider="gemini",
         gemini_enabled=True,
         gemini_api_key="SYNTHETIC-NOT-A-REAL-CREDENTIAL",
-        gemini_model="gemini-synthetic-test",
+        gemini_model="gemini-4-argon",
         analysis_write_token="synthetic-gemini-api-access",
         analysis_external_processing_allowed=True,
         analysis_permissions_path=policy,
@@ -78,8 +78,10 @@ def test_gemini_transport_worker_postgresql_citations_usage_and_protected_api(
         assert request.headers["x-goog-api-key"] == "SYNTHETIC-NOT-A-REAL-CREDENTIAL"
         body = json.loads(request.content)
         assert "tools" not in body
-        assert body["generationConfig"]["responseJsonSchema"] == ProgrammeResult.model_json_schema()
-        raw = json.loads(body["contents"][0]["parts"][0]["text"])
+        assert body["response_format"][0]["schema"] == ProgrammeResult.model_json_schema()
+        assert body["generation_config"]["thinking_level"] == "medium"
+        assert body["store"] is body["background"] is False
+        raw = json.loads(body["input"])
         raw.pop("validation_feedback", None)
         packet = EvidencePacket.model_validate(raw)
         packets.append(packet)
@@ -100,11 +102,12 @@ def test_gemini_transport_worker_postgresql_citations_usage_and_protected_api(
                 }
             ]
         response = gemini_reply(json.dumps(result))
-        response["usageMetadata"] = {
-            "promptTokenCount": 123,
-            "candidatesTokenCount": 234,
-            "thoughtsTokenCount": 20,
-            "totalTokenCount": 377,
+        response["model"] = "gemini-4-argon"
+        response["usage"] = {
+            "total_input_tokens": 123,
+            "total_output_tokens": 234,
+            "total_thought_tokens": 20,
+            "total_tokens": 377,
         }
         return httpx.Response(200, json=response)
 
@@ -138,8 +141,12 @@ def test_gemini_transport_worker_postgresql_citations_usage_and_protected_api(
             assert not audit["fallbacks"]
             assert len(requests) == (2 if outcome == "invalid_citation" else 1)
             assert all(item["request_count"] == 1 for item in audit["responses"])
+            assert all(item["api"] == "interactions" for item in audit["responses"])
+            assert all(item["thinking_level"] == "medium" for item in audit["responses"])
+            assert all(item["max_output_tokens"] == 32768 for item in audit["responses"])
+            assert all(item["latency_seconds"] >= 0 for item in audit["responses"])
             if outcome != "authentication_error":
-                assert result["model_name"] == "gemini-synthetic-test"
+                assert result["model_name"] == "gemini-4-argon"
                 assert audit["responses"][0]["usage"]["input_tokens"] == 123
                 assert audit["responses"][0]["usage"]["thought_tokens"] == 20
             else:
