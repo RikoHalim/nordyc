@@ -10,6 +10,12 @@ was not created/modified/merged/deleted. [STATUS](../STATUS.md) records Gemini's
 implementation commit and publication result. Only this Gemini branch is authorized
 for publication; stop before merging, Phase 5/6, frontend or deployment.
 
+Published implementation:
+[`c95384004e9563f3f00e2d69d8936aef7ec0956b`](https://github.com/RikoHalim/shift-os/commit/c95384004e9563f3f00e2d69d8936aef7ec0956b).
+After push, the remote feature ref matched exactly and `main` remained at the shared
+base. A documentation-only publication record can be the later tip of
+[`feature/phase4-gemini`](https://github.com/RikoHalim/shift-os/tree/feature/phase4-gemini).
+
 ## Actual acceptance result
 
 **Implemented and offline verified; live Gemini verification is BLOCKED.**

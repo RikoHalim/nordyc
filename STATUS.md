@@ -75,8 +75,19 @@ verified import/query → citation gate remains pending. Claude is not verified 
 Gemini results. Currentness/coverage/syllabus/occupation-identity limits and the
 organiser waiver gap below remain unchanged.
 
-Publication is prepared for this branch only; the verified implementation SHA and
-remote result will be recorded after commit/push. Stop before merging or later phases.
+**GitHub publication: SUCCEEDED.** Implementation commit
+[`c95384004e9563f3f00e2d69d8936aef7ec0956b`](https://github.com/RikoHalim/shift-os/commit/c95384004e9563f3f00e2d69d8936aef7ec0956b),
+`feat: add bounded direct Gemini verification and backend regression checks`, was
+pushed to **[`origin/feature/phase4-gemini`](https://github.com/RikoHalim/shift-os/tree/feature/phase4-gemini)**.
+`git ls-remote --heads` returned that exact SHA after push; remote `main` still
+returned `164255d52b5ceb005647ec670506f10cb5054b10`, and no teammate Claude branch
+was present or changed. The commit contains exactly **14 reviewed Gemini-related
+files**. Staged scope/whitespace/secret-pattern checks passed; private/local files
+and unrelated assets were excluded. AST comparison confirms Claude, Brave and shared
+HTTP transport are unchanged. This publication record is a documentation-only
+follow-up; the final branch tip may include it without changing the tested code.
+No merge, force push, application deployment or later-phase implementation occurred.
+Stop here.
 
 **Next recommended prompt:** “Read AGENTS.md, STATUS.md and docs/24_PHASE4_GEMINI.md.
 On feature/phase4-gemini, with privately configured API credentials and approved
