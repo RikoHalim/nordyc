@@ -128,3 +128,7 @@ python -m alembic upgrade head --sql
 ```
 
 The pytest integration fixture creates isolated schemas and verifies PostgreSQL rather than treating SQLite unit tests as migration acceptance. `tests/test_pathways_postgres.py` exercises the positive committed plan; `tests/test_pathways_reassessment.py` demonstrates actual offline Phase 4 linkage and selective immutable plan comparison. No live credentials are needed. Production setup, secure named-reviewer/tenant authorisation and public Replit deployment are later work.
+
+## Publication receipt
+
+The tested 37-file implementation was committed and pushed as [b711999d6c23023591eec590963ca8ee174ec703](https://github.com/RikoHalim/shift-os/commit/b711999d6c23023591eec590963ca8ee174ec703) to **`feature/phase6-academic-pathways`**; the exact GitHub remote SHA was verified. All 110 checked local Markdown links resolved; staged credential-pattern, private-path and whitespace checks passed. This documentation-only receipt records that result. Main, Gemini, Claude/Brave and Phase 5 remote SHAs remained unchanged; the original checkouts and Replit project were preserved. The owned PostgreSQL test server was stopped and ignored verification files retained. No force-push, merge, paid request, frontend or deployment occurred.

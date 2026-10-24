@@ -4,7 +4,7 @@
 
 ## Phase 6 Academic Pathways, Scenarios and Action Plans — 25 October 2026
 
-See [the complete method, data/API contracts, reproduction and limits](docs/28_PHASE6_ACADEMIC_PATHWAYS_ACTION_PLANS.md). Work is isolated to **`feature/phase6-academic-pathways`**, created from the latest published Phase 5 receipt **`91a24e91401f20fc173f92c01e5042e51417271d`**. The reviewed implementation is ready for feature-branch publication; the publication receipt follows after the remote SHA is verified. Main, Gemini, Claude/Brave, Phase 5 and the original Replit development checkout are preserved.
+See [the complete method, data/API contracts, reproduction and limits](docs/28_PHASE6_ACADEMIC_PATHWAYS_ACTION_PLANS.md). Work is isolated to **`feature/phase6-academic-pathways`**, created from the latest published Phase 5 receipt **`91a24e91401f20fc173f92c01e5042e51417271d`**. **The tested implementation, migration, 97 new cases, synthetic fixture and documentation were committed/pushed as [b711999d6c23023591eec590963ca8ee174ec703](https://github.com/RikoHalim/shift-os/commit/b711999d6c23023591eec590963ca8ee174ec703); the remote SHA was verified.** The 37-file staged review passed credential-pattern/private-path/whitespace checks, and **110 local Markdown links** resolved. This subsequent documentation-only receipt records publication. Main, Gemini, Claude/Brave, Phase 5 and the original Replit development checkout are preserved.
 
 | Phase 6 acceptance | Actual result |
 |---|---|
