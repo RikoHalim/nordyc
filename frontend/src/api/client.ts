@@ -138,7 +138,8 @@ export class ApiClient {
       const response = await fetch(path, {
         method: options.method || "GET",
         signal: controller.signal,
-        credentials: "omit",
+        // Retain same-origin preview access cookies; scoped bearer access still applies.
+        credentials: "same-origin",
         cache: "no-store",
         redirect: "error",
         mode: "same-origin",

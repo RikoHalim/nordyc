@@ -222,12 +222,35 @@ describe("request boundaries and bounded transport", () => {
     expect(request.body).toBe(JSON.stringify(body));
     expect(String(request.body)).not.toContain(credential);
     expect(request).toMatchObject({
-      credentials: "omit",
+      credentials: "same-origin",
       cache: "no-store",
       redirect: "error",
       mode: "same-origin",
     });
     expect(storage).not.toHaveBeenCalled();
+  });
+
+  it("retains same-origin preview access without accepting absolute destinations or following sign-in redirects", async () => {
+    const fetch = vi.fn().mockResolvedValue(json(courses.response));
+    vi.stubGlobal("fetch", fetch);
+    const api = new ApiClient(credential);
+    await api.get(path, "CoursePage");
+    const request = fetch.mock.calls[0][1] as RequestInit;
+    expect(request).toMatchObject({
+      credentials: "same-origin",
+      redirect: "error",
+      mode: "same-origin",
+      headers: { Authorization: `Bearer ${credential}` },
+    });
+    for (const destination of [
+      `${window.location.origin}${path}`,
+      "https://replit.com/__replshield",
+    ])
+      await expect(api.get(destination, "CoursePage")).rejects.toMatchObject({
+        code: "INVALID_RESPONSE",
+      });
+    expect(fetch).toHaveBeenCalledOnce();
+    expect(fetch.mock.calls[0][0]).toBe(path);
   });
 
   it("uploads PDF bytes directly instead of wrapping them in JSON", async () => {
