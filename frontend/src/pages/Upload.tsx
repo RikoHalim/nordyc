@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowRight, FileCheck2, FileText, UploadCloud } from "lucide-react";
 import { useWorkspace } from "../app/workspace";
 import { ApiError, validateResponse } from "../api/client";
 import { humanise, isPending, type Course, type Model } from "../api/types";
 import { useResource } from "../lib/resource";
+import GenerateReview from "../components/GenerateReview";
 import { validatePdfOrigin } from "../lib/catalogue-origin";
 export { validatePdfOrigin } from "../lib/catalogue-origin";
 import {
@@ -110,6 +111,22 @@ export default function UploadPage() {
     next.set("job", id);
     setParams(next);
   };
+  useEffect(() => {
+    if (!revisionId || !importFinished || params.get("revision") === revisionId)
+      return;
+    // Follow the imported revision, rather than the previous upload's results.
+    const next = new URLSearchParams(params);
+    next.set("revision", revisionId);
+    for (const stale of [
+      "analysis",
+      "career",
+      "plan",
+      "careerOffset",
+      "planOffset",
+    ])
+      next.delete(stale);
+    setParams(next);
+  }, [revisionId, importFinished, params, setParams]);
   if (!access.permissions.includes("write"))
     return (
       <>
@@ -492,6 +509,13 @@ export default function UploadPage() {
           The revision loaded without courses. Check the original document and
           use reviewed input; this is not a completed course inventory.
         </Empty>
+      )}
+      {extracted.data && readyCourseCount > 0 && (
+        <GenerateReview
+          key={revisionId}
+          revisionId={revisionId}
+          courseCount={readyCourseCount}
+        />
       )}
       {extracted.data && readyCourseCount > 0 && (
         <Card title="Review extracted courses">

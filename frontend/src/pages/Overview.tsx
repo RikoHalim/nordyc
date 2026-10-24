@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useWorkspace } from "../app/workspace";
 import { useResource } from "../lib/resource";
+import GenerateReview from "../components/GenerateReview";
 import type { Model, Page, CareerRun } from "../api/types";
 import {
   Badge,
@@ -114,6 +115,9 @@ export default function Overview() {
         These counts describe available records and evidence. They do not
         measure programme quality or certify a complete graduation curriculum.
       </Notice>
+      {!careers.length && (
+        <GenerateReview key={revisionId} courseCount={coverage.course_count} />
+      )}
       <div className="card-grid">
         <Card eyebrow="Evidence first" title="Know what is documented">
           <p>

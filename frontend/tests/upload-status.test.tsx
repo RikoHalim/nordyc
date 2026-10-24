@@ -1,7 +1,19 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { MemoryRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  MemoryRouter,
+  Outlet,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import courseFixture from "../../examples/api/courses.synthetic.json";
 import { ApiClient } from "../src/api/client";
 import { Workspace, type WorkspaceContext } from "../src/app/workspace";
@@ -108,11 +120,14 @@ function coursePage(items: Course[]) {
     programme_revision_id: revision.id,
   };
 }
-function renderUpload(job?: Model<"JobRead">, workspace = context) {
+function UploadLocation() {
+  return <p data-testid="upload-location">{useLocation().search}</p>;
+}
+function renderUpload(job?: Model<"JobRead">, workspace = context, query = "") {
   return render(
     <MemoryRouter
       initialEntries={[
-        `/programmes/${context.programme.id}/upload${job ? `?job=${job.id}` : ""}`,
+        `/programmes/${context.programme.id}/upload${job ? `?job=${job.id}` : ""}${query}`,
       ]}
     >
       <Routes>
@@ -124,7 +139,15 @@ function renderUpload(job?: Model<"JobRead">, workspace = context) {
             </Workspace.Provider>
           }
         >
-          <Route path="upload" element={<UploadPage />} />
+          <Route
+            path="upload"
+            element={
+              <>
+                <UploadPage />
+                <UploadLocation />
+              </>
+            }
+          />
         </Route>
       </Routes>
     </MemoryRouter>,
@@ -134,6 +157,39 @@ function renderUpload(job?: Model<"JobRead">, workspace = context) {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("curriculum upload status and review readiness", () => {
+  it("follows the extracted revision and clears previous assessment selections", async () => {
+    const job = uploadJob();
+    const course = {
+      ...courseFixture.response.items[0],
+      id: id(5),
+      programme_revision_id: revision.id,
+    } as Course;
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: string) =>
+        Promise.resolve(
+          json(input.includes("/catalogue/jobs/") ? job : coursePage([course])),
+        ),
+      ),
+    );
+    renderUpload(
+      job,
+      context,
+      `&revision=${id(99)}&analysis=${id(98)}&career=${id(97)}&plan=${id(96)}`,
+    );
+    await waitFor(() =>
+      expect(screen.getByTestId("upload-location")).toHaveTextContent(
+        `revision=${revision.id}`,
+      ),
+    );
+    const query = screen.getByTestId("upload-location").textContent || "";
+    expect(query).not.toContain("analysis=");
+    expect(query).not.toContain("career=");
+    expect(query).not.toContain("plan=");
+    expect(
+      await screen.findByRole("button", { name: "Generate results" }),
+    ).toBeEnabled();
+  });
   it("accepts only matching authorised HTTPS origins, including equivalent www hosts", () => {
     expect(
       validatePdfOrigin(

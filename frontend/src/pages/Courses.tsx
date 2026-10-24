@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useWorkspace } from "../app/workspace";
 import { useResource } from "../lib/resource";
+import GenerateReview from "../components/GenerateReview";
 import { ApiError, validateResponse } from "../api/client";
 import {
   dateLabel,
@@ -222,6 +223,7 @@ export default function Courses() {
           </button>
         ))}
       </div>
+      <GenerateReview key={revisionId} courseCount={courses.length} />
       <div className="analysis-toolbar">
         <div>
           <h2>Course intelligence</h2>

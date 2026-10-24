@@ -13,6 +13,7 @@ import type {
 import { dateLabel, humanise, isPending } from "../api/types";
 import { useWorkspace } from "../app/workspace";
 import { useResource } from "../lib/resource";
+import GenerateReview from "../components/GenerateReview";
 import {
   safeCareerResult,
   safePlanResult,
@@ -696,7 +697,7 @@ function RecommendationReview({
 function Recommendations({ state, path }: { state: Results; path: string }) {
   const { api } = useWorkspace();
   const key =
-    state.careerResult && state.careerRun
+    state.careerResult?.recommendations?.length && state.careerRun
       ? `${state.careerRun.id}:${state.careerRun.fingerprint}:recommendations`
       : null;
   const records = useResource(key, async (signal) => ({
@@ -707,6 +708,32 @@ function Recommendations({ state, path }: { state: Results; path: string }) {
       signal,
     ),
   }));
+  if (state.careerResult && !state.careerResult.recommendations?.length)
+    return (
+      <Empty
+        title={
+          state.careerResult.status === "insufficient_evidence"
+            ? "Assessment finished — more evidence needed"
+            : "Assessment finished — no supported proposals recorded"
+        }
+      >
+        <p>
+          No academic changes are recommended by this result. This is not a
+          judgement that the programme is good, bad or obsolete.
+        </p>
+        <p>
+          Next: review the extracted courses, then add reviewed occupation
+          requirements and relevant curriculum passages. Course titles alone
+          cannot establish what is taught.
+        </p>
+        {Boolean(state.careerResult.limitations?.length) && (
+          <details>
+            <summary>What this assessment could not establish</summary>
+            <TextList items={state.careerResult.limitations} />
+          </details>
+        )}
+      </Empty>
+    );
   if (records.loading)
     return <Loading label="Loading exact recommendation versions" />;
   if (records.error)
@@ -1438,7 +1465,10 @@ export default function IntelligencePage({ section }: { section: string }) {
   else if (state.loading) content = <Loading />;
   else if (state.error)
     content = <ErrorState error={state.error} retry={state.reload} />;
-  else if (state.careerRun?.needs_evidence_revalidation)
+  else if (
+    state.careerRun?.needs_evidence_revalidation &&
+    !isPending(state.careerRun.status)
+  )
     content = (
       <Notice tone="caution">
         This assessment is stale or its evidence is restricted. Source-derived
@@ -1465,6 +1495,31 @@ export default function IntelligencePage({ section }: { section: string }) {
         authorised operator before deliberately resubmitting.
       </Empty>
     );
+  else if (!state.careerRun)
+    content = (
+      <Empty
+        title={
+          needsPlan
+            ? "Start with a career assessment"
+            : "Assessment not started for this revision"
+        }
+      >
+        <p>
+          Uploading a PDF extracts course candidates. It does not automatically
+          analyse careers or create recommendations.
+        </p>
+        <p>
+          Next: check the extracted courses, then ask an authorised operator to
+          generate a review. Missing evidence will stay explicit.
+        </p>
+        {needsPlan && (
+          <p>
+            An Action Plan needs a completed career assessment, supported
+            recommendations and consideration review first.
+          </p>
+        )}
+      </Empty>
+    );
   else if (!state.careerResult)
     content = (
       <Empty title="No completed career assessment for this revision">
@@ -1477,7 +1532,11 @@ export default function IntelligencePage({ section }: { section: string }) {
     content = <Loading label="Loading the selected action plan" />;
   else if (needsPlan && state.planError)
     content = <ErrorState error={state.planError} retry={state.reload} />;
-  else if (needsPlan && state.planRun?.needs_evidence_revalidation)
+  else if (
+    needsPlan &&
+    state.planRun?.needs_evidence_revalidation &&
+    !isPending(state.planRun.status)
+  )
     content = (
       <Notice tone="caution">
         Action-plan evidence or parent review has changed. Derived proposals and
@@ -1503,10 +1562,24 @@ export default function IntelligencePage({ section }: { section: string }) {
     );
   else if (needsPlan && !state.planResult)
     content = (
-      <Empty title="No completed action plan for this assessment">
-        Recommendations need explicit consideration review and eligible
-        evidence. An authorised operator can submit an offline plan; generation
-        never grants academic approval.
+      <Empty
+        title={
+          state.planRun
+            ? "No completed action plan for this assessment"
+            : "Action plan not started"
+        }
+      >
+        <p>
+          A plan builds on a completed career assessment, admissible
+          recommendations and their consideration review. Uploading a PDF alone
+          does not create a plan.
+        </p>
+        <p>
+          {state.careerResult.recommendations?.length
+            ? "Next: review the supported recommendations before an authorised operator prepares the plan."
+            : "Next: strengthen the career assessment evidence. No supported recommendation is recorded for this assessment yet."}
+        </p>
+        <p>Generation never grants academic approval.</p>
       </Empty>
     );
   else {
@@ -1566,6 +1639,15 @@ export default function IntelligencePage({ section }: { section: string }) {
           run={needsPlan && state.planRun ? state.planRun : state.careerRun}
         />
       )}
+      {!state.loading &&
+        !state.error &&
+        (!state.careerRun ||
+          (needsPlan && state.careerResult && !state.planRun)) && (
+          <GenerateReview
+            key={`${revisionId}:${state.careerId || ""}`}
+            careerId={state.careerResult ? state.careerRun?.id : undefined}
+          />
+        )}
       {content}
       <OfflineGeneration state={state} />
     </>

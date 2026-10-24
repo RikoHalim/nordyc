@@ -204,6 +204,29 @@ beforeEach(() => {
 });
 
 describe("fresh structured result gates", () => {
+  it("shows status only for a queued assessment before its evidence packet is ready", () => {
+    resultsMock.mockReturnValue(
+      state({
+        careerRun: {
+          ...careerRun(),
+          status: "QUEUED",
+          needs_evidence_revalidation: true,
+          result_json: { private: "QUEUED-PRIVATE-CANARY" },
+        },
+        careerResult: undefined,
+        planRun: undefined,
+        planResult: undefined,
+      }),
+    );
+    show("recommendations");
+    expect(screen.getByRole("status")).toHaveTextContent(
+      /Career assessment QUEUED/i,
+    );
+    expect(screen.queryByText(/QUEUED-PRIVATE-CANARY/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/This assessment is stale/),
+    ).not.toBeInTheDocument();
+  });
   it("parses actual OpenAPI result schemas only after source and completion guards", () => {
     expect(safeCareerResult(careerRun())?.status).toBe("insufficient_evidence");
     expect(
@@ -250,6 +273,102 @@ describe("fresh structured result gates", () => {
 });
 
 describe("analytical pages preserve uncertainty", () => {
+  it("explains that extraction has not started a career assessment without inventing recommendations", () => {
+    const api = new ApiClient("SYNTHETIC-TEST-ONLY");
+    const post = vi.spyOn(api, "post");
+    resultsMock.mockReturnValue(
+      state({
+        careerRun: undefined,
+        careerResult: undefined,
+        planRun: undefined,
+        planResult: undefined,
+      }),
+    );
+    show("recommendations", workspace(api));
+    expect(
+      screen.getByText("Assessment not started for this revision"),
+    ).toBeVisible();
+    expect(
+      screen.getByText(/Uploading a PDF extracts course candidates/),
+    ).toBeVisible();
+    expect(screen.queryByText(/Assessment finished/)).not.toBeInTheDocument();
+    expect(post).not.toHaveBeenCalled();
+  });
+
+  it("distinguishes a completed evidence-limited assessment from one never run", () => {
+    const api = new ApiClient("SYNTHETIC-TEST-ONLY");
+    vi.spyOn(api, "get").mockResolvedValue({
+      items: [],
+      total: 0,
+      limit: 100,
+      offset: 0,
+      needs_evidence_revalidation: false,
+    });
+    show("recommendations", workspace(api));
+    expect(
+      screen.getByText("Assessment finished — more evidence needed"),
+    ).toBeVisible();
+    expect(
+      screen.queryByText("Assessment not started for this revision"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(/No academic changes are recommended by this result/),
+    ).toBeVisible();
+    expect(screen.getByText("Fictional test data only.")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Record review decision" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("keeps a completed non-insufficient empty result neutral", () => {
+    const result = { ...careerResult(), status: "supported" as const };
+    resultsMock.mockReturnValue(
+      state({ careerResult: result, careerRun: careerRun(result) }),
+    );
+    show("recommendations");
+    expect(
+      screen.getByText("Assessment finished — no supported proposals recorded"),
+    ).toBeVisible();
+    expect(
+      screen.queryByText("Assessment finished — more evidence needed"),
+    ).not.toBeInTheDocument();
+  });
+
+  it("explains missing career prerequisites before an action plan exists", () => {
+    resultsMock.mockReturnValue(
+      state({
+        careerRun: undefined,
+        careerResult: undefined,
+        planRun: undefined,
+        planResult: undefined,
+      }),
+    );
+    show("plan");
+    expect(screen.getByText("Start with a career assessment")).toBeVisible();
+    expect(
+      screen.getByText(/An Action Plan needs a completed career assessment/),
+    ).toBeVisible();
+    expect(
+      screen.queryByText(/01 · Programme overview/),
+    ).not.toBeInTheDocument();
+  });
+
+  it("explains a missing plan after a completed assessment without unsupported proposals", () => {
+    resultsMock.mockReturnValue(
+      state({ planRun: undefined, planResult: undefined }),
+    );
+    show("plan");
+    expect(screen.getByText("Action plan not started")).toBeVisible();
+    expect(
+      screen.getByText(
+        /No supported recommendation is recorded for this assessment yet/,
+      ),
+    ).toBeVisible();
+    expect(
+      screen.queryByText(/01 · Programme overview/),
+    ).not.toBeInTheDocument();
+  });
+
   it("shows insufficient occupation evidence instead of screenshot statistics", () => {
     show("industry");
     expect(screen.getByText("No reviewed occupational evidence")).toBeVisible();
