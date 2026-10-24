@@ -367,6 +367,7 @@ def retrieve_evidence(
                     "title",
                     "statement",
                     "occupation_label",
+                    "sector",
                     "task",
                     "capability",
                 )

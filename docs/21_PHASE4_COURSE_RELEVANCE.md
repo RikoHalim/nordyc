@@ -1,6 +1,6 @@
 # Phase 4 course relevance — operation and validation
 
-Implemented as a bounded backend extension on **24 October 2026**. [Phase 4.2 live backend acceptance](25_PHASE42_LIVE_BACKEND_VERIFICATION.md) now passes using Replit-managed `claude-opus-5`, two fictional courses and one permitted public ESCO excerpt. Brave live research remains pending; Gemini is discontinued for this MVP and disabled. [STATUS](../STATUS.md) distinguishes actual live acceptance from offline/mocked tests and evidence limitations. Phase 5 recommendations, Phase 6 pathways/scenarios, frontend and deployment remain unimplemented.
+Implemented as a bounded backend extension on **24 October 2026**. [Phase 4.2 live backend acceptance](25_PHASE42_LIVE_BACKEND_VERIFICATION.md) passes using Replit-managed `claude-opus-5`, two fictional courses and one permitted public ESCO excerpt. [Phase 4.3](26_PHASE43_BRAVE_SEARCH_VERIFICATION.md) passed one real Brave search; original-source admission remains blocked, so research acceptance is PARTIAL. Gemini is discontinued for this MVP and disabled. [STATUS](../STATUS.md) distinguishes actual live acceptance from offline/mocked tests and evidence limitations. Phase 5 recommendations, Phase 6 pathways/scenarios, frontend and deployment remain unimplemented.
 
 ## Stack and retained boundaries
 

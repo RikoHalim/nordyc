@@ -29,6 +29,8 @@ Phase 2–3 supply curriculum providers and source-specific evidence adapters. P
 
 The separate durable worker uses `QUEUED|RUNNING|SUCCEEDED|PARTIAL|FAILED`; it now also processes programme-targeted analysis jobs. Phase 3 external imports retain their separate evidence jobs. The existing institution/revision constraint is not a generic external-research target. Slow HTTP submissions return202/job IDs rather than performing provider work in requests.
 
+[Phase 4.3](26_PHASE43_BRAVE_SEARCH_VERIFICATION.md) adds safe Brave HTTP/count/duration/quota audit metadata and separates actual `search_request_count` from cached logical query evaluations. Search results remain transient candidates; default caches contain operational decisions and registered source lineage only. Live Brave transport passed, while exact source registration and original robots verification still block admission. No schema, provider, worker or evidence-policy replacement is implied.
+
 ## Reproducibility and evidence gates
 
 Future runs reference programme revision, source versions/hashes, dated signal snapshots, assumptions, rule version and model/prompt version if used. Results are immutable; evidence refresh creates a new run. Unrelated source changes should not alter unrelated discipline findings.

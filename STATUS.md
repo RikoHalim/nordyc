@@ -1,6 +1,34 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24: Phase 4.2 PASS / COMPLETE for bounded live backend integration.** The real protected FastAPI → background worker → Replit-managed **`claude-opus-5`** → PostgreSQL → protected FastAPI workflow passed on **two fictional courses**, with three validated citations and independently committed database results. **770 automated tests passed**, including all **13 PostgreSQL cases**, both locally and in Replit. Gemini stays disabled; Replit remains hosting; Brave live verification is separately **PENDING**. Phase 5–8 remain pending. This current record supersedes all historical partial/blocked snapshots below; it does not establish academic accuracy on real curricula.
+**As of 2026-10-25: Phase 4.2 remains PASS / COMPLETE; Phase 4.3 is PARTIAL.** One authorised live Brave Search request returned HTTP **200**, but no new original-source evidence was admitted. The separate registered DOSM original check stopped at `robots_unavailable`. **788 automated tests passed**, including all **14 PostgreSQL cases**, both locally and in Replit. The previously accepted protected FastAPI → worker → Replit-managed **`claude-opus-5`** → PostgreSQL → protected FastAPI result remains historical live proof; no Claude request was repeated in Phase 4.3. Gemini stays disabled; Replit remains hosting. Phase 5–8 remain pending. This current record supersedes historical status snapshots below and does not establish academic accuracy on real curricula.
+
+## Phase 4.3 live Brave and source-admission verification — 24–25 October 2026
+
+See [the complete configuration, source-policy and verification record](docs/26_PHASE43_BRAVE_SEARCH_VERIFICATION.md). Work is confined to **`codex/replit-managed-ai`**, based on published Phase 4.2 receipt **`0113b00606b32f28ec7fbeddaca409d4f6fbdd0e`**. Phase 4.3 publication is pending final staged review; this line will receive the verified implementation commit after push. Main and the Gemini branch are excluded from this work.
+
+The owner personally supplied `BRAVE_SEARCH_API_KEY` through Replit Secrets and approved **exactly one Brave request, up to $0.05**, followed by at most one permitted DOSM original download. The approved test enabled research only in its Settings object. Persistent `RESEARCH_ENABLED=false` and `ANALYSIS_EXTERNAL_PROCESSING_ALLOWED=false` were preserved. No Claude/Gemini call, retry, repair generation or additional paid research attempt occurred.
+
+| Phase 4.3 check | Actual result |
+|---|---|
+| Non-billable preflight | Credential present, expected endpoint and existing source permissions checked; **0** HTTP/model requests |
+| Live Brave API | **1** request, HTTP **200**, **10** web results / **10** filtered unique HTTPS candidate pointers, **1,156.641 ms**, no retry |
+| Query / completion time | `site:open.dosm.gov.my Malaysia employment sector statistics`; **2026-10-24T15:52:26.516764+00:00** (**23:52:26.516764 Asia/Makassar**) |
+| Result admission | **0** exact registered URL matches; `unregistered_sources_require_operator_policy`; unknown URLs/titles/snippets/raw bodies not retained under the existing storage policy |
+| Independent registered original | Existing `D-EMPLOYMENT-SECTOR` DOSM CSV through the secure acquisition pipeline: **FAILED**, `robots_unavailable`; this is not a source selected from the returned search pointers |
+| Live PostgreSQL evidence | Registry metadata, failed job and operational research audit retained; **0** new source versions/observations/excerpts/citations; `INSUFFICIENT_EVIDENCE`, analysis blocked by original acquisition |
+| Live source → analysis/citation acceptance | **NOT REACHED**; no snippet, fabricated fact or synthetic substitute admitted as a live original |
+| Billing / quota | `observed_cost=null`, actual charge unavailable. Numeric quota headers available. **$0.005** is only the published per-request price estimate, not an invoice or a claim that the request was free |
+| Full local regression suite | Python **3.13.13**, PostgreSQL **16.15**: **788 passed, 0 failed/skipped**, **14 PostgreSQL cases included**, **88.37 s** |
+| Full Replit regression suite | Python **3.12.12**, PostgreSQL **16.15**: **788 passed, 0 failed/skipped**, **14 PostgreSQL cases included**, **50.84 s**; provider credentials removed from test subprocess |
+| Other checks | Application Ruff lint/format, dependency integrity, existing Alembic migration/schema/SQL checks **PASS**; single head **`0005_programme_analysis`**. One existing Starlette/httpx warning remains. Git/secret/link checks are recorded with publication below |
+
+The **18** additional cases cover safe HTTP/quota/attempt accounting, missing/disabled credentials, 400/401/403/429/500 and malformed replies, pointer deduplication, positive/negative cache accounting and acceptance bounds. The new PostgreSQL case exercises a **mocked** Brave response and the existing golden DOSM excerpt through deterministic parsing, persisted provenance, candidate retrieval, **mocked** Claude worker, protected API and independent committed read, including fabricated-quote rejection. It proves software behaviour, not live source admission or real curriculum accuracy. The baseline is **770 → 788** total tests and **13 → 14** PostgreSQL cases; the historical Gemini suite belongs to another branch.
+
+Narrow changes add safe Brave request metadata, distinguish actual `search_request_count` from logical/cached query count, deduplicate discovery pointers, include the existing `sector` fact in lexical candidate matching, and provide a one-attempt receipt-guarded acceptance driver. Existing academic schemas, source permissions, SSRF/DNS pinning/robots checks, deterministic workforce calculations, providers, tables and migrations remain intact. No search content becomes evidence by virtue of appearing in a result.
+
+**Remaining gate:** exact candidate registration and source-rights review, followed by a permitted original acquisition or independently authenticated manual original, actual PostgreSQL admission and analysis/citation recheck. `robots_unavailable` does not establish an explicit publisher `Disallow` or an exact upstream HTTP status. No authentic local original was available for manual fallback; the historical Phase 3 **225-record** import is not a new Phase 4.3 result. Further paid research needs fresh approval. The isolated test database and audit receipts are retained under ignored `data/local`; its server is stopped after checks. Ambient/shared database configuration was not used or changed. Normal Replit app startup still needs its explicitly selected valid development PostgreSQL URL.
+
+**Stop boundary:** Phase 4.3 is **PARTIAL**, with live Brave transport verified and live evidence admission blocked. Phase 4.2's completed backend proof remains valid. Phase 5 planning can reflect these limits, but live research evidence must not be advertised as available; no Phase 5 implementation, merge or public deployment is authorised by this report.
 
 ## Phase 4.2 completed live backend acceptance — 24 October 2026
 
