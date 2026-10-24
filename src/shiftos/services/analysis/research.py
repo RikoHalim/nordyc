@@ -19,7 +19,7 @@ from shiftos.db.base import utc_now
 from shiftos.models.analysis import ResearchCache
 from shiftos.models.evidence import Dataset, DatasetVersion, EvidenceReference
 from shiftos.repositories.evidence import MODELS
-from shiftos.services.analysis.providers import BraveSearch, ProviderError
+from shiftos.services.analysis.providers import BraveSearch, ProviderError, _brave_quota
 from shiftos.services.evidence.acquisition import DatasetFetcher
 from shiftos.services.evidence.pipeline import AcquisitionRule, run_ingestion
 from shiftos.services.evidence.registry import read_registry
@@ -65,6 +65,32 @@ class ResearchPolicy(BaseModel):
     cache_ttl_seconds: int = Field(default=3600, ge=60, le=86400)
     negative_cache_ttl_seconds: int = Field(default=300, ge=30, le=3600)
     search_result_storage_allowed: bool = False
+
+
+def _search_metadata(search) -> dict:
+    """Operational audit only; discovery bodies and arbitrary keys stay transient."""
+    raw = getattr(search, "last_response_metadata", {})
+    if not isinstance(raw, dict) or raw.get("provider") != "brave":
+        return {}
+    safe = {"provider": "brave", "observed_cost": None}
+    for key, maximum in (("request_count", 3), ("result_count", 1_000_000), ("pointer_count", 10)):
+        value = raw.get(key)
+        if type(value) is int and 0 <= value <= maximum:
+            safe[key] = value
+    if type(raw.get("http_status")) is int and 100 <= raw["http_status"] <= 599:
+        safe["http_status"] = raw["http_status"]
+    duration = raw.get("duration_ms")
+    if type(duration) in {int, float} and 0 <= duration <= 600_000:
+        safe["duration_ms"] = duration
+    quota = raw.get("quota")
+    if isinstance(quota, dict):
+        safe["quota"] = _brave_quota(
+            {f"X-RateLimit-{key}": value for key, value in quota.items() if isinstance(value, str)}
+        )
+    error = raw.get("error_code")
+    if isinstance(error, str) and error in ProviderError.messages:
+        safe["error_code"] = error
+    return safe
 
 
 def _canonical_url(value: str) -> str | None:
@@ -258,6 +284,7 @@ class ResearchService:
             "outcomes": [],
             "status": "INSUFFICIENT_EVIDENCE",
             "requires_sufficiency_recheck": True,
+            "search_request_count": 0,
         }
         if is_synthetic:
             return {
@@ -398,6 +425,10 @@ class ResearchService:
                         continue
                     finally:
                         self._last_search_at = self.monotonic()
+                        metadata = _search_metadata(search)
+                        if metadata:
+                            attempt["search_metadata"] = metadata
+                            result["search_request_count"] += metadata.get("request_count", 0)
                 # Persist only minimal pointers when the plan explicitly permits result storage.
                 cache = {"status": "discovered", "verified_imports": []}
                 if policy.search_result_storage_allowed:

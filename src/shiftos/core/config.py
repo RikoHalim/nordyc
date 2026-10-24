@@ -84,6 +84,8 @@ class Settings(BaseSettings):
     research_timeout_seconds: int = Field(default=180, ge=1, le=180)
     analysis_provider_timeout_seconds: int = Field(default=20, ge=1, le=60)
     analysis_provider_max_attempts: int = Field(default=3, ge=1, le=3)
+    analysis_validation_max_attempts: int = Field(default=2, ge=1, le=2)
+    analysis_provider_max_request_bytes: int = Field(default=1_000_000, ge=1024, le=1_000_000)
 
     @field_validator("gemini_model")
     @classmethod

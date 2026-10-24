@@ -15,6 +15,7 @@ from shiftos.services.analysis.providers import (
     GeminiProvider,
     ProviderError,
     ReplitClaudeProvider,
+    _claude_transport_schema,
 )
 
 SECRET = "SYNTHETIC-MANAGED-TEST-CREDENTIAL"
@@ -111,13 +112,17 @@ def test_exact_managed_endpoint_headers_model_schema_and_metadata(base, expected
     assert body["output_config"]["format"]["type"] == "json_schema"
     assert "untrusted data" in body["system"]
     assert all(key not in body for key in ("tools", "mcp_servers", "web_search", "thinking"))
-    assert provider.last_response_metadata == {
+    assert provider.last_response_metadata["duration_ms"] >= 0
+    assert {
+        key: value for key, value in provider.last_response_metadata.items() if key != "duration_ms"
+    } == {
         "provider": "replit_claude",
         "requested_model": "claude-opus-5",
         "actual_model": "claude-opus-5-20261001",
         "usage": {"input_tokens": 31, "output_tokens": 7},
         "request_count": 1,
         "observed_cost": None,
+        "http_status": 200,
     }
 
 
@@ -369,6 +374,141 @@ def test_transport_schema_copy_open_maps_and_original_validation_limits():
         )
 
 
+def _resolve_schema_ref(root, ref):
+    target = root
+    for component in ref[2:].split("/"):
+        target = target[component.replace("~1", "/").replace("~0", "~")]
+    return target
+
+
+def _expanded_optional_property_occurrences(schema):
+    occurrences = []
+
+    def visit(node, path="$", ref_stack=()):
+        if isinstance(node, list):
+            for index, item in enumerate(node):
+                visit(item, f"{path}[{index}]", ref_stack)
+            return
+        if not isinstance(node, dict):
+            return
+        ref = node.get("$ref")
+        if isinstance(ref, str) and ref.startswith("#/") and ref not in ref_stack:
+            visit(_resolve_schema_ref(schema, ref), path, (*ref_stack, ref))
+        properties = node.get("properties")
+        if isinstance(properties, dict):
+            required = set(node.get("required", []))
+            for name, child in properties.items():
+                if name not in required:
+                    occurrences.append(f"{path}.{name}")
+                visit(child, f"{path}.{name}", ref_stack)
+        for name, child in node.items():
+            if name not in {"$ref", "properties", "$defs", "definitions"}:
+                visit(child, f"{path}.{name}", ref_stack)
+
+    visit(schema)
+    return occurrences
+
+
+def _contains_keyword(value, keyword):
+    if isinstance(value, dict):
+        return keyword in value or any(
+            _contains_keyword(child, keyword) for child in value.values()
+        )
+    if isinstance(value, list):
+        return any(_contains_keyword(child, keyword) for child in value)
+    return False
+
+
+def test_claude_transport_requires_ref_expanded_fields_and_preserves_defaults():
+    schema = ProgrammeResult.model_json_schema()
+    original = deepcopy(schema)
+    transport = _claude_transport_schema(schema)
+
+    assert len(_expanded_optional_property_occurrences(schema)) == 25
+    assert _expanded_optional_property_occurrences(transport) == []
+    assert schema == original
+    assert not _contains_keyword(transport, "default")
+    assert transport["required"] == list(transport["properties"])
+    dimension = transport["$defs"]["DimensionFinding"]
+    assert dimension["required"] == list(dimension["properties"])
+    insights = transport["$defs"]["ProgrammeInsights"]
+    assert insights["required"] == list(insights["properties"])
+    assert (
+        json.dumps(schema["properties"]["schema_version"]["default"])
+        in transport["properties"]["schema_version"]["description"]
+    )
+    assert (
+        json.dumps(
+            schema["$defs"]["CourseFindingResult"]["properties"]["is_final_curriculum_verdict"][
+                "default"
+            ]
+        )
+        in transport["$defs"]["CourseFindingResult"]["properties"]["is_final_curriculum_verdict"][
+            "description"
+        ]
+    )
+    assert (
+        json.dumps(schema["$defs"]["ProgrammeSummary"]["properties"]["notice"]["default"])
+        in transport["$defs"]["ProgrammeSummary"]["properties"]["notice"]["description"]
+    )
+
+
+def test_default_valued_programme_output_still_validates():
+    dimension = {"status": "insufficient_evidence"}
+    payload = {
+        "programme_revision_id": "00000000-0000-0000-0000-000000000001",
+        "is_synthetic": True,
+        "result_mode": "offline_synthetic",
+        "courses": [
+            {
+                "course_id": "00000000-0000-0000-0000-000000000002",
+                "course_name": "SYNTHETIC Irrigation Systems",
+                "evidence_level": "title_only",
+                "needs_syllabus_confirmation": True,
+                "review_flag": "needs_syllabus_confirmation",
+                "foundational_relevance": dimension,
+                "ai_transformation": dimension,
+                "workforce_alignment": dimension,
+                "curriculum_currency": dimension,
+                "future_resilience": dimension,
+            }
+        ],
+        "summary": {
+            "inventory_count": 1,
+            "returned_count": 1,
+            "review_required_count": 1,
+            "insufficient_evidence_count": 1,
+        },
+    }
+
+    with_defaults = ProgrammeResult.model_validate(payload)
+    explicit_defaults = with_defaults.model_dump(mode="json")
+    assert explicit_defaults["schema_version"] == "phase4-result-1"
+    course = explicit_defaults["courses"][0]
+    assert course["is_final_curriculum_verdict"] is False
+    for dimension_name in (
+        "foundational_relevance",
+        "ai_transformation",
+        "workforce_alignment",
+        "curriculum_currency",
+        "future_resilience",
+    ):
+        finding = course[dimension_name]
+        assert finding["citations"] == []
+        assert finding["review_questions"] == []
+        assert finding["limitations"] == []
+    assert explicit_defaults["summary"]["notice"] == ProgrammeSummary.model_fields["notice"].default
+    assert explicit_defaults["insights"] == {
+        "verified_curriculum_evidence": [],
+        "ai_task_developments": [],
+        "potential_coverage_questions": [],
+        "review_course_ids": [],
+        "demand_context": [],
+        "unknowns": [],
+    }
+    assert ProgrammeResult.model_validate(explicit_defaults) == with_defaults
+
+
 def test_request_response_size_and_worker_deadline_bounds():
     with httpx.Client(
         transport=httpx.MockTransport(lambda _: pytest.fail("No request expected"))
@@ -398,3 +538,30 @@ def test_request_response_size_and_worker_deadline_bounds():
 def test_output_token_bound_is_validated(tokens):
     with pytest.raises(ValidationError):
         configured(claude_max_output_tokens=tokens)
+
+
+@pytest.mark.parametrize("status", [400, 401, 429, 500])
+def test_http_error_status_is_safe_and_single_attempt(status):
+    with httpx.Client(
+        transport=httpx.MockTransport(
+            lambda _: httpx.Response(status, json={"error": {"message": SECRET}})
+        )
+    ) as client:
+        provider = ClaudeProvider(configured(analysis_provider_max_attempts=1), client)
+        with pytest.raises(ProviderError):
+            provider.generate({}, {})
+    assert provider.request_attempts == 1
+    assert provider.last_response_metadata["http_status"] == status
+    assert provider.last_response_metadata["duration_ms"] >= 0
+    assert SECRET not in json.dumps(provider.last_response_metadata)
+
+
+def test_configured_request_byte_cap_refuses_before_transport():
+    with httpx.Client(
+        transport=httpx.MockTransport(lambda _: pytest.fail("No HTTP allowed"))
+    ) as client:
+        provider = ClaudeProvider(configured(analysis_provider_max_request_bytes=1024), client)
+        with pytest.raises(ProviderError) as error:
+            provider.generate({"oversize": "X" * 1024}, {})
+    assert error.value.code == "provider_request_invalid"
+    assert provider.request_attempts == 0
