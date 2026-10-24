@@ -1,0 +1,16 @@
+modules = ["python-3.12"]
+
+[nix]
+channel = "stable-25_05"
+
+[agent]
+expertMode = true
+
+[userenv]
+
+[userenv.shared]
+ANALYSIS_EXTERNAL_PROCESSING_ALLOWED = "false"
+ANALYSIS_GEMINI_FALLBACK_ENABLED = "false"
+ANALYSIS_MODEL_PROVIDER = "replit_claude"
+CLAUDE_ENABLED = "true"
+CLAUDE_MODEL = "claude-opus-5"
