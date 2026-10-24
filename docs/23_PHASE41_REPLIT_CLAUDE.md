@@ -12,6 +12,8 @@ Replit documents paid-plan access, organization controls and an approval flow fo
 
 ## Replit handover
 
+The implementation was published to `origin/main` as [ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb](https://github.com/RikoHalim/shift-os/commit/ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb), with the exact remote SHA verified after push. A subsequent documentation-only publication record may be the branch tip. Compare the imported tip with the final publication report; the linked implementation is the tested code baseline, not a reason to discard later documentation. [STATUS](../STATUS.md) records the checks and publication scope.
+
 Use a separate development workspace and database for this verification. Import [RikoHalim/shift-os](https://github.com/RikoHalim/shift-os) through **Import → GitHub**, selecting `main`, after the publication report confirms the new commit. Replit's [GitHub import instructions](https://docs.replit.com/build/import-from-providers) describe connecting the repository. For an already imported workspace, inspect local changes and use the [Git pane's Pull action](https://docs.replit.com/features/workspace-tools/git-interface). Do not overwrite divergent work. The Shell equivalent below stops if a fast-forward is impossible:
 
 ```bash
