@@ -1,6 +1,6 @@
 # Phase 6 — Academic Reskilling Pathways, scenarios and action reporting
 
-**Planning specification, not available functionality.** Phase 4 remains the current implementation priority; Phase 5 Future Career Alignment and academic intervention comparison precede this extension. No pathways, scenarios, resources catalogue or student-facing modules are implemented by this documentation change. Extend the existing Academic Decision Studio and Academic Action Plans after explicit Phase 6 authorization.
+**Phase 6 implementation is documented in [Phase 6 methodology and acceptance](28_PHASE6_ACADEMIC_PATHWAYS_ACTION_PLANS.md).** The following design contract remains relevant; exact executable schemas, routes and measured tests are in the runbook/STATUS. This phase adds institutional pathways/scenarios/SDG/Action Plans, with no student-facing platform or deployment.
 
 ## Ordered Academic Reskilling Pathways
 
@@ -47,6 +47,6 @@ Use the official Phase 3 UN goal/target identifiers and descriptions. Map a path
 
 Produce a draft structured programme plan joining Future Career Alignment, evidence-supported or uncertain competency gaps, the primary minimum sufficient intervention, alternatives/no change, ordered pathway steps, scenarios and reassessment triggers. Include institution/programme, inventory coverage/all reviewed courses, title-only warnings, source and observation dates, curriculum-versus-benchmark distinction, confidence/unknowns/disagreements, resource verification and duration bases, SDG rationale, feasibility assumptions, approval status and next evidence required. A plan proposes academic action; it does not authorize curriculum changes or certify graduate competence.
 
-Use versioned structured JSON and, if useful, Markdown export first; full PDF generation is optional later. Export only permitted source material, maintaining provenance even when an excerpt cannot be redistributed. Future persistence/API additions belong in [the data model](03_DATA_MODEL.md) and [API contract](10_API_CONTRACT.md); no executable schema or endpoint is added here.
+Use versioned structured JSON and, if useful, Markdown export first; full PDF generation is optional later. Export only permitted source material, maintaining provenance even when an excerpt cannot be redistributed. Implemented persistence/API contracts are in [the data model](03_DATA_MODEL.md), [API contract](10_API_CONTRACT.md) and the Phase 6 runbook. PDF/export/UI work remains deferred.
 
 Future acceptance covers ordered dependencies, prerequisites and duration/resource abstention; appropriate assessment limits; proposed-versus-taught objectives; evidence citations and rights; justified SDG mappings; moderate/accelerated assumptions isolated from observations; frozen version replay and selective changed-evidence reassessment; unrelated discipline stability; alternatives/no change and human review; synthetic isolation; and source-auditable action-plan export. Institutional pathways do not establish compliance with the brief's personalised individual pathways; that substitution waiver remains [UNCONFIRMED](09_HACKATHON_COMPLIANCE.md).

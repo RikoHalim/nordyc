@@ -139,3 +139,7 @@ Phase 2 already implements institution-scoped URL identities, source/revision fi
 - `source_id` may be nullable for explicit synthetic/incomplete records (Phase 1 exposes `data_quality`); verified claims cannot omit provenance.
 - Store LLM extraction **candidate** separately from validated source-backed fact.
 - Delete/retire source via snapshot status rather than silent irreversible loss.
+
+## Phase 6 action-plan persistence
+
+Additive `0007_academic_action_plans` adds `action_plan_runs` (exact career/revision/job, frozen inputs/manifest/result), `plan_recommendations` (exact recommendation ID/run/revision/content-hash composite FK), and append-only `action_plan_reviews` (exact plan/revision/fingerprint). PostgreSQL triggers and ORM guards preserve terminal history; populated downgrade refuses data loss. Existing resources/source references, skills, occupations and official UN SDG tables are reused. See [Phase 6](28_PHASE6_ACADEMIC_PATHWAYS_ACTION_PLANS.md) for method, provenance and migration limits.

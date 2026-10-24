@@ -86,12 +86,27 @@ def _assert_metadata_matches(connection: Connection) -> None:
                 "career_runs",
                 "career_recommendations",
                 "career_reviews",
+                "action_plan_runs",
+                "plan_recommendations",
+                "action_plan_reviews",
             }:
                 table.to_metadata(metadata)
     elif revision == "0005_programme_analysis":
         metadata = MetaData(naming_convention=Base.metadata.naming_convention)
         for name, table in Base.metadata.tables.items():
-            if name not in {"career_runs", "career_recommendations", "career_reviews"}:
+            if name not in {
+                "career_runs",
+                "career_recommendations",
+                "career_reviews",
+                "action_plan_runs",
+                "plan_recommendations",
+                "action_plan_reviews",
+            }:
+                table.to_metadata(metadata)
+    elif revision == "0006_career_alignment":
+        metadata = MetaData(naming_convention=Base.metadata.naming_convention)
+        for name, table in Base.metadata.tables.items():
+            if name not in {"action_plan_runs", "plan_recommendations", "action_plan_reviews"}:
                 table.to_metadata(metadata)
     assert set(inspect(connection).get_table_names()) == set(metadata.tables) | {"alembic_version"}
     context = MigrationContext.configure(

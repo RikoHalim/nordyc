@@ -25,8 +25,12 @@ from shiftos.models.foundation import (
     ProgrammeRevision,
     Source,
 )
+from shiftos.models.pathways import ActionPlanReview, ActionPlanRun, PlanRecommendation
 
 __all__ = [
+    "ActionPlanRun",
+    "PlanRecommendation",
+    "ActionPlanReview",
     "CareerRun",
     "CareerRecommendation",
     "CareerReview",

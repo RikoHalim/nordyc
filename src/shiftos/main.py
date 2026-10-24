@@ -20,6 +20,7 @@ from shiftos.api.routers import (
     catalogue,
     evidence,
     health,
+    pathways,
     workforce_radar,
 )
 from shiftos.core.config import Settings
@@ -111,6 +112,7 @@ def create_app(settings: Settings | None = None, database: Database | None = Non
     application.include_router(catalogue.router)
     application.include_router(analysis.router)
     application.include_router(career.router)
+    application.include_router(pathways.router)
     application.add_middleware(BodyLimitMiddleware)
     return application
 

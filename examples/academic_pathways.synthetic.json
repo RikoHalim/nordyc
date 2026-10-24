@@ -1,0 +1,59 @@
+{
+  "fixture_id": "phase6-fictional-computing-pathways-1",
+  "is_synthetic": true,
+  "label": "Fictional academic planning demonstration. Reuses the Phase 5 synthetic computing programme, source passages, requirements and authenticated operator reviews; no real university outcome or approval is claimed.",
+  "parent_fixture": "career_alignment.synthetic.json",
+  "selected_competencies": ["model", "security"],
+  "unknown_competency": "governance",
+  "retained_competency": "sql",
+  "resources": [
+    {
+      "key": "model-workbook",
+      "title": "Synthetic Data Modelling Assessment Workbook",
+      "publisher": "Fictional Career Evidence University",
+      "url": "https://example.invalid/synthetic-modelling-workbook",
+      "skill": "model",
+      "resource_type": "university_learning_material",
+      "quote": "Fictional reviewed workbook: practise relational data modelling and justify schema constraints. Synthetic prerequisite: parameterised SQL construction. Provider planning duration: 3 learning hours and 1 assessment hour; these are separate activities. Access and cost are unknown; verification is required before use.",
+      "prerequisite_skill_keys": ["sql"],
+      "learning_hours": 3,
+      "assessment_hours": 1,
+      "cost_status": "unknown",
+      "label": "Entirely synthetic original-source fixture; no real provider, URL, resource availability, cost or teaching claim."
+    },
+    {
+      "key": "security-review",
+      "title": "Synthetic Threat Modelling Review Notes",
+      "publisher": "Synthetic Fixture Generator",
+      "url": "https://example.invalid/synthetic-threat-review",
+      "skill": "security",
+      "resource_type": "reviewed_training_material",
+      "quote": "Fictional reviewed notes describe an introduction to threat modelling for a proposed assessed practical activity. No duration, price, prerequisite or availability is documented; each remains unknown.",
+      "learning_hours": null,
+      "assessment_hours": null,
+      "cost_status": "unknown",
+      "label": "Entirely synthetic original-source fixture; this is not an actual training offer."
+    }
+  ],
+  "sdg_reference": {
+    "pack": "data/reference_packs/un-sdg-resolution.reviewed.json",
+    "goal": "4",
+    "target": "4.4",
+    "relationship": "A proposed, appropriately assessed technical-skill activity may contribute to the target's education and relevant technical-skill preparation intent. This is a bounded educational interpretation for review, not measured employment, proficiency or SDG achievement.",
+    "review_status": "Explicit fictional operator interpretation; UN target wording and identifiers come unchanged from the existing attributed official reference pack."
+  },
+  "scenarios": [
+    {
+      "key": "gradual",
+      "name": "Gradual workforce transformation",
+      "assumption": "Fictional planning assumption: uneven task adoption permits staged evidence review and a small assessed pilot before wider intervention. No adoption rate, placement forecast or probability is asserted."
+    },
+    {
+      "key": "accelerated",
+      "name": "Accelerated task change",
+      "assumption": "Fictional planning assumption: reviewers prioritise assessment scrutiny of the same admitted requirements sooner while retaining source uncertainty. No new competency, job forecast or compulsory curriculum change is inferred."
+    }
+  ],
+  "duration_limit": "Resource-stated effort is a planning input, not calendar scheduling, completion time or proof of competency. Missing durations stay null; explicit reviewer assumptions must be labelled separately.",
+  "human_review": "Authenticated synthetic operator records approval for consideration only. All pathway steps and the resulting action plan remain proposals requiring academic review."
+}

@@ -289,6 +289,7 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
                         "CURRICULUM_PDF_UPLOAD",
                         "PROGRAMME_ANALYSIS",
                         "CAREER_ANALYSIS",
+                        "ACTION_PLAN",
                     ]
                 ),
                 Job.status == JobStatus.QUEUED,
@@ -311,6 +312,11 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         session.commit()
         session.expunge(job)
     try:
+        if job.kind == "ACTION_PLAN":
+            from shiftos.services.pathways.orchestrator import process_plan_job
+
+            process_plan_job(database, job, settings)
+            return job.id
         if job.kind == "CAREER_ANALYSIS":
             from shiftos.services.career.orchestrator import process_career_job
 
@@ -343,7 +349,10 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
     except (FetchError, CurriculumParseError, DomainError, ValidationError) as exc:
         status, output = JobStatus.FAILED, None
         error = getattr(exc, "code", "INVALID_MANIFEST") + (
-            ": Career analysis failed; review frozen inventory, evidence and source permissions"
+            ": Action-plan generation failed; review parent findings and source permissions"
+            if job.kind == "ACTION_PLAN"
+            else ": Career analysis failed; review frozen inventory, evidence "
+            "and source permissions"
             if job.kind == "CAREER_ANALYSIS"
             else ": Catalogue acquisition failed; use reviewed structured JSON"
         )
@@ -352,7 +361,9 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         status, output, error = (
             JobStatus.FAILED,
             None,
-            "WORKER_ERROR: Career analysis failed; inspect server diagnostics"
+            "WORKER_ERROR: Action-plan generation failed; inspect server diagnostics"
+            if job.kind == "ACTION_PLAN"
+            else "WORKER_ERROR: Career analysis failed; inspect server diagnostics"
             if job.kind == "CAREER_ANALYSIS"
             else "WORKER_ERROR: Catalogue job failed; inspect server diagnostics",
         )
@@ -381,6 +392,7 @@ def fail_stale_jobs(database: Database) -> int:
                         "CURRICULUM_PDF_UPLOAD",
                         "PROGRAMME_ANALYSIS",
                         "CAREER_ANALYSIS",
+                        "ACTION_PLAN",
                     ]
                 ),
                 Job.status == JobStatus.RUNNING,
