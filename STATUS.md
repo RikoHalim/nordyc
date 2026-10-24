@@ -23,9 +23,10 @@ The final setting remains false by instruction. Source permissions were not chan
 | Python / dependencies | Python **3.12.12**; pinned `requirements.lock` installed in `.venv`; editable project install completed; `pip check` passed |
 | `python -m shiftos.cli verify-claude` without `--live` | **BLOCKED**, expected exit 1; selected provider/model and managed credential/base URL are configured and valid; `provider_requests=0`; only blocker is `external_processing_not_approved`; source permission passes |
 | Clean offline pytest subprocess | **743 passed, 13 skipped**, one existing Starlette/httpx deprecation warning; `TEST_DATABASE_URL` unset; skipped tests require PostgreSQL; offline SQLite fixtures and mocks were used |
-| `ruff check src tests` / `ruff format --check src tests` | **PASS** |
-| `pip check` / `git diff --check` | **PASS** |
-| Repository-root Ruff checks | `ruff check .` finds two pre-existing issues in `.local/skills/meta-devices/files/ray-ban/favicon-generator.py`; `ruff format --check .` reports 10 unformatted files under `.local` skills. No skill files were modified. |
+| Ruff over all Git-tracked Python files | **PASS**: `ruff check` and `ruff format --check` each passed on 97 tracked Python files, including six Alembic files |
+| Workspace-helper Ruff limitation | `ruff check .` finds two existing issues in `.local/skills/meta-devices/files/ray-ban/favicon-generator.py`; `ruff format --check .` reports 10 unformatted files under `.local` skills. These generated skill helpers are not Git-tracked and were not modified. |
+| `pip check` / commit and working `git diff --check` | **PASS** |
+| Secret scan and connection-fix diff audit | **PASS**: no credential candidate in the committed or working diff; commit changes only `.replit` non-secret flags and the two documentation records; application code and source permissions are unchanged |
 | Live model / research / search requests | **0**; no worker, migration, or database connection was started |
 
 The PostgreSQL integration tests were intentionally skipped because this verification forbids database connections and leaves `TEST_DATABASE_URL` unset. The prior 756-test run with 13 PostgreSQL cases remains a historical result; it is not represented as the result of this clean offline run.
