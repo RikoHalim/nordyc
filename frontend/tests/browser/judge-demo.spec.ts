@@ -250,9 +250,7 @@ for (const viewport of [
       "Academic recommendations",
       /academic recommendations/i,
     );
-    await expect(
-      page.getByText("Minimum sufficient intervention").first(),
-    ).toBeVisible();
+    await expect(page.getByText("Suggested next step").first()).toBeVisible();
     await readOnlyControls(page);
     await navigate(page, "Academic pathways", /academic pathways/i);
     await expect(page.locator(".pathway-timeline")).toHaveCount(

@@ -101,9 +101,7 @@ test("actual PostgreSQL workspace navigation, evidence, review and desktop captu
   await expect(dialog).not.toBeVisible();
   await expect(citation).toBeFocused();
   await navigate(page, "Academic recommendations", /academic recommendations/i);
-  await expect(
-    page.getByText("Minimum sufficient intervention").first(),
-  ).toBeVisible();
+  await expect(page.getByText("Suggested next step").first()).toBeVisible();
   await navigate(page, "Academic pathways", /academic pathways/i);
   await expect(page.locator(".pathway-timeline")).toHaveCount(4);
   await page.screenshot({

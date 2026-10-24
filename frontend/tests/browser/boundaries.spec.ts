@@ -76,6 +76,9 @@ test("mocked source-withdrawal response removes already displayed academic findi
     });
   });
   await page
+    .getByText("Assessment history and versions", { exact: true })
+    .click();
+  await page
     .getByRole("button", { name: "Refresh records", exact: true })
     .click();
   await expect(
@@ -140,6 +143,9 @@ test("mocked pending worker and unavailable API do not become successful results
     page.getByText("Synthetic Data Systems Analyst", { exact: true }),
   ).toHaveCount(0);
   await page.unroute(unavailable);
+  await page
+    .getByText("Assessment history and versions", { exact: true })
+    .click();
   await page
     .getByRole("button", { name: "Refresh records", exact: true })
     .click();
