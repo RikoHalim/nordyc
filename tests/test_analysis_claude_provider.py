@@ -112,13 +112,17 @@ def test_exact_managed_endpoint_headers_model_schema_and_metadata(base, expected
     assert body["output_config"]["format"]["type"] == "json_schema"
     assert "untrusted data" in body["system"]
     assert all(key not in body for key in ("tools", "mcp_servers", "web_search", "thinking"))
-    assert provider.last_response_metadata == {
+    assert provider.last_response_metadata["duration_ms"] >= 0
+    assert {
+        key: value for key, value in provider.last_response_metadata.items() if key != "duration_ms"
+    } == {
         "provider": "replit_claude",
         "requested_model": "claude-opus-5",
         "actual_model": "claude-opus-5-20261001",
         "usage": {"input_tokens": 31, "output_tokens": 7},
         "request_count": 1,
         "observed_cost": None,
+        "http_status": 200,
     }
 
 
@@ -534,3 +538,30 @@ def test_request_response_size_and_worker_deadline_bounds():
 def test_output_token_bound_is_validated(tokens):
     with pytest.raises(ValidationError):
         configured(claude_max_output_tokens=tokens)
+
+
+@pytest.mark.parametrize("status", [400, 401, 429, 500])
+def test_http_error_status_is_safe_and_single_attempt(status):
+    with httpx.Client(
+        transport=httpx.MockTransport(
+            lambda _: httpx.Response(status, json={"error": {"message": SECRET}})
+        )
+    ) as client:
+        provider = ClaudeProvider(configured(analysis_provider_max_attempts=1), client)
+        with pytest.raises(ProviderError):
+            provider.generate({}, {})
+    assert provider.request_attempts == 1
+    assert provider.last_response_metadata["http_status"] == status
+    assert provider.last_response_metadata["duration_ms"] >= 0
+    assert SECRET not in json.dumps(provider.last_response_metadata)
+
+
+def test_configured_request_byte_cap_refuses_before_transport():
+    with httpx.Client(
+        transport=httpx.MockTransport(lambda _: pytest.fail("No HTTP allowed"))
+    ) as client:
+        provider = ClaudeProvider(configured(analysis_provider_max_request_bytes=1024), client)
+        with pytest.raises(ProviderError) as error:
+            provider.generate({"oversize": "X" * 1024}, {})
+    assert error.value.code == "provider_request_invalid"
+    assert provider.request_attempts == 0

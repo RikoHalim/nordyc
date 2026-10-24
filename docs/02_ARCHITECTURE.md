@@ -25,7 +25,7 @@ Selected programme + uploaded curriculum/brochure/syllabus
   -> scenario replay + human review + draft report
 ```
 
-Phase 2–3 supply curriculum providers and source-specific evidence adapters. Phase 4 extends them with internal evidence retrieval and approved Brave discovery; Phase 4.1 selects Replit-managed Claude or the preserved direct Gemini adapter. Access retains bounded timeouts/retries, terms/robots, lawful reuse and manual fallback. The Phase 1 source registry itself does not fetch or authenticate URLs.
+Phase 2–3 supply curriculum providers and source-specific evidence adapters. Phase 4 extends them with internal evidence retrieval and approved Brave discovery. The current MVP selects Replit-managed `claude-opus-5`; Gemini and cross-provider fallback remain disabled. Replit remains the hosting target. [Phase 4.2](25_PHASE42_LIVE_BACKEND_VERIFICATION.md) verifies the actual HTTP/worker/Claude/PostgreSQL path without changing the academic contract or deploying publicly. Access retains bounded timeouts/retries, terms/robots, lawful reuse and manual fallback. The Phase 1 source registry itself does not fetch or authenticate URLs.
 
 The separate durable worker uses `QUEUED|RUNNING|SUCCEEDED|PARTIAL|FAILED`; it now also processes programme-targeted analysis jobs. Phase 3 external imports retain their separate evidence jobs. The existing institution/revision constraint is not a generic external-research target. Slow HTTP submissions return202/job IDs rather than performing provider work in requests.
 

@@ -143,7 +143,9 @@ class _JsonProvider:
             )
         except (TypeError, ValueError, OverflowError):
             raise ProviderError("provider_request_invalid") from None
-        if encoded and len(encoded) > MAX_REQUEST_BYTES:
+        if encoded and len(encoded) > min(
+            MAX_REQUEST_BYTES, self.settings.analysis_provider_max_request_bytes
+        ):
             raise ProviderError("provider_request_invalid")
         deadline = min(
             self.deadline or float("inf"),
@@ -169,6 +171,9 @@ class _JsonProvider:
                         timeout=remaining,
                         follow_redirects=False,
                     ) as response:
+                        # Status is safe operational metadata; never retain error bodies/headers.
+                        if self.last_response_metadata.get("provider") == "replit_claude":
+                            self.last_response_metadata["http_status"] = response.status_code
                         if 300 <= response.status_code < 400:
                             raise ProviderError("provider_redirect_rejected")
                         if response.status_code in {401, 403}:
@@ -380,10 +385,14 @@ class ClaudeProvider(_JsonProvider):
 
     def generate(self, packet: dict, response_schema: dict) -> dict:
         started = self._begin_generation("replit_claude", self.settings.claude_model)
+        began = self.monotonic()
         try:
             return self._generate(packet, response_schema)
         finally:
             self.last_response_metadata["request_count"] = self.request_attempts - started
+            self.last_response_metadata["duration_ms"] = round(
+                max(0, self.monotonic() - began) * 1000, 3
+            )
 
     def _generate(self, packet: dict, response_schema: dict) -> dict:
         if not self.settings.claude_enabled:

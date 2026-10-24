@@ -182,6 +182,37 @@ def test_operational_claude_failure_does_not_silently_substitute_gemini(
     assert_complete_synthetic_findings(session, run)
 
 
+def test_single_validation_attempt_never_makes_a_paid_repair(
+    database, session, monkeypatch, tmp_path
+):
+    calls = synthetic_models(monkeypatch, claude="invalid_schema")
+    run, job = process_live(
+        database,
+        session,
+        synthetic_settings(
+            tmp_path,
+            analysis_model_provider="replit_claude",
+            analysis_validation_max_attempts=1,
+        ),
+    )
+    assert calls == ["replit_claude"]
+    assert job.status == JobStatus.PARTIAL
+    assert run.manifest_json["model_processing"]["request_count"] == 1
+    assert_complete_synthetic_findings(session, run)
+
+
+def test_safe_http_status_and_latency_are_persisted(database, session, monkeypatch, tmp_path):
+    synthetic_models(monkeypatch, extra_metadata={"http_status": 200, "duration_ms": 123.5})
+    run, job = process_live(
+        database,
+        session,
+        synthetic_settings(tmp_path, analysis_model_provider="replit_claude"),
+    )
+    assert job.status == JobStatus.SUCCEEDED
+    response = run.manifest_json["model_processing"]["responses"][0]
+    assert response["http_status"] == 200 and response["duration_ms"] == 123.5
+
+
 def test_fallback_flag_never_switches_default_gemini_to_claude(
     database, session, monkeypatch, tmp_path
 ):

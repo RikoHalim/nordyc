@@ -74,6 +74,10 @@ def _response_metadata(provider, *, provider_name, requested_model, status, erro
     }
     if error_code:
         item["error_code"] = error_code
+    if type(raw.get("http_status")) is int and 100 <= raw["http_status"] <= 599:
+        item["http_status"] = raw["http_status"]
+    if type(raw.get("duration_ms")) in {int, float} and 0 <= raw["duration_ms"] <= 600_000:
+        item["duration_ms"] = raw["duration_ms"]
     return item
 
 
@@ -160,7 +164,7 @@ def _analyse(packet, settings, provider_factory, deadline):
             continue
         accepted = None
         repair = 0
-        while repair < 2:
+        while repair < settings.analysis_validation_max_attempts:
             response_status, error_code = "returned", None
             switch_provider = False
             try:

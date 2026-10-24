@@ -1,8 +1,10 @@
 # Phase 4.1 — Replit-managed Claude
 
-This extension preserves the Phase 4 evidence engine, academic Pydantic contract, citation validator, deterministic workforce calculations, background worker and protected APIs. It adds a configurable Replit-managed Anthropic Messages adapter and retains an explicitly gated Gemini fallback in code. Current MVP decision: Replit-managed Claude Opus is primary; Gemini is discontinued and not enabled; Replit remains the host; Brave research is preserved but pending. The Phase 4.2 record below is current. Earlier handover and verification sections are historical and do not authorize another request.
+This extension preserves the Phase 4 evidence engine, academic Pydantic contract, citation validator, deterministic workforce calculations, background worker and protected APIs. It adds a configurable Replit-managed Anthropic Messages adapter and retains an explicitly gated Gemini fallback in code. Current MVP decision: Replit-managed Claude Opus is primary; Gemini is discontinued and not enabled; Replit remains the host; Brave research is preserved but pending. **[Phase 4.2 live backend acceptance is now PASS / COMPLETE](25_PHASE42_LIVE_BACKEND_VERIFICATION.md)**: one actual worker request, two courses, three citations, committed PostgreSQL results and protected HTTP retrieval. Earlier handover/diagnostic snapshots below are historical and do not authorize another request.
 
-## Phase 4.2 diagnostic correction and accepted live result — 24 October 2026
+Current bounds additionally include `ANALYSIS_VALIDATION_MAX_ATTEMPTS` (default 2, use **1** to prohibit paid repair) and `ANALYSIS_PROVIDER_MAX_REQUEST_BYTES` (default 1,000,000, acceptance **24,576**). These complement transport attempts, timeout and output-token limits. Safe Claude HTTP status and elapsed milliseconds are retained with actual model/usage in the existing manifest. Persistent external processing stays false. The current development/publication branch is **`codex/replit-managed-ai`**; do not follow historical main-branch import commands in an existing checkout.
+
+## Historical Phase 4.2 diagnostic correction and accepted isolated result — 24 October 2026
 
 **Assessment: isolated live Claude verification PASS; full live worker/database/API verification PARTIAL (pending).** Replit-managed Anthropic is the primary MVP provider, requested and returned model `claude-opus-5`; Gemini remains disabled, Replit remains the hosting platform, and Brave remains independent and live-unverified. The later owner-approved diagnosis and instruction to continue until success supersede the earlier one-request stop recorded below. Retrying did not remove the $1 diagnostic budget or source restrictions.
 
@@ -98,7 +100,9 @@ At the initial snapshot on 24 October 2026 this work ran in a local Windows chec
 
 Replit documents paid-plan access, organization controls and an approval flow for adding **Anthropic (Replit managed)** to an existing app. Its public documentation confirms Messages API support, but not this adapter's bridge variable/path contract. Managed credentials and an endpoint must actually be provisioned; a paid account alone is insufficient. [Replit AI Integrations](https://docs.replit.com/features/integrations/replit-ai-integrations).
 
-## Replit handover
+## Historical Phase 4.1 Replit handover
+
+The import example below describes the older Phase 4.1 baseline. For the current Claude development branch, isolated PostgreSQL setup and completed live acceptance, follow [Phase 4.2](25_PHASE42_LIVE_BACKEND_VERIFICATION.md). Preserve divergent Replit changes; do not pull or switch to main for this work.
 
 The implementation was published to `origin/main` as [ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb](https://github.com/RikoHalim/shift-os/commit/ec9b7f79ea26760a75f84e3c98cef8d4ce71bcfb), with the exact remote SHA verified after push. A subsequent documentation-only publication record may be the branch tip. Compare the imported tip with the final publication report; the linked implementation is the tested code baseline, not a reason to discard later documentation. [STATUS](../STATUS.md) records the checks and publication scope.
 

@@ -1,8 +1,39 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24:** Replit-managed **`claude-opus-5`** has passed the bounded live synthetic verification (HTTP 200, original Pydantic and citation/grounding validation, three citations). Phase 4.2 remains **PARTIAL** until a fresh live worker → Claude → PostgreSQL → protected FastAPI proof. Final offline results: **750 passed / 13 PostgreSQL-only skipped** in Replit; separately **13 PostgreSQL integration tests passed** on the exact downloaded source. Gemini remains disabled, Replit remains hosting, Brave live verification is pending. The current diagnostic record below supersedes historical attempt/consent snapshots. **This record is saved in the Replit development checkout; GitHub publication of this diagnosis remains pending.**
+**As of 2026-10-24: Phase 4.2 PASS / COMPLETE for bounded live backend integration.** The real protected FastAPI → background worker → Replit-managed **`claude-opus-5`** → PostgreSQL → protected FastAPI workflow passed on **two fictional courses**, with three validated citations and independently committed database results. **770 automated tests passed**, including all **13 PostgreSQL cases**, both locally and in Replit. Gemini stays disabled; Replit remains hosting; Brave live verification is separately **PENDING**. Phase 5–8 remain pending. This current record supersedes all historical partial/blocked snapshots below; it does not establish academic accuracy on real curricula.
 
-## Phase 4.2 diagnostic correction and accepted live result — 24 October 2026
+## Phase 4.2 completed live backend acceptance — 24 October 2026
+
+See the [complete acceptance record and reproduction/hosting boundaries](docs/25_PHASE42_LIVE_BACKEND_VERIFICATION.md). Work is isolated to **`codex/replit-managed-ai`**. The exact previously tested compatibility fixes were published to GitHub as **[a33e5795823367147084368d870aa5ba4b74735c](https://github.com/RikoHalim/shift-os/commit/a33e5795823367147084368d870aa5ba4b74735c)** after a full **763-test** PostgreSQL-inclusive pass. The final acceptance changes follow that publication; their reviewed publication receipt is recorded after push. Main and the Gemini branch are preserved.
+
+The owner approved **one** further live end-to-end request with a **$1** limit. The isolated Claude smoke was not repeated. The real worker alone received process-scoped external-processing consent; the persistent gate stayed **false** and was checked afterward. No Gemini fallback, Brave call, retry, validation-repair generation or public deployment occurred.
+
+| Acceptance check | Actual result |
+|---|---|
+| Isolated Replit database | PostgreSQL **16.15**, loopback-only dedicated cluster/database, existing migrations through **`0005_programme_analysis`**; ambient database untouched |
+| Protected API submission / worker | Missing token **401**, authorised POST **202**, correct frozen revision and QUEUED job; actual separate CLI worker completed **SUCCEEDED** |
+| Live Claude | **1** invocation / **1** HTTP request, **200**, requested and returned **`claude-opus-5`**; **2/2** model-generated courses validated, **0** fallback courses |
+| JSON / schemas / citations | Original JSON/Pydantic/grounding validation **PASS**, **3** valid exact-quote citation occurrences of one admitted attributed public ESCO legacy excerpt |
+| Coverage / uncertainty | Both fictional title-only courses accounted for; all five dimensions **insufficient_evidence**, syllabus confirmation required, no final curriculum verdict; unmatched course has no citations |
+| Persistence / retrieval | Run, two findings, source/version references, model usage and job timestamps committed; new independent engine read them; protected run/course GETs **200**, missing/wrong token **401**, evidence revalidation false |
+| Actual usage / time | **6,718 input / 2,496 output**, cache creation/read **0**; provider measurement **25,540.276 ms**, worker subprocess **27,477.066 ms** |
+| Observed billing | **Unavailable**, `observed_cost=null`. **$0.09599** is only the public standard-token-price estimate, not a verified Replit charge; earlier failures are not asserted free |
+| Zero-call rehearsal | Actual HTTP/worker/PostgreSQL/protected-API path **PASS**, **2** findings, independent committed read, **0** model calls |
+| Full local regressions | Python **3.13.13**, isolated PostgreSQL **16.15**: **770 passed**, **0 failed/skipped**, **13** PostgreSQL cases included, **87.27 s** |
+| Full Replit regressions | Python **3.12.12**, isolated PostgreSQL **16.15**: **770 passed**, **0 failed/skipped**, **13** PostgreSQL cases included, **50.35 s**; provider credentials removed from test subprocess |
+| Other checks | Ruff application lint/format, dependency integrity, existing Alembic head/SQL/migration checks and Git whitespace/secret review **PASS**; one existing Starlette/httpx deprecation warning |
+
+The live job started **2026-10-24T15:08:08.380840+00:00** and completed **2026-10-24T15:08:34.371685+00:00**. This acceptance added **one** live request to the five historical diagnostic transport attempts. The provider source used for this worker proof has SHA-256 **`87f3fd0178f7f5120cbac811ddcb96b2a6d4fadd5c72d0e08399321ad4e89e7d`**. It retains the accepted transport/prompt fix and adds safe HTTP status/duration accounting. New controls separate transport attempts from validation-repair attempts and bound request bytes; both attempt limits were **1**, request cap **24,576 bytes**, measured offline request **15,874 bytes**, output cap **6,144**, timeout **60 s**. The acceptance scripts drive the existing endpoints/CLI worker and refuse repeated live execution after reserving a receipt.
+
+Seven bounds/metadata regressions account for **763 → 770** tests on this Claude source. The historical **794-test Gemini** tree is a different branch. Local tests and Linux tests are separate from the one real Claude request. Replit-wide Ruff initially found two issues in unrelated Replit-owned `.local/skills` metadata; those files were preserved and complete application paths passed explicit lint/format checks. No new dependency, table, API route, academic schema, source grant or workforce arithmetic was introduced.
+
+**Remaining limits:** the fixture contains no admitted academic-standard, workforce or dated AI observations. Missing families are reported; the real ESCO quote is only a historical occupation benchmark, never proof of taught content or Malaysian demand. No private university files were processed. Live Brave remains **PENDING**: key absent, research disabled, separate authorisation/source/storage review needed. The ambient Replit database URL is currently rejected outside test mode; ordinary application startup still needs an explicitly selected valid development PostgreSQL URL. The verified isolated cluster is not production provisioning or an automatic transfer of Windows data. Protected APIs currently use the existing single-operator token; full tenant/security/deployment work remains later.
+
+Live Alembic schema comparison and offline SQL compilation passed. Both committed live findings were confirmed again after regression testing. Temporary API processes and the isolated test PostgreSQL server were stopped; data and the one-attempt live receipt were retained under ignored `data/local`.
+
+**Stop boundary:** Phase 4.2 backend acceptance is complete. Phase 5 planning is reasonable after owner review, while preserving evidence gaps and the separate Brave gate. No Phase 5 implementation, merge or public deployment was performed or authorised by this result. Raw reports, database files, credentials and synthetic outputs stay ignored under `data/local`.
+
+## Historical Phase 4.2 diagnostic correction and isolated live result — 24 October 2026
 
 **Assessment: isolated live Claude verification PASS; full live worker/database/API verification PARTIAL (pending).** Replit-managed Anthropic is the primary MVP provider, requested and returned model `claude-opus-5`; Gemini remains disabled, Replit remains the hosting platform, and Brave remains independent and live-unverified. The later owner-approved diagnosis and instruction to continue until success supersede the earlier one-request stop recorded below. Retrying did not remove the $1 diagnostic budget or source restrictions.
 
