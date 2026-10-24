@@ -1,3 +1,19 @@
+from shiftos.models.analysis import AnalysisRun, CourseFinding, ResearchCache
+from shiftos.models.evidence import (
+    AcademicStandard,
+    AIImpactEvidence,
+    Dataset,
+    DatasetVersion,
+    EvidenceIngestionJob,
+    EvidenceProcessingLog,
+    EvidenceReference,
+    Occupation,
+    OccupationalTask,
+    OccupationSkill,
+    SDGReference,
+    Skill,
+    WorkforceObservation,
+)
 from shiftos.models.foundation import (
     Course,
     Document,
@@ -10,6 +26,9 @@ from shiftos.models.foundation import (
 )
 
 __all__ = [
+    "AnalysisRun",
+    "CourseFinding",
+    "ResearchCache",
     "Course",
     "Document",
     "DocumentAnchor",
@@ -18,4 +37,17 @@ __all__ = [
     "Programme",
     "ProgrammeRevision",
     "Source",
+    "AcademicStandard",
+    "AIImpactEvidence",
+    "Dataset",
+    "DatasetVersion",
+    "EvidenceIngestionJob",
+    "EvidenceProcessingLog",
+    "EvidenceReference",
+    "Occupation",
+    "OccupationalTask",
+    "OccupationSkill",
+    "SDGReference",
+    "Skill",
+    "WorkforceObservation",
 ]

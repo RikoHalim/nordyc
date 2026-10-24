@@ -8,14 +8,31 @@ The existing foundation is adapted to revised requirements. STATUS records measu
 |---|---|---|
 | 1 — Foundation adaptation | Retain FastAPI/PostgreSQL, versioned multi-programme catalogue; add source/provenance metadata and create/read APIs | Preserve old records/importer; multi-programme/API/provenance/migration tests; actual results in STATUS |
 | 2 — Discovery | All publicly discoverable XMUM undergraduate links/course titles/year/elective metadata; manual fallback | Diverse HTML fixtures, idempotency/versioning, truthful real-source access/verified counts |
-| 3 — Evidence | Standards, occupations/skills, dated workforce/AI references and two snapshots | Traceable dates/units/classes; synthetic fallback explicit; reuse source registry |
-| 4 — Relevance | Conservative whole-programme assessment including every course | Title-only abstention, diverse disciplines, citations, no invented scores |
-| 5 — Actions | Supported primary action, alternatives/no change and human review | Weak evidence -> review; redesign evidence gate; pending approval |
-| 6 — Scenarios/SDG/report | Moderate/accelerated assumptions and evidence replay | Traceable changes, unrelated discipline stability, explained SDG links |
+| 3 — Evidence | Standards, occupations/skills, dated workforce/AI references, radar and upload compatibility | Functional bounded prototype: genuine legacy/multilingual taxonomy, narrow benchmarks, official SDGs, research/workforce records; currentness/coverage/permission limits remain explicit |
+| 4 — Relevance | Internal-first hybrid retrieval, controlled research fallback and one configured LLM; conservative assessment of every available course | Frozen citations, verified permitted fallback, deterministic trends, diverse disciplines, title-only/insufficiency gates; no invented scores |
+| 4.1 — Managed Claude | Selectable Replit-managed Claude, explicit optional Gemini fallback and model/usage audit metadata | Same academic/privacy contracts; synthetic protocol/worker/PostgreSQL/API regressions; actual Replit/live-model verification remains blocked locally |
+| 5 — Actions and Future Career Alignment | Programme occupation/competency alignment, potential gaps, primary minimum sufficient intervention, alternatives/no change and human review | Verified curriculum support, reviewed occupational mappings, optional explained deterministic scoring or insufficiency; no individual employment probability; pending authorization |
+| 6 — Pathways/scenarios/SDG/report | Ordered Academic Reskilling Pathways within Action Plans, verified resources, based duration estimates, moderate/accelerated scenarios and evidence replay | Traceable ordered steps/objectives/prerequisites/resources/duration/SDGs; assessed practice distinct from attendance; unrelated discipline stability; pending authorization |
 | 7 — Integration | Offline clean-setup demo, evaluation, source-access safeguards | End-to-end without private keys; measured coverage/abstention |
 | 8 — Minimal UI/demo | Programme explorer, evidence inspector, actions/scenario comparison | Real endpoints; synthetic/unknown states visible; reproducible proof |
 
 Preliminary requirements are a proposal covering intended full delivery and a rough live proof of the key capability, with accessible GitHub. Production readiness is not required. Prioritise a defensible vertical slice and honest coverage. Catalogue target: all discoverable XMUM undergraduate programmes; deep validation: a small diverse subset first. Do not promise content-level evidence for every course.
+
+## Current priority — complete Phase 4 validation
+
+The subsequently authorized Phase 4 implementation extends the bounded Phase 3 infrastructure, without rebuilding it. Its [runbook](21_PHASE4_COURSE_RELEVANCE.md) records implemented Gemini/Brave adapters, internal retrieval, validation, jobs/persistence/APIs and actual offline/genuine-data checks. No live provider verification is claimed without credentials. Existing source/currentness/rights/identity limitations remain explicit.
+
+1. Finish the full relevant offline/PostgreSQL regression suite, migration checks and genuine persisted-evidence API smoke; report actual results in STATUS.
+2. Phase 4.1 adds the preferred `claude-opus-5` configuration through Replit-managed Anthropic, with preserved optional Gemini fallback. The current Windows workspace lacks the managed credential/endpoint and the user chose local completion. Close the [explicit live Claude gate](23_PHASE41_REPLIT_CLAUDE.md) in an enabled Replit runtime: one synthetic request, schema/citations/actual model/usage, then worker → PostgreSQL → protected API. Separately verify Brave search → registered original verification/import → cited finding when research access and policies are available. Live acceptance remains open.
+3. Review missing current taxonomy, standards applicability, curriculum detail, Malaysian occupation bridges and source permissions. Preserve insufficient-evidence outcomes rather than force matches or academic conclusions.
+4. Obtain written Domain 1 clarification in parallel. Future feature planning does not grant a waiver or authorization to implement a personal platform.
+5. Stop before Phase 5 implementation; the [career alignment/pathway planning revision](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) updates later requirements only.
+
+An insufficient-evidence result is a correct outcome for an unsupported claim. Passing offline fixtures does not prove live research or model integration. Phase 4 completion must disclose any blocked real-source/provider gate rather than claim broad/current coverage. Action generation, scenario work and frontend remain later phases. See the [planned test matrix](11_TEST_PLAN.md#phase-4-hybrid-retrieval-tests-planned).
+
+## Revised Phase 5–6 priorities — documentation only
+
+Phase 5 extends existing Academic Decision Studio logic with programme-level Future Career Alignment and occupational competency-gap analysis, followed by the minimum sufficient primary intervention, alternatives/no change and human review. Phase 6 extends existing scenario/report/Academic Action Plans with ordered academic pathways, duration estimates with explicit basis, verified resources, meaningful SDG links and selective reassessment. No additional standalone module, student tracking, new model or frontend is introduced. Proposed objectives remain future plans; titles and attendance cannot prove skills. Optional alignment scores must explain evidence/weights/method and abstain when coverage is unknown.
 
 ## Final-round expectations and unresolved scope
 

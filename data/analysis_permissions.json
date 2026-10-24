@@ -1,0 +1,108 @@
+{
+  "version": "analysis-permissions-1",
+  "notes": "Explicit narrow analysis-use decisions; unknown sources deny by default. Source/version/record denials override grants. These flags do not verify factual claims or academic applicability.",
+  "sources": {
+    "C-ESCO": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "European Commission ESCO reuse acknowledgement and adaptation terms, as recorded in the Phase 3 source policy and attributed reference pack. Preserve source edition/language; no currentness or Malaysian identity bridge is granted."
+    },
+    "C-ESCO-V103": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "European Commission ESCO reuse acknowledgement and adaptation terms, as recorded in the Phase 3 source policy and attributed reference pack. Preserve source edition/language; no currentness or Malaysian identity bridge is granted."
+    },
+    "D-JMI-Q1-2026": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "DOSM attributed Government Open Data/CC BY dataset use already reviewed in data/evidence_acquisition.json. Published population, indicator and dates must be preserved; no skill-demand inference."
+    },
+    "D-JMI-Q2-2026": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "DOSM attributed Government Open Data/CC BY dataset use already reviewed in data/evidence_acquisition.json. Published population, indicator and dates must be preserved; no skill-demand inference."
+    },
+    "D-EMPLOYMENT-SECTOR": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "DOSM attributed Government Open Data/CC BY dataset use already reviewed in data/evidence_acquisition.json. Published population, indicator and dates must be preserved; no skill-demand inference."
+    },
+    "F-UN-SDG-RES70-1": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "Official UN A/RES/70/1 document text under UN Publications Policy Manual 5.34–5.35(c), as recorded in the attributed Phase 3 reference pack; database/API rights remain separate."
+    },
+    "E-ILO-2025": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": true,
+      "excerpt_output_allowed": true,
+      "basis": "ILO Working Paper 140 attributed CC BY 4.0 source use reviewed in Phase 3; exposure remains distinct from capability/practice and raw extracted pages remain candidates."
+    },
+    "B-MQA-COMPUTING": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "B-MQA-ACCOUNTING": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "B-MQA-BIOTECH": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "B-MQA-BUSINESS": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "E-ALAB": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "E-ALAB-CORRECTION": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "E-HBS-2026": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "E-METR-2025": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "E-METR-2026": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    },
+    "E-OECD-2024": {
+      "internal_analysis_allowed": true,
+      "external_model_allowed": false,
+      "excerpt_output_allowed": false,
+      "basis": "Existing narrow Phase 3 internal source-research decision only, not permission for external-model processing or excerpt redistribution. Retain bibliographic provenance; seek explicit reviewed permission before widening use."
+    }
+  }
+}

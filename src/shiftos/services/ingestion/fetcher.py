@@ -95,6 +95,10 @@ class SafeFetcher:
     fallback; callers must not retry by disabling protections.
     """
 
+    reviewed_hosts = OFFICIAL_HOSTS
+    accepted_suffixes = frozenset({".html", ".htm", ".php", ".aspx"})
+    accepted_types = _HTML_TYPES
+
     def __init__(
         self,
         allowed_hosts: Iterable[str],
@@ -113,7 +117,7 @@ class SafeFetcher:
         absent_robots_policy: str = "deny",
     ) -> None:
         self.allowed_hosts = frozenset(allowed_hosts)
-        if not self.allowed_hosts or not self.allowed_hosts <= OFFICIAL_HOSTS:
+        if not self.allowed_hosts or not self.allowed_hosts <= self.reviewed_hosts:
             raise ValueError("Only explicitly reviewed official provider hosts are supported")
         if (
             not math.isfinite(min_interval)
@@ -277,7 +281,7 @@ class SafeFetcher:
             host, address = self._validate_url(current_url)
             if not robots:
                 suffix = PurePosixPath(urlsplit(current_url).path).suffix.casefold()
-                if suffix and suffix not in {".html", ".htm", ".php", ".aspx"}:
+                if suffix and suffix not in self.accepted_suffixes:
                     raise FetchError(
                         "unsupported_format", "Only official HTML source pages are supported."
                     )
@@ -318,7 +322,7 @@ class SafeFetcher:
                             .strip()
                             .lower()
                         )
-                        accepted_types = _ROBOTS_TYPES if robots else _HTML_TYPES
+                        accepted_types = _ROBOTS_TYPES if robots else self.accepted_types
                         if media_type not in accepted_types:
                             raise FetchError(
                                 "unsupported_format",

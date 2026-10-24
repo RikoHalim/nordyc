@@ -2,6 +2,8 @@
 
 Research date: **24 October 2026** (Asia/Makassar). Scope: research and acquisition design only. No backend feature, database migration, live-source import or AI assessment was implemented.
 
+**Subsequent Phase 3 implementation/completion:** this describes the original research-time state. See [the ingestion report](PHASE3_INGESTION_REPORT.md) for actual PostgreSQL imports/failures. The registry now contains the original73 rows plus explicit legacyESCO and officialUNresolution alternatives (75 total), scoped `phase3_*` outcomes and actual acquisition flags. Narrow MQA research rights and Biotechnology's verified2019 edition year were clarified; current/API and restricted-source failures remain separate. Research access is still distinct from reuse permission and successful import.
+
 ## Decision
 
 A public-evidence preliminary MVP is feasible: discover the current XMUM directory, import every publicly exposed **Main Courses** list, and demonstrate conservative review prompts on a few diverse programmes. Public evidence is not sufficient for definitive obsolete/replacement decisions, a certified degree audit, skill-level Malaysian demand rankings, or claims about actual teaching and assessment.

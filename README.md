@@ -14,12 +14,13 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 - Existing document metadata, exact anchors, revision checksums and job records retained.
 - Dynamic XMUM undergraduate discovery, conservative title/year/elective parsing, source dates/hashes and coverage/missing-field reporting.
 - Separate worker, reviewed structured imports, duplicate checks and safe snapshot re-imports/history.
+- Protected programme analysis jobs and history, internal evidence retrieval, configurable Replit-managed Claude or direct Gemini, separate Brave discovery, structured citation validation and explicit insufficient-evidence results. Live provider verification remains blocked by missing runtime access/credentials.
 
-Workforce/academic/AI reference imports, analysis, recommendations, scenarios, reports and frontend remain future phases. Source registration and reviewed-file flags are supplied assertions; they do not independently verify actual teaching content.
+Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. Phase 4 now adds a bounded evidence-grounded screening backend; [its runbook](docs/21_PHASE4_COURSE_RELEVANCE.md) distinguishes actual offline/genuine-data verification from unverified live Gemini/Brave calls. Legacy/language/currentness/identity/permission limits remain. See also [Phase 3 ingestion](docs/17_PHASE3_EVIDENCE_INGESTION.md), [measured evidence](docs/PHASE3_INGESTION_REPORT.md) and [workforce methodology](docs/18_WORKFORCE_TRENDS.md). Recommendations, pathways, scenarios and frontend remain future phases.
 
 ## Revised product contract
 
-University name and programme selection are minimal inputs. Public course titles are required where available; year/elective information is retained when shown and **detailed syllabi are optional**. Individual-course analysis is a drill-down from programme review. A title proves no taught content: future outputs must use preliminary questions and `needs_syllabus_confirmation` where appropriate.
+The primary journey is **select programme → upload available curriculum/brochure or syllabus documents → review extraction → analyse every available course**. Detailed syllabi are optional; public discovery remains secondary. Phase 3 implements the upload/extraction portion, with explicit year columns or reviewed-region fallback and unreviewed title candidates; analysis is Phase 4. A title proves no taught content, so later outputs must preserve `needs_syllabus_confirmation` where appropriate.
 
 Future analysis proposes no change, syllabus revision, evidence-gated redesign/consolidation, new courses/electives, workshops and industry engagement, or request review. Staff compare alternatives including no change and approve decisions. Budget/time constraints are optional at later comparison. Recommendations need admissible citations or `insufficient_evidence`; benchmarks are not XMUM teaching facts.
 
@@ -37,7 +38,7 @@ python -m pip install -e '.[dev]'
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-Set `POSTGRES_PASSWORD` in `.env` and its URL-encoded equivalent in `DATABASE_URL`. The template supplies no password; changing port/database/user also requires updating the URL. Shell variables override `.env`. No AI/API key is needed. Dependencies are fixed in `pyproject.toml` and the full tested environment is recorded in `requirements.lock`.
+Set `POSTGRES_PASSWORD` in `.env` and its URL-encoded equivalent in `DATABASE_URL`. The template supplies no password; changing port/database/user also requires updating the URL. Shell variables override `.env`. Baseline/offline operation needs no AI key; [live Phase 4](docs/21_PHASE4_COURSE_RELEVANCE.md) separately requires a configured model provider and approved use. [Phase 4.1](docs/23_PHASE41_REPLIT_CLAUDE.md) adds managed Claude; local cloning does not provision a Replit connection. Brave research is configured independently. Dependencies are fixed in `pyproject.toml` and the tested environment is recorded in `requirements.lock`.
 
 ```powershell
 docker compose up -d --wait
@@ -52,7 +53,7 @@ The original fixture contains 12 invented courses, two electives and six without
 
 ## Existing database upgrade
 
-Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002` and `0003`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, import metadata and institution-scoped jobs. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md).
+Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002`–`0005`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, curriculum jobs, reference evidence and programme-analysis tables. Phase 4.1 reuses these tables without another migration. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md).
 
 ## Curriculum discovery and imports
 
@@ -61,6 +62,23 @@ Read the [Phase 2 runbook](docs/16_PHASE2_CURRICULUM_INGESTION.md) before live a
 For verified files, `python -m shiftos.cli import-curriculum path/to/reviewed.json --institution <UUID>` queues the same persistence path; `python -m shiftos.cli worker --once` processes the next eligible job. [The clearly synthetic example](examples/curriculum_import.synthetic.json) works offline with a matching synthetic institution. Real imports require official URLs, actual retrieval dates, locators and title excerpts. No syllabus is invented. In production configure a nonempty `CATALOGUE_WRITE_TOKEN` for new HTTP job submissions; this is not full deployment authentication.
 
 ## Development checks
+
+Upload-first catalogue ingestion is explicit and uses the existing worker:
+
+```powershell
+python -m shiftos.cli upload-curriculum-pdf path/to/brochure.pdf --programme <UUID>
+python -m shiftos.cli worker --once
+```
+
+The protected HTTP equivalent is `POST /api/v1/programmes/{id}/curriculum-pdf` with an `application/pdf` body. Supported labelled year-column brochures can be detected automatically; unsupported/scanned layouts need explicit regions or reviewed JSON. Private originals are retained separately from unreviewed course candidates. This performs no course relevance analysis.
+
+Phase 3 administration is explicit, outside HTTP requests:
+
+```powershell
+python -m shiftos.cli ingest-evidence --dataset D-JMI-Q1-2026 --dataset D-JMI-Q2-2026 --live --report data/local/workforce-report.json
+```
+
+Per-source access/rights gates still apply. Without `--live`, acquisition remains disabled; permitted manual files and explicitly synthetic offline fixtures are supported. See the Phase 3 runbook for commands, formats, provenance, restricted sources and brochure review.
 
 ```powershell
 python -m pytest -q --basetemp=.pytest-tmp
@@ -90,9 +108,15 @@ Tests use randomly named `shiftos_test_*` schemas and clean them up; they do not
 | `docs/12_MVP_ROADMAP.md` | Preliminary, final and post-hackathon priorities |
 | `docs/15_PHASE1_MIGRATION_AUDIT.md` | Phase 1 compatibility review |
 | `docs/16_PHASE2_CURRICULUM_INGESTION.md` | Discovery, structured import, worker and actual coverage handoff |
+| `docs/17_PHASE3_EVIDENCE_INGESTION.md`, `docs/PHASE3_INGESTION_REPORT.md` | Evidence ETL, manual procedures, measured counts and readiness blockers |
+| `docs/18_WORKFORCE_TRENDS.md`, `data/reference_packs/README.md` | Demand/AI separation, reproducible calculations and permitted frozen real subsets |
+| `docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md` | Planned PostgreSQL-first retrieval, controlled research fallback, verification/cache and single-model analysis |
+| `docs/21_PHASE4_COURSE_RELEVANCE.md` | Implemented analysis jobs/APIs, Gemini/Brave configuration, offline operation, tests and live blockers |
+| `docs/22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md` | Planned Phase 5 career alignment and Phase 6 academic pathways/Action Plans; unresolved Domain 1 substitutions |
+| `docs/23_PHASE41_REPLIT_CLAUDE.md` | Managed Claude configuration, bounded synthetic verification, usage metadata and actual live-access blocker |
 | `docs/DATASET_RESEARCH.md`, `data/dataset_registry.csv` | Verified research and acquisition candidates |
 | `examples/` | Preserved executable synthetic fixtures |
 | `fixtures/`, `references/` | Later acceptance cases and candidate sources |
 | `prompts/` | One-phase instructions; legacy filenames redirect |
 
-Phase 2 stops here. The user subsequently authorised merging `feature/phase-2-curriculum-ingestion` into `main` and synchronising the local checkout. The next recommended development task is Phase 3 reference evidence ingestion, guided by the completed dataset research; start only when explicitly requested. See STATUS for the merge verification and remaining source-access limits.
+Phase 4 is functional for a bounded offline proof. Phase 4.1 adds configurable managed Claude with explicit Gemini fallback; actual Claude/Gemini/Brave requests remain unverified here. Final local verification passed **756 tests**, including 13 PostgreSQL cases. The user explicitly authorized GitHub publication and [Replit handover](docs/23_PHASE41_REPLIT_CLAUDE.md#replit-handover); actual managed access still needs verification in Replit. Future Career Alignment and ordered Academic Reskilling Pathways extend existing later phases, not standalone products; individual-workflow substitution remains UNCONFIRMED. No Phase 5/6 implementation, frontend or public application deployment is authorized. See [STATUS](STATUS.md) for publication results and [the roadmap](docs/12_MVP_ROADMAP.md).

@@ -29,6 +29,7 @@ data/local/
 tmp/
 temp/
 .pytest-phase*/
+.pytest-*/
 *.pem
 *.key
 *.p12

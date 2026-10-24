@@ -1,6 +1,6 @@
 # Data acquisition and maintenance plan
 
-Research baseline: 24 October 2026. **Design only.** No importer, worker, table, migration, API or LLM integration was added. Source access states and exact URLs are in [dataset_registry.csv](../data/dataset_registry.csv); check them again before acquisition.
+Research baseline: 24 October 2026. The design below is the preserved research snapshot. Phase 3 now implements bounded ETL/CLI/versioned storage; see [the runbook](17_PHASE3_EVIDENCE_INGESTION.md) and [actual ingestion report](PHASE3_INGESTION_REPORT.md). No LLM integration was added. Source access/reuse states remain separate from acquisition and import.
 
 ## Operating model
 

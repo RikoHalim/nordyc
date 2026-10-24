@@ -18,7 +18,7 @@ JSON UTF-8, `/api/v1` resource prefix, UUID IDs and timezone-aware timestamps. H
 | POST / GET | `/api/v1/sources` | 201 metadata registration / 200 registry page |
 | GET | `/api/v1/sources/{id}` | 200 source metadata / 404 |
 
-The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds the curriculum jobs/imports/revision routes below. Workforce/standards/AI evidence ingestion, analysis, academic actions and frontend APIs remain future phases.
+The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds curriculum jobs/imports/revision routes. Phase 3 adds read-only evidence routes/explicit CLI ingestion. Phase 4 adds protected analysis jobs/history below; academic actions, pathways, scenarios and frontend remain future work.
 
 Academic resource lists accept `limit` 1-100 (default 50), `offset` >=0 (default 0) and return `{items,total,limit,offset}` sorted by UUID. Course pages add `programme_revision_id`. `total` counts the full matching inventory, not one page. Every known course is retrievable across pages; page limit is not a programme cap. Course lists include compulsory/elective/unknown-type records and those without syllabi. No active revision yields an empty course page; creation requires a mutable active revision. Checksum-protected fixtures and fingerprinted imported revisions refuse course additions with 409. General course POST creates one inventory entry; the Phase 2 import routes perform deduplication and versioned ingestion.
 
@@ -38,7 +38,7 @@ Academic resource lists accept `limit` 1-100 (default 50), `offset` >=0 (default
 
 Discovery bodies are `{"provider":"xmum","idempotency_key":"optional-request-key"}`; `{}` selects `xmum`. The HTTP request only persists a queue record. Start the separate worker with `python -m shiftos.cli worker` (or `worker --once` to process at most one eligible job). Live source retrieval is disabled until both `DISCOVERY_ENABLED=true` and `DISCOVERY_TERMS_REVIEWED=true` are configured. The fetcher still enforces official-host allowlists, HTTPS/public DNS, robots rules, response limits, rate limits and bounded retries. Failed policy/network/parser checks produce job failures with structured-import guidance; a 202 is not evidence of collection. No PDF or CSV upload endpoint is implemented.
 
-Phase 2 POST routes require `X-Catalogue-Token` when `CATALOGUE_WRITE_TOKEN` is configured. Missing/wrong tokens return `NOT_AUTHORIZED` (401). With `APP_ENV=production`, an unset token disables those writes with `CATALOGUE_WRITE_DISABLED` (503). Development/test allow those routes without a token when none is configured. This protection covers the new enqueue routes; preserved Phase 1 write routes retain their existing behavior. All POST/PUT/PATCH request bodies are bounded to 1 MiB before JSON decoding, including chunked requests; exceeding it returns `PAYLOAD_TOO_LARGE` (413).
+Catalogue job POST routes, including PDF upload, require `X-Catalogue-Token` when `CATALOGUE_WRITE_TOKEN` is configured. Missing/wrong tokens return `NOT_AUTHORIZED` (401). With `APP_ENV=production`, an unset token disables those writes with `CATALOGUE_WRITE_DISABLED` (503). Development/test allow them without a token when none is configured. Preserved Phase 1 write routes retain their existing behavior. POST/PUT/PATCH bodies are bounded to 1 MiB before JSON decoding, including chunked requests, except the dedicated raw PDF route's 20 MB bound; exceeding the relevant limit returns `PAYLOAD_TOO_LARGE` (413).
 
 Jobs expose `id`, `institution_id`, nullable `programme_revision_id`, `kind`, `status`, `is_synthetic`, `created_at`, nullable `started_at`/`completed_at`/`error`, and `result`. States are `QUEUED`, `RUNNING`, `SUCCEEDED`, `PARTIAL`, `FAILED`. Result summaries report provider/directory provenance, discovered/imported/unchanged/failed programme counts, course/verified-title counts, missing-directory IDs, per-programme entries and limitations. Entry states include `discovered`, `imported`, `unchanged`, `historical`, `failed`, with nullable IDs, source URL, counts, `active`, `error_code` and `message`. A directory-only programme can have no revision and zero imported courses. Programme failures retain previous snapshots and do not erase successful imports from the same job.
 
@@ -104,13 +104,65 @@ Create a synthetic institution and use its returned ID in the nested route (repl
 
 This creates no verified institution/course facts and requires no source fetch or API key. Use returned IDs, not invented factual university records.
 
+## Phase 3 reference evidence APIs
+
+The upload-first curriculum route is `POST /api/v1/programmes/{id}/curriculum-pdf` with a raw `application/pdf` body, optional official-host `source_url`, and optional `regions` JSON query (`page,x0,top,x1,bottom`). It queues an existing catalogue worker job and returns 202/JobRead; it does not parse documents in the request or analyse courses. The catalogue token/production guard applies. Only this route permits20MB; all other write routes retain 1 MiB. Wrong media returns415, malformed origin/regions/PDF returns422, oversized content413, and unsupported PDF layouts fail visibly on the queued job. Private originals and page anchors are retained; parsed titles remain unreviewed and syllabus detail unavailable.
+
+Paths below are under `/api/v1/evidence`. All are GET; there is **no public ingestion trigger**. List responses use `{items,total,limit,offset}` with limits 1–100 and nonnegative offsets. Historical versions are returned unless filtered; missing taxonomy/standard/SDG imports return empty pages, not invented data. Read-only access does not imply public redistribution permission for stored source text; deployment operators must restrict access according to source rights.
+
+| Routes | Purpose |
+|---|---|
+| `/datasets`, `/datasets/{id}`, `/datasets/{id}/versions`, `/datasets/{id}/jobs` | Registry metadata and actual ingestion/version status |
+| `/versions/{id}`, `/versions/{id}/provenance` | Frozen registry/transform metadata, source, dates, hashes, record counts |
+| `/references`, `/references/{id}`, `/references/{id}/provenance` | Exact source locators/excerpts, PDF candidate text/tables, review state and lineage |
+| `/occupations`, `/occupations/{id}`, `/occupations/{id}/skills`, `/occupations/{id}/tasks`, `/skills` | Version-scoped occupation requirements and relationships |
+| `/workforce-observations` | Dated historical indicators, values/units/periods, source pointers |
+| `/ai-impact` | AI evidence subtype, supported statement, limitations and provenance |
+| `/academic-standards` | Source-attributed benchmarks, no university teaching assertion |
+| `/sdg-references` | Permitted official goals/targets; no skill mappings |
+| `/ingestion-jobs`, `/ingestion-jobs/{id}`, `/ingestion-jobs/{id}/logs` | Durable per-dataset outcomes and diagnostics |
+| `/workforce-trends?before_id=...&after_id=...` | Deterministic source-bound directional change, scope, limitations, policy and fingerprint |
+| `/occupations/{id}/ai-transformation` | Independent reviewed task/capability attribute or insufficient evidence |
+
+List filters include `dataset_id`, `version_id`, `is_synthetic` where applicable; registry has category; workforce has `indicator`, `classification_code`, `period_start`, `period_end`; AI has `impact_type`, `occupation_label`; standards have `discipline`; SDGs have `kind`, `goal_code`. OpenAPI gives exact parameter names/availability and typed response fields. Errors retain the existing shape. Review state is a supplied engineering assertion, not academic approval. See [the runbook](17_PHASE3_EVIDENCE_INGESTION.md) for CLI access controls, supported formats and manual/rights gates.
+
+Radar accepts configurable finite nonnegative `percent_threshold` (default5, max1000) and `absolute_threshold` (default0, max10^18). Response classifications are `RISING`, `DECLINING`, `STABLE`, `INSUFFICIENT_DATA`; `AI-TRANSFORMING` is a separate nested attribute, never a fifth demand class. Results contain both full observations/version/source/reference inputs, exact decimal deltas, policy/method version, compatible dimensions and a reproducibility fingerprint. Results are computed without overwriting or adding source observations. Two-point comparisons never claim a sustained trend. Missing identities return404; invalid query values422; insufficient/incompatible observations return200 with explicit abstention/reasons. See [the methodology](18_WORKFORCE_TRENDS.md) for units/populations/periods and independent AI admission gates.
+
+## Phase 4 analysis APIs — implemented bounded MVP
+
+All routes below are under `/api/v1` and require `X-Analysis-Token`, compared against `ANALYSIS_WRITE_TOKEN`. Missing server configuration returns503; missing/wrong supplied token returns401 before resource lookup. This is an operator access boundary, not full tenant identity. The legacy `/catalogue/jobs/{id}` also applies this guard to analysis jobs, preserving curriculum job reads.
+
+| Route | Behavior |
+|---|---|
+| `POST /programmes/{id}/analyses` | Queue and freeze a nonempty programme revision/inventory;202 with run/job identifiers; no provider work in request |
+| `GET /programmes/{id}/analyses` | Paginated analysis history |
+| `GET /analyses/{id}` | Job state/times, mode, request, frozen manifest, summary/insights, research outcomes, fingerprint and disclosed model/schema/prompt versions |
+| `GET /analyses/{id}/courses` | Paginated findings for every available frozen course appearance |
+| `GET /analyses/{id}/courses/{course_id}` | One owned course result with five dimensions, scoped citations, fixed review questions and limitations |
+
+Submission accepts optional `revision_id`, optional bounded `idempotency_key`, `mode='live'|'offline'` (defaultlive), `research=true` and optional aware historical `as_of`. Unknown fields are rejected. Repeating identical intent/key returns the same run even when the active catalogue changes; changed intent/key returns409. Wrong/missing revision404, empty/inconsistent inventory409. The existing separate worker and `analyse-programme` CLI are described in [the runbook](21_PHASE4_COURSE_RELEVANCE.md).
+
+Responses expose `needs_evidence_revalidation` and `evidence_access_limitations`; current permission-policy/source-state checks can withhold source text while preserving pointers/history. The run's `summary_json` contains deterministic counts/insights and `result_mode`; model/research processing outcomes remain distinct from source sufficiency. Offline genuine records disclose `deterministic_insufficiency`, synthetic fixtures `offline_synthetic`. Live processing failure yields visible partial/fallback outcomes, never a false model-success claim. No live Gemini/Brave verification occurred without keys.
+
+Phase 4.1 preserves these routes, request/academic finding schemas and authorization. Provider/model selection is server configuration, never a client-supplied credential or endpoint. The existing run manifest additionally discloses selected provider/model, `model_processing.responses` (sanitized actual model, token usage, HTTP request count and validation/error status), explicit `fallbacks`, and `observed_cost: null`; actual billing reconciliation is external. `model_name` records returned models only. Preflight and the bounded synthetic Claude smoke are explicit CLI administration, not public HTTP triggers; [live Claude access is blocked here](23_PHASE41_REPLIT_CLAUDE.md).
+
+`insufficient_evidence` dimensions display **INSUFFICIENT EVIDENCE**; title-only courses retain `needs_syllabus_confirmation` and `is_final_curriculum_verdict=false`. Citation validation checks exact associated admitted references, quotations, dates/scope/rights and curriculum evidence level. No relevance scores, definitive obsolete/replacement verdicts, academic actions or free-form factual claims are accepted. See OpenAPI for exact typed fields and [the retrieval design](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) for policy boundaries.
+
 ## Later endpoint targets - not implemented
 
 | Phase | Proposed endpoints | Purpose |
 |---|---|---|
-| 3 | `GET /evidence/sources`, `POST /evidence/imports`, `GET /evidence/snapshots` | Reuse the source registry; versioned evidence passages/dated snapshots |
-| 4 | `POST /programmes/{id}/analyses`, `GET /analyses/{id}`, `/analyses/{id}/courses`, `/analyses/{id}/courses/{course_id}` | Whole-programme run and course drill-down |
 | 5 | `GET /analyses/{id}/actions`, `POST /analyses/{id}/compare` | Supported primary action/alternatives including no change |
 | 6 | `POST /analyses/{id}/scenarios`, `GET /analyses/{id}/report` | Reproducible scenario/review draft |
 
 Resource paths above carry `/api/v1`; async activities return 202 and a job ID. Finalise later contracts in the authorised phase without removing compatible foundation routes. Future title-only results must expose `needs_syllabus_confirmation`, sources, dates, unknown taught content and `is_final_curriculum_verdict=false`. A proposed action is never an approved academic decision.
+
+### Planned career alignment/pathway contract extensions
+
+The [planning revision](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) extends Phase 5 action/comparison responses with programme `career_alignment`, reviewed occupation/skill pointers, curriculum-supported competencies, requirement-level potential gaps, confidence/limitations and optional deterministic alignment calculation metadata. A title-only comparison must report unknown coverage. Any score requires method/version, weights, eligible denominator and missingness; it is not an employment probability.
+
+Phase 5 responses will retain primary recommended intervention, alternatives including no change, minimum sufficient rationale, evidence conditions and human review. Phase 6 scenario/report responses will add ordered `academic_pathways`/Academic Action Plans with target competency, proposed objectives/activities, prerequisites, duration and basis, verified resources, occupational/evidence pointers and meaningful SDG links. Null/unknown duration or resource verification is preferable to invented values. No attendance-based technical competency attribution is allowed.
+
+These are future additive schema/API requirements, not implemented fields/routes. Keep proposed intervention objectives separate from actual taught content and scenario assumptions separate from observed indicators. Source permissions, reproducibility, protected reads/writes and structured validation continue across phases. Do not introduce a standalone career or student platform to expose these nested capabilities.
+
+Phase 4 currently supplies scoped citations, source/version/date/rights lineage, five dimensions, fixed coverage questions and deterministic programme context. Later competency support needs typed skill/concept assertions, reviewed mappings and `documented_intent`/`assessed_demonstration`/`unknown` states. This planning revision identifies those additions; it does not expand Phase 4 into recommendations, pathways or individual matching.

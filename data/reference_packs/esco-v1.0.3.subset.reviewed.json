@@ -1,0 +1,2573 @@
+{
+  "reviewed": true,
+  "records": [
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/07bd65d7-c13f-443a-bdf6-88903f3822be",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "قاضي / قاضية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 105,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/07bd65d7-c13f-443a-bdf6-88903f3822be",
+            "iscoGroup": "2612",
+            "preferredLabel": "قاضي / قاضية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T12:08:53Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "قاضي / قاضية",
+        "description": null,
+        "classification_code": "2612"
+      },
+      "locator": "occupations_ar.csv row 105",
+      "excerpt": "قاضي / قاضية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "original_arabic_label": "فني الهندسة المائية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 242,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3",
+            "iscoGroup": "3112",
+            "preferredLabel": "فني الهندسة المائية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T13:23:34Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "water engineering technician",
+        "description": null,
+        "classification_code": "3112"
+      },
+      "locator": "occupations_ar.csv row 242; partial TTL subject <http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3>/skos:prefLabel[@en]",
+      "excerpt": "water engineering technician",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/18dafd4f-8c37-4276-b4b3-cfa31059b2b6",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل على سطح سفن الصيد / عاملة على سطح سفن الصيد",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 304,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/18dafd4f-8c37-4276-b4b3-cfa31059b2b6",
+            "iscoGroup": "8350",
+            "preferredLabel": "عامل على سطح سفن الصيد / عاملة على سطح سفن الصيد",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-12-20T11:05:32Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل على سطح سفن الصيد / عاملة على سطح سفن الصيد",
+        "description": null,
+        "classification_code": "8350"
+      },
+      "locator": "occupations_ar.csv row 304",
+      "excerpt": "عامل على سطح سفن الصيد / عاملة على سطح سفن الصيد",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/1f5932eb-b36d-44e1-a063-7aa9e228af51",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل دعم الرعاية البديلة / عاملة دعم الرعاية البديلة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 383,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/1f5932eb-b36d-44e1-a063-7aa9e228af51",
+            "iscoGroup": "3412",
+            "preferredLabel": "عامل دعم الرعاية البديلة / عاملة دعم الرعاية البديلة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:25:32Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل دعم الرعاية البديلة / عاملة دعم الرعاية البديلة",
+        "description": null,
+        "classification_code": "3412"
+      },
+      "locator": "occupations_ar.csv row 383",
+      "excerpt": "عامل دعم الرعاية البديلة / عاملة دعم الرعاية البديلة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/24413f38-e457-4de1-bba0-5a02b7282e2c",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل مصايد الأسماك في أعماق البحار / عاملة مصايد الأسماك في أعماق البحار",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 443,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/24413f38-e457-4de1-bba0-5a02b7282e2c",
+            "iscoGroup": "6223",
+            "preferredLabel": "عامل مصايد الأسماك في أعماق البحار / عاملة مصايد الأسماك في أعماق البحار",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-12-20T11:06:26Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل مصايد الأسماك في أعماق البحار / عاملة مصايد الأسماك في أعماق البحار",
+        "description": null,
+        "classification_code": "6223"
+      },
+      "locator": "occupations_ar.csv row 443",
+      "excerpt": "عامل مصايد الأسماك في أعماق البحار / عاملة مصايد الأسماك في أعماق البحار",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/2ae76ccc-f02e-4eb6-b693-fff70ba8f409",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل رعاية الطفل / عاملة رعاية الطفل",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 520,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/2ae76ccc-f02e-4eb6-b693-fff70ba8f409",
+            "iscoGroup": "3412",
+            "preferredLabel": "عامل رعاية الطفل / عاملة رعاية الطفل",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:25:57Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل رعاية الطفل / عاملة رعاية الطفل",
+        "description": null,
+        "classification_code": "3412"
+      },
+      "locator": "occupations_ar.csv row 520",
+      "excerpt": "عامل رعاية الطفل / عاملة رعاية الطفل",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/2e46a2a3-4d33-469e-8d50-588cc17e6bed",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "رئيس البحارة / رئيسة البحارة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 559,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/2e46a2a3-4d33-469e-8d50-588cc17e6bed",
+            "iscoGroup": "8350",
+            "preferredLabel": "رئيس البحارة / رئيسة البحارة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-12-22T22:19:35Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "رئيس البحارة / رئيسة البحارة",
+        "description": null,
+        "classification_code": "8350"
+      },
+      "locator": "occupations_ar.csv row 559",
+      "excerpt": "رئيس البحارة / رئيسة البحارة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/30194ac4-93b8-4450-8a15-f6f7cbe351cb",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل دعم الأمومة / عاملة دعم الأمومة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 583,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/30194ac4-93b8-4450-8a15-f6f7cbe351cb",
+            "iscoGroup": "3222",
+            "preferredLabel": "عامل دعم الأمومة / عاملة دعم الأمومة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T11:35:11Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل دعم الأمومة / عاملة دعم الأمومة",
+        "description": null,
+        "classification_code": "3222"
+      },
+      "locator": "occupations_ar.csv row 583",
+      "excerpt": "عامل دعم الأمومة / عاملة دعم الأمومة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "original_arabic_label": "مخرج الرسوم المتحركة / مخرجة الرسوم المتحركة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 594,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc",
+            "iscoGroup": "2166",
+            "preferredLabel": "مخرج الرسوم المتحركة / مخرجة الرسوم المتحركة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:16:39Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "animation director",
+        "description": null,
+        "classification_code": "2166"
+      },
+      "locator": "occupations_ar.csv row 594; partial TTL subject <http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc>/skos:prefLabel[@en]",
+      "excerpt": "animation director",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/353c19d6-62d6-4dfc-85e9-f59d219d457c",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "قاضي المحكمة العليا / قاضية المحكمة العليا",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 643,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/353c19d6-62d6-4dfc-85e9-f59d219d457c",
+            "iscoGroup": "2612",
+            "preferredLabel": "قاضي المحكمة العليا / قاضية المحكمة العليا",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T14:12:29Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "قاضي المحكمة العليا / قاضية المحكمة العليا",
+        "description": null,
+        "classification_code": "2612"
+      },
+      "locator": "occupations_ar.csv row 643",
+      "excerpt": "قاضي المحكمة العليا / قاضية المحكمة العليا",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "original_arabic_label": "منتج فيديوهات وأفلام / منتجة فيديوهات وأفلام",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 722,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb",
+            "iscoGroup": "2654",
+            "preferredLabel": "منتج فيديوهات وأفلام / منتجة فيديوهات وأفلام",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T13:58:37Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "video and motion picture producer",
+        "description": null,
+        "classification_code": "2654"
+      },
+      "locator": "occupations_ar.csv row 722; partial TTL subject <http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb>/skos:prefLabel[@en]",
+      "excerpt": "video and motion picture producer",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/3f74aad8-2d60-4be2-b059-8dba5568d530",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل الرعاية النهارية للأطفال / عاملة الرعاية النهارية للأطفال",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 769,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/3f74aad8-2d60-4be2-b059-8dba5568d530",
+            "iscoGroup": "5311",
+            "preferredLabel": "عامل الرعاية النهارية للأطفال / عاملة الرعاية النهارية للأطفال",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:26:08Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل الرعاية النهارية للأطفال / عاملة الرعاية النهارية للأطفال",
+        "description": null,
+        "classification_code": "5311"
+      },
+      "locator": "occupations_ar.csv row 769",
+      "excerpt": "عامل الرعاية النهارية للأطفال / عاملة الرعاية النهارية للأطفال",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/461959ed-6a80-4c33-a75e-26aaeb52a5a7",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "فني صرف",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 831,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/461959ed-6a80-4c33-a75e-26aaeb52a5a7",
+            "iscoGroup": "7126",
+            "preferredLabel": "فني صرف",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:04:39Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "فني صرف",
+        "description": null,
+        "classification_code": "7126"
+      },
+      "locator": "occupations_ar.csv row 831",
+      "excerpt": "فني صرف",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/4c89c65c-4e35-44e3-8fa0-5d73e9e15325",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل دعم الأسرة / عاملة دعم الأسرة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 913,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/4c89c65c-4e35-44e3-8fa0-5d73e9e15325",
+            "iscoGroup": "3412",
+            "preferredLabel": "عامل دعم الأسرة / عاملة دعم الأسرة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-20T13:26:22Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل دعم الأسرة / عاملة دعم الأسرة",
+        "description": null,
+        "classification_code": "3412"
+      },
+      "locator": "occupations_ar.csv row 913",
+      "excerpt": "عامل دعم الأسرة / عاملة دعم الأسرة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/4ca8ba6c-dc55-40c0-ae6c-d55c94dd2e03",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "ضابط مخابرات / ضابطة مخابرات",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 915,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/4ca8ba6c-dc55-40c0-ae6c-d55c94dd2e03",
+            "iscoGroup": "2422",
+            "preferredLabel": "ضابط مخابرات / ضابطة مخابرات",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:25:40Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "ضابط مخابرات / ضابطة مخابرات",
+        "description": null,
+        "classification_code": "2422"
+      },
+      "locator": "occupations_ar.csv row 915",
+      "excerpt": "ضابط مخابرات / ضابطة مخابرات",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/4d5bd738-9202-4fd7-bd8c-7dbe914048de",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس زراعي / مهندسة زراعية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 925,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/4d5bd738-9202-4fd7-bd8c-7dbe914048de",
+            "iscoGroup": "2144",
+            "preferredLabel": "مهندس زراعي / مهندسة زراعية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-27T11:30:36Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس زراعي / مهندسة زراعية",
+        "description": null,
+        "classification_code": "2144"
+      },
+      "locator": "occupations_ar.csv row 925",
+      "excerpt": "مهندس زراعي / مهندسة زراعية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "محلل الميزانية / محللة الميزانية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 935,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11",
+            "iscoGroup": "2411",
+            "preferredLabel": "محلل الميزانية / محللة الميزانية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T15:24:12Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "محلل الميزانية / محللة الميزانية",
+        "description": null,
+        "classification_code": "2411"
+      },
+      "locator": "occupations_ar.csv row 935",
+      "excerpt": "محلل الميزانية / محللة الميزانية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/50e00fda-ac7c-4bc5-9f19-69a33ff3d6e7",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مسؤول سياسات الشؤون المالية / مسؤولة سياسات الشؤون المالية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 971,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/50e00fda-ac7c-4bc5-9f19-69a33ff3d6e7",
+            "iscoGroup": "2422",
+            "preferredLabel": "مسؤول سياسات الشؤون المالية / مسؤولة سياسات الشؤون المالية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T14:45:07Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مسؤول سياسات الشؤون المالية / مسؤولة سياسات الشؤون المالية",
+        "description": null,
+        "classification_code": "2422"
+      },
+      "locator": "occupations_ar.csv row 971",
+      "excerpt": "مسؤول سياسات الشؤون المالية / مسؤولة سياسات الشؤون المالية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/51ec004e-aec8-4f89-b114-952bcc56b0b0",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مدون فيديو / مدونة فيديو",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 980,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/51ec004e-aec8-4f89-b114-952bcc56b0b0",
+            "iscoGroup": "2642",
+            "preferredLabel": "مدون فيديو / مدونة فيديو",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-10-17T18:30:02Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مدون فيديو / مدونة فيديو",
+        "description": null,
+        "classification_code": "2642"
+      },
+      "locator": "occupations_ar.csv row 980",
+      "excerpt": "مدون فيديو / مدونة فيديو",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/53d2052f-edc0-4f44-8be1-164526412bfe",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس صناعي / مهندسة صناعية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1004,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/53d2052f-edc0-4f44-8be1-164526412bfe",
+            "iscoGroup": "2141",
+            "preferredLabel": "مهندس صناعي / مهندسة صناعية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:17:03Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس صناعي / مهندسة صناعية",
+        "description": null,
+        "classification_code": "2141"
+      },
+      "locator": "occupations_ar.csv row 1004",
+      "excerpt": "مهندس صناعي / مهندسة صناعية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/56afc09a-75a0-49c7-a5cb-256df45d8f2d",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مستشار اقتصادي / مستشارة اقتصادية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1034,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/56afc09a-75a0-49c7-a5cb-256df45d8f2d",
+            "iscoGroup": "2631",
+            "preferredLabel": "مستشار اقتصادي / مستشارة اقتصادية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T14:09:38Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مستشار اقتصادي / مستشارة اقتصادية",
+        "description": null,
+        "classification_code": "2631"
+      },
+      "locator": "occupations_ar.csv row 1034",
+      "excerpt": "مستشار اقتصادي / مستشارة اقتصادية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/579254cf-6d69-4889-9000-9c79dc568644",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس ميكانيكي / مهندسة ميكانيكية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1047,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/579254cf-6d69-4889-9000-9c79dc568644",
+            "iscoGroup": "2144",
+            "preferredLabel": "مهندس ميكانيكي / مهندسة ميكانيكية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-10-20T15:55:00Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس ميكانيكي / مهندسة ميكانيكية",
+        "description": null,
+        "classification_code": "2144"
+      },
+      "locator": "occupations_ar.csv row 1047",
+      "excerpt": "مهندس ميكانيكي / مهندسة ميكانيكية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/6a3d3d28-0ab6-49b0-9a32-697e5e104bf1",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عالم التربة / عالمة التربة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1275,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/6a3d3d28-0ab6-49b0-9a32-697e5e104bf1",
+            "iscoGroup": "2133",
+            "preferredLabel": "عالم التربة / عالمة التربة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T11:28:38Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عالم التربة / عالمة التربة",
+        "description": null,
+        "classification_code": "2133"
+      },
+      "locator": "occupations_ar.csv row 1275",
+      "excerpt": "عالم التربة / عالمة التربة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "محاسب مالي عام / محاسبة مالية عامة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1457,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830",
+            "iscoGroup": "2411",
+            "preferredLabel": "محاسب مالي عام / محاسبة مالية عامة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:19:36Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "محاسب مالي عام / محاسبة مالية عامة",
+        "description": null,
+        "classification_code": "2411"
+      },
+      "locator": "occupations_ar.csv row 1457",
+      "excerpt": "محاسب مالي عام / محاسبة مالية عامة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/7bc02fa7-7aaa-41a6-be5b-ab7a7b6684d3",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس توزيع الغاز / مهندسة توزيع الغاز",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1484,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/7bc02fa7-7aaa-41a6-be5b-ab7a7b6684d3",
+            "iscoGroup": "2145",
+            "preferredLabel": "مهندس توزيع الغاز / مهندسة توزيع الغاز",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:03:47Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس توزيع الغاز / مهندسة توزيع الغاز",
+        "description": null,
+        "classification_code": "2145"
+      },
+      "locator": "occupations_ar.csv row 1484",
+      "excerpt": "مهندس توزيع الغاز / مهندسة توزيع الغاز",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/87d0795a-d41f-47ee-979f-0ab7d73836e7",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مساعد ممرض / مساعدة ممرض",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1625,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/87d0795a-d41f-47ee-979f-0ab7d73836e7",
+            "iscoGroup": "5321",
+            "preferredLabel": "مساعد ممرض / مساعدة ممرض",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-02-23T12:43:56Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مساعد ممرض / مساعدة ممرض",
+        "description": null,
+        "classification_code": "5321"
+      },
+      "locator": "occupations_ar.csv row 1625",
+      "excerpt": "مساعد ممرض / مساعدة ممرض",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/8801ef16-92a4-4889-8f80-9b78206c7ec0",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مسؤول حقوق الإنسان / مسؤولة حقوق الإنسان",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1629,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/8801ef16-92a4-4889-8f80-9b78206c7ec0",
+            "iscoGroup": "2619",
+            "preferredLabel": "مسؤول حقوق الإنسان / مسؤولة حقوق الإنسان",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:21:32Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مسؤول حقوق الإنسان / مسؤولة حقوق الإنسان",
+        "description": null,
+        "classification_code": "2619"
+      },
+      "locator": "occupations_ar.csv row 1629",
+      "excerpt": "مسؤول حقوق الإنسان / مسؤولة حقوق الإنسان",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/8f928d49-da89-4d07-9123-2151a4d276d4",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مدير النقل / مديرة النقل",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1719,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/8f928d49-da89-4d07-9123-2151a4d276d4",
+            "iscoGroup": "1324",
+            "preferredLabel": "مدير النقل / مديرة النقل",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T17:07:24Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مدير النقل / مديرة النقل",
+        "description": null,
+        "classification_code": "1324"
+      },
+      "locator": "occupations_ar.csv row 1719",
+      "excerpt": "مدير النقل / مديرة النقل",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/952aa13c-731f-4add-98d1-66b59f70e607",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل نقل الحيوانات الحية / عاملة نقل الحيوانات الحية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1768,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/952aa13c-731f-4add-98d1-66b59f70e607",
+            "iscoGroup": "8332",
+            "preferredLabel": "عامل نقل الحيوانات الحية / عاملة نقل الحيوانات الحية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:17:57Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل نقل الحيوانات الحية / عاملة نقل الحيوانات الحية",
+        "description": null,
+        "classification_code": "8332"
+      },
+      "locator": "occupations_ar.csv row 1768",
+      "excerpt": "عامل نقل الحيوانات الحية / عاملة نقل الحيوانات الحية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/a4e96a0c-3a49-4cd3-a45c-ff081c28405d",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "عامل جلفطة الخشب / عاملة جلفطة الخشب",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1955,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/a4e96a0c-3a49-4cd3-a45c-ff081c28405d",
+            "iscoGroup": "9329",
+            "preferredLabel": "عامل جلفطة الخشب / عاملة جلفطة الخشب",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T16:58:26Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "عامل جلفطة الخشب / عاملة جلفطة الخشب",
+        "description": null,
+        "classification_code": "9329"
+      },
+      "locator": "occupations_ar.csv row 1955",
+      "excerpt": "عامل جلفطة الخشب / عاملة جلفطة الخشب",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/a504e79e-f146-4773-a1cf-2b15b9d614db",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "سائق شاحنة الانتقال / سائقة شاحنة الانتقال",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1956,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/a504e79e-f146-4773-a1cf-2b15b9d614db",
+            "iscoGroup": "8332",
+            "preferredLabel": "سائق شاحنة الانتقال / سائقة شاحنة الانتقال",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T17:08:22Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "سائق شاحنة الانتقال / سائقة شاحنة الانتقال",
+        "description": null,
+        "classification_code": "8332"
+      },
+      "locator": "occupations_ar.csv row 1956",
+      "excerpt": "سائق شاحنة الانتقال / سائقة شاحنة الانتقال",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/a5dc92b4-9712-4bc5-a08a-f6efa07b855f",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس تصميم المعدات الزراعية / مهندسة تصميم المعدات الزراعية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 1965,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/a5dc92b4-9712-4bc5-a08a-f6efa07b855f",
+            "iscoGroup": "2144",
+            "preferredLabel": "مهندس تصميم المعدات الزراعية / مهندسة تصميم المعدات الزراعية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-10-20T15:56:03Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس تصميم المعدات الزراعية / مهندسة تصميم المعدات الزراعية",
+        "description": null,
+        "classification_code": "2144"
+      },
+      "locator": "occupations_ar.csv row 1965",
+      "excerpt": "مهندس تصميم المعدات الزراعية / مهندسة تصميم المعدات الزراعية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/b2cede50-82bb-4684-9f11-1930e12ad672",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس طاقة / مهندسة طاقة",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 2110,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/b2cede50-82bb-4684-9f11-1930e12ad672",
+            "iscoGroup": "2149",
+            "preferredLabel": "مهندس طاقة / مهندسة طاقة",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-13T11:48:43Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس طاقة / مهندسة طاقة",
+        "description": null,
+        "classification_code": "2149"
+      },
+      "locator": "occupations_ar.csv row 2110",
+      "excerpt": "مهندس طاقة / مهندسة طاقة",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "original_arabic_label": "محررة نشرة الأخبار / محررة نشرة الأخبار",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 2156,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5",
+            "iscoGroup": "2642",
+            "preferredLabel": "محررة نشرة الأخبار / محررة نشرة الأخبار",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T13:57:47Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "broadcast news editor",
+        "description": null,
+        "classification_code": "2642"
+      },
+      "locator": "occupations_ar.csv row 2156; partial TTL subject <http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5>/skos:prefLabel[@en]",
+      "excerpt": "broadcast news editor",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مهندس زراعي / مهندسة زراعية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 2325,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2",
+            "iscoGroup": "2132",
+            "preferredLabel": "مهندس زراعي / مهندسة زراعية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T14:26:47Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مهندس زراعي / مهندسة زراعية",
+        "description": null,
+        "classification_code": "2132"
+      },
+      "locator": "occupations_ar.csv row 2325",
+      "excerpt": "مهندس زراعي / مهندسة زراعية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/d38c2107-98f2-47b7-8bb4-f69750d51082",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مساعد العناية الصحية / مساعدة العناية الصحية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 2488,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/d38c2107-98f2-47b7-8bb4-f69750d51082",
+            "iscoGroup": "5321",
+            "preferredLabel": "مساعد العناية الصحية / مساعدة العناية الصحية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T13:34:37Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مساعد العناية الصحية / مساعدة العناية الصحية",
+        "description": null,
+        "classification_code": "5321"
+      },
+      "locator": "occupations_ar.csv row 2488",
+      "excerpt": "مساعد العناية الصحية / مساعدة العناية الصحية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/e1fdca51-a0e1-4bea-822f-82a090ece780",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "مستشار ثروة حيوانية / مستشارة ثروة حيوانية",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 2637,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/e1fdca51-a0e1-4bea-822f-82a090ece780",
+            "iscoGroup": "2132",
+            "preferredLabel": "مستشار ثروة حيوانية / مستشارة ثروة حيوانية",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2017-01-17T12:49:56Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/occupations,\nhttp://data.europa.eu/esco/concept-scheme/member-occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "مستشار ثروة حيوانية / مستشارة ثروة حيوانية",
+        "description": null,
+        "classification_code": "2132"
+      },
+      "locator": "occupations_ar.csv row 2637",
+      "excerpt": "مستشار ثروة حيوانية / مستشارة ثروة حيوانية",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation",
+      "key": "http://data.europa.eu/esco/occupation/f57eb0cb-e67a-419c-9b7b-4abd811b7e2f",
+      "data": {
+        "metadata_json": {
+          "source_language": "ar",
+          "original_arabic_label": "منسق الانتقال / منسقة الانتقال",
+          "edition": "v1.0.3",
+          "classification_code_system": "ISCO-08 (published iscoGroup field)",
+          "original_csv_row": 2824,
+          "raw": {
+            "conceptType": "Occupation",
+            "conceptUri": "http://data.europa.eu/esco/occupation/f57eb0cb-e67a-419c-9b7b-4abd811b7e2f",
+            "iscoGroup": "4323",
+            "preferredLabel": "منسق الانتقال / منسقة الانتقال",
+            "altLabels": "",
+            "hiddenLabels": "",
+            "status": "released",
+            "modifiedDate": "2016-07-05T17:07:49Z",
+            "regulatedProfessionNote": "http://data.europa.eu/esco/regulated-professions/unregulated",
+            "scopeNote": "",
+            "definition": "",
+            "inScheme": "http://data.europa.eu/esco/concept-scheme/member-occupations,\nhttp://data.europa.eu/esco/concept-scheme/occupations",
+            "description": ""
+          },
+          "limitations": "Old ESCO edition, not current taxonomy or Malaysian demand; Arabic source label retained when English preferred label was not available in acquired same-edition material."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "منسق الانتقال / منسقة الانتقال",
+        "description": null,
+        "classification_code": "4323"
+      },
+      "locator": "occupations_ar.csv row 2824",
+      "excerpt": "منسق الانتقال / منسقة الانتقال",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يتفقد النفقات الحكومية",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/423516c0-a86c-4a58-8e1a-1f988412826a",
+          "original_csv_row": 1323,
+          "skill_resource_block_sha256": "09a4d7e0dfa3b87d52e3242385951dd3a491562df51d0801fbb38c1a930bf3b8",
+          "description_resource_block_sha256": "1d06067c15a14bf65a648b25822fa96945f86575d2307858b87d8fe726206c0b",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "inspect government expenditures",
+        "description": "Inspect the financial procedures of a government organisation which deals with budget and resource allocation and spending to ensure that no faults are being made and no suspicious activity occurs in the handling of financial accounts, and that the expenditures are compliant with financial needs and forecasts."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/423516c0-a86c-4a58-8e1a-1f988412826a>/esco:nodeLiteral[@en]",
+      "excerpt": "inspect government expenditures: Inspect the financial procedures of a government organisation which deals with budget and resource allocation and spending to ensure that no faults are being made and no suspicious activity occurs in the handling of financial accounts, and that the expenditures are compliant with financial needs and forecasts.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يشرف على الإجراءات الصحية في المناطق الزراعية",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/4874faea-fc28-4ffd-8d9b-3af1b0cd63f1",
+          "original_csv_row": 4811,
+          "skill_resource_block_sha256": "57b2f1db2fe746a2375719152fee3c3a578c5d839e6dc11879d66451033a243a",
+          "description_resource_block_sha256": "6c502bd57ad2755a0392340cae8a7f8833c29d4df864134ed07ecfb19d94bd79",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "supervise hygiene procedures in agricultural settings",
+        "description": "Ensure that hygiene procedures in agricultural settings are followed, taking into account the regulations of specific areas of action e.q. livestock, plants, local farm products, etc."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/4874faea-fc28-4ffd-8d9b-3af1b0cd63f1>/esco:nodeLiteral[@en]",
+      "excerpt": "supervise hygiene procedures in agricultural settings: Ensure that hygiene procedures in agricultural settings are followed, taking into account the regulations of specific areas of action e.q. livestock, plants, local farm products, etc.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يفحص عمليات الهياكل الأساسية لخطوط الأنابيب",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/239671f6-0fce-4255-a5d1-94eb08a7b352",
+          "original_csv_row": 5648,
+          "skill_resource_block_sha256": "01ae981d75454851f6bfef4f5f6cd217cefa6e29209986697761c0600a48e9e3",
+          "description_resource_block_sha256": "42b29bb297957a49d5ae8f73306ee471d9d0cd733d4a535d437bfcc7f7ad9939",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "test pipeline infrastructure operations",
+        "description": "Perform tests on pipelines, such checking whether there is continuous flow of materials through them, examining for leakages, and assessing the suitability of the location of the pipeline is."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/239671f6-0fce-4255-a5d1-94eb08a7b352>/esco:nodeLiteral[@en]",
+      "excerpt": "test pipeline infrastructure operations: Perform tests on pipelines, such checking whether there is continuous flow of materials through them, examining for leakages, and assessing the suitability of the location of the pipeline is.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "أنظمة الري",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/d4e0a967-cd2e-457d-8e12-2a68fd8e03b7",
+          "original_csv_row": 5974,
+          "skill_resource_block_sha256": "85a9833c881714662d7c71e25215eaba7ada332cc3f5bfd1aedb0fcb41020a15",
+          "description_resource_block_sha256": "f3c28b0e6306517ffe3e370509a4243e10348e403b5e9b285d42cb7d240b3726",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "irrigation systems",
+        "description": "The methods and systems management in irrigation."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/d4e0a967-cd2e-457d-8e12-2a68fd8e03b7>/esco:nodeLiteral[@en]",
+      "excerpt": "irrigation systems: The methods and systems management in irrigation.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "تعديل الصور الرقمية المتحركة",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/93fba03a-d11b-4aea-8f72-9cd01b1db84b",
+          "original_csv_row": 8345,
+          "skill_resource_block_sha256": "10aabaecec029a160357686eb80d8f85063f61d2b305c19b90a6f3d6fcb6a011",
+          "description_resource_block_sha256": "7c1459d5a214282c0757a450d07d2e005d4ab50ce9a4a7865f2100b75e7c71e8",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "edit digital moving images",
+        "description": "Use specialised software to edit video images for use in an artistic production."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/93fba03a-d11b-4aea-8f72-9cd01b1db84b>/esco:nodeLiteral[@en]",
+      "excerpt": "edit digital moving images: Use specialised software to edit video images for use in an artistic production.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يسمع روايات الشهود",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/cc93e278-da4d-42d4-b38f-15a917df6823",
+          "original_csv_row": 8590,
+          "skill_resource_block_sha256": "08f002fc7535e6941498eb8fa861e2f915ae3b4f9d77953d7e84642a1afc4c70",
+          "description_resource_block_sha256": "1dd850faaa045a69b2f098e7a00d41e448aab1c1397e6d6840ebde02e7e94dc7",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "hear witness accounts",
+        "description": "Hear witness accounts during a court hearing or during an investigation to assess the significance of the account, its impact on the case under scrutiny or investigation, and to aid in reaching a conclusion."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/cc93e278-da4d-42d4-b38f-15a917df6823>/esco:nodeLiteral[@en]",
+      "excerpt": "hear witness accounts: Hear witness accounts during a court hearing or during an investigation to assess the significance of the account, its impact on the case under scrutiny or investigation, and to aid in reaching a conclusion.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يساعد في صيانة السفينة",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/22ea1f18-45ec-4fe3-9fcb-7e808fa86724",
+          "original_csv_row": 8647,
+          "skill_resource_block_sha256": "324f0f2a273f51b8a6278783d41ded188c89b66519a1567d7734ea7fd5f7f65d",
+          "description_resource_block_sha256": "b756c8b1b068c1bf854fbb07cf792aa4d1e7ae2fae5517ca6e5aceac9cfb94fb",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "assist in ship maintenance",
+        "description": "Contribute to shipboard maintenance and repair using painting, lubrication and cleaning materials and equipment. Execute routine maintenance and repair procedures. Dispose safely waste materials. Apply, maintain and use hand and power tools."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/22ea1f18-45ec-4fe3-9fcb-7e808fa86724>/esco:nodeLiteral[@en]",
+      "excerpt": "assist in ship maintenance: Contribute to shipboard maintenance and repair using painting, lubrication and cleaning materials and equipment. Execute routine maintenance and repair procedures. Dispose safely waste materials. Apply, maintain and use hand and power tools.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يعمل مع طاقم التمريض",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/57f60c2a-28d5-4798-97ec-df8aac5636ca",
+          "original_csv_row": 9927,
+          "skill_resource_block_sha256": "d8e3a133b3160e960cba316cae64f58814ffc74413f987b8582849e0d696c3eb",
+          "description_resource_block_sha256": "1cd6f897c9e26a9cac5f54d4f3311934cae595466381ec6f951f53961a6dc8bb",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "work with nursing staff",
+        "description": "Work together with nurses and other health professionals in supporting the delivery of basic patient care."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/57f60c2a-28d5-4798-97ec-df8aac5636ca>/esco:nodeLiteral[@en]",
+      "excerpt": "work with nursing staff: Work together with nurses and other health professionals in supporting the delivery of basic patient care.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "يساعد مستخدمي الخدمات الاجتماعية في صياغة الشكاوى",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/2791d905-e80f-471c-9681-16a3b0c70464",
+          "original_csv_row": 12340,
+          "skill_resource_block_sha256": "473cc2b332c265cb97280f6e790cb671076530a0f34d8367b91b74d994403fb5",
+          "description_resource_block_sha256": "cc91747a98d32e6174e62e48d2928dcfdcf19cddedbec8814ec5d461b91f7275",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "assist social service users in formulating complaints",
+        "description": "Help social services users and caregivers file complaints, taking the complaints seriously and responding to them or passing them to the appropriate person."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/2791d905-e80f-471c-9681-16a3b0c70464>/esco:nodeLiteral[@en]",
+      "excerpt": "assist social service users in formulating complaints: Help social services users and caregivers file complaints, taking the complaints seriously and responding to them or passing them to the appropriate person.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "skill",
+      "key": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "data": {
+        "metadata_json": {
+          "source_language": "en",
+          "edition": "v1.0.3",
+          "original_arabic_label": "مركبات نقل الحيوانات",
+          "description_node_uri": "http://data.europa.eu/esco/node-literal/43a631e8-cb24-4689-9f24-beca5a087646",
+          "original_csv_row": 12707,
+          "skill_resource_block_sha256": "c98532921173402c2f35a6796573c0dbafab10fd51e755def91d417d032b52c3",
+          "description_resource_block_sha256": "a1087bb9edd39eb77312f717f1b9facecbc39d81bcf375f677097095e1ca52d7",
+          "limitations": "English preferred label and description are explicit complete linked source blocks in the partially retrieved official TTL artifact; no full TTL ZIP integrity or whole-corpus completeness is claimed."
+        },
+        "taxonomy": "ESCO:v1.0.3",
+        "label": "animal transportation vehicles",
+        "description": "The types of vehicles for the transportation of animals and their features, the selection of appropriate vehicles and their safe use, according to national and international regulations."
+      },
+      "locator": "partial TTL subject <http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af>/skos:prefLabel; description node <http://data.europa.eu/esco/node-literal/43a631e8-cb24-4689-9f24-beca5a087646>/esco:nodeLiteral[@en]",
+      "excerpt": "animal transportation vehicles: The types of vehicles for the transportation of animals and their features, the selection of appropriate vehicles and their safe use, according to national and international regulations.",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc:optional:http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc",
+        "skill_external_id": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 21874",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/30b25ee4-da97-4167-8592-460217f6bdcc; relationType=optional; skillUri=http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb:optional:http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb",
+        "skill_external_id": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 26672",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/3b6bea7d-36f4-44fb-ac73-d1cc8a198dcb; relationType=optional; skillUri=http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5:optional:http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5",
+        "skill_external_id": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 83757",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/b65530b8-0b50-49da-8e9e-331b161374a5; relationType=optional; skillUri=http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/51ec004e-aec8-4f89-b114-952bcc56b0b0:essential:http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/51ec004e-aec8-4f89-b114-952bcc56b0b0",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/51ec004e-aec8-4f89-b114-952bcc56b0b0",
+        "skill_external_id": "http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 36641",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/51ec004e-aec8-4f89-b114-952bcc56b0b0; relationType=essential; skillUri=http://data.europa.eu/esco/skill/9ce52938-fe28-4548-b38d-0c783933e19a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/353c19d6-62d6-4dfc-85e9-f59d219d457c:essential:http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/353c19d6-62d6-4dfc-85e9-f59d219d457c",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/353c19d6-62d6-4dfc-85e9-f59d219d457c",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 23831",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/353c19d6-62d6-4dfc-85e9-f59d219d457c; relationType=essential; skillUri=http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/07bd65d7-c13f-443a-bdf6-88903f3822be:optional:http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/07bd65d7-c13f-443a-bdf6-88903f3822be",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/07bd65d7-c13f-443a-bdf6-88903f3822be",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 3832",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/07bd65d7-c13f-443a-bdf6-88903f3822be; relationType=optional; skillUri=http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/4ca8ba6c-dc55-40c0-ae6c-d55c94dd2e03:optional:http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/4ca8ba6c-dc55-40c0-ae6c-d55c94dd2e03",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/4ca8ba6c-dc55-40c0-ae6c-d55c94dd2e03",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 34171",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/4ca8ba6c-dc55-40c0-ae6c-d55c94dd2e03; relationType=optional; skillUri=http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/8801ef16-92a4-4889-8f80-9b78206c7ec0:optional:http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/8801ef16-92a4-4889-8f80-9b78206c7ec0",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/8801ef16-92a4-4889-8f80-9b78206c7ec0",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 62974",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/8801ef16-92a4-4889-8f80-9b78206c7ec0; relationType=optional; skillUri=http://data.europa.eu/esco/skill/a1f79d57-2e4d-4876-a7ac-4ab19e0861dc",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/18dafd4f-8c37-4276-b4b3-cfa31059b2b6:essential:http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/18dafd4f-8c37-4276-b4b3-cfa31059b2b6",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/18dafd4f-8c37-4276-b4b3-cfa31059b2b6",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 11411",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/18dafd4f-8c37-4276-b4b3-cfa31059b2b6; relationType=essential; skillUri=http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/24413f38-e457-4de1-bba0-5a02b7282e2c:essential:http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/24413f38-e457-4de1-bba0-5a02b7282e2c",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/24413f38-e457-4de1-bba0-5a02b7282e2c",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 16284",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/24413f38-e457-4de1-bba0-5a02b7282e2c; relationType=essential; skillUri=http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/2e46a2a3-4d33-469e-8d50-588cc17e6bed:essential:http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/2e46a2a3-4d33-469e-8d50-588cc17e6bed",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/2e46a2a3-4d33-469e-8d50-588cc17e6bed",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 20446",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/2e46a2a3-4d33-469e-8d50-588cc17e6bed; relationType=essential; skillUri=http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/a4e96a0c-3a49-4cd3-a45c-ff081c28405d:optional:http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/a4e96a0c-3a49-4cd3-a45c-ff081c28405d",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/a4e96a0c-3a49-4cd3-a45c-ff081c28405d",
+        "skill_external_id": "http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 75652",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/a4e96a0c-3a49-4cd3-a45c-ff081c28405d; relationType=optional; skillUri=http://data.europa.eu/esco/skill/a31c8047-8715-4484-aa32-c974127bcc69",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/952aa13c-731f-4add-98d1-66b59f70e607:essential:http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/952aa13c-731f-4add-98d1-66b59f70e607",
+            "relationType": "essential",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/952aa13c-731f-4add-98d1-66b59f70e607",
+        "skill_external_id": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 68272",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/952aa13c-731f-4add-98d1-66b59f70e607; relationType=essential; skillUri=http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/8f928d49-da89-4d07-9123-2151a4d276d4:optional:http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/8f928d49-da89-4d07-9123-2151a4d276d4",
+            "relationType": "optional",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/8f928d49-da89-4d07-9123-2151a4d276d4",
+        "skill_external_id": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 66385",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/8f928d49-da89-4d07-9123-2151a4d276d4; relationType=optional; skillUri=http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/a504e79e-f146-4773-a1cf-2b15b9d614db:optional:http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/a504e79e-f146-4773-a1cf-2b15b9d614db",
+            "relationType": "optional",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/a504e79e-f146-4773-a1cf-2b15b9d614db",
+        "skill_external_id": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 75684",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/a504e79e-f146-4773-a1cf-2b15b9d614db; relationType=optional; skillUri=http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/f57eb0cb-e67a-419c-9b7b-4abd811b7e2f:optional:http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/f57eb0cb-e67a-419c-9b7b-4abd811b7e2f",
+            "relationType": "optional",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/f57eb0cb-e67a-419c-9b7b-4abd811b7e2f",
+        "skill_external_id": "http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 109640",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/f57eb0cb-e67a-419c-9b7b-4abd811b7e2f; relationType=optional; skillUri=http://data.europa.eu/esco/skill/f1d84ceb-f9bc-4b69-866d-426ee337f9af",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/1f5932eb-b36d-44e1-a063-7aa9e228af51:essential:http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/1f5932eb-b36d-44e1-a063-7aa9e228af51",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/1f5932eb-b36d-44e1-a063-7aa9e228af51",
+        "skill_external_id": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 14431",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/1f5932eb-b36d-44e1-a063-7aa9e228af51; relationType=essential; skillUri=http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/2ae76ccc-f02e-4eb6-b693-fff70ba8f409:essential:http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/2ae76ccc-f02e-4eb6-b693-fff70ba8f409",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/2ae76ccc-f02e-4eb6-b693-fff70ba8f409",
+        "skill_external_id": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 19085",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/2ae76ccc-f02e-4eb6-b693-fff70ba8f409; relationType=essential; skillUri=http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/3f74aad8-2d60-4be2-b059-8dba5568d530:essential:http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/3f74aad8-2d60-4be2-b059-8dba5568d530",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/3f74aad8-2d60-4be2-b059-8dba5568d530",
+        "skill_external_id": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 28452",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/3f74aad8-2d60-4be2-b059-8dba5568d530; relationType=essential; skillUri=http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/4c89c65c-4e35-44e3-8fa0-5d73e9e15325:essential:http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/4c89c65c-4e35-44e3-8fa0-5d73e9e15325",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/4c89c65c-4e35-44e3-8fa0-5d73e9e15325",
+        "skill_external_id": "http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 34113",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/4c89c65c-4e35-44e3-8fa0-5d73e9e15325; relationType=essential; skillUri=http://data.europa.eu/esco/skill/eb2d56cf-4689-43d9-88c6-775c7bf6596d",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/30194ac4-93b8-4450-8a15-f6f7cbe351cb:essential:http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/30194ac4-93b8-4450-8a15-f6f7cbe351cb",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/30194ac4-93b8-4450-8a15-f6f7cbe351cb",
+        "skill_external_id": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 21402",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/30194ac4-93b8-4450-8a15-f6f7cbe351cb; relationType=essential; skillUri=http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/87d0795a-d41f-47ee-979f-0ab7d73836e7:essential:http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/87d0795a-d41f-47ee-979f-0ab7d73836e7",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/87d0795a-d41f-47ee-979f-0ab7d73836e7",
+        "skill_external_id": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 62776",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/87d0795a-d41f-47ee-979f-0ab7d73836e7; relationType=essential; skillUri=http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/d38c2107-98f2-47b7-8bb4-f69750d51082:essential:http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/d38c2107-98f2-47b7-8bb4-f69750d51082",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/d38c2107-98f2-47b7-8bb4-f69750d51082",
+        "skill_external_id": "http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 97112",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/d38c2107-98f2-47b7-8bb4-f69750d51082; relationType=essential; skillUri=http://data.europa.eu/esco/skill/bccafecc-4d80-43d3-8c9f-aef382c3926f",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2:essential:http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2",
+        "skill_external_id": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 90735",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2; relationType=essential; skillUri=http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/e1fdca51-a0e1-4bea-822f-82a090ece780:essential:http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/e1fdca51-a0e1-4bea-822f-82a090ece780",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/e1fdca51-a0e1-4bea-822f-82a090ece780",
+        "skill_external_id": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 102697",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/e1fdca51-a0e1-4bea-822f-82a090ece780; relationType=essential; skillUri=http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/53d2052f-edc0-4f44-8be1-164526412bfe:optional:http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/53d2052f-edc0-4f44-8be1-164526412bfe",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/53d2052f-edc0-4f44-8be1-164526412bfe",
+        "skill_external_id": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 37605",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/53d2052f-edc0-4f44-8be1-164526412bfe; relationType=optional; skillUri=http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/a5dc92b4-9712-4bc5-a08a-f6efa07b855f:optional:http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/a5dc92b4-9712-4bc5-a08a-f6efa07b855f",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/a5dc92b4-9712-4bc5-a08a-f6efa07b855f",
+        "skill_external_id": "http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 75980",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/a5dc92b4-9712-4bc5-a08a-f6efa07b855f; relationType=optional; skillUri=http://data.europa.eu/esco/skill/5a8d4d8c-ff64-4f82-945e-ec6f56e05cbe",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3:optional:http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3",
+        "skill_external_id": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 9119",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/13331bd9-0599-47c0-9812-29650c218de3; relationType=optional; skillUri=http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/7bc02fa7-7aaa-41a6-be5b-ab7a7b6684d3:optional:http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/7bc02fa7-7aaa-41a6-be5b-ab7a7b6684d3",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/7bc02fa7-7aaa-41a6-be5b-ab7a7b6684d3",
+        "skill_external_id": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 56871",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/7bc02fa7-7aaa-41a6-be5b-ab7a7b6684d3; relationType=optional; skillUri=http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/b2cede50-82bb-4684-9f11-1930e12ad672:optional:http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/b2cede50-82bb-4684-9f11-1930e12ad672",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/b2cede50-82bb-4684-9f11-1930e12ad672",
+        "skill_external_id": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 82022",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/b2cede50-82bb-4684-9f11-1930e12ad672; relationType=optional; skillUri=http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/461959ed-6a80-4c33-a75e-26aaeb52a5a7:essential:http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/461959ed-6a80-4c33-a75e-26aaeb52a5a7",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/461959ed-6a80-4c33-a75e-26aaeb52a5a7",
+        "skill_external_id": "http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 30556",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/461959ed-6a80-4c33-a75e-26aaeb52a5a7; relationType=essential; skillUri=http://data.europa.eu/esco/skill/6a0aab53-6246-41e8-a910-e7a13f314860",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/50e00fda-ac7c-4bc5-9f19-69a33ff3d6e7:essential:http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/50e00fda-ac7c-4bc5-9f19-69a33ff3d6e7",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/50e00fda-ac7c-4bc5-9f19-69a33ff3d6e7",
+        "skill_external_id": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 36394",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/50e00fda-ac7c-4bc5-9f19-69a33ff3d6e7; relationType=essential; skillUri=http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830:essential:http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830",
+            "relationType": "essential",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830",
+        "skill_external_id": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 55759",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/78db356f-a96a-4456-ab29-2de62e52f830; relationType=essential; skillUri=http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11:optional:http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11",
+        "skill_external_id": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 34906",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/4e4a291d-1d38-4c5a-812a-5827d0691b11; relationType=optional; skillUri=http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/56afc09a-75a0-49c7-a5cb-256df45d8f2d:optional:http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/56afc09a-75a0-49c7-a5cb-256df45d8f2d",
+            "relationType": "optional",
+            "skillType": "skill/competence",
+            "skillUri": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/56afc09a-75a0-49c7-a5cb-256df45d8f2d",
+        "skill_external_id": "http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 39137",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/56afc09a-75a0-49c7-a5cb-256df45d8f2d; relationType=optional; skillUri=http://data.europa.eu/esco/skill/1951e126-6c66-46cf-9345-d4941c85bc2a",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2:essential:http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2",
+            "relationType": "essential",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2",
+        "skill_external_id": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+        "relationship": "essential"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 90720",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/c40ef517-d4ab-4932-b184-9c2ea5b24fe2; relationType=essential; skillUri=http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/4d5bd738-9202-4fd7-bd8c-7dbe914048de:optional:http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/4d5bd738-9202-4fd7-bd8c-7dbe914048de",
+            "relationType": "optional",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/4d5bd738-9202-4fd7-bd8c-7dbe914048de",
+        "skill_external_id": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 34525",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/4d5bd738-9202-4fd7-bd8c-7dbe914048de; relationType=optional; skillUri=http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/579254cf-6d69-4889-9000-9c79dc568644:optional:http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/579254cf-6d69-4889-9000-9c79dc568644",
+            "relationType": "optional",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/579254cf-6d69-4889-9000-9c79dc568644",
+        "skill_external_id": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 39661",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/579254cf-6d69-4889-9000-9c79dc568644; relationType=optional; skillUri=http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "page_number": null,
+      "review_status": "reviewed"
+    },
+    {
+      "kind": "occupation_skill",
+      "key": "http://data.europa.eu/esco/occupation/6a3d3d28-0ab6-49b0-9a32-697e5e104bf1:optional:http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "data": {
+        "metadata_json": {
+          "edition": "v1.0.3",
+          "raw": {
+            "occupationUri": "http://data.europa.eu/esco/occupation/6a3d3d28-0ab6-49b0-9a32-697e5e104bf1",
+            "relationType": "optional",
+            "skillType": "knowledge",
+            "skillUri": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530"
+          },
+          "limitations": "As-published old-edition essential/optional taxonomy relation, not a university course mandate, current Malaysian hiring measurement, or reviewed MASCO bridge."
+        },
+        "occupation_external_id": "http://data.europa.eu/esco/occupation/6a3d3d28-0ab6-49b0-9a32-697e5e104bf1",
+        "skill_external_id": "http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+        "relationship": "optional"
+      },
+      "locator": "occupationSkillRelations_ar.csv row 49188",
+      "excerpt": "occupationUri=http://data.europa.eu/esco/occupation/6a3d3d28-0ab6-49b0-9a32-697e5e104bf1; relationType=optional; skillUri=http://data.europa.eu/esco/skill/700ea222-8139-4c48-95cf-014855565530",
+      "page_number": null,
+      "review_status": "reviewed"
+    }
+  ],
+  "metadata": {
+    "edition": "v1.0.3",
+    "not_current_edition": true,
+    "publisher": "European Commission DG EMPL",
+    "title": "ESCO v1.0.3 official multilingual subset: occupations, English-described skills and source relations",
+    "original_retrieved_at": "2026-10-23T19:57:05.013428+00:00",
+    "original_artifacts": [
+      {
+        "url": "https://ec.europa.eu/esco/download/ESCO%20dataset%20-%20v1.0.3%20-%20classification%20-%20ar%20-%20csv.zip",
+        "sha256": "51259f71995ff62f75fa23d3b30ac7707051f062234c45ffc3fe60be7527c665",
+        "bytes": 4236615,
+        "complete": true,
+        "zip_crc_verified": true
+      },
+      {
+        "url": "https://ec.europa.eu/esco/download/ESCO%20dataset%20-%20v1.0.3%20-%20classification%20-%20%20-%20ttl.zip",
+        "sha256": "86f7082991054352c1c0cb7b97711e68967fd54b536a3aa7cb9ed5b68ec9c8b9",
+        "bytes": 3145728,
+        "complete": false,
+        "retained_range": "bytes 0-3145727 of 118686977",
+        "zip_crc_verified": false,
+        "scope": "Only complete Turtle subject blocks and their explicit linked English description nodes used; no full archive acquisition claim."
+      }
+    ],
+    "discovery_url": "https://ec.europa.eu/esco/download/",
+    "rights_basis_url": "https://esco.ec.europa.eu/en/about-esco/faq?page=1",
+    "rights_basis": "Official ESCO FAQ licence question: download/use/reproduction/reuse for any purpose free of charge; acknowledgement required and adaptations marked.",
+    "attribution": "This service uses the ESCO classification of the European Commission.",
+    "adaptation_notice": "SHIFT//OS curated adapted subset of ESCO v1.0.3; not a current or complete ESCO release. Original concept URIs and explicit old-edition relationships retained. English labels/descriptions only when present in acquired same-edition material; other occupation labels remain Arabic. No European Commission endorsement.",
+    "reviewer_basis": "Agent engineering source check of official CSV archive integrity, exact URI joins, complete English Turtle subject/literal blocks and Pydantic schema; not independent academic validation.",
+    "selection_basis": "Up to four source-linked occupations per available English-described skill, preferring source English labels and professional groups; an accessibility-limited demonstration subset, not a representative taxonomy sample or programme mapping.",
+    "limitations": "Version1.0.3 is old. Later ESCO releases changed labels/relations including transversal links. Currentness review is required before academic analysis. No MASCO mapping or Malaysian skill demand is inferred. Partial TTL does not establish full file integrity; complete source blocks are retained for each selected English fact.",
+    "parser_version": "phase3-evidence-1"
+  },
+  "warnings": []
+}

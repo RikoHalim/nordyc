@@ -2,6 +2,8 @@
 
 As of 24 October 2026. These gaps are part of the acquisition contract; none may be silently filled with generated source content. Research completion is not ingestion completion.
 
+Phase 3 completion update: genuine PostgreSQL records now include38 legacy ESCO occupations/10 English-described skills/39 links,12 narrow MQA benchmark summaries,186 UN resolution references,20 AI cards and247 workforce observations;76 automatic PDF pages remain candidates. These close a bounded prototype baseline, not current English taxonomy, reviewed Malaysian bridges or full standards coverage. TalentCorp consent remains required. [The measured report](PHASE3_INGESTION_REPORT.md) supersedes acquisition-status assumptions below without erasing semantic/currentness/rights limits.
+
 | Gap | Impact / affected scope | Practical fallback and closure condition |
 |---|---|---|
 | Public XMUM Main Courses lists are not certified full graduation curricula | All 25 programmes; shared MPU, prerequisites, credits, some electives and cohort rules uncertain | Import all visible lists with explicit public-list completeness; keep unknowns. Close only with authoritative public programme/cohort evidence or authorised manual documents; detailed syllabi remain optional. |

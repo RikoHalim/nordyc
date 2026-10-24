@@ -1,0 +1,158 @@
+{
+  "D-JMI-Q1-2026": {
+    "adapter": "dosm_jmi",
+    "format": "xlsx",
+    "access_reviewed": true,
+    "reuse_reviewed": true,
+    "retain_raw": true,
+    "instructions": "DOSM Government Open Data Terms 1.0 attribution applies. If robots/DNS/access fails, save official workbook 19819 normally and use --file with original UTC retrieval time. No mirrors."
+  },
+  "D-JMI-Q2-2026": {
+    "adapter": "dosm_jmi",
+    "format": "xlsx",
+    "access_reviewed": true,
+    "reuse_reviewed": true,
+    "retain_raw": true,
+    "instructions": "DOSM Government Open Data Terms 1.0 attribution applies. Save official workbook 20742 manually if automated access is refused; preserve original bytes and retrieval time."
+  },
+  "D-EMPLOYMENT-SECTOR": {
+    "adapter": "employment_sector",
+    "format": "csv",
+    "access_reviewed": true,
+    "reuse_reviewed": true,
+    "retain_raw": true,
+    "instructions": "Attribute DOSM under the published CC BY 4.0 dataset terms. Annual sector percentages are not vacancies or skill demand. Use official CSV manual fallback when required."
+  },
+  "C-ESCO": {
+    "adapter": "esco_api",
+    "format": "json",
+    "access_reviewed": true,
+    "reuse_reviewed": true,
+    "retain_raw": true,
+    "instructions": "Attribute European Commission ESCO and version v1.2.1; record adaptations. Registered search endpoint is only a sample, not a complete taxonomy. For bulk, use official download wizard manually with own consent, then source-specific CSV adapters; never invent ZIP URLs."
+  },
+  "E-ILO-2025": {
+    "adapter": "pdf_candidates",
+    "format": "pdf",
+    "access_reviewed": true,
+    "reuse_reviewed": true,
+    "retain_raw": true,
+    "instructions": "Attribute ILO Working Paper 140 (2025), CC BY 4.0 stated conditions. Extracted pages are candidates requiring review, not verified AI findings. Stop on access/robots refusal; permitted original-file manual import available."
+  },
+  "B-MQA-COMPUTING": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www2.mqa.gov.my/qad/v2/2024/Aug/PS%20Computing%203rd%20Edition%20-%20updated%20version%2031.7.24.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "F-UN-SDG": {
+    "adapter": "un_sdg",
+    "format": "json",
+    "access_reviewed": true,
+    "reuse_reviewed": false,
+    "retain_raw": false,
+    "instructions": "UN goals API is verified, but registry has unresolved redistribution rights. Review exact UN terms for intended use before importing full text; retain metadata/pointers meanwhile. Register Target/List separately when permitted. No inferred skill-SDG relationships."
+  },
+  "F-UN-SDG-RES70-1": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://digitallibrary.un.org/record/3923923/files/A_RES_70_1-EN.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "B-MQA-ACCOUNTING": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www2.mqa.gov.my/qad/v2/2025/PS%20ACCOUNTING%202024%20%282nd%20edition%29_Pengemaskinian%202025.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "B-MQA-BIOTECH": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www2.mqa.gov.my/QAD/garispanduan/2019/PS%20Biotech%202nd%20edition%20uploaded.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "B-MQA-BUSINESS": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www2.mqa.gov.my/qad/v2/garispanduan/2022/PS%20Business%20Studies%202nd%20Ed%2016.8.2021%20AMENDMENT%20RECORDS%20V1.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "E-ALAB-CORRECTION": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://bartel.cems.umn.edu/sites/bartel.cems.umn.edu/files/2026-02/author-correction_for_an_autonomous_laboratory_for_the_accelerated_synthesis_of_inorganic_materials.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "E-ALAB": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www.nature.com/articles/s41586-023-06734-w",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "E-HBS-2026": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www.hbs.edu/ris/Publication%20Files/dell-acqua-et-al-2026-navigating-the-jagged-technological-frontier_5c589c8c-fbb5-458f-b285-c944746cd717.pdf",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "E-METR-2025": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study/",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "E-METR-2026": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://metr.org/blog/2026-02-24-uplift-update/",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "E-OECD-2024": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "url": "https://www.oecd.org/en/publications/artificial-intelligence-and-the-changing-demand-for-skills-in-the-labour-market_88684e36-en.html",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "instructions": "Local reviewed derivative only: verify exact source/edition, narrow reuse basis, excerpts, task/benchmark scope and attribution in manifest metadata. No fulltext redistribution or automatic fetch permission is implied. Reproduce from official sources or use stored permitted local originals. Never infer curriculum content."
+  },
+  "C-ESCO-V103": {
+    "adapter": "reviewed_json",
+    "format": "json",
+    "access_reviewed": false,
+    "reuse_reviewed": true,
+    "retain_raw": false,
+    "absent_robots_policy": "deny",
+    "instructions": "Import reviewed legacy subset manually. Full source CSV archive and complete linked English source blocks retained locally; no current-taxonomy or full TTL acquisition claim."
+  }
+}

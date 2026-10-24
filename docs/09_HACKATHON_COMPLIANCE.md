@@ -1,39 +1,42 @@
-# IMPORTANT — hackathon brief compliance and unresolved waiver
+# Hackathon compliance — original requirements and unconfirmed substitutions
 
-**Source:** User-provided `Domain 1 (1).pdf`, Aiversecity Future-Ready Workforce Domain, pp. 3–7 (brief page numbers 3–7 within the PDF). The requirements below are **brief-derived**; committee verbal/contextual approval is a **separate, unverified scope clarification**.
+**Source:** User-provided `Domain 1 (1).pdf`, Aiversecity Future-Ready Workforce Domain, pp. 3–7 (brief page numbers 3–7 within the PDF), as recorded in the existing project brief review. The original PDF is unavailable in this checkout and was not independently rechecked during this revision. The six requirements below remain brief-derived. User-reported organiser approval is a separate scope clarification; no written waiver evidence has been supplied. This planning revision does not certify full compliance.
 
-## Preliminary vs final according to brief
+## Preliminary versus final
 
-- Preliminary round: **proposal + a rough working version of the single most important feature shown live**, backed by accessible GitHub. The proposal covers intended delivery of the full requirements; not a finished production product.
-- Original brief says **final product must include all six must-haves**. It further says **final-round rubric will be shared with finalists**. Do not assume final scope has been reduced without confirmation.
+- Preliminary: a proposal covering intended full delivery and a rough working version of the single most important feature demonstrated live, backed by an accessible GitHub repository. A production-complete system is not required.
+- Original final brief: all six must-haves. The final-round rubric will be shared with finalists; do not assume that the institutional angle reduces those requirements.
+- Phase 4 remains the current implementation priority. Future Career Alignment (Phase 5) and Academic Reskilling Pathways/scenarios/reporting (Phase 6) are planned institutional extensions, not available features.
 
-## Original six must-have items (preserve exact meaning)
+## Six original must-haves
 
-| # | Brief requirement | Institutional mapping / compliance gap |
-|---|---|---|
-| 1 | Skills profile intake from person's CV/form/questionnaire | Reportedly CV upload exempt; institutional programme profile **may not** satisfy *person's current skills*; **organiser confirmation required** |
-| 2 | Updatable source of AI and job-market trends, with source + date | Workforce/AI evidence snapshot pipeline. **Build for preliminary demo** |
-| 3 | Ranked future roles, explainable match score and skill gap | Course/occupation alignment is **not** automatically person-to-role matching. **Unresolved** |
-| 4 | Ordered personalised reskilling pathway, estimated time, free/low-cost resources | Academic intervention plan is **not** automatically a personal reskilling pathway. **Unresolved** |
-| 5 | SDG mapping to roles and skills with explanation | Build defensible SDG linkage; don't treat programme tags as automatic substitute |
-| 6 | More than one uncertain future scenario | Moderate vs accelerated AI adoption with stated assumptions; planned |
+| # | Original requirement | Institutional mapping and delivery state | Remaining compliance gap |
+|---|---|---|---|
+| 1 | Individual current-skills intake from CV, form or questionnaire | Programme upload/catalogue evidence is available; individual intake is not implemented. CV-upload exemption is user-reported. | A programme curriculum is not a person's current skills. Replacement of individual intake overall is **UNCONFIRMED**. |
+| 2 | Updatable AI and job-market signals with sources and dates | Phase 3 versioned acquisition/ETL and deterministic radar are implemented; genuine bounded datasets and access limits are recorded in STATUS. Phase 4 consumption is in progress. | Current/full discipline coverage and lawful refresh are source-specific. Existing imports do not prove every source is current or automatically refreshable. |
+| 3 | Explainable ranked future-role matching, match score and skill gaps | Phase 5 plans programme-level Future Career Alignment, occupational requirements, supported curricular competencies/potential gaps and optional reproducible scores. | Programme alignment is not person-to-role matching or an individual's employment probability. Personal-matching substitution is **UNCONFIRMED**; planned functionality is not delivered compliance. |
+| 4 | Ordered personalised reskilling pathways, estimated time and free/low-cost resources | Phase 6 plans ordered Academic Reskilling Pathways, verified resources, explicit duration bases and minimum sufficient interventions. | Institutional pathways are not automatically personalised learning plans. The substitution is **UNCONFIRMED**; absent verified resource/time data remains unknown. |
+| 5 | Explained SDG mapping to roles and skills | Official UN references are implemented in Phase 3; meaningful requirement/competency/pathway links are planned in Phase 6. | Reference data alone is not mapping. Programme-level tags alone do not satisfy role/skill explanations, and unsupported links must remain unmapped. |
+| 6 | Multiple uncertain future scenarios | Phase 6 plans moderate versus accelerated AI adoption assumptions and traceable reassessment. | Not implemented by this planning revision. Historical signal comparison alone is not a future scenario, and scenario assumptions are not measured forecasts. |
 
-## User-reported committee response
+Detailed specifications: [Future Career Alignment/actions](07_ACADEMIC_ACTIONS.md), [Academic Reskilling Pathways/scenarios](08_SCENARIOS_SDG_AND_REPORTING.md). Consult [STATUS](../STATUS.md) for measured implementation/test results; a requirement, proposed schema or demo script is not proof of delivery.
 
-Institution-focused concept confirmed acceptable and **CV uploads not necessary**. It is **NOT confirmed** that all individual-centric features (#1 overall, #3, #4) were waived. Do not claim full compliance. Obtain explicit written answer: "Can programme-level profiles, occupation alignment and institutional reskilling/interventions replace individual-profile intake, person-to-role matching and personalised learning plans for Domain 1?"
+## Reported organiser response and clarification required
 
-## Engineering consequence
+The user reports that organisers accepted the university-focused concept and said CV uploads are unnecessary. No date, channel, exact written response or evidence has been supplied for a waiver of individual skills intake, person-to-role matching or personalised pathways. Record all three substitutions as **UNCONFIRMED**. Do not infer that SDG mapping or multiple scenarios were waived.
 
-Do not distort core academic product just to imitate a job-matching app. Retain adapter interfaces and a **synthetic learner demonstration option**, **ONLY if necessary following confirmation**. Never use real personal records/CVs in the demo.
+Obtain a written answer to: “Can programme-level profiles, Future Career Alignment and institutional Academic Reskilling Pathways replace individual current-skills intake, explainable person-to-role matching and personalised reskilling plans for Domain 1, or is only CV upload exempted?” Record the exact question/response, date, channel and supporting link/screenshot only when actually received. Preserve the original requirements alongside any confirmed interpretation; do not backfill evidence of approval.
 
-## Original rules
+## Lightweight individual contingency — planning only
 
-Public, open or synthetic demo data only; LLM provider/model disclosed; source-cited recommendations; no invented jobs/courses/statistics; human-centred decisions; no full course content, payment or real recruitment integrations.
+Preserve a possible narrow adapter if organisers confirm the individual requirements remain necessary and the user authorizes that work: optional form/questionnaire intake of self-reported skills, clear distinction from verified assessed competencies, source-backed occupation requirements, explainable matching/gaps and an ordered personal resource plan with duration bases. Reuse the institutional evidence and pathway contracts rather than build a second platform. A synthetic learner can illustrate a later approved proof without real personal records.
 
-## Preliminary scoring (brief)
+This contingency is **not implemented or authorized by this revision**. Do not add student-facing modules, CV processing, personal profiles, tracking, recruitment or assessment-result collection now. A synthetic individual demonstration would not prove real-user competency or automatically resolve the organiser waiver.
 
-Innovation & Creativity 30%; Problem–Solution Fit 25%; Feasibility of Build 25%; Clarity of Proposal 20%. Github link required. Preliminary score does not transfer to final.
+## Brief safeguards and evidence of completion
 
-## Evidence of compliance
+Use public/permitted or explicitly synthetic demonstration data; disclose the actual configured LLM/provider/model; cite admissible evidence; avoid invented jobs, courses, statistics, resources, partners or measured outcomes; preserve human academic decisions. No full course content, payments or real recruitment integrations. Seminar/talk attendance and resource completion do not establish technical competency or employment prospects.
 
-Maintain an `organiser_clarifications.md` or update `STATUS.md` with date, exact question, response, channel and screenshot/link **only when actually available**. Until then, write `UNCONFIRMED`.
+Preliminary scoring recorded in the brief: Innovation & Creativity 30%; Problem–Solution Fit 25%; Feasibility of Build 25%; Clarity of Proposal 20%. GitHub link required; preliminary score does not transfer to the final. This documentation request does not authorize a commit or push.
+
+At demonstration time identify which features are implemented, which use labelled synthetic fixtures, which are planned and which are externally blocked. Support delivery claims with actual persisted/queryable results and tests, not checklist completion alone. Keep `UNCONFIRMED` in STATUS until genuine organiser evidence resolves the individual-workflow substitutions.
