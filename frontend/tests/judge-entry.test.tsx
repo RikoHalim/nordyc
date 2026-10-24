@@ -256,11 +256,7 @@ describe("judge sample programme entry", () => {
       active_revision: null,
     };
     const fetch = show({ programmes: [empty, programme] });
-    expect(
-      screen.getByText(
-        "Synthetic demonstration — not real university findings.",
-      ),
-    ).toBeVisible();
+    expect(screen.getByText("Demo data — fictional example.")).toBeVisible();
     const link = await screen.findByRole("link", {
       name: "Explore Sample Programme",
     });

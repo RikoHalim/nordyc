@@ -82,9 +82,8 @@ export default function Overview() {
           <p className="eyebrow">Programme intelligence</p>
           <h2>{programme.name}</h2>
           <p>
-            {programme.is_synthetic
-              ? "A fictional programme used to demonstrate the complete academic review workflow."
-              : "A versioned programme workspace. Findings remain bounded by the documents and evidence actually admitted."}
+            A versioned programme workspace. Findings remain bounded by the
+            documents and evidence actually admitted.
           </p>
           <Link className="text-link" to={`../courses${suffix}`}>
             Explore the learning journey
@@ -193,13 +192,6 @@ export default function Overview() {
           </div>
         </div>
       </Card>
-      {programme.is_synthetic && (
-        <Notice>
-          Synthetic inputs and mocked model output demonstrate software
-          behaviour. They are not findings about XMUM or another real
-          university.
-        </Notice>
-      )}
     </>
   );
 }

@@ -488,11 +488,7 @@ function ProgrammeShell() {
           </span>
           <h2>{programme.name}</h2>
           <p>{institution.name}</p>
-          <small>
-            {programme.is_synthetic
-              ? "Synthetic demonstration"
-              : "Stored programme records"}
-          </small>
+          <small>Stored programme records</small>
         </div>
         <p className="eyebrow nav-label">Explore &amp; improve</p>
         <nav>
@@ -562,11 +558,7 @@ function ProgrammeShell() {
           </div>
         </header>
         <div className="workspace-banner">
-          <span>
-            {programme.is_synthetic
-              ? "Synthetic demonstration — not real university findings."
-              : "Stored curriculum · title-only records need syllabus confirmation"}
-          </span>
+          <span>Stored curriculum · human review required.</span>
           <Link to={`${base}/evidence${suffix}`}>Evidence &amp; limits ↗</Link>
         </div>
         <div className="context-strip">

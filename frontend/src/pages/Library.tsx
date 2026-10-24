@@ -145,7 +145,7 @@ function CreateCurriculum({
             {localInstitutions.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
-                {item.is_synthetic ? " · synthetic" : ""}
+                {item.is_synthetic ? " · demo" : ""}
               </option>
             ))}
           </select>
@@ -190,7 +190,7 @@ function CreateCurriculum({
         {institution?.is_synthetic && (
           <Notice>
             This institution is fictional. Its programme and imported records
-            will remain synthetic.
+            will remain labelled as demo data.
           </Notice>
         )}
         {error && (
@@ -450,9 +450,7 @@ export default function Library() {
                     <Clock3 size={12} />
                     {dateLabel(programme.updated_at)}
                   </span>
-                  <Badge>
-                    {programme.is_synthetic ? "Synthetic" : "Stored"}
-                  </Badge>
+                  <Badge>Stored</Badge>
                 </div>
               </div>
             </Link>
@@ -487,7 +485,7 @@ export default function Library() {
       )}
       <p className="library-note">
         <ShieldCheck size={16} aria-hidden="true" />
-        Synthetic programmes are fictional. Your own curriculum starts with
+        Demo programmes are fictional. Your own curriculum starts with
         attributed documents you provide.
       </p>
       {create && (

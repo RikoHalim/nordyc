@@ -945,7 +945,7 @@ describe("current source evidence drawer", () => {
         name: "Evidence & limitations",
       });
       await within(dialog).findByText("occupation benchmark");
-      expect(within(dialog).getByText("synthetic demo")).toBeVisible();
+      expect(within(dialog).getByText("Demo evidence")).toBeVisible();
       if (withMetadata) {
         expect(within(dialog).getByText("MY")).toBeVisible();
         expect(within(dialog).getByText("en")).toBeVisible();

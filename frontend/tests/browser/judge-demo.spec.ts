@@ -20,8 +20,7 @@ import {
 } from "./helpers";
 import { syntheticPdf } from "./synthetic-inputs";
 
-const syntheticLabel =
-  "Synthetic demonstration — not real university findings.";
+const syntheticLabel = "Demo data — fictional example.";
 
 async function deniedJudgeSubmissions(
   page: Page,
@@ -159,7 +158,11 @@ for (const viewport of [
       }),
     ).toBeVisible();
     await expect(
-      page.getByText(syntheticLabel, { exact: true }).first(),
+      page
+        .getByText("Stored curriculum · human review required.", {
+          exact: true,
+        })
+        .first(),
     ).toBeVisible();
     await readOnlyControls(page);
 
@@ -243,6 +246,11 @@ for (const viewport of [
       name: "Evidence & limitations",
     });
     await expect(evidence.locator(".evidence-record").first()).toBeVisible();
+    await expect(
+      evidence
+        .getByText("Demo source — fictional example", { exact: true })
+        .first(),
+    ).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(evidence).not.toBeVisible();
     await navigate(

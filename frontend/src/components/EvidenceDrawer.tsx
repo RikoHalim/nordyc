@@ -95,7 +95,7 @@ function EvidenceContent({
         <article key={row.id} className="evidence-record">
           <p className="eyebrow">
             {row.is_synthetic
-              ? "Synthetic demonstration source"
+              ? "Demo source — fictional example"
               : row.evidence_class.replaceAll("_", " ")}
           </p>
           <h3>{row.title}</h3>
@@ -106,7 +106,11 @@ function EvidenceContent({
             <dt>Version</dt>
             <dd>{row.version_id || "Not supplied"}</dd>
             <dt>Evidence class</dt>
-            <dd>{humanise(row.evidence_class)}</dd>
+            <dd>
+              {row.is_synthetic
+                ? "Demo evidence"
+                : humanise(row.evidence_class)}
+            </dd>
             <dt>Applicable scope</dt>
             <dd>{humanise(row.scope)}</dd>
             {typeof row.facts?.geography === "string" &&

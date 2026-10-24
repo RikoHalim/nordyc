@@ -1,0 +1,42 @@
+{
+  "fixture_id": "data-science-single-course-1",
+  "is_synthetic": true,
+  "label": "Generated fictional course, assessment, occupation benchmarks and review inputs. These are not facts about a real university, student, employer or labour market.",
+  "programme": "Data Science",
+  "institution": "Data Science Workspace",
+  "course_inventory_scope": "One authored course for an illustrative curriculum review. No real institutional curriculum is asserted.",
+  "taxonomy": "Illustrative Data Science Role Requirements 1",
+  "discipline": "computing",
+  "courses": [
+    {
+      "key": "data-science",
+      "title": "Applied Data Science",
+      "quote": "The course assessment requires construction of parameterised SQL queries and validation against a controlled teaching dataset. The stated learning outcomes intend students to explain statistical data modelling, compare regression and classification methods, and assess model limitations. The course outline introduces one data cleaning and transformation pipeline; end-to-end pipeline performance has not been assessed.",
+      "demonstration_reviewed": true
+    }
+  ],
+  "skills": [
+    {"key": "sql", "label": "Data querying and validation"},
+    {"key": "model", "label": "Statistical data modelling"},
+    {"key": "pipeline", "label": "Data cleaning and transformation pipelines"},
+    {"key": "security", "label": "Data privacy threat modelling"},
+    {"key": "governance", "label": "Data governance and responsible use"}
+  ],
+  "occupations": [
+    {"key": "analyst", "label": "Data Analyst", "requirements": {"sql": "essential", "model": "essential", "pipeline": "optional"}},
+    {"key": "practitioner", "label": "SQL Analysis Specialist", "requirements": {"sql": "essential"}},
+    {"key": "steward", "label": "Data Steward", "requirements": {"security": "essential", "governance": "essential", "model": "optional"}}
+  ],
+  "support": [
+    {"skill": "sql", "course": "data-science", "support": "demonstrated", "extent": "full"},
+    {"skill": "model", "course": "data-science", "support": "documented_intent", "extent": "full"},
+    {"skill": "pipeline", "course": "data-science", "support": "documented_intent", "extent": "partial"}
+  ],
+  "gap": {
+    "skill": "security",
+    "quote": "For this authored course example, a complete scope review specifies that data privacy threat modelling is absent from the teaching outline and assessment. This is a defined fictional gap in the example, not an inference about any real university course."
+  },
+  "unknown": "governance",
+  "review_basis": "Explicit consideration of generated example inputs for software demonstration only; no real academic assessment or approval.",
+  "malaysia_applicability": "Illustrative Malaysian institutional planning context only. The authored role requirements and workforce observations do not measure Malaysian demand."
+}

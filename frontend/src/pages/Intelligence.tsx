@@ -70,11 +70,7 @@ function ResultLabels({ run }: { run: CareerRun | PlanRun }) {
   return (
     <div className="inline-meta">
       <Status value={run.status} />
-      <Badge tone={run.is_synthetic ? "caution" : "neutral"}>
-        {run.is_synthetic
-          ? "Fictional academic demonstration"
-          : "Stored programme data"}
-      </Badge>
+      <Badge>Stored programme data</Badge>
       <Badge>
         {run.mode === "offline"
           ? "Offline deterministic analysis"
@@ -1186,7 +1182,7 @@ function EvidenceList({ items, path }: { items: Evidence[]; path: string }) {
               <Status value={item.review_status} />
               <Badge>
                 {item.is_synthetic
-                  ? "Synthetic source"
+                  ? "Demo source"
                   : "Attributed reference source"}
               </Badge>
               {item.historical_context_only && (

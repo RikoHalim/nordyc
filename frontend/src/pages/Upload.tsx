@@ -9,7 +9,6 @@ import GenerateReview from "../components/GenerateReview";
 import { validatePdfOrigin } from "../lib/catalogue-origin";
 export { validatePdfOrigin } from "../lib/catalogue-origin";
 import {
-  Badge,
   Card,
   Empty,
   ErrorState,
@@ -478,7 +477,6 @@ export default function UploadPage() {
               their unresolved fields before analysis.
             </Notice>
           )}
-          {job.data.is_synthetic && <Badge>Synthetic input</Badge>}
           {revisionId && importFinished && importedEntry?.active === false && (
             <Notice tone="caution">
               This import was saved as a historical revision. The active

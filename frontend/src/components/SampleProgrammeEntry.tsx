@@ -122,9 +122,7 @@ export default function SampleProgrammeEntry({
   });
   return (
     <Card title="Explore before you upload" className="sample-programme-card">
-      <p className="eyebrow">
-        Synthetic demonstration — not real university findings.
-      </p>
+      <p className="eyebrow">Demo data — fictional example.</p>
       <p>
         Explore a fictional programme, its stored analysis and Academic Action
         Plan. No PDF or new AI generation is needed. Evidence limitations remain
@@ -145,9 +143,8 @@ export default function SampleProgrammeEntry({
       ) : (
         <p role="status">
           No prepared sample programme is available in your authorised
-          workspace. Ask the development administrator to load the synthetic
-          demonstration through the supported backend workflow. No sample has
-          been invented.
+          workspace. Ask the development administrator to load the demo through
+          the supported backend workflow. No sample has been invented.
         </p>
       )}
     </Card>
