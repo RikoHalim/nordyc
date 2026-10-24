@@ -271,6 +271,7 @@ describe("curriculum library and creation", () => {
   function library(
     permissions: AccessContext["permissions"],
     createResponse?: () => Response,
+    coverageResponse?: (programmeId: string) => Response,
   ) {
     const business = {
       ...programme,
@@ -286,6 +287,8 @@ describe("curriculum library and creation", () => {
         return Promise.resolve(json(page([programme, business])));
       if (url.pathname === "/api/v1/institutions")
         return Promise.resolve(json(page([institution])));
+      if (coverageResponse)
+        return Promise.resolve(coverageResponse(url.pathname.split("/")[4]));
       return Promise.resolve(
         json({
           programme_id: url.pathname.includes(business.id)
@@ -344,6 +347,50 @@ describe("curriculum library and creation", () => {
     expect(fetch.mock.calls.every(([, init]) => init?.method !== "POST")).toBe(
       true,
     );
+  });
+
+  it("shows returned evidence counts and keeps unavailable coverage distinct from zero", async () => {
+    library(["read"], undefined, (programmeId) =>
+      programmeId === programme.id
+        ? json({
+            programme_id: programme.id,
+            programme_revision_id: revision.id,
+            course_count: 2,
+            verified_title_count: 0,
+            needs_review_count: 2,
+            title_only_count: 2,
+            is_synthetic: true,
+            graduation_curriculum_complete: false,
+            metadata: {},
+          })
+        : json(
+            {
+              error: {
+                code: "DATABASE_UNAVAILABLE",
+                message: "Synthetic coverage fault",
+                details: [],
+              },
+            },
+            503,
+          ),
+    );
+    const computing = (
+      await screen.findByRole("heading", { name: programme.name })
+    ).closest("a")!;
+    expect(
+      within(computing).getByText(
+        "0 verified titles · 2 title-only records · 2 needing extraction review",
+      ),
+    ).toBeVisible();
+    const accounting = screen
+      .getByRole("heading", { name: "Fictional Accounting" })
+      .closest("a")!;
+    expect(
+      within(accounting).getByText("Curriculum evidence unavailable"),
+    ).toBeVisible();
+    expect(
+      within(accounting).queryByText(/0 verified titles/),
+    ).not.toBeInTheDocument();
   });
 
   it("submits a real authorised creation payload and navigates only after backend acceptance", async () => {
@@ -724,6 +771,77 @@ describe("attributed PDF and reviewed input", () => {
 });
 
 describe("current source evidence drawer", () => {
+  it.each([true, false])(
+    "shows actual source scope and only available study metadata (metadata=%s)",
+    async (withMetadata) => {
+      const row = {
+        ...evidence(1),
+        ...(withMetadata
+          ? {
+              language: "en",
+              study_period: "Fictional study period 2024–2025",
+              model_version: "fictional-model-v1",
+              retrieved_at: now,
+              facts: {
+                geography: "MY",
+                unlisted_metadata: "DO-NOT-DUMP-ARBITRARY-FACTS",
+              },
+            }
+          : {}),
+      };
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(() =>
+          Promise.resolve(
+            json({
+              ...page([row]),
+              status: "SUCCEEDED",
+              error: null,
+              needs_evidence_revalidation: false,
+              evidence_access_limitations: [],
+            }),
+          ),
+        ),
+      );
+      render(
+        <EvidenceProvider api={new ApiClient(credential)}>
+          <EvidenceOpener
+            path={`/api/v1/career-analyses/${id(10)}/evidence`}
+            referenceId={row.id}
+          />
+        </EvidenceProvider>,
+      );
+      await userEvent.click(
+        screen.getByRole("button", { name: "Inspect source evidence" }),
+      );
+      const dialog = screen.getByRole("dialog", {
+        name: "Evidence & limitations",
+      });
+      await within(dialog).findByText("occupation benchmark");
+      expect(within(dialog).getByText("synthetic demo")).toBeVisible();
+      if (withMetadata) {
+        expect(within(dialog).getByText("MY")).toBeVisible();
+        expect(within(dialog).getByText("en")).toBeVisible();
+        expect(
+          within(dialog).getByText("Fictional study period 2024–2025"),
+        ).toBeVisible();
+        expect(within(dialog).getByText("fictional-model-v1")).toBeVisible();
+        expect(within(dialog).getByText("25 Oct 2026")).toBeVisible();
+      } else {
+        expect(within(dialog).queryByText("Geography")).not.toBeInTheDocument();
+        expect(
+          within(dialog).queryByText("Study period"),
+        ).not.toBeInTheDocument();
+        expect(
+          within(dialog).queryByText("Study model/version"),
+        ).not.toBeInTheDocument();
+      }
+      expect(
+        within(dialog).queryByText("DO-NOT-DUMP-ARBITRARY-FACTS"),
+      ).not.toBeInTheDocument();
+    },
+  );
+
   it.each([
     "javascript:alert(1)",
     "data:text/html,private",

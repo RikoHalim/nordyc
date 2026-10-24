@@ -9,6 +9,7 @@ import {
 import { ExternalLink, X } from "lucide-react";
 import { ApiClient, ApiError, validateResponse } from "../api/client";
 import type { Evidence, Model } from "../api/types";
+import { dateLabel, humanise } from "../api/types";
 import { useResource } from "../lib/resource";
 
 const EvidenceContext = createContext<{
@@ -104,6 +105,23 @@ function EvidenceContent({
             <dd>{row.id}</dd>
             <dt>Version</dt>
             <dd>{row.version_id || "Not supplied"}</dd>
+            <dt>Evidence class</dt>
+            <dd>{humanise(row.evidence_class)}</dd>
+            <dt>Applicable scope</dt>
+            <dd>{humanise(row.scope)}</dd>
+            {typeof row.facts?.geography === "string" &&
+              row.facts.geography && (
+                <>
+                  <dt>Geography</dt>
+                  <dd>{row.facts.geography}</dd>
+                </>
+              )}
+            {row.language && (
+              <>
+                <dt>Language</dt>
+                <dd>{row.language}</dd>
+              </>
+            )}
             <dt>Publication date</dt>
             <dd>
               {row.publication_date || "Not recorded"} ({row.date_precision})
@@ -114,6 +132,24 @@ function EvidenceContent({
                 .filter(Boolean)
                 .join(" to ") || "Not recorded"}
             </dd>
+            {row.study_period && (
+              <>
+                <dt>Study period</dt>
+                <dd>{row.study_period}</dd>
+              </>
+            )}
+            {row.model_version && (
+              <>
+                <dt>Study model/version</dt>
+                <dd>{row.model_version}</dd>
+              </>
+            )}
+            {row.retrieved_at && (
+              <>
+                <dt>Retrieved</dt>
+                <dd>{dateLabel(row.retrieved_at)}</dd>
+              </>
+            )}
             <dt>Locator</dt>
             <dd>{row.locator}</dd>
             <dt>Review state</dt>

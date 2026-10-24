@@ -413,6 +413,11 @@ export default function Library() {
                       : "Coverage unavailable"}
                   </span>
                 </div>
+                <p>
+                  {cov
+                    ? `${cov.verified_title_count} verified titles · ${cov.title_only_count} title-only records · ${cov.needs_review_count} needing extraction review`
+                    : "Curriculum evidence unavailable"}
+                </p>
                 <div className="programme-card-footer">
                   <span>
                     <Clock3 size={12} />
