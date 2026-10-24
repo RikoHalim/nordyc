@@ -2,6 +2,8 @@
 
 ## Implemented Phase 1 and Phase 2 schema
 
+Additive Phase 5 migration **`0006_career_alignment`** adds `career_runs`, `career_recommendations`, and `career_reviews`. Runs reference existing programme/revision/job identities and store frozen requests, source/policy hashes, method/schema/model lineage and validated results. Recommendation rows reference their exact run/revision and a content-version hash. Composite review foreign keys bind decision, server-authenticated actor, reason and timestamp to that exact recommendation version. Completed runs and recommendation/review history are immutable through ORM checks and PostgreSQL triggers; populated downgrade refuses data loss. Existing tables and migrations are preserved. See [Phase 5](27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) for contracts and practical limits.
+
 All eight application tables use UUID primary keys, timezone-aware UTC `created_at`/`updated_at` and `is_synthetic`. PostgreSQL is the runtime target. Original migration `0001_foundation` and its seven tables are preserved; additive `0002_catalogue_sources` adds source attribution, and `0003_curriculum_ingestion` extends those tables for versioned curriculum imports and durable jobs. No separate curriculum snapshot table was introduced.
 
 | Table | Implemented fields and relationships |
@@ -88,7 +90,9 @@ Existing `jobs` queues `PROGRAMME_ANALYSIS` with the institution/revision target
 
 Phase 4.1 reuses `analysis_runs.manifest_json.model_processing` for sanitized per-invocation provider, requested/actual model, token usage, HTTP-attempt counts, validation outcomes and explicit fallback transitions. `model_name` holds only actual returned model identifiers. Observed billing cost remains null without a billing observation. Existing job/result JSON and protected retrieval expose this metadata; no table, migration or academic finding-schema change is required. See [the Claude runbook](23_PHASE41_REPLIT_CLAUDE.md).
 
-## Future Phase 5–6 concepts - not implemented
+## Original Phase 5–6 conceptual plan
+
+The Phase 5 subset below is now implemented through the three career tables described above and typed versioned JSON, rather than duplicating taxonomy/skill/source records. Detailed pathway/resource/SDG/scenario concepts remain Phase 6 plans. The following paragraphs retain the original planning context; [Phase 5's measured record](27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) is the implementation authority.
 
 The [career alignment/pathway plan](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) adds future concepts around the implemented run/evidence boundary. Programme–occupation alignment must link reviewed occupation/skill IDs, requirement sets, curriculum competency assertions and source versions. Competency support distinguishes documented intent, actual assessed demonstration and unknown coverage; title matches never populate verified support. Optional score records need method/weight/denominator/unknown-state provenance and abstention.
 

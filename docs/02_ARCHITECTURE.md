@@ -2,6 +2,8 @@
 
 ## Existing foundation retained
 
+Phase 5 extends this monolith with `schemas/career.py`, deterministic `services/career/engine.py`, optional bounded managed-Claude option comparison, a career repository and protected router. `CAREER_ANALYSIS` reuses the existing worker/job lifecycle. Three additive career/recommendation/review tables retain immutable inputs, evidence hashes and append-only human decisions. [The Phase 5 runbook](27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) records source, scoring, privacy and API boundaries; no model/search call occurs in an HTTP handler.
+
 Python 3.12+, FastAPI/Pydantic v2, SQLAlchemy 2, Alembic and PostgreSQL form a modular monolith. HTTP database work uses synchronous sessions/psycopg; request sessions close through a dependency. Injected SQLite databases with foreign keys are for unit/API tests only. PostgreSQL is the runtime/migration target. Exact dependencies and the tested full environment are pinned.
 
 The app factory owns/disposes its engine during lifespan. Startup does not connect or migrate. Liveness needs no database; readiness executes `SELECT 1` and proves connectivity only. Errors retain `{error:{code,message,details}}`; responses expose request IDs without logging secrets/raw documents.
@@ -41,7 +43,7 @@ Title-only means unknown taught content and preliminary questions, never definit
 
 ## Deferred
 
-Expanded verified learning-outcome/assessment ingestion, Phase 5 career alignment/actions, Phase 6 pathways/scenario reports and frontend remain future work. Bounded Phase 4 analysis/research adapters exist; their live acceptance still needs credentials. No microservices, default vector database, knowledge graph, custom training or per-major agents are required.
+Expanded automatic learning-outcome/assessment extraction, Phase 6 pathways/scenario reports and frontend remain future work. Phase 5 consumes explicitly reviewed existing passages and occupational requirements; it does not claim automatic syllabus interpretation or graduate assessment. Phase 4.2's bounded live Claude acceptance passed, while Phase 4.3 source admission remains partial. No microservices, default vector database, knowledge graph, custom training or per-major agents are required.
 
 ## Implemented Phase 3 evidence boundary
 
@@ -61,8 +63,8 @@ One selected pretrained model receives bounded admitted evidence; structured quo
 
 External search/model egress must respect private upload and content-use policy. Use generic nonprivate search terms, restrict original-source hosts and redirects, retain transport SSRF/robots/size/rate/timeout controls, and treat retrieved instructions as untrusted data. Authorize analysis submission/result access; the catalogue token alone is not production tenant isolation. Research has no public arbitrary-URL trigger and does not run on backend startup. A missing provider, blocked source or unsupported claim remains an explicit limitation in every affected course result.
 
-## Planned Phase 5–6 enhancement integration
+## Phase 5 implementation and planned Phase 6 integration
 
 [Future Career Alignment and Academic Reskilling Pathways](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) extend the existing Academic Decision Studio and Action Plans. Phase 5 consumes frozen Phase 4 evidence to compare programme-supported competencies with reviewed occupation/skill requirements, identify potential gaps and compare minimum sufficient interventions, alternatives/no change and human review. Optional alignment calculations must be deterministic, explained and insufficient when coverage is unknown; they are not employment probabilities.
 
-Phase 6 adds ordered learning steps, supported prerequisites, duration estimates with a basis, verified resources and meaningful SDG links inside scenario/report/action-plan results. Proposed objectives are future intervention plans, not university teaching facts. Seminars/talk attendance cannot establish technical competence; assessed practical work needs actual assessment evidence. Scenarios preserve observed data and version assumptions separately. These remain planning-only; no standalone student platform, runtime module, additional model or Phase 5/6 migration was implemented. Replit hosting and React/TypeScript UI remain future work. Domain 1 substitution approval remains UNCONFIRMED.
+Phase 6 would add ordered learning steps, supported prerequisites, duration estimates with a basis, verified resources and meaningful SDG links inside scenario/report/action-plan results. These remain planning-only. Phase 5's additive `0006` and reviewed coverage/action/review services are implemented; no standalone student platform or additional model was added. Replit remains the hosting decision, with deployment and React/TypeScript UI deferred. Proposed objectives are future intervention plans, not university teaching facts; attendance does not establish technical competence. Domain 1 substitution approval remains UNCONFIRMED.

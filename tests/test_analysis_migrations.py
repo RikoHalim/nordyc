@@ -50,6 +50,7 @@ def test_analysis_schema_upgrade_preserves_old_data_and_refuses_populated_downgr
     command.upgrade(config, "head")
     connection.commit()
     _assert_metadata_matches(connection)
+    upgraded_revision = connection.scalar(text("SELECT version_num FROM alembic_version"))
     assert connection.scalar(text("SELECT count(*) FROM institutions")) == 1
     assert connection.scalar(text("SELECT count(*) FROM datasets")) == 1
     cache_id = uuid4()
@@ -71,10 +72,7 @@ def test_analysis_schema_upgrade_preserves_old_data_and_refuses_populated_downgr
         command.downgrade(config, "0004_reference_evidence")
     connection.rollback()
     assert connection.scalar(text("SELECT count(*) FROM research_cache")) == 1
-    assert (
-        connection.scalar(text("SELECT version_num FROM alembic_version"))
-        == "0005_programme_analysis"
-    )
+    assert connection.scalar(text("SELECT version_num FROM alembic_version")) == upgraded_revision
     connection.execute(text("DELETE FROM research_cache WHERE id=:id"), {"id": cache_id})
     connection.commit()
     command.downgrade(config, "0004_reference_evidence")

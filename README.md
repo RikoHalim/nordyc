@@ -6,6 +6,8 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 
 ## Current foundation
 
+Phase 5 adds protected programme career-alignment jobs, reviewed competency coverage/gap findings, minimum sufficient academic actions and append-only human review. The [Phase 5 methodology and runbook](docs/27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) describe explicit mapping/passage requirements, calculation abstention and the synthetic demonstration. Phase 4.3 remains PARTIAL; no live research admission or real curriculum accuracy is implied.
+
 - FastAPI factory/lifespan, typed settings, request IDs and documented errors.
 - PostgreSQL, SQLAlchemy 2, Alembic and UUID/UTC records; SQLite only for unit/API tests.
 - Multiple institutions, programmes and versioned course inventories with optional course codes, year, semester and elective status.
@@ -16,7 +18,7 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 - Separate worker, reviewed structured imports, duplicate checks and safe snapshot re-imports/history.
 - Protected programme analysis jobs and history, internal evidence retrieval, Replit-managed `claude-opus-5`, separate Brave discovery, structured citation validation and explicit insufficient-evidence results. The real FastAPI → worker → Claude → PostgreSQL → protected FastAPI workflow passed on two fictional courses. Gemini is disabled for the MVP. [Phase 4.3](docs/26_PHASE43_BRAVE_SEARCH_VERIFICATION.md) verified one live Brave search, while original-source admission remains blocked by exact registration and robots checks. See [Phase 4.2 acceptance](docs/25_PHASE42_LIVE_BACKEND_VERIFICATION.md) and STATUS.md for measured results and evidence limits.
 
-Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. Phase 4 adds bounded evidence-grounded screening; [its runbook](docs/21_PHASE4_COURSE_RELEVANCE.md) and the Phase 4.2 record distinguish live backend acceptance from academic validation and pending Brave research. Legacy/language/currentness/identity/permission limits remain. See also [Phase 3 ingestion](docs/17_PHASE3_EVIDENCE_INGESTION.md), [measured evidence](docs/PHASE3_INGESTION_REPORT.md) and [workforce methodology](docs/18_WORKFORCE_TRENDS.md). Recommendations, pathways, scenarios and frontend remain future phases.
+Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. Phase 4 adds bounded evidence-grounded screening; [its runbook](docs/21_PHASE4_COURSE_RELEVANCE.md) and the Phase 4.2 record distinguish live backend acceptance from academic validation and partial Brave research. Legacy/language/currentness/identity/permission limits remain. See also [Phase 3 ingestion](docs/17_PHASE3_EVIDENCE_INGESTION.md), [measured evidence](docs/PHASE3_INGESTION_REPORT.md) and [workforce methodology](docs/18_WORKFORCE_TRENDS.md). Phase 5 provides evidence-bound action proposals; pathways, scenarios and frontend remain future phases.
 
 ## Revised product contract
 
@@ -53,7 +55,7 @@ The original fixture contains 12 invented courses, two electives and six without
 
 ## Existing database upgrade
 
-Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002`–`0005`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, curriculum jobs, reference evidence and programme-analysis tables. Phase 4.1 reuses these tables without another migration. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata; see [the data model](docs/03_DATA_MODEL.md).
+Back up the configured database and confirm the intended environment. Keep original migrations unchanged; `python -m alembic upgrade head` applies additive `0002`–`0006`. They preserve original tables, IDs, fixture hashes and anchors while adding provenance, curriculum jobs, reference evidence, programme-analysis and Phase 5 career/review tables. Existing rows receive safe defaults, not invented provenance. Downgrade refuses loss of populated added metadata and career history; see [the data model](docs/03_DATA_MODEL.md).
 
 ## Curriculum discovery and imports
 

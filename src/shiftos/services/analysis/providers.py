@@ -398,18 +398,22 @@ def _claude_transport_schema(schema: dict) -> dict:
 class ClaudeProvider(_JsonProvider):
     """Anthropic Messages protocol through an explicitly provisioned Replit bridge."""
 
-    def generate(self, packet: dict, response_schema: dict) -> dict:
+    def generate(
+        self, packet: dict, response_schema: dict, *, task_instruction: str | None = None
+    ) -> dict:
         started = self._begin_generation("replit_claude", self.settings.claude_model)
         began = self.monotonic()
         try:
-            return self._generate(packet, response_schema)
+            return self._generate(packet, response_schema, task_instruction=task_instruction)
         finally:
             self.last_response_metadata["request_count"] = self.request_attempts - started
             self.last_response_metadata["duration_ms"] = round(
                 max(0, self.monotonic() - began) * 1000, 3
             )
 
-    def _generate(self, packet: dict, response_schema: dict) -> dict:
+    def _generate(
+        self, packet: dict, response_schema: dict, *, task_instruction: str | None = None
+    ) -> dict:
         if not self.settings.claude_enabled:
             raise ProviderError("model_disabled")
         if not self.settings.analysis_external_processing_allowed:
@@ -446,7 +450,12 @@ class ClaudeProvider(_JsonProvider):
             body={
                 "model": self.settings.claude_model,
                 "max_tokens": self.settings.claude_max_output_tokens,
-                "system": MODEL_SYSTEM_INSTRUCTION + CLAUDE_ANALYSIS_INSTRUCTION,
+                "system": MODEL_SYSTEM_INSTRUCTION
+                + (
+                    task_instruction
+                    if task_instruction is not None
+                    else CLAUDE_ANALYSIS_INSTRUCTION
+                ),
                 "messages": [{"role": "user", "content": serialized}],
                 "output_config": {"format": {"type": "json_schema", "schema": schema}},
             },

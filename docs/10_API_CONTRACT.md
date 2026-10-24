@@ -18,7 +18,7 @@ JSON UTF-8, `/api/v1` resource prefix, UUID IDs and timezone-aware timestamps. H
 | POST / GET | `/api/v1/sources` | 201 metadata registration / 200 registry page |
 | GET | `/api/v1/sources/{id}` | 200 source metadata / 404 |
 
-The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds curriculum jobs/imports/revision routes. Phase 3 adds read-only evidence routes/explicit CLI ingestion. Phase 4 adds protected analysis jobs/history below; academic actions, pathways, scenarios and frontend remain future work.
+The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds curriculum jobs/imports/revision routes. Phase 3 adds read-only evidence routes/explicit CLI ingestion. Phase 4 adds protected analysis jobs/history below; Phase 5 adds separate protected career-alignment, action comparison and human-review resources. Pathways, scenarios and frontend remain future work.
 
 Academic resource lists accept `limit` 1-100 (default 50), `offset` >=0 (default 0) and return `{items,total,limit,offset}` sorted by UUID. Course pages add `programme_revision_id`. `total` counts the full matching inventory, not one page. Every known course is retrievable across pages; page limit is not a programme cap. Course lists include compulsory/elective/unknown-type records and those without syllabi. No active revision yields an empty course page; creation requires a mutable active revision. Checksum-protected fixtures and fingerprinted imported revisions refuse course additions with 409. General course POST creates one inventory entry; the Phase 2 import routes perform deduplication and versioned ingestion.
 
@@ -148,21 +148,30 @@ Phase 4.1 preserves these routes, request/academic finding schemas and authoriza
 
 `insufficient_evidence` dimensions display **INSUFFICIENT EVIDENCE**; title-only courses retain `needs_syllabus_confirmation` and `is_final_curriculum_verdict=false`. Citation validation checks exact associated admitted references, quotations, dates/scope/rights and curriculum evidence level. No relevance scores, definitive obsolete/replacement verdicts, academic actions or free-form factual claims are accepted. See OpenAPI for exact typed fields and [the retrieval design](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) for policy boundaries.
 
+## Implemented Phase 5 career alignment and academic review
+
+All Phase 5 routes require the existing `X-Analysis-Token`; absent/wrong access returns 401, unconfigured access 503. `POST /api/v1/programmes/{id}/career-analyses` accepts `CareerRequest` and returns 202 with frozen revision/cutoff and run/job IDs. Optional reviewed mappings/assertions/audits use existing database identifiers and exact permitted passages; an empty mapping request produces explicit insufficiency. Repeating the same idempotency key/payload returns the same run; changed content returns 409. Process with the existing separate CLI worker.
+
+`GET /api/v1/programmes/{id}/career-analyses` lists history. `GET /api/v1/career-analyses/{id}` returns job state, validated matrix, recommendations, method/model metadata, source lineage and revalidation flags. Its `/occupations`, `/competencies`, `/recommendations` and `/evidence` children return typed pages with limits 1–100, offset, job state and source-access limitations. Pending/failed jobs are distinct from completed insufficient-evidence outcomes. Restricted/stale source prose is withheld without rewriting history.
+
+`POST /api/v1/career-recommendations/{id}/reviews` requires `decision`, nonblank `reason` and exact `expected_recommendation_version` SHA256, returning 201. Decisions are `needs_evidence`, `under_review`, `approved`, `rejected`, `no_change_required`. The actor is assigned server-side as `authenticated_analysis_operator`; client-supplied actors are rejected. Approvals require current revision, permitted unchanged evidence and a completed run. `GET` on the same path returns append-only history. A recorded operator approval does not automatically modify curricula or independently identify an academic staff member. See [Phase 5](27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) and generated OpenAPI for exact contracts.
+
+The original planned `/analyses/{id}/actions` and `/compare` spellings were reconciled into these explicit career-run resources, keeping existing Phase 4 findings unchanged. Primary action, alternatives and no-change comparison are included in each recommendation rather than a separate model call or endpoint. No existing route was removed.
+
 ## Later endpoint targets - not implemented
 
 | Phase | Proposed endpoints | Purpose |
 |---|---|---|
-| 5 | `GET /analyses/{id}/actions`, `POST /analyses/{id}/compare` | Supported primary action/alternatives including no change |
 | 6 | `POST /analyses/{id}/scenarios`, `GET /analyses/{id}/report` | Reproducible scenario/review draft |
 
 Resource paths above carry `/api/v1`; async activities return 202 and a job ID. Finalise later contracts in the authorised phase without removing compatible foundation routes. Future title-only results must expose `needs_syllabus_confirmation`, sources, dates, unknown taught content and `is_final_curriculum_verdict=false`. A proposed action is never an approved academic decision.
 
-### Planned career alignment/pathway contract extensions
+### Historical alignment plan and pending pathway extension
 
 The [planning revision](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) extends Phase 5 action/comparison responses with programme `career_alignment`, reviewed occupation/skill pointers, curriculum-supported competencies, requirement-level potential gaps, confidence/limitations and optional deterministic alignment calculation metadata. A title-only comparison must report unknown coverage. Any score requires method/version, weights, eligible denominator and missingness; it is not an employment probability.
 
 Phase 5 responses will retain primary recommended intervention, alternatives including no change, minimum sufficient rationale, evidence conditions and human review. Phase 6 scenario/report responses will add ordered `academic_pathways`/Academic Action Plans with target competency, proposed objectives/activities, prerequisites, duration and basis, verified resources, occupational/evidence pointers and meaningful SDG links. Null/unknown duration or resource verification is preferable to invented values. No attendance-based technical competency attribution is allowed.
 
-These are future additive schema/API requirements, not implemented fields/routes. Keep proposed intervention objectives separate from actual taught content and scenario assumptions separate from observed indicators. Source permissions, reproducibility, protected reads/writes and structured validation continue across phases. Do not introduce a standalone career or student platform to expose these nested capabilities.
+The Phase 5 portion is now implemented through the career resources above; Phase 6 pathway/scenario/report fields remain future requirements. Keep proposed intervention objectives separate from actual taught content and scenario assumptions separate from observed indicators. Source permissions, reproducibility, protected reads/writes and structured validation continue across phases. No standalone career or student platform is introduced.
 
 Phase 4 currently supplies scoped citations, source/version/date/rights lineage, five dimensions, fixed coverage questions and deterministic programme context. Later competency support needs typed skill/concept assertions, reviewed mappings and `documented_intent`/`assessed_demonstration`/`unknown` states. This planning revision identifies those additions; it does not expand Phase 4 into recommendations, pathways or individual matching.

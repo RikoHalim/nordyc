@@ -1,4 +1,5 @@
 from shiftos.models.analysis import AnalysisRun, CourseFinding, ResearchCache
+from shiftos.models.career import CareerRecommendation, CareerReview, CareerRun
 from shiftos.models.evidence import (
     AcademicStandard,
     AIImpactEvidence,
@@ -26,6 +27,9 @@ from shiftos.models.foundation import (
 )
 
 __all__ = [
+    "CareerRun",
+    "CareerRecommendation",
+    "CareerReview",
     "AnalysisRun",
     "CourseFinding",
     "ResearchCache",

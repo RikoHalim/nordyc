@@ -1,0 +1,37 @@
+{
+  "fixture_id": "phase5-fictional-computing-1",
+  "is_synthetic": true,
+  "label": "Entirely fictional curriculum, taxonomy, reviews and observations. Not university or ESCO facts.",
+  "programme": "Bachelor of Synthetic Computing",
+  "course_inventory_scope": "All four fictional courses are compulsory in this complete synthetic revision; this is not a real university assertion.",
+  "institution": "Fictional Career Evidence University",
+  "taxonomy": "Synthetic teaching taxonomy 1",
+  "discipline": "computing",
+  "courses": [
+    {"key": "query", "title": "Synthetic Query Laboratory", "quote": "Synthetic reviewed assessment demonstrates parameterised SQL query construction against a fictional database.", "demonstration_reviewed": true},
+    {"key": "model", "title": "Synthetic Data Modelling", "quote": "Synthetic learning outcome: students are intended to explain relational data modelling and schema constraints."},
+    {"key": "pipeline", "title": "Synthetic Pipeline Studio", "quote": "Synthetic learning outcome: students are intended to practise one introductory data pipeline transformation."},
+    {"key": "inventory", "title": "Synthetic Data Security Capstone", "quote": null}
+  ],
+  "skills": [
+    {"key": "sql", "label": "Synthetic parameterised SQL construction"},
+    {"key": "model", "label": "Synthetic relational data modelling"},
+    {"key": "pipeline", "label": "Synthetic data pipeline transformation"},
+    {"key": "security", "label": "Synthetic threat modelling"},
+    {"key": "governance", "label": "Synthetic governance review"}
+  ],
+  "occupations": [
+    {"key": "analyst", "label": "Synthetic Data Systems Analyst", "requirements": {"sql": "essential", "model": "essential", "pipeline": "optional"}},
+    {"key": "practitioner", "label": "Synthetic Query Practitioner", "requirements": {"sql": "essential"}},
+    {"key": "steward", "label": "Synthetic Secure Data Steward", "requirements": {"security": "essential", "governance": "essential", "model": "optional"}}
+  ],
+  "support": [
+    {"skill": "sql", "course": "query", "support": "demonstrated", "extent": "full"},
+    {"skill": "model", "course": "model", "support": "documented_intent", "extent": "full"},
+    {"skill": "pipeline", "course": "pipeline", "support": "documented_intent", "extent": "partial"}
+  ],
+  "gap": {"skill": "security", "quote": "Synthetic whole-revision academic audit explicitly confirms no documented threat-modelling teaching or assessment across all four listed courses; this is a fictional reviewed deficiency finding, not an inference from a missing title."},
+  "unknown": "governance",
+  "review_basis": "Explicit fictional academic review for deterministic acceptance tests only; not real academic approval.",
+  "malaysia_applicability": "Fictional Malaysian pilot context only; this synthetic taxonomy measures no Malaysian demand."
+}

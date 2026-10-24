@@ -1,5 +1,7 @@
 # Future Career Alignment and Academic Reskilling Pathways — planning revision
 
+**Implementation update, 25 October 2026:** the separately authorised Phase 5 subset is now implemented on `feature/phase5-career-alignment`; [its runbook](27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) reconciles exact mappings, typed passage assertions, source permissions, additive persistence, protected career resources and review history with this plan. The original planning text below remains historical scope guidance. Phase 6 pathways/resources/durations/SDGs/scenarios remain pending and unauthorised by Phase 5 completion.
+
 **24 October 2026 — documentation only.** These requirements extend the existing Phase 5 Academic Decision Studio and Phase 6 scenarios/reporting plans. They do not add a separate product, student platform, runtime module, schema migration or endpoint. Ongoing Phase 4 development remains the current priority. Read [academic actions](07_ACADEMIC_ACTIONS.md), [scenarios/pathways](08_SCENARIOS_SDG_AND_REPORTING.md), [compliance](09_HACKATHON_COMPLIANCE.md) and [roadmap](12_MVP_ROADMAP.md).
 
 ## Phase 5: Future Career Alignment

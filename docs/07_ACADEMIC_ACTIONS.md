@@ -1,5 +1,7 @@
 # Phase 5 — Future Career Alignment and Academic Decision Studio
 
+**Implementation update — 25 October 2026:** the separately authorised [Phase 5 implementation](27_PHASE5_FUTURE_CAREER_ALIGNMENT.md) now supplies reviewed occupation/competency matrices, conservative gap/score handling, minimum sufficient actions and protected append-only human review. The original planning requirements below explain the scope and cautions; Phase 6 pathways/scenarios and automatic individual matching remain unimplemented.
+
 **Planning specification, not available functionality.** Phase 4 Course Relevance Analysis remains the current implementation priority. Implement this extension only after Phase 4 acceptance and explicit Phase 5 authorization. Reuse its versioned programme/course findings and the Phase 3 evidence infrastructure; do not create a separate career platform or student module.
 
 ## Programme-level Future Career Alignment

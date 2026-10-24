@@ -288,6 +288,7 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
                         "CURRICULUM_DISCOVERY",
                         "CURRICULUM_PDF_UPLOAD",
                         "PROGRAMME_ANALYSIS",
+                        "CAREER_ANALYSIS",
                     ]
                 ),
                 Job.status == JobStatus.QUEUED,
@@ -310,6 +311,11 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         session.commit()
         session.expunge(job)
     try:
+        if job.kind == "CAREER_ANALYSIS":
+            from shiftos.services.career.orchestrator import process_career_job
+
+            process_career_job(database, job, settings)
+            return job.id
         if job.kind == "PROGRAMME_ANALYSIS":
             from shiftos.services.analysis.orchestrator import process_analysis_job
 
@@ -336,16 +342,19 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         output = _summary(result)
     except (FetchError, CurriculumParseError, DomainError, ValidationError) as exc:
         status, output = JobStatus.FAILED, None
-        error = (
-            getattr(exc, "code", "INVALID_MANIFEST")
-            + ": Catalogue acquisition failed; use reviewed structured JSON"
+        error = getattr(exc, "code", "INVALID_MANIFEST") + (
+            ": Career analysis failed; review frozen inventory, evidence and source permissions"
+            if job.kind == "CAREER_ANALYSIS"
+            else ": Catalogue acquisition failed; use reviewed structured JSON"
         )
     except Exception:
         # Previously persisted per-programme progress is retained, with a visible terminal failure.
         status, output, error = (
             JobStatus.FAILED,
             None,
-            "WORKER_ERROR: Catalogue job failed; inspect server diagnostics",
+            "WORKER_ERROR: Career analysis failed; inspect server diagnostics"
+            if job.kind == "CAREER_ANALYSIS"
+            else "WORKER_ERROR: Catalogue job failed; inspect server diagnostics",
         )
         logger.error("catalogue_worker_failed job_id=%s", job.id)
     with database.session_factory() as session:
@@ -371,6 +380,7 @@ def fail_stale_jobs(database: Database) -> int:
                         "CURRICULUM_DISCOVERY",
                         "CURRICULUM_PDF_UPLOAD",
                         "PROGRAMME_ANALYSIS",
+                        "CAREER_ANALYSIS",
                     ]
                 ),
                 Job.status == JobStatus.RUNNING,
