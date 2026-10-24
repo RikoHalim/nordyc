@@ -18,7 +18,7 @@ JSON UTF-8, `/api/v1` resource prefix, UUID IDs and timezone-aware timestamps. H
 | POST / GET | `/api/v1/sources` | 201 metadata registration / 200 registry page |
 | GET | `/api/v1/sources/{id}` | 200 source metadata / 404 |
 
-The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds curriculum jobs/imports/revision routes. Phase 3 adds read-only reference evidence routes below and explicit CLI ingestion. Analysis, academic actions and frontend remain future phases.
+The preserved foundation implements **create/read**, not PATCH/DELETE. Source registration does not fetch or verify external content. Phase 2 adds curriculum jobs/imports/revision routes. Phase 3 adds read-only evidence routes/explicit CLI ingestion. Phase 4 adds protected analysis jobs/history below; academic actions, pathways, scenarios and frontend remain future work.
 
 Academic resource lists accept `limit` 1-100 (default 50), `offset` >=0 (default 0) and return `{items,total,limit,offset}` sorted by UUID. Course pages add `programme_revision_id`. `total` counts the full matching inventory, not one page. Every known course is retrievable across pages; page limit is not a programme cap. Course lists include compulsory/elective/unknown-type records and those without syllabi. No active revision yields an empty course page; creation requires a mutable active revision. Checksum-protected fixtures and fingerprinted imported revisions refuse course additions with 409. General course POST creates one inventory entry; the Phase 2 import routes perform deduplication and versioned ingestion.
 
@@ -128,22 +128,39 @@ List filters include `dataset_id`, `version_id`, `is_synthetic` where applicable
 
 Radar accepts configurable finite nonnegative `percent_threshold` (default5, max1000) and `absolute_threshold` (default0, max10^18). Response classifications are `RISING`, `DECLINING`, `STABLE`, `INSUFFICIENT_DATA`; `AI-TRANSFORMING` is a separate nested attribute, never a fifth demand class. Results contain both full observations/version/source/reference inputs, exact decimal deltas, policy/method version, compatible dimensions and a reproducibility fingerprint. Results are computed without overwriting or adding source observations. Two-point comparisons never claim a sustained trend. Missing identities return404; invalid query values422; insufficient/incompatible observations return200 with explicit abstention/reasons. See [the methodology](18_WORKFORCE_TRENDS.md) for units/populations/periods and independent AI admission gates.
 
+## Phase 4 analysis APIs — implemented bounded MVP
+
+All routes below are under `/api/v1` and require `X-Analysis-Token`, compared against `ANALYSIS_WRITE_TOKEN`. Missing server configuration returns503; missing/wrong supplied token returns401 before resource lookup. This is an operator access boundary, not full tenant identity. The legacy `/catalogue/jobs/{id}` also applies this guard to analysis jobs, preserving curriculum job reads.
+
+| Route | Behavior |
+|---|---|
+| `POST /programmes/{id}/analyses` | Queue and freeze a nonempty programme revision/inventory;202 with run/job identifiers; no provider work in request |
+| `GET /programmes/{id}/analyses` | Paginated analysis history |
+| `GET /analyses/{id}` | Job state/times, mode, request, frozen manifest, summary/insights, research outcomes, fingerprint and disclosed model/schema/prompt versions |
+| `GET /analyses/{id}/courses` | Paginated findings for every available frozen course appearance |
+| `GET /analyses/{id}/courses/{course_id}` | One owned course result with five dimensions, scoped citations, fixed review questions and limitations |
+
+Submission accepts optional `revision_id`, optional bounded `idempotency_key`, `mode='live'|'offline'` (defaultlive), `research=true` and optional aware historical `as_of`. Unknown fields are rejected. Repeating identical intent/key returns the same run even when the active catalogue changes; changed intent/key returns409. Wrong/missing revision404, empty/inconsistent inventory409. The existing separate worker and `analyse-programme` CLI are described in [the runbook](21_PHASE4_COURSE_RELEVANCE.md).
+
+Responses expose `needs_evidence_revalidation` and `evidence_access_limitations`; current permission-policy/source-state checks can withhold source text while preserving pointers/history. The run's `summary_json` contains deterministic counts/insights and `result_mode`; model/research processing outcomes remain distinct from source sufficiency. Offline genuine records disclose `deterministic_insufficiency`, synthetic fixtures `offline_synthetic`. Live processing failure yields visible partial/fallback outcomes, never a false model-success claim. No live Gemini/Brave verification occurred without keys.
+
+`insufficient_evidence` dimensions display **INSUFFICIENT EVIDENCE**; title-only courses retain `needs_syllabus_confirmation` and `is_final_curriculum_verdict=false`. Citation validation checks exact associated admitted references, quotations, dates/scope/rights and curriculum evidence level. No relevance scores, definitive obsolete/replacement verdicts, academic actions or free-form factual claims are accepted. See OpenAPI for exact typed fields and [the retrieval design](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) for policy boundaries.
+
 ## Later endpoint targets - not implemented
 
 | Phase | Proposed endpoints | Purpose |
 |---|---|---|
-| 4 | `POST /programmes/{id}/analyses`, `GET /analyses/{id}`, `/analyses/{id}/courses`, `/analyses/{id}/courses/{course_id}` | Whole-programme run and course drill-down |
 | 5 | `GET /analyses/{id}/actions`, `POST /analyses/{id}/compare` | Supported primary action/alternatives including no change |
 | 6 | `POST /analyses/{id}/scenarios`, `GET /analyses/{id}/report` | Reproducible scenario/review draft |
 
 Resource paths above carry `/api/v1`; async activities return 202 and a job ID. Finalise later contracts in the authorised phase without removing compatible foundation routes. Future title-only results must expose `needs_syllabus_confirmation`, sources, dates, unknown taught content and `is_final_curriculum_verdict=false`. A proposed action is never an approved academic decision.
 
-### Phase 4 planned retrieval/result behavior
+### Planned career alignment/pathway contract extensions
 
-The [hybrid retrieval plan](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) is documentation only; these analysis routes are still unimplemented. Proposed submission selects a programme revision and allowed evidence/as-known policy with an idempotency key; operator configuration owns search/model providers, source allowlists, credentials, permissions and finite research budgets. A caller cannot supply arbitrary fetch URLs, credentials or a host-policy override. Authorize job submission and result/provenance access for the relevant operator/institution before enabling research; the existing catalogue token alone is not full tenant authorization.
+The [planning revision](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) extends Phase 5 action/comparison responses with programme `career_alignment`, reviewed occupation/skill pointers, curriculum-supported competencies, requirement-level potential gaps, confidence/limitations and optional deterministic alignment calculation metadata. A title-only comparison must report unknown coverage. Any score requires method/version, weights, eligible denominator and missingness; it is not an employment probability.
 
-The durable job retrieves internal evidence first and researches important gaps only when the approved fallback is configured/enabled. Return 202 plus the analysis job identifier; expose progress and sanitized outcomes in the run read rather than performing network/model work in the request. Final field names/schemas and any additive migrations are to be tested during authorized implementation, not implied to exist today.
+Phase 5 responses will retain primary recommended intervention, alternatives including no change, minimum sufficient rationale, evidence conditions and human review. Phase 6 scenario/report responses will add ordered `academic_pathways`/Academic Action Plans with target competency, proposed objectives/activities, prerequisites, duration and basis, verified resources, occupational/evidence pointers and meaningful SDG links. Null/unknown duration or resource verification is preferable to invented values. No attendance-based technical competency attribution is allowed.
 
-Each completed run/course read must include all available course appearances, catalogue/content verification level, admitted reference/version IDs, original locators and source dates, deterministic indicator scope/method, coverage gaps, research enabled/disabled/blocked/failed/cached outcomes, limitations and the disclosed model/prompt/policy versions. Preserve review questions separately from substantiated content claims. Use `insufficient_evidence` (display **INSUFFICIENT EVIDENCE**) for unsupported conclusions and retain `needs_syllabus_confirmation` for title-based benchmarking. Valid partial/insufficient findings are typed results, not fabricated evidence or unhandled errors; operational failures use the existing error envelope and explicit job state.
+These are future additive schema/API requirements, not implemented fields/routes. Keep proposed intervention objectives separate from actual taught content and scenario assumptions separate from observed indicators. Source permissions, reproducibility, protected reads/writes and structured validation continue across phases. Do not introduce a standalone career or student platform to expose these nested capabilities.
 
-Public responses must obey excerpt/redistribution rights and private-document access policy; return permitted provenance pointers where text cannot be exposed. Completed-run replay uses frozen evidence without external calls; an authorized refresh creates a new run. No standalone unrestricted research/ingestion endpoint, startup acquisition or Phase 5 action generation is part of this Phase 4 contract.
+Phase 4 currently supplies scoped citations, source/version/date/rights lineage, five dimensions, fixed coverage questions and deterministic programme context. Later competency support needs typed skill/concept assertions, reviewed mappings and `documented_intent`/`assessed_demonstration`/`unknown` states. This planning revision identifies those additions; it does not expand Phase 4 into recommendations, pathways or individual matching.

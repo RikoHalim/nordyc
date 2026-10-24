@@ -23,7 +23,7 @@
 
 ## Phase 4 hybrid retrieval tests (planned)
 
-These are implementation requirements, not tests added or run by the documentation revision. Use pytest and existing service/repository/API conventions with labelled synthetic fixtures and mocked search/original-source/model responses. The [retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) defines planned behavior. Preserve Phase 1–3 regression coverage and PostgreSQL migration/history tests.
+The authorized Phase 4 implementation now supplies pytest coverage for these boundaries; actual results/limits are in STATUS and the [runbook](21_PHASE4_COURSE_RELEVANCE.md). The original planning revision alone did not run these tests. Use labelled synthetic fixtures/mocked providers and separate genuine-data checks; do not equate them with live Gemini/Brave acceptance. Preserve Phase 1–3 regressions and PostgreSQL migration/history coverage.
 
 | Area | Required cases and expected outcome |
 |---|---|
@@ -44,6 +44,12 @@ Add PostgreSQL persistence/API/migration tests for any actual Phase 4 schema or 
 Separately perform an **opt-in real-data smoke test** with an approved search provider and the single configured model, permitted original sources and a bounded programme subset. Demonstrate internal retrieval, a real gap → search → original-source check → permitted import/query → cited finding, repeat/cache reuse and one honest blocked/insufficient outcome. Record actual provider/model, source dates/versions, imported counts, citations, request outcomes and unresolved gaps. Missing credentials or permissions block that live gate; mocked tests cannot pass it. Avoid any accuracy or cross-discipline completeness claim from this smoke test alone.
 
 ## Evaluation: don't claim model accuracy without a labelled benchmark
+
+### Planned Phase 5–6 enhancement tests
+
+These requirements are documentation only; no alignment/pathway functionality is implemented. Phase 5 must test requirement-to-curriculum support across disciplines, reviewed mappings, title-only unknowns, possible-versus-confirmed gaps, optional deterministic score denominators/weights/missingness, minimum sufficient primary intervention, alternatives/no change and human review. Alignment must never become individual employment probability.
+
+Phase 6 must test ordered/acyclic prerequisites, proposed-versus-existing objectives, unknown duration without a basis, original-source resource suitability/access/cost verification, no fabricated partnerships, meaningful goal/target rationale, and assessed practical work versus attendance-only awareness. Scenario assumptions must not overwrite observations; changed evidence affects linked findings/steps only and no forced action flip is required. Reports retain evidence, limitations, resource/duration dates and approval status. Domain 1 institutional substitutions remain UNCONFIRMED; any individual contingency needs separate authorization, labelled fixtures and no real student tracking.
 
 Compare output on a hand-reviewed set of public/synthetic cases from at least 3 disciplines; report agreement rates, citation accuracy, abstention on missing data, false-confidence examples and limitations. Avoid arbitrary thresholds disguised as independently validated performance.
 

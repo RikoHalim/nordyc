@@ -157,8 +157,18 @@ def import_programme(id: UUID, data: ProgrammeImport, session: SessionDep, _writ
 
 
 @router.get("/catalogue/jobs/{id}", response_model=JobRead)
-def read_job(id: UUID, session: SessionDep):
-    return require_job(session, id)
+def read_job(
+    id: UUID,
+    request: Request,
+    session: SessionDep,
+    x_analysis_token: Annotated[str | None, Header()] = None,
+):
+    job = require_job(session, id)
+    if job.kind == "PROGRAMME_ANALYSIS":
+        from shiftos.api.routers.analysis import require_analysis_access
+
+        require_analysis_access(request, x_analysis_token)
+    return job
 
 
 @router.get("/programmes/{id}/coverage", response_model=CoverageRead)

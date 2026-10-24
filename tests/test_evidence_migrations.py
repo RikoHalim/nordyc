@@ -39,7 +39,7 @@ def test_reference_upgrade_preserves_curriculum_and_populated_downgrade_guard(
         {"id": institution_id, "name": "Synthetic Phase 3 migration university"},
     )
     connection.commit()
-    command.upgrade(config, "head")
+    command.upgrade(config, "0004_reference_evidence")
     connection.commit()
     _assert_metadata_matches(connection)
     assert (

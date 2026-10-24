@@ -1,6 +1,6 @@
 # SHIFT//OS — implementation status
 
-**As of 2026-10-24:** Phase 3 evidence infrastructure and Future Workforce Radar are **FUNCTIONAL; bounded prototype evidence gates met**. Genuine PostgreSQL evidence now includes 38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official UN goal/target records, 247 workforce observations and 20 AI cards, plus 76 unreviewed PDF page references. **Ready to begin a conservative Phase 4 prototype against frozen subsets, not a complete/current all-programme evidence catalogue.** Current English ESCO, TalentCorp permission, reviewed Malaysian crosswalks and full academic coverage remain explicit restrictions. No Phase 4 analysis, academic recommendations, frontend redesign or additional AI model was implemented.
+**As of 2026-10-24:** Phase 4 is **FUNCTIONAL for a bounded offline backend proof**: internal-first retrieval, controlled Brave/Gemini adapters, validated programme/course findings, PostgreSQL persistence, worker and protected APIs are implemented. **637 tests passed**, including 12 PostgreSQL integration tests; live Gemini/Brave acceptance remains **PENDING credentials/model configuration**. The user explicitly chose offline verification. Phase 1–3 functionality and source limits are preserved. Future Career Alignment and Academic Reskilling Pathways are now planned in Phases 5–6, not implemented. No frontend, Replit deployment, training, commit or push was performed for these tasks.
 
 **Pilot target:** all publicly discoverable XMUM undergraduate programme/course lists. The directory parser found 25 official undergraduate links. Production live retrieval **failed safely** in this environment because `www.xmu.edu.my` resolved to a private network address; no live crawl success is claimed. A separate reviewed manual fallback stored 25 directory programme facts and **141 course appearances across three programmes** in a disposable local PostgreSQL database, retrieved through real FastAPI HTTP. The remaining 22 programmes have no loaded course inventory in that validation database. None of these records certify a complete graduation curriculum or lecturer-taught content.
 
@@ -9,13 +9,68 @@
 | 1 | FastAPI/PostgreSQL multi-institution foundation, provenance, migrations and tests | COMPLETE |
 | 2 | XMUM discovery/parser, year/elective extraction, safe import/versioning, worker, APIs and coverage | COMPLETE — live network blocked; reviewed manual fallback verified |
 | 3 | Evidence acquisition, workforce radar and independent AI task evidence | FUNCTIONAL — bounded evidence gates met; legacy/language/currentness/permission limits explicit |
-| 4 | Internal-first hybrid retrieval, controlled external fallback and conservative course screening | PLANNING REVISED — implementation PENDING |
-| 5 | Supported academic actions, alternatives/no change and human review | PENDING |
-| 6 | Scenarios, SDG rationale and reproducible reports | PENDING |
+| 4 | Internal-first hybrid retrieval, controlled Brave fallback, one Gemini adapter and conservative whole-programme screening | FUNCTIONAL OFFLINE — 637 passed; actual live API acceptance PENDING |
+| 5 | Future Career Alignment, competency-gap review, minimum sufficient actions, alternatives/no change and human review | PENDING — requirements revised only |
+| 6 | Ordered Academic Reskilling Pathways, scenarios/SDGs/resources/duration and consolidated Action Plans | PENDING — requirements revised only |
 | 7 | Integration, evaluation, change replay and security | PENDING |
 | 8 | Minimal working dashboard and preliminary demo | PENDING |
 
-## GitHub publication authorization and verification — 24 October 2026
+## Phase 4 publication authorization — 24 October 2026
+
+After implementation and the planning revision, the user explicitly requested a GitHub push. This publication includes the completed Phase 4 backend, tests/migration and Phase 5–6 planning updates. Earlier no-commit/push statements describe their original stop boundaries; the later explicit request authorizes this publication only, not later-phase implementation or deployment.
+
+Final publication checks passed: Ruff lint/formatting, dependency integrity, whitespace and remote-branch synchronization. The complete Phase 4 suite already passed 637 tests, including 12 PostgreSQL integration tests, as recorded below. Live Gemini/Brave verification remains pending. Private/local source material, database files, editor settings and unrelated visual-concept work are excluded from the publication.
+
+## Phase 4 implementation and measured verification — 24 October 2026
+
+The latest attached implementation request authorized Phase 4 only, and the subsequent enhancement request explicitly preserved that priority while revising later-phase documentation. Starting checkout `main`/`1585b9e` matched `origin/main`; completed Phase 3 code and the revised retrieval specifications were present. The initial full PostgreSQL baseline passed 487 tests before code changes. The previous conditional publication authorization does not apply to this work: both current requests prohibit automatic commit/push.
+
+Delivered [runbook](docs/21_PHASE4_COURSE_RELEVANCE.md): existing background worker now processes `PROGRAMME_ANALYSIS`; explicit CLI and protected asynchronous API submissions freeze the selected revision/inventory. All courses have five structured screening dimensions, exact scoped citations, safe review questions, limits and deterministic programme insights. Internal retrieval includes source-attributed standards, occupations/skills/relations/tasks, workforce observations and independent AI evidence; conservative lexical associations never prove taught competencies or reviewed identities. Strict output validation rejects missing/extra courses, invented/unsupported citations, scores and obsolete/replacement claims. Missing content/evidence retains insufficient-evidence and syllabus-confirmation states.
+
+Direct Gemini and Brave adapters use fixed endpoints, explicit credentials/configuration, finite attempts/time/bytes and sanitized errors. Research uses only generic policy-controlled discipline/gap queries, then exact registered permitted originals through Phase 3 adapters; no snippets/private uploads are admitted as evidence. Unknown/ambiguous sources stay manual/candidates. Permission-aware metadata caching, immutable source/run lineage and current read-time policy/rejection/correction checks preserve provenance and withhold text requiring revalidation. The original deterministic workforce calculations remain unchanged. No Replit AI Integration or additional runtime agent/model was added.
+
+Additive `0005_programme_analysis` adds only `analysis_runs`, `course_findings`, `research_cache`; the first four revisions are unchanged. Composite constraints enforce course/revision ownership. Existing jobs provide idempotency, state/times and explicit stale-worker recovery; atomic completion fencing prevents late writes. All new analysis reads/writes, including legacy job reads for analysis jobs, require `X-Analysis-Token`; this operator token is not full production tenant identity.
+
+| Verification | Actual measured result |
+|---|---|
+| Initial complete PostgreSQL baseline | **487 passed**, zero skips; 54.47s; one existing upstream warning |
+| Final `python -m pytest -q --basetemp=.pytest-phase4-release --tb=short` with explicit disposable `TEST_DATABASE_URL` | **637 passed, zero failed/skipped**, 73.17s; one existing Starlette/httpx deprecation warning |
+| PostgreSQL integration included in the complete suite | **12 passed**, including clean/history/guarded migrations and worker→protected API across Computing, Accounting and Marine Biotechnology synthetic fixtures |
+| Genuine ESCO reference-pack retrieval regression | **87 genuine normalized records imported/queried** against an explicitly fictional engineering fixture; exact source URI/labels/relations and legacy/language limits retained |
+| Genuine Accounting CLI/API/worker smoke in isolated database copy | **37/37 actual course appearances returned; 57 source-linked references, all57 internally eligible, 51 model/output eligible**; HTTP202 queue, protected200 reads, unauthorized401, idempotent replay unchanged |
+| Accounting interpretation | All37 retain insufficient content evidence; genuine `deterministic_insufficiency`, no false synthetic or Gemini-success claim |
+| Actual live Gemini calls / Brave calls | **0 / 0**; neither key/model configured; user chose offline tests. Mocked adapter/retry/schema/search→original import/cache tests passed; these are not live API verification |
+| Ruff lint / formatting | **PASS** |
+| Dependency integrity / migration SQL / whitespace | **PASS**; all five PostgreSQL revisions generate; `git diff --check` clean |
+
+The real smoke used an isolated `shiftos_phase4_validation_fc15f950` copy of the prior disposable Phase 3 database; no application/user database was migrated. Prior source counts across 22 public-schema tables were preserved. Final smoke run `931de6a9-26bf-49ce-8864-e20268fb7c36` retained fingerprint `a1d32abb16e5afe0400e8c554b06f7bfefc2730743caf33611016b51eeffefaa`; ignored local reports preserve the detailed checks. No new genuine external dataset was downloaded by Phase 4. Only Accounting had an active genuine course inventory in this copied database; other real programme inventories mentioned in the historical Phase 2 handoff were not assumed to exist here. Cross-disciplinary worker validation used labelled synthetic fixtures plus genuine ESCO evidence where available.
+
+Checks caught an old Phase 1 assertion that analysis routes must not exist; it was updated to the now-authorized contract, then the full suite passed. Review also closed an analysis-job authorization bypass and added changed-policy/source revalidation tests. Source/date/review/permission gates remain conservative; frozen historical cutoffs do not reconstruct every earlier mutable operator-review decision. No remote CI, live model quality/accuracy, complete current taxonomy, semantic curriculum mapping, general syllabus extraction or academic decision readiness is claimed.
+
+**Readiness:** bounded offline Phase 4 works. Full live Phase 4 acceptance is incomplete until one configured Gemini model and Brave are actually verified through permitted originals/imports/citations; current source coverage, exact Malaysian occupation bridges and verified curriculum content also remain limitations. Do not start Phase 5 implementation automatically. No commit/push or deployment was performed; unrelated local visual-concept/editor work is preserved.
+
+## MVP enhancement and Domain 1 planning revision — 24 October 2026
+
+[The integrated plan](docs/22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) revises product requirements, architecture/database/API targets, Phase 5/6 specs/prompts, MVP checklist, compliance matrix, tests and roadmap. **Documentation only for these additions:** Phase 4 remains the development priority; no Phase 5/6 code or migration was added.
+
+- **Phase 5:** programme-level Future Career Alignment compares reviewed occupation/skill requirements with curriculum-supported competencies and potential gaps; distinguishes documented intent, assessed demonstration and unknown coverage. Optional deterministic scoring requires explicit method/weights/denominator/missingness and is never employment probability. Primary recommendations compare the minimum sufficient intervention, alternatives/no change and human review.
+- **Phase 6:** ordered academic pathways within scenario/report/Academic Action Plans, with target competency, proposed objectives/activities, supported prerequisites, duration and basis, verified resources/observed access/cost, occupational/evidence pointers and meaningful SDG rationale. Unsupported fields remain unknown. Attendance does not establish technical competence; assessed hands-on evidence must be scoped. No full course content or real student tracking is planned.
+- **Future contract work:** typed competency-support/mapping, requirement-level gap/confidence and optional alignment metadata; later action/comparison/review, ordered-step/resource/duration/SDG/scenario persistence and additive APIs. Existing Phase 4 citations/versions/limitations feed them but do not already implement skill coverage or pathways.
+- **Domain 1 risk:** institutional framing and no-CV acceptance are user-reported; replacement of individual intake, person-to-role matching and personalised pathways remains **UNCONFIRMED**. The original brief PDF is unavailable locally; the existing brief-derived six requirements and latest supplied text are preserved without inventing fresh verification/approval. A lightweight form/questionnaire or synthetic learner contingency is planning only, pending written clarification and separate authorization; no student-facing module was implemented.
+
+Priority: close Phase 4 live/source gates → obtain organiser clarification → authorize Phase 5 career alignment/actions → authorize Phase 6 pathways/scenarios/SDGs/Action Plans → later integration/minimal UI. Do not restart Phases 1–3, deploy or automatically commit/push.
+
+Final documentation validation passed for **20 revised/new Markdown files and 92 local links/anchors**, including balanced code fences and UTF-8 checks. The enhancement itself changes planning only; existing Phase 4 code work continued separately as requested. Git HEAD remains `1585b9e`; nothing was staged, committed or pushed during these tasks.
+
+## Nordyc visual concept — 24 October 2026
+
+The user requested a Nordic/maritime identity and app concept under the name **Nordyc**, then narrowed the work to **logo exploration first** after finding the initial screen too generic and a more literal chartroom too game-like. The [visual concept guide](docs/20_NORDYC_VISUAL_CONCEPT.md) now leads with three reference-led sail/N logo studies based on five user-provided images, alongside their monochrome silhouettes; no mark is selected. Earlier app artwork remains an explicitly illustrative, unapproved exploration using fictional institutions, synthetic course records and sample counts.
+
+Subsequent logo feedback requested **simpler**, **more curve**, then a stronger design. The latest candidate uses three curved navy sail-like strokes for a clearer N silhouette; the design guide retains the preceding two-shape versions and all prompts. No final logo has been selected.
+
+This is design exploration only. No frontend, backend, schema, API, analysis service or deployment was implemented by this design task. Phase 3 remains the documented implementation boundary; the Phase 4 prerequisites and unconfirmed hackathon compliance gaps remain unchanged. No application tests or migrations are required for these image/Markdown artifacts; artifact checks are recorded in the concept guide.
+
+## Historical Phase 3 GitHub publication — 24 October 2026
 
 The user subsequently explicitly requested publication to GitHub. This authorizes committing/pushing the completed Phase 3 implementation and Phase 4 planning documentation together to `origin/main`; earlier no-commit/push statements record the prior phase stop boundaries. No Phase 4 implementation is included.
 
@@ -23,9 +78,9 @@ Fresh pre-publication checks: **487 tests passed, zero failed/skipped**, includi
 
 Publication excludes `.idea`, private uploads, local databases/downloads and restricted research originals/cards. Only the permitted attributed ESCO/UN reference subsets and explicitly synthetic engineering fixtures accompany the implementation. Git publication does not deploy a service, transfer the local evidence database or make all restricted evidence redistributable.
 
-## Phase 4 planning revision — 24 October 2026
+## Historical Phase 4 planning revision — 24 October 2026
 
-**Documentation only; Phase 4 implementation has not started.** The [hybrid evidence retrieval contract](docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md), [analysis specification](docs/06_ANALYSIS_ENGINE.md), architecture, schema/API targets, roadmap, implementation prompt and testing requirements now specify:
+**At the original documentation-only boundary, Phase 4 had not started.** The subsequent authorized implementation and measured results above supersede that status. The original [retrieval contract](docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md), [analysis specification](docs/06_ANALYSIS_ENGINE.md), architecture, schema/API targets, roadmap, prompt and test requirements specified:
 
 - PostgreSQL as the primary source for occupational skills, applicable academic standards, dated workforce indicators and independent AI task evidence; claim-specific checks for quality, relevance, dates/edition, rights and completeness.
 - Automatic, bounded research of authoritative original sources for important missing/stale/insufficient evidence once an approved provider and use policy are configured. Search snippets and unsupported model findings remain candidates; restricted sources retain manual/insufficient outcomes.
@@ -33,7 +88,7 @@ Publication excludes `.idea`, private uploads, local databases/downloads and res
 - One disclosed configured existing LLM for structured, citation-bounded analysis; deterministic workforce calculations; every available course returned; title-only benchmarking separated from verified syllabus content; explicit **INSUFFICIENT EVIDENCE**, without automatic obsolescence from decline or AI exposure.
 - Configurable allowlists, budgets/rates/timeouts, safe transport, private-upload/egress controls, durable jobs, synthetic offline fixtures and a planned internal-only/fallback/security/cache/grounding test matrix across diverse disciplines.
 
-**Implementation prerequisites remain open:** there is no runtime LLM connection/provider/model configured in this repository and no automatic research adapter yet. Select/configure one approved existing model and approved search provider, establish source/use/privacy policies and implement the documented Phase 4 contracts only when authorized. Phase 3 source/identity/currentness limitations below are preserved; a new plan does not fill them.
+**Historical prerequisite at that boundary:** no runtime LLM or research adapter existed then. The implementation above now supplies direct Gemini/Brave adapters, while actual credential-backed verification and Phase 3 source/identity/currentness limitations remain open.
 
 This revision changes documentation only: no runtime code, tests, dependencies, configuration, data, migrations or Phase 1–3 behavior were changed. No new research, source import, model call or database migration was performed. The 487-test result below remains the historical Phase 3 completion result, not a new Phase 4 test pass. Documentation checks are reported separately for this revision. No commit or push was performed; stop before implementation.
 
@@ -80,7 +135,7 @@ Completion checks caught and corrected PDF persistence occurring before result v
 
 **Remaining source actions:** obtain a permitted current English ESCO export (operator's own wizard consent/email); secure TalentCorp written aggregation/network-use consent (Group notice §3.3, PDF page 10); review taxonomy-to-Malaysian occupation bridges, exact AI occupation associations, standard editions/applicability and full discipline coverage. Unsupported layouts/scans/detailed syllabi need explicit regions or reviewed JSON. Limited catalogue tokens are not full production identity/tenant controls; private/rights-limited data is not approved for unrestricted deployment.
 
-At the Phase 3 completion and Phase 4 planning stop boundaries, no commit/push was performed. Subsequent explicit GitHub publication authorization is recorded above. Phase 3 functionality is preserved; Phase 4 implementation remains pending.
+At the historical Phase 3 completion/Phase 4 planning boundaries, no commit/push was performed; the later Phase 3 publication is recorded above. Current Phase 4 implementation/validation is recorded at the top, with Phase 3 functionality preserved.
 
 ## Phase 2 delivered (historical handoff)
 
@@ -141,7 +196,7 @@ Historical local Phase 1 result: **144 passed, 0 skipped**, PostgreSQL 16.15/Pyt
 - HTML structure changes can require parser review; no general PDF or JavaScript crawler is implemented. Phase 3 adds local operator-selected PDF regions for unreviewed candidate preparation; other layouts can still require transcription. Raw HTML hash changes may create a new revision even when titles are unchanged.
 - Copyright/reuse permission is not inferred from public access or robots. Whole brochures/pages are not committed. Reviewed flags/manual hashes are operator assertions, not independent source authentication.
 - Full production identity/access control, automatic scheduling/monitoring, backups and Docker Compose execution remain outside this local verification. New tokens govern new catalogue job writes only.
-- Genuine bounded taxonomy/benchmark/SDG subsets are loaded; latest English taxonomy, full coverage and reviewed local bridges remain limited. Relevance/actions, scenarios/reports and frontend remain pending. No analysis accuracy is claimed.
+- Genuine bounded taxonomy/benchmark/SDG subsets are loaded; latest English taxonomy, full coverage and reviewed local bridges remain limited. Phase 4 offline screening is implemented; live validation, actions, pathways/scenario reports and frontend remain pending. No analysis accuracy is claimed.
 
 ## Unresolved organiser clarification — UNCONFIRMED
 
@@ -151,9 +206,9 @@ Obtain in writing: “Can programme-level profiles, occupation alignment and ins
 
 ## Next recommended prompt and stop boundary
 
-“Read AGENTS.md, STATUS.md, docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md, the Phase 4 specification/prompt, Phase 3 report and workforce methodology. Implement the documented bounded Phase 4 proof: upload-first catalogue, every available course appearance, PostgreSQL primary retrieval with deterministic sufficiency/freshness gates, controlled approved external research on important gaps, original-source verification and permitted versioned cache, then one configured existing LLM over admitted evidence. Disclose/configure the actual single model and search provider; keep offline synthetic mode and explicit unavailable-provider outcomes. Preserve title-versus-syllabus limits, insufficient-evidence results, deterministic workforce maths and independent AI task evidence; retain source/rights/language/identity gaps. Add necessary migrations/tests, run targeted/full checks and a permitted genuine fallback smoke test, update STATUS with measured results/blockers and stop before Phase 5. Do not commit/push unless explicitly instructed.”
+“Read AGENTS.md, STATUS.md, the Phase 4 runbook and career alignment/pathway plan. Preserve the existing Phase 1–4 implementation and 637-test baseline. When local credentials/use policies are available, configure one explicit Gemini model and Brave Search, perform actual bounded structured-model and search→registered original→verified import/query→cited finding smoke tests, and report source/credential blockers honestly. Keep private uploads out of search and preserve title-only abstention, deterministic workforce scope and source permissions. Rerun appropriate checks after changes, update STATUS and stop. Do not implement Phase 5/6, deploy or commit/push without separate authorization.”
 
-Historical Phase 2 stop: the user authorized its commit/push and main merge. The Phase 4 planning request authorized documentation only; subsequent GitHub publication authorization is recorded above. No Phase 4 implementation is authorized.
+Historical Phase 2/3 publication authorizations do not authorize publishing this work. The current requests authorize Phase 4 implementation and Phase 5–6 documentation only, prohibit automatic commit/push and require stopping before later-phase implementation.
 
 ## Main merge verification — 2026-10-24
 

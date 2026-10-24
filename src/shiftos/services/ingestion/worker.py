@@ -283,7 +283,12 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
             select(Job)
             .where(
                 Job.kind.in_(
-                    ["CURRICULUM_IMPORT", "CURRICULUM_DISCOVERY", "CURRICULUM_PDF_UPLOAD"]
+                    [
+                        "CURRICULUM_IMPORT",
+                        "CURRICULUM_DISCOVERY",
+                        "CURRICULUM_PDF_UPLOAD",
+                        "PROGRAMME_ANALYSIS",
+                    ]
                 ),
                 Job.status == JobStatus.QUEUED,
                 ~institution_busy,
@@ -305,6 +310,11 @@ def run_once(database: Database, settings: Settings, *, fetcher_factory=SafeFetc
         session.commit()
         session.expunge(job)
     try:
+        if job.kind == "PROGRAMME_ANALYSIS":
+            from shiftos.services.analysis.orchestrator import process_analysis_job
+
+            process_analysis_job(database, job, settings)
+            return job.id
         if job.kind == "CURRICULUM_PDF_UPLOAD":
             from shiftos.services.ingestion.uploads import process_pdf_upload
 
@@ -356,7 +366,12 @@ def fail_stale_jobs(database: Database) -> int:
             select(Job)
             .where(
                 Job.kind.in_(
-                    ["CURRICULUM_IMPORT", "CURRICULUM_DISCOVERY", "CURRICULUM_PDF_UPLOAD"]
+                    [
+                        "CURRICULUM_IMPORT",
+                        "CURRICULUM_DISCOVERY",
+                        "CURRICULUM_PDF_UPLOAD",
+                        "PROGRAMME_ANALYSIS",
+                    ]
                 ),
                 Job.status == JobStatus.RUNNING,
                 Job.started_at < cutoff,

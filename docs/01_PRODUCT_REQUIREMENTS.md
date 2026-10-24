@@ -29,11 +29,15 @@ Institution-facing application for university career centres, working with progr
 - University/discipline/programme coverage report, not a leaderboard of real colleges.
 - Programme-level skill/topic areas to investigate, not fictional competency gaps.
 - Per-course evidence trail and review flags.
+- **Planned Phase 5 Future Career Alignment:** programme-level occupation/skill requirements compared with curriculum-supported competencies and potential gaps; transparent optional deterministic alignment, never individual employment probability or title-inferred coverage.
 - One defensible primary action recommendation, legitimate alternatives, relative academic disruption + feasibility assumptions; compare against **no change**.
 - Scenario sensitivity and dated source re-evaluation.
+- **Planned Phase 6 Academic Reskilling Pathways:** ordered, evidence-backed intervention steps within Academic Action Plans, with proposed objectives/activities, supported prerequisites, duration/basis, verified resources and meaningful SDGs; no full course content or attendance-based technical competency claims.
 - Observed `RISING`, `DECLINING`, `STABLE` or `INSUFFICIENT_DATA` indicators, with `AI-TRANSFORMING` as a separate task-evidence attribute. Broad group statistics never become individual occupational trends; two quarters show only short-term change.
 - SDG rationale with evidence where genuinely appropriate.
 
 ## No false certainty
 
 For title-only courses: recommend **review the coverage of X in the syllabus**, or **monitor the topic**, never `remove course because AI can do it`. Any provisional academic action is labeled `conditional`; final recommendation needs deeper evidence/validation.
+
+The [MVP enhancement revision](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) is planning only. Phase 4 remains the current development priority; Phases 5–6 and individual-level contingency functionality are not implemented. The institutional substitution of individual matching/personalised pathways remains UNCONFIRMED in the compliance matrix.

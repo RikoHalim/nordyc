@@ -6,7 +6,7 @@ Revised specifications target institution-facing, whole-programme review across 
 
 `AGENTS.md`, revised docs 01–14, migration audit and authorised phase prompt govern development. Older filenames redirect to revised contracts; original content remains in Git. Docs 03 and 10 distinguish implemented foundation from future concepts. A proposed table, endpoint or fixture is not implemented functionality.
 
-For the completed Phase 3 bounded MVP, read docs 17, 18 and the ingestion report. Phase 4 planning now also follows [the hybrid retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md): PostgreSQL evidence first, controlled research for important gaps, verified permitted reuse and one configured existing LLM. This is a documentation revision; model/research services and analysis remain unimplemented. Keep the Phase 3 limitations and title-versus-syllabus distinction visible.
+For completed Phase 3 infrastructure, read docs 17, 18 and the ingestion report. The [Phase 4 runbook](21_PHASE4_COURSE_RELEVANCE.md) records implemented internal-first retrieval, direct Gemini/Brave adapters and protected course analysis; offline verification is complete while live credentials/model verification remains open. The [retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) retains admission/rights rules. The [career alignment/pathway revision](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) plans Phase 5–6 only. Keep Phase 3 limitations and title-versus-syllabus distinctions visible; do not rebuild completed phases or implement later additions automatically.
 
 ## Evidence expectations
 

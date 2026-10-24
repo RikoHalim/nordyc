@@ -38,6 +38,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     pdf.add_argument("--regions", type=Path, help="Optional JSON list of reviewed page rectangles")
     worker = commands.add_parser("worker", help="Run durable catalogue jobs outside HTTP requests")
     worker.add_argument("--once", action="store_true")
+    analysis = commands.add_parser(
+        "analyse-programme", help="Queue evidence-bounded programme screening"
+    )
+    analysis.add_argument("--programme", type=UUID, required=True)
+    analysis.add_argument("--revision", type=UUID)
+    analysis.add_argument("--mode", choices=("live", "offline"), default="live")
+    analysis.add_argument("--no-research", action="store_true")
+    analysis.add_argument("--idempotency-key")
     commands.add_parser(
         "fail-stale-jobs", help="Explicitly fail abandoned catalogue jobs older than one hour"
     )
@@ -55,6 +63,23 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         settings = Settings()
         database = create_database(settings.database_url.get_secret_value())
+        if args.command == "analyse-programme":
+            from shiftos.repositories.analysis import enqueue_analysis
+            from shiftos.schemas.analysis import AnalysisRequest
+
+            with database.session_factory() as session:
+                run = enqueue_analysis(
+                    session,
+                    args.programme,
+                    AnalysisRequest(
+                        revision_id=args.revision,
+                        mode=args.mode,
+                        research=not args.no_research,
+                        idempotency_key=args.idempotency_key,
+                    ),
+                )
+                print(json.dumps({"analysis_id": str(run.id), "job_id": str(run.job_id)}))
+            return 0
         if args.command == "upload-curriculum-pdf":
             from shiftos.services.ingestion.pdf import PdfCourseRegion
             from shiftos.services.ingestion.uploads import enqueue_pdf_upload

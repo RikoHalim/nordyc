@@ -1,3 +1,4 @@
+from shiftos.models.analysis import AnalysisRun, CourseFinding, ResearchCache
 from shiftos.models.evidence import (
     AcademicStandard,
     AIImpactEvidence,
@@ -25,6 +26,9 @@ from shiftos.models.foundation import (
 )
 
 __all__ = [
+    "AnalysisRun",
+    "CourseFinding",
+    "ResearchCache",
     "Course",
     "Document",
     "DocumentAnchor",

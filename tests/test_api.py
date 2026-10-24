@@ -49,7 +49,8 @@ def test_health_and_openapi(client: TestClient) -> None:
     assert paths["/api/v1/programmes/{id}/courses"]["get"]["responses"]["200"]["content"][
         "application/json"
     ]["schema"]["$ref"]
-    assert all("analyses" not in path and "documents" not in path for path in paths)
+    assert "/api/v1/programmes/{id}/analyses" in paths
+    assert all("documents" not in path for path in paths)
 
 
 def test_liveness_is_independent_of_database_and_readiness_redacts_failure(

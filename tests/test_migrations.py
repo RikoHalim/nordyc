@@ -61,10 +61,9 @@ def migration_database() -> Iterator[tuple[Connection, Config]]:
 
 def _assert_metadata_matches(connection: Connection) -> None:
     metadata = Base.metadata
+    revision = connection.scalar(text("SELECT version_num FROM alembic_version"))
     # Tests targeting the historical 0003 boundary compare only tables present then.
-    if connection.scalar(text("SELECT version_num FROM alembic_version")) == (
-        "0003_curriculum_ingestion"
-    ):
+    if revision == "0003_curriculum_ingestion":
         metadata = MetaData(naming_convention=Base.metadata.naming_convention)
         for name in (
             "institutions",
@@ -77,6 +76,11 @@ def _assert_metadata_matches(connection: Connection) -> None:
             "sources",
         ):
             Base.metadata.tables[name].to_metadata(metadata)
+    elif revision == "0004_reference_evidence":
+        metadata = MetaData(naming_convention=Base.metadata.naming_convention)
+        for name, table in Base.metadata.tables.items():
+            if name not in {"analysis_runs", "course_findings", "research_cache"}:
+                table.to_metadata(metadata)
     assert set(inspect(connection).get_table_names()) == set(metadata.tables) | {"alembic_version"}
     context = MigrationContext.configure(
         connection, opts={"compare_type": True, "compare_server_default": True}

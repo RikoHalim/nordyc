@@ -1,0 +1,41 @@
+{
+  "version": "phase4-research-1",
+  "registry_path": "data/dataset_registry.csv",
+  "acquisition_policy_path": "data/evidence_acquisition.json",
+  "allowed_dataset_ids": ["D-JMI-Q1-2026", "D-JMI-Q2-2026", "D-EMPLOYMENT-SECTOR", "C-ESCO", "E-ILO-2025", "B-MQA-COMPUTING", "B-MQA-ACCOUNTING", "B-MQA-BIOTECH", "B-MQA-BUSINESS"],
+  "disciplines": {
+    "computing": "computing and software engineering",
+    "accounting": "accounting",
+    "business": "business and management",
+    "finance": "finance",
+    "biotechnology": "biotechnology and biological sciences",
+    "chemistry": "chemistry",
+    "engineering": "engineering",
+    "media": "media communication and journalism",
+    "languages": "languages translation and literature",
+    "mathematics": "mathematics",
+    "physics": "physics",
+    "hospitality": "hospitality and tourism",
+    "traditional_medicine": "traditional and complementary medicine"
+  },
+  "aliases": {
+    "software_engineering": "computing",
+    "computer_science": "computing",
+    "data_science": "computing",
+    "marine_biotechnology": "biotechnology",
+    "media_communication": "media"
+  },
+  "queries": {
+    "occupations": ["site:esco.ec.europa.eu {discipline} occupation skills official", "site:mynsr.talentcorp.com.my {discipline} occupation skills"],
+    "standards": ["site:mqa.gov.my {discipline} bachelor programme standards", "site:www2.mqa.gov.my {discipline} programme standards edition"],
+    "workforce": ["site:dosm.gov.my Malaysia {discipline} occupation job market statistics", "site:open.dosm.gov.my Malaysia {discipline} employment statistics"],
+    "ai": ["site:ilo.org {discipline} artificial intelligence professional tasks research", "site:oecd.org {discipline} artificial intelligence professional workflow study"],
+    "currentness": ["site:esco.ec.europa.eu {discipline} latest taxonomy edition", "site:dosm.gov.my Malaysia {discipline} latest job market release"],
+    "classification": ["site:mohr.gov.my MASCO ISCO {discipline} official classification mapping", "site:esco.ec.europa.eu {discipline} official ISCO crosswalk"]
+  },
+  "queries_per_gap": 2,
+  "max_documents": 10,
+  "cache_ttl_seconds": 3600,
+  "negative_cache_ttl_seconds": 300,
+  "search_result_storage_allowed": false
+}

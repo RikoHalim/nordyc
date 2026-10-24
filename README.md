@@ -14,8 +14,9 @@ Phase 2 adds bounded XMUM discovery, durable ingestion jobs, reviewed JSON fallb
 - Existing document metadata, exact anchors, revision checksums and job records retained.
 - Dynamic XMUM undergraduate discovery, conservative title/year/elective parsing, source dates/hashes and coverage/missing-field reporting.
 - Separate worker, reviewed structured imports, duplicate checks and safe snapshot re-imports/history.
+- Protected programme analysis jobs and history, internal evidence retrieval, direct configurable Gemini/Brave adapters, structured citation validation and explicit insufficient-evidence results. Live provider verification remains pending credentials.
 
-Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. **Ready for a bounded Phase 4 prototype using frozen subsets**, with legacy/multilingual taxonomy, currentness, crosswalk and permission limits explicit. See [the runbook](docs/17_PHASE3_EVIDENCE_INGESTION.md), [actual ingestion report](docs/PHASE3_INGESTION_REPORT.md) and [trend methodology](docs/18_WORKFORCE_TRENDS.md). Source registration/review flags are assertions, not proof of taught content. Course analysis, recommendations and frontend remain future phases.
+Phase 3 provides registry-driven acquisition, versioned PostgreSQL evidence, controlled PDF extraction and the Future Workforce Radar. Real validation contains **38 legacy ESCO occupations, 10 English-described skills, 39 relationships, 12 MQA benchmark summaries, 186 official SDG references, 247 workforce observations and 20 AI cards**, plus 76 unreviewed PDF page references. Phase 4 now adds a bounded evidence-grounded screening backend; [its runbook](docs/21_PHASE4_COURSE_RELEVANCE.md) distinguishes actual offline/genuine-data verification from unverified live Gemini/Brave calls. Legacy/language/currentness/identity/permission limits remain. See also [Phase 3 ingestion](docs/17_PHASE3_EVIDENCE_INGESTION.md), [measured evidence](docs/PHASE3_INGESTION_REPORT.md) and [workforce methodology](docs/18_WORKFORCE_TRENDS.md). Recommendations, pathways, scenarios and frontend remain future phases.
 
 ## Revised product contract
 
@@ -37,7 +38,7 @@ python -m pip install -e '.[dev]'
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-Set `POSTGRES_PASSWORD` in `.env` and its URL-encoded equivalent in `DATABASE_URL`. The template supplies no password; changing port/database/user also requires updating the URL. Shell variables override `.env`. No AI/API key is needed. Dependencies are fixed in `pyproject.toml` and the full tested environment is recorded in `requirements.lock`.
+Set `POSTGRES_PASSWORD` in `.env` and its URL-encoded equivalent in `DATABASE_URL`. The template supplies no password; changing port/database/user also requires updating the URL. Shell variables override `.env`. Baseline/offline operation needs no AI key; [live Phase 4](docs/21_PHASE4_COURSE_RELEVANCE.md) separately requires configured Gemini/Brave credentials and approved use. Dependencies are fixed in `pyproject.toml` and the tested environment is recorded in `requirements.lock`.
 
 ```powershell
 docker compose up -d --wait
@@ -110,9 +111,11 @@ Tests use randomly named `shiftos_test_*` schemas and clean them up; they do not
 | `docs/17_PHASE3_EVIDENCE_INGESTION.md`, `docs/PHASE3_INGESTION_REPORT.md` | Evidence ETL, manual procedures, measured counts and readiness blockers |
 | `docs/18_WORKFORCE_TRENDS.md`, `data/reference_packs/README.md` | Demand/AI separation, reproducible calculations and permitted frozen real subsets |
 | `docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md` | Planned PostgreSQL-first retrieval, controlled research fallback, verification/cache and single-model analysis |
+| `docs/21_PHASE4_COURSE_RELEVANCE.md` | Implemented analysis jobs/APIs, Gemini/Brave configuration, offline operation, tests and live blockers |
+| `docs/22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md` | Planned Phase 5 career alignment and Phase 6 academic pathways/Action Plans; unresolved Domain 1 substitutions |
 | `docs/DATASET_RESEARCH.md`, `data/dataset_registry.csv` | Verified research and acquisition candidates |
 | `examples/` | Preserved executable synthetic fixtures |
 | `fixtures/`, `references/` | Later acceptance cases and candidate sources |
 | `prompts/` | One-phase instructions; legacy filenames redirect |
 
-Phase 3 remains the implemented boundary. Phase 4 documentation now plans PostgreSQL-first retrieval, controlled authoritative research for important evidence gaps, permitted versioned caching and one configured existing LLM. The repository currently has no runtime LLM connection or automatic research service; these remain implementation work. See [the retrieval contract](docs/19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) and [roadmap](docs/12_MVP_ROADMAP.md). All source-scope/old-edition/identity limits remain. The planning revision authorized documentation only; subsequent explicit GitHub publication authorization is recorded in STATUS and does not authorize Phase 4 implementation.
+Phase 4 is functional for a bounded offline proof; live Gemini/Brave acceptance remains pending credentials and a genuine API smoke test. The user authorized Phase 4 implementation and separately revised Phase 5–6 requirements only. Future Career Alignment and ordered Academic Reskilling Pathways extend existing later phases, not standalone products; individual-workflow substitution remains UNCONFIRMED. No Phase 5/6 implementation, frontend, Replit deployment, automatic commit or push is authorized by these tasks. See [STATUS](STATUS.md) and [the roadmap](docs/12_MVP_ROADMAP.md).

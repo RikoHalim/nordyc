@@ -1,6 +1,6 @@
 # Programme-wide relevance engine — evidence first
 
-**Phase 4 specification revised 24 October 2026; implementation remains pending.** The [hybrid retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) defines the planned source, verification, cache, security and worker boundaries. Existing Phase 1–3 services remain in place.
+**Phase 4 bounded backend implemented; live acceptance pending credentials.** The [operational runbook](21_PHASE4_COURSE_RELEVANCE.md) records actual tests/limits. The [hybrid retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) defines source, verification, cache, security and worker boundaries. Existing Phase 1–3 services remain in place; no Phase 5/6 runtime feature is added.
 
 ## Core question
 
@@ -26,7 +26,7 @@ The primary journey is select programme → upload available documents → revie
 2. Retrieve PostgreSQL records first: occupational requirements/skills, applicable MQA/professional standards, dated workforce observations and AI occupational/task evidence. Check quality, relevance, publication dates, edition, geography/granularity, rights and completeness for each proposed claim.
 3. Important missing, stale or insufficient evidence triggers bounded authoritative external research when an approved search API/tool and use policy are configured. Prioritise original government, academic, professional and credible research publications. Search snippets and AI-written research are candidates, not evidence.
 4. Verify specific claims against original pages/tables, preserve dates/excerpts/locators/provenance and uncertainty, and import/cache verified findings for future use only where permitted. Recheck sufficiency. Unavailable/restricted originals, unresolved identity or ambiguous extraction leave explicit gaps; do not substitute synthetic data.
-5. Freeze the evidence packet and deterministic workforce results. One configured, disclosed existing LLM analyses courses against that packet, with structured output and final citation/scope validation. The repository currently has no runtime LLM integration; connecting that single model is an implementation prerequisite, not a completed feature.
+5. Freeze the evidence packet and deterministic workforce results. One explicit pretrained Gemini model analyses that packet through the direct adapter, with structured output and final citation/scope validation. The adapter exists, but no local credential/model is configured and no live Gemini/Brave call is verified. Offline/missing-provider results disclose their actual mode.
 6. Return findings for every available course. An unresolved evidence requirement yields `insufficient_evidence`; title-based benchmark questions also retain `needs_syllabus_confirmation`. Model/research failure must be visible and cannot produce invented rationale.
 
 Run slow work in a durable worker behind authorized job submission. Apply configurable source allowlists, rate/byte/query/time budgets, public-IP/redirect protections, terms/robots and permission checks. Keep external research modular, disabled until configured, and automatic on important gaps once enabled. Cache/version permitted findings; completed runs replay frozen evidence without fresh searches. See the [full retrieval contract](19_PHASE4_HYBRID_EVIDENCE_RETRIEVAL.md) for admission, privacy, cache invalidation and missing-provider behavior.
@@ -71,3 +71,7 @@ Verified: course titled `Software Quality Engineering` exists. Independently sou
 ## Programme-level inference
 
 Absence of a course named `Responsible AI` is **not evidence** the content is not taught anywhere else. Frame as "verify coverage of responsible AI across relevant courses".
+
+## Handoff to planned career alignment and pathways
+
+Current structured results preserve every course, five dimensions, scoped quotations, review questions, limitations, source/version/locator/date/rights metadata and deterministic programme context. Verified curriculum quotations can support later competency review; they are not already normalized skill coverage. [The enhancement plan](22_CAREER_ALIGNMENT_AND_PATHWAYS_PLAN.md) identifies later typed competency assertions, reviewed occupation/skill mappings, potential-gap and confidence contracts. Title-only coverage stays unknown. Phase 5 will own Future Career Alignment and minimum sufficient actions; Phase 6 will own ordered Academic Reskilling Pathways/Action Plans. Those additions remain documentation only and do not expand Phase 4 into academic recommendations.
